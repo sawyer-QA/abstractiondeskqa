@@ -10,12 +10,21 @@
 
 <style>
 :root{
-  --bg:#f6f7f9;
+  --bg:#f5f6f8;
   --panel:#ffffff;
-  --ink:#1d2430;
-  --muted:#6b7280;
-  --border:#d7dce2;
-  --accent:#274c77;
+  --ink:#1c2430;
+  --muted:#5f6b7a;
+  --border:#d8dde3;
+  --accent:#1f3c5b;
+}
+
+body.dark{
+  --bg:#121417;
+  --panel:#1b1f24;
+  --ink:#e6e8eb;
+  --muted:#a0a7b2;
+  --border:#2b3138;
+  --accent:#4c78a8;
 }
 
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -28,56 +37,66 @@ body{
   line-height:1.6;
 }
 
-/* Layout */
 .wrapper{
   display:grid;
-  grid-template-columns:240px 1fr;
+  grid-template-columns:260px 1fr;
   min-height:100vh;
 }
 
-/* Sidebar */
 .sidebar{
   background:var(--panel);
   border-right:1px solid var(--border);
-  padding:18px 16px;
+  padding:18px;
 }
 
 .sidebar h2{
   font-family:'Source Serif 4',serif;
-  font-size:16px;
+  font-size:15px;
+  margin-bottom:12px;
+}
+
+.tag-group{
   margin-bottom:14px;
 }
 
-.sidebar button{
+.tag-group h3{
+  font-size:13px;
+  font-weight:700;
+  cursor:pointer;
+  margin-bottom:6px;
+}
+
+.tag-list{
+  display:none;
+  padding-left:8px;
+}
+
+.tag-list button{
   display:block;
   width:100%;
   text-align:left;
-  background:none;
   border:none;
-  padding:6px 4px;
-  font-size:14px;
-  color:var(--ink);
+  background:none;
+  padding:4px 0;
+  font-size:13px;
   cursor:pointer;
 }
 
-.sidebar button:hover{
-  background:#eef2f7;
+.tag-list button:hover{
+  color:var(--accent);
 }
 
-/* Main */
 .main{
-  padding:22px 28px;
+  padding:24px 32px;
 }
 
-/* Header */
 .header{
-  margin-bottom:18px;
+  margin-bottom:16px;
 }
 
 .header h1{
   font-family:'Source Serif 4',serif;
   font-size:22px;
-  font-weight:700;
   margin-bottom:4px;
 }
 
@@ -86,26 +105,21 @@ body{
   font-size:14px;
 }
 
-/* How It Works */
-.how{
-  background:var(--panel);
+.controls{
+  display:flex;
+  gap:10px;
+  margin-bottom:14px;
+  flex-wrap:wrap;
+}
+
+.controls button{
+  font-size:13px;
+  padding:6px 10px;
   border:1px solid var(--border);
-  padding:14px 16px;
-  margin-bottom:18px;
+  background:var(--panel);
+  cursor:pointer;
 }
 
-.how h3{
-  font-family:'Source Serif 4',serif;
-  font-size:15px;
-  margin-bottom:6px;
-}
-
-.how ul{
-  padding-left:18px;
-  font-size:14px;
-}
-
-/* Search */
 .search{
   width:100%;
   padding:9px 12px;
@@ -114,7 +128,6 @@ body{
   font-size:14px;
 }
 
-/* Card */
 .card{
   background:var(--panel);
   border:1px solid var(--border);
@@ -125,41 +138,39 @@ body{
 .card h4{
   font-size:14px;
   font-weight:700;
-  margin-bottom:6px;
+  cursor:pointer;
 }
 
-.card p{
+.card-content{
+  display:none;
+  margin-top:6px;
   font-size:14px;
 }
 
-/* Feedback */
 .feedback{
   margin-top:28px;
   padding-top:18px;
   border-top:1px solid var(--border);
 }
 
-.feedback h3{
-  font-family:'Source Serif 4',serif;
-  font-size:16px;
-  margin-bottom:8px;
-}
-
 .feedback input{
-  padding:8px 10px;
+  padding:8px;
   border:1px solid var(--border);
   width:260px;
-  font-size:14px;
-  margin-right:8px;
+  margin-right:6px;
 }
 
 .feedback button{
-  padding:8px 14px;
+  padding:8px 12px;
+  border:none;
   background:var(--accent);
   color:white;
-  border:none;
   cursor:pointer;
-  font-size:14px;
+}
+
+@media print{
+  .sidebar,.controls,.feedback{display:none;}
+  body{background:white;}
 }
 </style>
 </head>
@@ -168,44 +179,121 @@ body{
 
 <div class="wrapper">
 
-  <div class="sidebar">
-    <h2>Filter</h2>
-    <button>All Questions</button>
-    <button>Stroke (STK)</button>
-    <button>Stroke Ready (ASR-IP)</button>
-    <button>ED Throughput</button>
-  </div>
+<div class="sidebar">
 
-  <div class="main">
+<h2>Tags</h2>
 
-    <div class="header">
-      <h1>AbstractionDeskQA</h1>
-      <p>Core Measure abstraction reference for CMS and TJC measures.</p>
-    </div>
+<div class="tag-group">
+<h3 onclick="toggleGroup(this)">Stroke Timing</h3>
+<div class="tag-list">
+<button>LKW</button>
+<button>TLKW</button>
+<button>Wake-Up Stroke</button>
+<button>Found Down</button>
+</div>
+</div>
 
-    <div class="how">
-      <h3>How to Use</h3>
-      <ul>
-        <li>Type the language you see in the chart (e.g., "wake up stroke," "left AMA," "EMS gave TNK").</li>
-        <li>Filter by measure set if needed.</li>
-        <li>Expand a scenario to read abstraction guidance tied to specification language.</li>
-        <li>Gray areas are identified when interpretation varies.</li>
-      </ul>
-    </div>
+<div class="tag-group">
+<h3 onclick="toggleGroup(this)">Thrombolytic</h3>
+<div class="tag-list">
+<button>TNK</button>
+<button>tPA</button>
+<button>Extended Window</button>
+<button>Reason Not Given</button>
+</div>
+</div>
 
-    <input class="search" placeholder="Search by scenario, abbreviation, data element...">
+<div class="tag-group">
+<h3 onclick="toggleGroup(this)">Comfort / EOL</h3>
+<div class="tag-list">
+<button>Comfort Measures</button>
+<button>Hospice</button>
+<button>POLST</button>
+<button>Code Status</button>
+</div>
+</div>
 
-    <!-- Q&A engine from lookup.html goes here -->
+<div class="tag-group">
+<h3 onclick="toggleGroup(this)">Disposition</h3>
+<div class="tag-list">
+<button>Home</button>
+<button>AMA</button>
+<button>Transfer</button>
+</div>
+</div>
 
-    <div class="feedback">
-      <h3>Updates & Feedback</h3>
-      <input type="email" placeholder="Enter your email">
-      <button>Submit</button>
-    </div>
-
-  </div>
+<div class="tag-group">
+<h3 onclick="toggleGroup(this)">ED Timing</h3>
+<div class="tag-list">
+<button>Arrival</button>
+<button>Admit</button>
+<button>Boarding</button>
+</div>
+</div>
 
 </div>
+
+<div class="main">
+
+<div class="header">
+<h1>AbstractionDeskQA</h1>
+<p>Core Measure abstraction reference for CMS and TJC.</p>
+</div>
+
+<div class="controls">
+<button onclick="toggleDark()">Dark Mode</button>
+<button onclick="toggleCompact()">Compact Mode</button>
+<button onclick="window.print()">Print View</button>
+<button>Recently Added</button>
+<button>Frequently Misabstracted</button>
+</div>
+
+<input class="search" placeholder="Search scenario, abbreviation, data element...">
+
+<div id="qa-container">
+
+<!-- PASTE YOUR EXISTING Q&A DATA LOOP HERE -->
+
+<div class="card">
+<h4 onclick="toggleCard(this)">Example Question Title</h4>
+<div class="card-content">
+<p>Answer and abstraction guidance appear here.</p>
+</div>
+</div>
+
+</div>
+
+<div class="feedback">
+<h3>Updates & Feedback</h3>
+<input type="email" placeholder="Enter your email">
+<button>Submit</button>
+</div>
+
+</div>
+</div>
+
+<script>
+function toggleGroup(el){
+  const list = el.nextElementSibling;
+  list.style.display = list.style.display === "block" ? "none" : "block";
+}
+
+function toggleCard(el){
+  const content = el.nextElementSibling;
+  content.style.display = content.style.display === "block" ? "none" : "block";
+}
+
+function toggleDark(){
+  document.body.classList.toggle("dark");
+}
+
+function toggleCompact(){
+  document.body.classList.toggle("compact");
+  document.querySelectorAll('.card').forEach(card=>{
+    card.style.padding = document.body.classList.contains("compact") ? "8px 10px" : "12px 14px";
+  });
+}
+</script>
 
 </body>
 </html>
