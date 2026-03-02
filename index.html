@@ -190,7 +190,22 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 </style>
 </head>
 <body>
-
+<div style="background:#f7f9fc;border-bottom:1px solid #dbe2ec;padding:20px 24px;font-family:'Source Sans 3',sans-serif;">
+  <div style="max-width:1100px;margin:auto;">
+    <div style="font-size:22px;font-weight:700;color:#0d2240;margin-bottom:6px;">
+      Free Clinical Abstractor Tool
+    </div>
+    <div style="font-size:14px;color:#5b6b7d;margin-bottom:10px;">
+      A searchable reference for Stroke and ED throughput abstractors.
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;font-size:13px;color:#5b6b7d;">
+      <div>Stroke & ED Throughput measures covered</div>
+      <div>Tag-based search by chart language</div>
+      <div>No login required</div>
+      <div>Based on TJC v2026B specification manual</div>
+    </div>
+  </div>
+</div>
 <div class="bar">
   <div class="brand">
     <a href="index.html" style="text-decoration:none;color:inherit;display:flex;align-items:baseline;gap:6px" aria-label="Back to AbstractionDeskQA home">
@@ -201,9 +216,9 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
   <div class="bar-btns">
     <a href="index.html" class="btn btn-ghost" style="text-decoration:none" aria-label="Back to home">← Home</a>
     <button class="btn btn-ghost" onclick="toggleAdd()">+ Add Q&amp;A</button>
-    <button class="btn btn-ghost" onclick="openPaste()">📋 Paste Raw</button>
-    <button class="btn btn-purple" onclick="openTM()">🏷 Manage Tags</button>
-    <button class="btn btn-teal" onclick="exportPDF()">⬇ Export</button>
+    <button class="btn btn-ghost" onclick="openPaste()"> Paste Raw</button>
+    <button class="btn btn-purple" onclick="openTM()"> Manage Tags</button>
+    <button class="btn btn-teal" onclick="exportPDF()"> Export</button>
   </div>
 </div>
 
