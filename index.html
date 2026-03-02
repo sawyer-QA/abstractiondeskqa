@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>AbstractionDeskQA · Core Measure Reference</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
@@ -82,7 +81,8 @@ body{
   cursor:pointer;
 }
 
-.tag-list button:hover{
+.tag-list button.active{
+  font-weight:700;
   color:var(--accent);
 }
 
@@ -168,6 +168,10 @@ body{
   cursor:pointer;
 }
 
+.compact .card{
+  padding:8px 10px;
+}
+
 @media print{
   .sidebar,.controls,.feedback{display:none;}
   body{background:white;}
@@ -180,54 +184,35 @@ body{
 <div class="wrapper">
 
 <div class="sidebar">
-
 <h2>Tags</h2>
 
 <div class="tag-group">
 <h3 onclick="toggleGroup(this)">Stroke Timing</h3>
 <div class="tag-list">
 <button>LKW</button>
-<button>TLKW</button>
-<button>Wake-Up Stroke</button>
-<button>Found Down</button>
+<button>in-house stroke</button>
+<button>onset</button>
+<button>arrival time</button>
 </div>
 </div>
 
 <div class="tag-group">
-<h3 onclick="toggleGroup(this)">Thrombolytic</h3>
+<h3 onclick="toggleGroup(this)">Thrombolytic / Imaging</h3>
 <div class="tag-list">
-<button>TNK</button>
-<button>tPA</button>
-<button>Extended Window</button>
-<button>Reason Not Given</button>
+<button>CT scan</button>
+<button>CT interpretation time</button>
 </div>
 </div>
 
 <div class="tag-group">
 <h3 onclick="toggleGroup(this)">Comfort / EOL</h3>
 <div class="tag-list">
-<button>Comfort Measures</button>
-<button>Hospice</button>
 <button>POLST</button>
-<button>Code Status</button>
-</div>
-</div>
-
-<div class="tag-group">
-<h3 onclick="toggleGroup(this)">Disposition</h3>
-<div class="tag-list">
-<button>Home</button>
-<button>AMA</button>
-<button>Transfer</button>
-</div>
-</div>
-
-<div class="tag-group">
-<h3 onclick="toggleGroup(this)">ED Timing</h3>
-<div class="tag-list">
-<button>Arrival</button>
-<button>Admit</button>
-<button>Boarding</button>
+<button>CMO</button>
+<button>comfort measures</button>
+<button>ACP</button>
+<button>code status</button>
+<button>EOL</button>
 </div>
 </div>
 
@@ -244,24 +229,14 @@ body{
 <button onclick="toggleDark()">Dark Mode</button>
 <button onclick="toggleCompact()">Compact Mode</button>
 <button onclick="window.print()">Print View</button>
-<button>Recently Added</button>
-<button>Frequently Misabstracted</button>
+<button onclick="setFilter('recent')">Recently Added</button>
+<button onclick="setFilter('frequent')">Frequently Misabstracted</button>
+<button onclick="clearFilters()">Clear Filters</button>
 </div>
 
-<input class="search" placeholder="Search scenario, abbreviation, data element...">
+<input class="search" placeholder="Search scenario, abbreviation, data element..." oninput="handleSearch(this.value)">
 
-<div id="qa-container">
-
-<!-- PASTE YOUR EXISTING Q&A DATA LOOP HERE -->
-
-<div class="card">
-<h4 onclick="toggleCard(this)">Example Question Title</h4>
-<div class="card-content">
-<p>Answer and abstraction guidance appear here.</p>
-</div>
-</div>
-
-</div>
+<div id="qa-container"></div>
 
 <div class="feedback">
 <h3>Updates & Feedback</h3>
@@ -273,26 +248,149 @@ body{
 </div>
 
 <script>
-function toggleGroup(el){
-  const list = el.nextElementSibling;
-  list.style.display = list.style.display === "block" ? "none" : "block";
+
+const QA_DATA = [
+
+{
+id:1,
+category:"Gray",
+source:"TJC PMN guidance",
+dataElement:"Comfort Measures Only",
+question:"Patient has a POLST on file documenting DNR/DNI, but no physician note using 'comfort measures only' language. Does the POLST alone satisfy the Comfort Measures Only data element?",
+answer:"A POLST/DNR documents resuscitation preferences, not necessarily a global comfort-focused care goal. CMO requires documentation that the entire care approach has shifted to comfort. Look for physician notes with CMO language, goals-of-care documentation, or a CMO order. Do not assume CMO from DNR status alone.",
+tags:["POLST","CMO","comfort measures","ACP","code status","EOL"],
+frequent:true,
+added:"2026-02-01"
+},
+
+{
+id:2,
+category:"Gray",
+source:"TJC Spec Manual v2026B",
+dataElement:"Last Known Well",
+question:"Patient arrives at ED at 2330 with fatigue and cough. Two hours later develops right-sided weakness. Did LKW occur prior to arrival?",
+answer:"No. If LKW first occurred after arrival, this is an in-house stroke. The neurological event developed in-house and does not meet criteria for LKW prior to arrival.",
+tags:["LKW","in-house stroke","onset","arrival time"],
+frequent:false,
+added:"2026-02-05"
+},
+
+{
+id:3,
+category:"Edge",
+source:"TJC Spec Manual v2026B",
+dataElement:"CT/MRI Scan Interpretation Time",
+question:"Preliminary CT dictated at 2205. Final at 2220. Which interpretation time is used?",
+answer:"2205. Interpretation time is the earliest documented interpretation. The preliminary read is valid and should be used.",
+tags:["CT scan","CT interpretation time","arrival time"],
+frequent:false,
+added:"2026-02-10"
+}
+
+];
+
+let selectedTags=new Set();
+let searchTerm="";
+let filterMode=null;
+
+function render(){
+const container=document.getElementById("qa-container");
+container.innerHTML="";
+
+let data=[...QA_DATA];
+
+if(filterMode==="recent"){
+data.sort((a,b)=>new Date(b.added)-new Date(a.added));
+}
+if(filterMode==="frequent"){
+data=data.filter(i=>i.frequent);
+}
+
+data=data.filter(item=>{
+const textMatch=(item.question+item.answer+item.tags.join(" "))
+.toLowerCase().includes(searchTerm.toLowerCase());
+
+const tagMatch=selectedTags.size===0||
+[...selectedTags].every(tag=>item.tags.includes(tag));
+
+return textMatch && tagMatch;
+});
+
+data.forEach(item=>{
+const card=document.createElement("div");
+card.className="card";
+card.innerHTML=`
+<h4 onclick="toggleCard(this)">${item.question}</h4>
+<div class="card-content">
+<p><strong>${item.dataElement}</strong></p>
+<p>${item.answer}</p>
+<p style="color:var(--muted);font-size:13px;margin-top:6px;">
+${item.source} · ${item.category}
+</p>
+</div>
+`;
+container.appendChild(card);
+});
 }
 
 function toggleCard(el){
-  const content = el.nextElementSibling;
-  content.style.display = content.style.display === "block" ? "none" : "block";
+const content=el.nextElementSibling;
+content.style.display=content.style.display==="block"?"none":"block";
+}
+
+function toggleGroup(el){
+const list=el.nextElementSibling;
+list.style.display=list.style.display==="block"?"none":"block";
 }
 
 function toggleDark(){
-  document.body.classList.toggle("dark");
+document.body.classList.toggle("dark");
+localStorage.setItem("darkMode",document.body.classList.contains("dark"));
+}
+
+if(localStorage.getItem("darkMode")==="true"){
+document.body.classList.add("dark");
 }
 
 function toggleCompact(){
-  document.body.classList.toggle("compact");
-  document.querySelectorAll('.card').forEach(card=>{
-    card.style.padding = document.body.classList.contains("compact") ? "8px 10px" : "12px 14px";
-  });
+document.body.classList.toggle("compact");
 }
+
+function handleSearch(value){
+searchTerm=value;
+render();
+}
+
+document.querySelectorAll(".tag-list button").forEach(btn=>{
+btn.addEventListener("click",()=>{
+const tag=btn.textContent;
+if(selectedTags.has(tag)){
+selectedTags.delete(tag);
+btn.classList.remove("active");
+}else{
+selectedTags.add(tag);
+btn.classList.add("active");
+}
+render();
+});
+});
+
+function setFilter(type){
+filterMode=type;
+render();
+}
+
+function clearFilters(){
+selectedTags.clear();
+filterMode=null;
+searchTerm="";
+document.querySelector(".search").value="";
+document.querySelectorAll(".tag-list button").forEach(b=>b.classList.remove("active"));
+render();
+}
+
+render();
+
 </script>
 
 </body>
