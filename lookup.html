@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AbstractionDeskQA · Stroke Q&A Lookup</title>
+<title>Stroke & ED Throughput · Q&A Bank</title>
 <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+3:wght@300;400;500;600;700&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -54,31 +54,6 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 .ctag:hover{border-color:var(--purple);color:var(--purple);}
 .ctag.on{background:var(--purple);border-color:var(--purple);color:white;}
 .ctag-n{opacity:.5;font-size:8.5px;margin-left:1px;}
-
-/* SIDEBAR TOPIC GROUP */
-.sb-topic{display:flex;align-items:center;justify-content:space-between;padding:7px 15px;cursor:pointer;font-size:12.5px;color:var(--navy);font-weight:700;transition:all .12s;border-left:3px solid transparent;background:var(--slate);}
-.sb-topic:hover{background:#e8edf4;color:var(--navy);}
-.sb-topic.on{background:var(--teal-bg);color:var(--teal);border-left-color:var(--teal);}
-.sb-topic-arrow{font-size:9px;color:var(--mid);transition:transform .18s;}
-.sb-topic.open .sb-topic-arrow{transform:rotate(90deg);}
-.sb-sub{display:none;}
-.sb-sub.open{display:block;}
-.sb-subitem{display:flex;align-items:center;justify-content:space-between;padding:5px 15px 5px 26px;cursor:pointer;font-size:12px;color:#4a5268;font-weight:500;transition:all .12s;border-left:3px solid transparent;}
-.sb-subitem:hover{background:var(--slate);color:var(--navy);}
-.sb-subitem.on{background:var(--teal-bg);color:var(--teal);border-left-color:var(--teal);font-weight:700;}
-.sb-subitem .sb-cnt{background:#eef0f5;color:var(--mid);font-size:9.5px;font-weight:700;padding:1px 6px;border-radius:8px;}
-.sb-subitem.on .sb-cnt{background:rgba(11,122,120,.14);color:var(--teal);}
-.sb-sub-label{font-size:9.5px;color:var(--mid);font-weight:400;margin-left:4px;}
-
-/* WELCOME BOX */
-.welcome{background:white;border:1px solid var(--border);border-radius:8px;padding:18px 20px;margin-bottom:14px;border-left:4px solid var(--teal);}
-.welcome h3{font-family:var(--serif);font-size:15px;color:var(--navy);margin-bottom:8px;font-weight:700;}
-.welcome p{font-size:12.5px;color:#3d4f62;line-height:1.65;margin-bottom:6px;}
-.welcome p:last-child{margin-bottom:0;}
-.welcome-steps{display:flex;gap:16px;flex-wrap:wrap;margin-top:10px;}
-.welcome-step{font-size:11.5px;color:var(--mid);display:flex;align-items:center;gap:6px;}
-.welcome-step strong{color:var(--navy);}
-.welcome-dismiss{font-size:11px;color:var(--teal);cursor:pointer;font-weight:700;text-decoration:underline;float:right;margin-top:-2px;}
 
 /* MAIN */
 .main{padding:18px 22px;min-width:0;}
@@ -221,59 +196,36 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
     <a href="index.html" style="text-decoration:none;color:inherit;display:flex;align-items:baseline;gap:6px" aria-label="Back to AbstractionDeskQA home">
       <span class="brand-name">AbstractionDesk<em>QA</em></span>
     </a>
-    <span class="brand-scope">Stroke · Q&amp;A Lookup</span>
+    <span class="brand-scope">Stroke &amp; ED Throughput · Q&amp;A Lookup</span>
   </div>
   <div class="bar-btns">
     <a href="index.html" class="btn btn-ghost" style="text-decoration:none" aria-label="Back to home">← Home</a>
     <button class="btn btn-ghost" onclick="toggleAdd()">+ Add Q&amp;A</button>
-    <button class="btn btn-ghost" onclick="openPaste()">Paste Raw</button>
-    <button class="btn btn-purple" onclick="openTM()">Manage Tags</button>
-    <button class="btn btn-teal" onclick="exportPDF()">Export PDF</button>
+    <button class="btn btn-ghost" onclick="openPaste()">📋 Paste Raw</button>
+    <button class="btn btn-purple" onclick="openTM()">🏷 Manage Tags</button>
+    <button class="btn btn-teal" onclick="exportPDF()">⬇ Export</button>
   </div>
 </div>
 
 <div class="layout">
   <div class="sidebar">
     <span class="sb-lbl">All Questions</span>
-    <div class="sb-item on" data-m="all" onclick="filterM('all',this)">All Questions <span class="sb-cnt" id="cnt-all">0</span></div>
+    <div class="sb-item on" data-m="all" onclick="filterM('all',this)">All <span class="sb-cnt" id="cnt-all">0</span></div>
     <div class="sb-div"></div>
-    <span class="sb-lbl">Topic</span>
-
-    <!-- STROKE TOPIC GROUP -->
-    <div class="sb-topic" id="topic-stroke" onclick="toggleTopic('stroke',this)">
-      Stroke <span style="display:flex;align-items:center;gap:6px"><span class="sb-cnt" id="cnt-stroke">0</span><span class="sb-topic-arrow">▶</span></span>
-    </div>
-    <div class="sb-sub" id="sub-stroke">
-      <div class="sb-subitem" data-m="STK" onclick="filterM('STK',this)">STK <span class="sb-sub-label">Stroke</span><span class="sb-cnt" id="cnt-STK">0</span></div>
-      <div class="sb-subitem" data-m="ASR-IP" onclick="filterM('ASR-IP',this)">ASR-IP <span class="sb-sub-label">Stroke Ready</span><span class="sb-cnt" id="cnt-ASR-IP">0</span></div>
-      <div class="sb-subitem" data-m="CSTK" onclick="filterM('CSTK',this)">CSTK <span class="sb-sub-label">Comprehensive</span><span class="sb-cnt" id="cnt-CSTK">0</span></div>
-      <div class="sb-subitem" data-m="STK-OP" onclick="filterM('STK-OP',this)">STK-OP <span class="sb-sub-label">Outpatient</span><span class="sb-cnt" id="cnt-STK-OP">0</span></div>
-      <div class="sb-subitem" data-m="STK-VOL" onclick="filterM('STK-VOL',this)">STK-VOL <span class="sb-sub-label">Volume</span><span class="sb-cnt" id="cnt-STK-VOL">0</span></div>
-    </div>
-
+    <span class="sb-lbl">Measure Set</span>
+    <div class="sb-item" data-m="STK" onclick="filterM('STK',this)">STK — Stroke <span class="sb-cnt" id="cnt-STK">0</span></div>
+    <div class="sb-item" data-m="ASR-IP" onclick="filterM('ASR-IP',this)">ASR-IP — Stroke Ready <span class="sb-cnt" id="cnt-ASR-IP">0</span></div>
+    <div class="sb-item" data-m="ED-OP" onclick="filterM('ED-OP',this)">ED-OP — Throughput <span class="sb-cnt" id="cnt-ED-OP">0</span></div>
     <div class="sb-div"></div>
     <span class="sb-lbl">Difficulty</span>
-    <div class="sb-item" data-m="__gray" onclick="filterM('__gray',this)">Gray Areas <span class="sb-cnt" id="cnt-gray">0</span></div>
-    <div class="sb-item" data-m="__edge" onclick="filterM('__edge',this)">Edge Cases <span class="sb-cnt" id="cnt-edge">0</span></div>
+    <div class="sb-item" data-m="__gray" onclick="filterM('__gray',this)">❓ Gray Areas <span class="sb-cnt" id="cnt-gray">0</span></div>
+    <div class="sb-item" data-m="__edge" onclick="filterM('__edge',this)">⚡ Edge Cases <span class="sb-cnt" id="cnt-edge">0</span></div>
     <div class="sb-div"></div>
     <span class="sb-lbl">Browse Tags</span>
     <div class="cloud-outer"><div class="cloud" id="tagCloud"></div></div>
   </div>
 
   <div class="main">
-    <!-- WELCOME -->
-    <div class="welcome" id="welcomeBox">
-      <span class="welcome-dismiss" onclick="dismissWelcome()" aria-label="Dismiss welcome message">Dismiss</span>
-      <h3>Welcome to the Stroke Q&A Lookup</h3>
-      <p>This tool is a searchable reference for core measure abstraction. It is a work in progress — new entries are added regularly and existing ones are updated when specifications change.</p>
-      <div class="welcome-steps">
-        <span class="welcome-step"><strong>Search</strong> by any chart term, abbreviation, or plain description</span>
-        <span class="welcome-step"><strong>Filter</strong> by measure code in the sidebar</span>
-        <span class="welcome-step"><strong>Click a tag</strong> on any card to filter by keyword</span>
-        <span class="welcome-step"><strong>Gray Area</strong> entries flag known inter-rater variation</span>
-      </div>
-    </div>
-
     <!-- ADD PANEL -->
     <div class="add-panel" id="addPanel">
       <h3>Add New Q&amp;A Entry</h3>
@@ -281,10 +233,10 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
         <div class="full"><label class="flbl">Question / Scenario</label><textarea class="fta" id="fq" placeholder="Describe the abstraction scenario…"></textarea></div>
         <div class="full"><label class="flbl">Answer / Guidance</label><textarea class="fta" id="fa" placeholder="The authoritative answer or interpretation…"></textarea></div>
         <div><label class="flbl">Measure Set</label>
-          <select class="fsel" id="fm"><option value="STK">STK — Stroke</option><option value="ASR-IP">ASR-IP — Stroke Ready</option><option value="CSTK">CSTK — Comprehensive Stroke</option><option value="STK-OP">STK-OP — Stroke Outpatient</option><option value="STK-VOL">STK-VOL — Stroke Volume</option><option value="ED-OP">ED-OP — ED Throughput</option></select></div>
+          <select class="fsel" id="fm"><option value="STK">STK — Stroke</option><option value="ASR-IP">ASR-IP</option><option value="ED-OP">ED-OP</option></select></div>
         <div><label class="flbl">Specific Measure</label><input class="fi" id="fspec" placeholder="e.g. ASR-IP-1, ED-OP-18b"/></div>
         <div><label class="flbl">Difficulty</label>
-          <select class="fsel" id="ftype"><option value="routine">Routine</option><option value="edge">Edge Case</option><option value="gray">Gray Area</option></select></div>
+          <select class="fsel" id="ftype"><option value="routine">✅ Routine</option><option value="edge">⚡ Edge Case</option><option value="gray">❓ Gray Area</option></select></div>
         <div><label class="flbl">Source</label><input class="fi" id="fsrc" placeholder="TJC PMN, spec manual, training…"/></div>
         <div class="full">
           <label class="flbl">Keyword Tags — type &amp; press Enter, or click suggestions</label>
@@ -305,22 +257,22 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 
     <!-- ACTIVE TAG FILTER -->
     <div class="atbar" id="atbar">
-      <span class="atbar-lbl">Tag filter:</span>
+      <span class="atbar-lbl">🏷 Tag filter:</span>
       <div id="atpills" style="display:flex;gap:5px;flex-wrap:wrap;"></div>
       <span class="clear-at" onclick="clearTagFilters()">Clear all</span>
     </div>
 
     <div class="search-wrap">
-      <span class="si" aria-hidden="true">&#9906;</span>
-      <input class="search" id="srch" placeholder="Search by scenario, keyword, tag, data element, abbreviation…" oninput="dismissWelcome();render()"/>
+      <span class="si">🔍</span>
+      <input class="search" id="srch" placeholder="Search by scenario, keyword, tag, data element, abbreviation…" oninput="render()"/>
     </div>
 
     <div class="frow">
       <span style="font-size:10px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.7px">Difficulty:</span>
       <span class="fchip on" data-t="all" onclick="filterT('all',this)">All</span>
-      <span class="fchip" data-t="routine" onclick="filterT('routine',this)">Routine</span>
-      <span class="fchip fe" data-t="edge" onclick="filterT('edge',this)">Edge Case</span>
-      <span class="fchip fg" data-t="gray" onclick="filterT('gray',this)">Gray Area</span>
+      <span class="fchip" data-t="routine" onclick="filterT('routine',this)">✅ Routine</span>
+      <span class="fchip fe" data-t="edge" onclick="filterT('edge',this)">⚡ Edge</span>
+      <span class="fchip fg" data-t="gray" onclick="filterT('gray',this)">❓ Gray Area</span>
     </div>
 
     <div class="rhdr"><div class="rcnt" id="rcnt"></div></div>
@@ -329,9 +281,9 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 </div>
 
 <!-- ══ TAG MANAGER MODAL ══ -->
-<div class="moverlay" id="tmModal" onclick="if(event.target===this)closeTM()">
+<div class="moverlay" id="tmModal">
   <div class="modal" style="max-width:700px">
-    <h3>Tag Manager</h3>
+    <h3>🏷 Tag Manager</h3>
     <p class="modal-sub">
       Each tag has <strong>aliases</strong> — the words and phrases that trigger it during auto-detection (chart language, abbreviations, typos).
       <strong>Related tags</strong> are shown as click-to-add suggestions whenever an abstractor uses this tag, surfacing terms they might not have thought of.
@@ -352,24 +304,24 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 </div>
 
 <!-- ══ PASTE MODAL ══ -->
-<div class="moverlay" id="pasteModal" onclick="if(event.target===this)closePaste()">
+<div class="moverlay" id="pasteModal">
   <div class="modal" style="max-width:520px">
-    <h3>Paste Raw Q&amp;A</h3>
+    <h3>📋 Paste Raw Q&amp;A</h3>
     <p class="modal-sub">Paste text from TJC PMN, CMS clarifications, or training notes. Click "Preview Tags" to review auto-detected tags before saving.</p>
     <textarea id="pasteRaw" style="width:100%;font-family:var(--mono);font-size:11px;padding:9px;border:1.5px solid var(--border);border-radius:5px;min-height:120px;resize:vertical;margin-bottom:10px;outline:none;color:var(--ink);" placeholder="Q: If a patient woke up with stroke symptoms…&#10;&#10;A: Per TJC guidance…"></textarea>
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px">
-      <div><label class="flbl">Measure</label><select class="fsel" id="pm"><option value="STK">STK</option><option value="ASR-IP">ASR-IP</option><option value="CSTK">CSTK</option><option value="STK-OP">STK-OP</option><option value="STK-VOL">STK-VOL</option><option value="ED-OP">ED-OP</option></select></div>
+      <div><label class="flbl">Measure</label><select class="fsel" id="pm"><option value="STK">STK</option><option value="ASR-IP">ASR-IP</option><option value="ED-OP">ED-OP</option></select></div>
       <div><label class="flbl">Specific Measure</label><input class="fi" id="pspec" placeholder="e.g. ASR-IP-1"/></div>
       <div><label class="flbl">Source</label><input class="fi" id="psrc" placeholder="TJC PMN, training…"/></div>
     </div>
     <div class="tag-review" id="tagReview" style="display:none">
-      <h4>Auto-detected tags — click to accept or reject:</h4>
+      <h4>🏷 Auto-detected tags — click to accept or reject:</h4>
       <div class="rrow" id="rrow"></div>
       <div style="font-size:10.5px;color:var(--mid);font-style:italic">Purple = accepted &nbsp;·&nbsp; Gray = rejected &nbsp;·&nbsp; Click to toggle</div>
     </div>
     <div class="mactions">
       <button class="btn btn-ghost" style="font-size:11px;padding:5px 11px" onclick="closePaste()">Cancel</button>
-      <button class="btn btn-purple" style="font-size:11px;padding:5px 11px" onclick="previewTags()">Preview Tags</button>
+      <button class="btn btn-purple" style="font-size:11px;padding:5px 11px" onclick="previewTags()">🏷 Preview Tags</button>
       <button class="btn btn-teal" style="font-size:11px;padding:5px 11px" onclick="savePaste()">Save Entry</button>
     </div>
   </div>
@@ -548,138 +500,7 @@ const DEFAULT_TAGS = [
 //  SEED Q&As
 // ══════════════════════════════════════════════════
 const SEED = [
-  // ── EXISTING 12 ──────────────────────────────────
   {id:'q1',measure:'ASR-IP',specific:'ASR-IP-1',type:'gray',
-   question:'Patient woke up with stroke symptoms. Family states he was "fine when he went to bed around 11 PM." No specific LKW time is documented in the chart by clinical staff. How do we abstract Last Known Well?',
-   answer:'"Around 11 PM" may be abstracted as 23:00 if that time is documented in the medical record by clinical staff (nurse, physician, or APP). Family-reported times are acceptable when charted. If no time appears in the record, LKW is Unknown and the case excludes from the denominator. A verbal family report that was never charted cannot be used. Best practice: have ED triage nurses document the specific family-reported time and the witness name.',
-   source:'TJC Spec Manual v2026B; Data Element: Last Known Well',tags:['LKW','TLKW','wake-up stroke','family','found down']},
-  {id:'q2',measure:'ASR-IP',specific:'ASR-IP-1',type:'edge',
-   question:'EMS documented LKW as 09:15 on the run report. The ED physician note documents LKW as 09:45. Which time takes precedence?',
-   answer:'Use the hospital medical record time — the ED physician\'s 09:45. EMS run reports are pre-hospital documents and are not part of the hospital record unless explicitly referenced and incorporated by clinical staff. Exception: if the physician writes "per EMS, LKW 09:15," that physician-acknowledged EMS time may be used. When times conflict without cross-reference, document your abstraction rationale and flag for internal review.',
-   source:'TJC Spec Manual v2026B; Data Element: Last Known Well',tags:['LKW','TLKW','PTA','onset','found down']},
-  {id:'q3',measure:'ASR-IP',specific:'ASR-IP-1',type:'edge',
-   question:'IV alteplase initiated at 3 hours 22 minutes from LKW. Physician did not document a reason for extending past 3 hours. Does this pass?',
-   answer:'Yes. ASR-IP-1 uses a 3.5-hour (210-minute) window. Three hours 22 minutes equals 202 minutes, which is within the window. No "Reason for Extending" is needed. A very common error: confusing the older 3-hour window from STK measures with ASR-IP-1\'s 3.5-hour window. "Reason for Extending" only triggers when tPA is initiated after 210 minutes from LKW.',
-   source:'TJC Spec Manual v2026B; MIF ASR-IP-1',tags:['TNK','LKW','time window','extending tPA']},
-  {id:'q4',measure:'ASR-IP',specific:'ASR-IP-2,ASR-IP-3',type:'routine',
-   question:'Family requests comfort measures only. Physician documents CMO in the progress note. Patient did not receive antithrombotic therapy. How do you answer ASR-IP-2 and ASR-IP-3?',
-   answer:'CMO is a denominator exclusion for both ASR-IP-2 and ASR-IP-3. When CMO is documented by a physician or APP, the case is excluded (MCA = B) and is not counted as a failure. Nursing documentation of CMO alone is generally not sufficient; it should be a physician or APP order or documented note. The Comfort Measures Only data element must be answered Yes to trigger the exclusion.',
-   source:'TJC Spec Manual v2026B; Data Element: Comfort Measures Only',tags:['comfort measures','CMO','antithrombotic','reason no antithrombotic','family','EOL']},
-  {id:'q5',measure:'ASR-IP',specific:'ASR-IP-3',type:'edge',
-   question:'Patient discharged to hospice. No physician note specifically using the words "comfort measures only." Does hospice discharge alone satisfy the Comfort Measures Only data element for ASR-IP-3?',
-   answer:'No. Hospice discharge alone does not satisfy CMO. The data element requires explicit documentation that care has been redirected to comfort. A DNR order, hospice referral, or POLST alone does not automatically equal CMO. Look for physician or APP notes using CMO language, goals-of-care documentation, or a CMO order set. When only hospice disposition is documented without supporting CMO documentation, the case remains in the denominator and antithrombotic should be prescribed or a valid exception documented.',
-   source:'TJC Spec Manual v2026B; Data Elements: Comfort Measures Only, Discharge Disposition',tags:['hospice','comfort measures','CMO','POLST','antithrombotic','disposition','reason no antithrombotic']},
-  {id:'q6',measure:'STK',specific:'STK',type:'gray',
-   question:'Patient has a POLST on file documenting DNR/DNI, but no physician note using "comfort measures only" language. Does the POLST alone satisfy the Comfort Measures Only data element?',
-   answer:'This is a gray area and a frequent source of inter-rater variation. A POLST or DNR documents resuscitation preferences, not necessarily a global comfort-focused care goal. CMO requires documentation that the entire care approach has shifted to comfort. Look for additional supporting documentation: physician notes with CMO language, goals-of-care or palliative care notes indicating CMO transition, or a CMO order. Do not assume CMO from DNR status alone. When in doubt, flag for team consensus.',
-   source:'TJC PMN guidance; Data Element: Comfort Measures Only',tags:['POLST','CMO','comfort measures','ACP','code status','EOL']},
-  {id:'q7',measure:'STK',specific:'STK',type:'gray',
-   question:'Patient arrives at the ED at 2330 with fatigue, shortness of breath, and productive cough. Two hours after arrival they develop right-sided weakness and facial drooping. How do you answer the Last Known Well data element?',
-   answer:'Select No for LKW prior to arrival. If there is no documentation that neurological symptoms occurred before the patient arrived, and documentation shows the deficit first appeared after arrival, this is an in-hospital stroke. The presenting complaints of fatigue, shortness of breath, and cough are unrelated to the stroke. The patient does not meet the criterion for LKW prior to arrival and will typically be excluded from the stroke measure denominator.',
-   source:'TJC Spec Manual v2026B; Data Element: Last Known Well',tags:['LKW','in-house stroke','onset','arrival time']},
-  {id:'q8',measure:'STK',specific:'STK',type:'edge',
-   question:'Preliminary CT dictated by radiologist at 2205. ED physician documents "Findings discussed directly with the radiologist at 2209." Final CT dictated at 2220. What is the CT/MRI Scan Interpretation Time?',
-   answer:'Use 2205, the preliminary read. Interpretation time is the earliest time a radiologist or physician interpreted the results. The preliminary dictation at 2205 is a valid interpretation. The verbal communication at 2209 confirms awareness but is not a separate read. The final dictation at 2220 is later and not used when an earlier interpretation time is documented. Always use the earliest.',
-   source:'TJC Spec Manual v2026B; Data Element: CT/MRI Scan Interpretation Time',tags:['CT scan','CT interpretation time','arrival time']},
-  {id:'q9',measure:'ED-OP',specific:'ED-OP',type:'routine',
-   question:'ED face sheet lists arrival time 1320. ED Registration Time 1325. ED Triage Time 1330. Consent to treat form has 1:17 AM. What is the Arrival Time?',
-   answer:'Use 1320, the face sheet time. Always use the earliest documented time from acceptable sources. The face sheet is a primary acceptable source. Registration at 1325 and triage at 1330 are later. The consent to treat form time of 1:17 AM is ambiguous and is not a standard arrival time source.',
-   source:'TJC Spec Manual v2026B; Data Element: Arrival Time',tags:['arrival time','ED patient']},
-  {id:'q10',measure:'ED-OP',specific:'ED-OP',type:'edge',
-   question:'Patient arrives 04/01 at 2000. APN orders observation 04/02 at 0400. Patient physically leaves the ED for the observation unit at 0500. Patient transferred to acute care at 0445. What is the ED Departure Date/Time?',
-   answer:'04/02 at 0400, when the observation order was placed. ED Departure is the earliest of: the time the patient physically left the ED, or the time an inpatient or observation order was placed. The observation order at 0400 precedes physical departure at 0500. The transfer to acute care at 0445 is a distractor — departure was already established by the order at 0400.',
-   source:'TJC Spec Manual v2026B; Data Element: ED Departure Date/Time',tags:['departure time','arrival time','admit time','transfer']},
-  {id:'q11',measure:'ED-OP',specific:'ED-OP',type:'gray',
-   question:'Patient leaves the ED without signing AMA paperwork. Staff document "patient eloped" and note they "left without being discharged." How do you answer Discharge Disposition?',
-   answer:'Select Left Against Medical Advice. "Eloped," "patient directed discharge," and "left without being discharged" are all abstracted as AMA for the discharge disposition data element, regardless of whether the AMA form was signed. The patient\'s action defines the disposition, not the paperwork.',
-   source:'TJC Spec Manual v2026B; Data Element: Discharge Disposition',tags:['AMA','disposition','ED patient']},
-  {id:'q12',measure:'ASR-IP',specific:'ASR-IP-1',type:'edge',
-   question:'Patient transferred in from an outside hospital where tPA was already given. Should this case be in our ASR-IP-1 denominator?',
-   answer:'Likely no. ASR-IP-1 captures IV alteplase initiation for patients arriving via your ED. If the patient was transferred in after tPA was given elsewhere and did not present through your ED as the initial point of care, they likely do not meet "ED Patient = Yes." Confirm your abstraction software\'s ED Patient logic for transfer patients.',
-   source:'TJC Spec Manual v2026B; Data Elements: ED Patient, IV Alteplase Initiation',tags:['transfer','PTA','TNK','ED patient','arrival time']},
-
-  // ── NEW 20 — rewritten in original language ──────
-  {id:'n1',measure:'STK',specific:'STK-4',type:'edge',
-   question:'For STK-4, a patient\'s symptoms resolved in the ED, then recurred hours later and the patient received tPA. Which Last Known Well time is used?',
-   answer:'Use the original time the patient was last known to be at their neurological baseline before hospital arrival. STK-4 requires that Last Known Well precede arrival. If the only documented LKW occurred during the ED stay — after arrival — the case falls outside the measure denominator. Some quality registries such as GWTG handle in-hospital onset differently, but those registry rules do not change TJC abstraction.',
-   source:'TJC Spec Manual v2026B; Data Element: Last Known Well; STK-4',tags:['LKW','last known well','tPA','alteplase','thrombolytic','in-hospital onset','time calculation','denominator','STK-4']},
-  {id:'n2',measure:'STK-VOL',specific:'STK-VOL-1',type:'routine',
-   question:'Our hospital is a Primary Stroke Center that does not perform mechanical thrombectomy. Which stroke measures are we required to report?',
-   answer:'PSCs without mechanical thrombectomy capability report STK-VOL-1. The denominator is all ischemic stroke discharges each month and the numerator will be zero. Reporting zero is acceptable and expected. CSTK measures that require thrombectomy procedures (such as CSTK-02, CSTK-05, CSTK-08, CSTK-09) do not apply to your hospital for that reason.',
-   source:'TJC Spec Manual v2026B; STK-VOL, CSTK measure sets',tags:['PSC','primary stroke center','mechanical thrombectomy','MT','CSTK','measure requirements','STK-VOL-1']},
-  {id:'n3',measure:'CSTK',specific:'CSTK-02',type:'routine',
-   question:'For CSTK-02 (Modified Rankin Score at 90 Days), what is the acceptable time window for the follow-up mRS to count?',
-   answer:'The mRS must be obtained between 75 and 105 days after discharge, inclusive. A score collected before day 75 or after day 105 does not satisfy the requirement. The score may be collected by phone or in person, and the patient or a caregiver may be interviewed.',
-   source:'TJC Spec Manual v2026B; MIF CSTK-02; Data Element: Modified Rankin Score',tags:['mRS','modified Rankin','90 day','follow-up','time window','numerator','phone call','CSTK-02']},
-  {id:'n4',measure:'CSTK',specific:'CSTK-02',type:'routine',
-   question:'Who is qualified to perform and document the 90-day Modified Rankin Score for CSTK-02?',
-   answer:'Any trained individual. TJC does not specify a discipline requirement. Physicians, APNs, PAs, registered nurses, medical assistants, and occupational therapists may perform the mRS interview. The key requirement is that the person has received training and is certified to conduct the interview. Your organization determines who qualifies and how training is provided.',
-   source:'TJC Spec Manual v2026B; MIF CSTK-02',tags:['mRS','modified Rankin','who can document','qualified staff','OT','nurse','physician','training','CSTK-02']},
-  {id:'n5',measure:'CSTK',specific:'CSTK-02',type:'edge',
-   question:'Two mRS scores are documented within the 75 to 105 day window and they differ. Which score is used?',
-   answer:'Use the highest score. When multiple or conflicting scores exist within the valid date range, abstract the highest documented value.',
-   source:'TJC Spec Manual v2026B; MIF CSTK-02; Data Element: Modified Rankin Score',tags:['mRS','modified Rankin','discrepant scores','multiple scores','highest','CSTK-02']},
-  {id:'n6',measure:'CSTK',specific:'CSTK-02',type:'edge',
-   question:'A patient in CSTK-02 dies during the hospital stay. What is entered for the mRS Date?',
-   answer:'Enter the discharge date. When a patient expires during the admission and no 90-day score can be obtained, the discharge date is used as the Modified Rankin Score Date. A date is still required in the abstraction even though no actual score was collected.',
-   source:'TJC Spec Manual v2026B; MIF CSTK-02; Data Element: Modified Rankin Score Date',tags:['mRS','modified Rankin','expired inpatient','death','mRS date','discharge date','default','CSTK-02']},
-  {id:'n7',measure:'CSTK',specific:'CSTK-02',type:'routine',
-   question:'The team attempted to reach the patient three times for the 90-day mRS and was unsuccessful. What value is selected?',
-   answer:'Select value 7, which removes the case from the measure population. TJC requires at least three documented contact attempts before value 7 may be used. Abstraction notes should include the attempt dates and methods.',
-   source:'TJC Spec Manual v2026B; MIF CSTK-02; Data Element: Modified Rankin Score',tags:['mRS','modified Rankin','unable to contact','three attempts','value 7','exclusion','unsuccessful contact','CSTK-02']},
-  {id:'n8',measure:'CSTK',specific:'CSTK-05',type:'gray',
-   question:'For CSTK-05, the first imaging within 36 hours documents "possible contrast staining vs. hemorrhage," but a repeat scan rules out hemorrhage. Is Positive Brain Image still selected as Yes?',
-   answer:'Yes. When any imaging report within 36 hours after reperfusion therapy documents hemorrhage, even tentatively, select Yes for Positive Brain Image. This is treated as contradictory documentation. However, Positive Brain Image alone does not place the case in the numerator. Both Positive Brain Image and a clinical deterioration of 4 or more NIHSS points are required. If NIHSS did not worsen by at least 4 points, the case is not counted as a symptomatic intracranial hemorrhage.',
-   source:'TJC Spec Manual v2026B; MIF CSTK-05; Data Element: Positive Brain Image',tags:['CSTK-05','hemorrhagic transformation','positive brain image','contrast staining','contradictory documentation','NIHSS','clinical deterioration','numerator']},
-  {id:'n9',measure:'CSTK',specific:'CSTK-05',type:'routine',
-   question:'What must be present for a case to meet the definition of symptomatic intracranial hemorrhage in CSTK-05?',
-   answer:'Two criteria must both be met within 36 hours after reperfusion therapy: first, clinical deterioration of 4 or more points on the NIHSS; and second, brain imaging showing parenchymal hematoma, subarachnoid hemorrhage, or intraventricular hemorrhage. If only one of the two criteria is present, the case does not count as a symptomatic intracranial hemorrhage.',
-   source:'TJC Spec Manual v2026B; MIF CSTK-05',tags:['CSTK-05','symptomatic ICH','hemorrhagic transformation','NIHSS','4-point increase','brain image','definition','numerator criteria']},
-  {id:'n10',measure:'CSTK',specific:'CSTK-05',type:'edge',
-   question:'Our hospital receives many transfers from community hospitals where IV tPA was given before arrival. Do those patients count in our CSTK-05 denominator?',
-   answer:'Only if your hospital billed an ICD-10-PCS code for thrombolytic therapy or mechanical endovascular reperfusion for that inpatient episode. Procedures performed at the referring hospital are not included in your CSTK-05 unless your hospital bills for them as part of the inpatient admission. Review the applicable procedure code tables in the TJC manual appendix.',
-   source:'TJC Spec Manual v2026B; MIF CSTK-05; Appendix A',tags:['CSTK-05','transfer in','transferred patient','tPA at another hospital','ICD-10-PCS','denominator','procedure code','billing']},
-  {id:'n11',measure:'CSTK',specific:'CSTK-05',type:'edge',
-   question:'Our PSC administers IV tPA in the ED and then transfers the patient to a Comprehensive Stroke Center. Does CSTK-05 apply to us for that case?',
-   answer:'No. If tPA is given at your hospital and the patient is transferred out as an outpatient (never formally admitted), that case falls under STK-OP-1, not CSTK-05. CSTK-05 captures only inpatient admissions to your hospital.',
-   source:'TJC Spec Manual v2026B; MIF CSTK-05; MIF STK-OP-1',tags:['CSTK-05','STK-OP-1','drip and ship','transfer out','outpatient','inpatient','tPA','PSC to CSC']},
-  {id:'n12',measure:'CSTK',specific:'CSTK-08',type:'gray',
-   question:'For CSTK-08, a thrombectomy was attempted but the team was unable to reach the clot due to vessel anatomy. Is this case included in the denominator?',
-   answer:'Yes. CSTK-08 is an outcome measure and includes all patients for whom mechanical thrombectomy was attempted, including failed attempts. The measure is designed to reflect actual outcomes and not exclude cases where reperfusion was not achieved.',
-   source:'TJC Spec Manual v2026B; MIF CSTK-08',tags:['CSTK-08','TICI','failed thrombectomy','attempted MT','denominator','outcome measure','anatomy']},
-  {id:'n13',measure:'CSTK',specific:'CSTK-09',type:'routine',
-   question:'Why are patients with an initial NIHSS score below 6 excluded from CSTK-09?',
-   answer:'Mild stroke patients may have a clinically appropriate reason for a longer time to thrombectomy based on their symptom severity. Including them would skew the median time that CSTK-09 reports. The measure also excludes cases where the first thrombectomy procedure was performed more than 8 hours after hospital arrival.',
-   source:'TJC Spec Manual v2026B; MIF CSTK-09',tags:['CSTK-09','NIHSS less than 6','exclusion','mild stroke','median time','skin puncture','EVT']},
-  {id:'n14',measure:'CSTK',specific:'CSTK-09',type:'routine',
-   question:'For CSTK-09, what makes a thrombectomy procedure qualify as a "delayed endovascular rescue procedure" that triggers exclusion?',
-   answer:'If the first mechanical thrombectomy procedure was initiated more than 8 hours after hospital arrival, select Yes for Delayed Endovascular Rescue Procedure and the case is excluded from the measure. If the procedure occurred within the first 8 hours, or if timing cannot be determined, select No.',
-   source:'TJC Spec Manual v2026B; MIF CSTK-09; Data Element: Delayed Endovascular Rescue Procedure',tags:['CSTK-09','delayed EVT','8 hours','skin puncture','exclusion','delayed endovascular','arrival']},
-  {id:'n15',measure:'STK-VOL',specific:'STK-VOL-1',type:'routine',
-   question:'STK-VOL-1 shows zero MER procedures at our hospital. Will this reflect poorly on our performance reports?',
-   answer:'No. STK-VOL-1 is a volume measure — it captures what your hospital performs, not whether eligible patients received MER elsewhere. Zero is expected and acceptable if your hospital does not offer mechanical thrombectomy. Transferring eligible patients to a facility that performs it is appropriate care. Those transfer cases are tracked under STK-OP-1.',
-   source:'TJC Spec Manual v2026B; MIF STK-VOL-1',tags:['STK-VOL-1','zero denominator','MER','volume measure','PI report','transfer out','STK-OP-1']},
-  {id:'n16',measure:'STK-OP',specific:'STK-OP-1',type:'routine',
-   question:'For STK-OP-1, do I include a patient who was admitted to our hospital and then later transferred to another facility?',
-   answer:'No. STK-OP-1 is an outpatient measure. It captures only patients who were not admitted and were transferred directly from your ED to another hospital. Patients who were admitted first and transferred later are excluded.',
-   source:'TJC Spec Manual v2026B; MIF STK-OP-1',tags:['STK-OP-1','outpatient','ED transfer','admitted then transferred','inpatient exclusion','denominator']},
-  {id:'n17',measure:'CSTK',specific:'CSTK-02',type:'routine',
-   question:'Where should 90-day mRS results be documented?',
-   answer:'Ideally in the patient\'s EHR. Because inpatient records are typically closed after 30 days, TJC accepts other data sources for 90-day scores, including outpatient records, logs, and spreadsheets. The score and the date it was obtained must be accessible for abstraction regardless of where they are stored.',
-   source:'TJC Spec Manual v2026B; MIF CSTK-02',tags:['mRS','modified Rankin','documentation','EHR','90-day follow-up','outpatient records','acceptable sources','CSTK-02']},
-  {id:'n18',measure:'CSTK',specific:'CSTK-05',type:'routine',
-   question:'For CSTK-05 Positive Brain Image Date and Time — if multiple imaging reports show hemorrhage within the 36-hour window, which date and time is used?',
-   answer:'Use the earliest date and time at which a symptomatic intracranial hemorrhage was first documented after therapy initiation. If times conflict, still select the earliest. If the time cannot be determined, select UTD.',
-   source:'TJC Spec Manual v2026B; MIF CSTK-05; Data Element: Positive Brain Image Date',tags:['CSTK-05','positive brain image','date time','earliest','multiple reports','discrepant','UTD','abstraction rule']},
-  {id:'n19',measure:'CSTK',specific:'CSTK-09',type:'routine',
-   question:'CSTK-09 is stratified. What is the difference between the two sub-measures?',
-   answer:'One sub-measure captures patients who transferred to your hospital from another facility. The other captures patients who arrived directly. Both sub-measures roll up into the overall CSTK-09 rate, and both measure the median time from hospital arrival to skin puncture.',
-   source:'TJC Spec Manual v2026B; MIF CSTK-09; Data Element: Mode of Arrival',tags:['CSTK-09','stratified','transfer in','direct arrival','mode of arrival','median time']},
-  {id:'n20',measure:'CSTK',specific:'CSTK-09',type:'routine',
-   question:'Does TJC publish a benchmark for CSTK-09 (Arrival to Skin Puncture)?',
-   answer:'TJC does not currently publish an official benchmark for CSTK-09. A commonly referenced performance target is 90 minutes, which aligns with goals used in quality improvement registries. If your hospital needs a reference point for internal goals, 90 minutes is a reasonable starting place while TJC benchmark data develops.',
-   source:'TJC Spec Manual v2026B; MIF CSTK-09',tags:['CSTK-09','benchmark','90 minutes','skin puncture','performance target']},
-];
    question:'Patient woke up with stroke symptoms ("wake-up stroke"). Family states he was "fine when he went to bed around 11 PM." No specific LKW time is documented in the chart by clinical staff. How do we abstract Last Known Well?',
    answer:'"Around 11 PM" may be abstracted as 23:00 if — and only if — that time is documented in the medical record by clinical staff (nurse, physician, or APP). Family-reported times are acceptable when charted. If no time appears in the record, LKW = Unknown and the case excludes from the denominator. A verbal family report that was never charted cannot be used. Best practice: have ED triage nurses document the specific family-reported time and the witness name.',
    source:'TJC Spec Manual v2026B; Data Element: Last Known Well',tags:['LKW','TLKW','wake-up stroke','family','found down']},
@@ -772,26 +593,21 @@ function normTag(raw){
 // ══════════════════════════════════════════════════
 //  RENDER
 // ══════════════════════════════════════════════════
-const STROKE_MEASURES = ['STK','ASR-IP','CSTK','STK-OP','STK-VOL'];
 function filtered(){
   const q=(document.getElementById('srch')?.value||'').toLowerCase();
   return entries.filter(e=>{
-    let mOk;
-    if(actM==='all') mOk=true;
-    else if(actM==='__gray') mOk=e.type==='gray';
-    else if(actM==='__edge') mOk=e.type==='edge';
-    else if(actM==='__topic_stroke') mOk=STROKE_MEASURES.includes(e.measure);
-    else mOk=e.measure===actM;
+    const mOk=actM==='all'||(actM==='__gray'&&e.type==='gray')||(actM==='__edge'&&e.type==='edge')||e.measure===actM;
+    const tOk=actT==='all'||e.type===actT;
     const tagOk=actTags.length===0||actTags.every(t=>(e.tags||[]).includes(t));
     const tx=[e.question,e.answer,e.specific||'',e.source||'',...(e.tags||[])].join(' ').toLowerCase();
-    return mOk&&tagOk&&(!q||tx.includes(q));
+    return mOk&&tOk&&tagOk&&(!q||tx.includes(q));
   });
 }
 const esc=s=>(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 function typeBadge(t){
-  if(t==='edge')return'<span class="badge be">Edge Case</span>';
-  if(t==='gray')return'<span class="badge bg">Gray Area</span>';
-  return'<span class="badge br">Routine</span>';
+  if(t==='edge')return'<span class="badge be">⚡ Edge</span>';
+  if(t==='gray')return'<span class="badge bg">❓ Gray</span>';
+  return'<span class="badge br">✅ Routine</span>';
 }
 function render(){
   const f=filtered();
@@ -806,7 +622,7 @@ function render(){
           <div class="meta">
             <span class="badge bm">${esc(e.measure)}${e.specific?' · '+esc(e.specific):''}</span>
             ${typeBadge(e.type)}
-            ${e.source?`<span class="badge bs">${esc(e.source.split(';')[0].split(',')[0].trim())}</span>`:''}
+            ${e.source?`<span class="badge bs">📎 ${esc(e.source.split(';')[0].split(',')[0].trim())}</span>`:''}
             ${(e.tags||[]).map(t=>`<span class="ktag" onclick="event.stopPropagation();addTagFilter('${esc(t)}')">${esc(t)}</span>`).join('')}
           </div>
           <div class="q-text">${esc(e.question)}</div>
@@ -818,7 +634,7 @@ function render(){
           <div class="qa-src"><span class="sdot"></span>${esc(e.source||'')}${e.date?' · '+e.date:''}</div>
           <div style="display:flex;align-items:center;gap:8px">
             <div class="qa-tags">${(e.tags||[]).map(t=>`<span class="ktag" onclick="addTagFilter('${esc(t)}')">${esc(t)}</span>`).join('')}</div>
-            <button class="del-btn" onclick="deleteEntry('${e.id}')" title="Delete this entry">Delete</button>
+            <button class="del-btn" onclick="deleteEntry('${e.id}')" title="Delete this entry">🗑 Delete</button>
           </div>
         </div>
       </div>
@@ -832,22 +648,17 @@ function deleteEntry(id){
   const preview=e.question.length>80?e.question.slice(0,80)+'…':e.question;
   const pw=prompt(`Enter curator password to delete:\n\n"${preview}"`);
   if(pw===null)return; // cancelled
-  if(pw!==CURATOR_PW){toast('Incorrect password — entry not deleted.');return;}
+  if(pw!==CURATOR_PW){toast('❌ Incorrect password — entry not deleted.');return;}
   if(!confirm(`Are you sure you want to permanently delete this entry?\n\n"${preview}"`))return;
   entries=entries.filter(x=>x.id!==id);
   save();render();
-  toast('Entry deleted.');
+  toast('🗑 Entry deleted.');
 }
 function updCounts(){
-  ['STK','ASR-IP','CSTK','STK-OP','STK-VOL','ED-OP'].forEach(m=>{
-    const el=document.getElementById('cnt-'+m);
-    if(el) el.textContent=entries.filter(e=>e.measure===m).length;
-  });
+  ['STK','ASR-IP','ED-OP'].forEach(m=>{const el=document.getElementById('cnt-'+m);if(el)el.textContent=entries.filter(e=>e.measure===m).length;});
   document.getElementById('cnt-all').textContent=entries.length;
   document.getElementById('cnt-gray').textContent=entries.filter(e=>e.type==='gray').length;
   document.getElementById('cnt-edge').textContent=entries.filter(e=>e.type==='edge').length;
-  const strokeEl=document.getElementById('cnt-stroke');
-  if(strokeEl) strokeEl.textContent=entries.filter(e=>STROKE_MEASURES.includes(e.measure)).length;
 }
 function buildCloud(){
   const cnt={};
@@ -860,32 +671,7 @@ function buildCloud(){
 // ══════════════════════════════════════════════════
 //  FILTERS
 // ══════════════════════════════════════════════════
-function filterM(v,el){
-  actM=v;
-  document.querySelectorAll('[data-m]').forEach(e=>e.classList.remove('on'));
-  document.querySelectorAll('.sb-topic').forEach(e=>e.classList.remove('on'));
-  if(el) el.classList.add('on');
-  render();
-}
-function toggleTopic(topic, el){
-  const sub=document.getElementById('sub-'+topic);
-  const isOpen=sub.classList.contains('open');
-  sub.classList.toggle('open');
-  el.classList.toggle('open');
-  // Also filter to all entries in this topic
-  if(!isOpen){
-    actM='__topic_'+topic;
-    document.querySelectorAll('[data-m]').forEach(e=>e.classList.remove('on'));
-    document.querySelectorAll('.sb-subitem').forEach(e=>e.classList.remove('on'));
-    el.classList.add('on');
-    render();
-  }
-}
-function dismissWelcome(){
-  const w=document.getElementById('welcomeBox');
-  if(w) w.style.display='none';
-  try{localStorage.setItem('qc-welcome-dismissed','1');}catch(e){}
-}
+function filterM(v,el){actM=v;document.querySelectorAll('[data-m]').forEach(e=>e.classList.remove('on'));el.classList.add('on');render();}
 function filterT(v,el){actT=v;document.querySelectorAll('[data-t]').forEach(e=>e.classList.remove('on'));el.classList.add('on');render();}
 function addTagFilter(t){if(!actTags.includes(t))actTags.push(t);renderAtBar();render();}
 function removeTagFilter(t){actTags=actTags.filter(x=>x!==t);renderAtBar();render();}
@@ -1012,7 +798,7 @@ function savePaste(){
   document.getElementById('pasteRaw').value='';
   document.getElementById('pspec').value='';
   document.getElementById('psrc').value='';
-  toast(`Saved with ${tags.length} tag${tags.length===1?'':'s'}.`);
+  toast(`✅ Saved with ${tags.length} tags!`);
 }
 
 // ══════════════════════════════════════════════════
@@ -1042,7 +828,7 @@ function addTagDef(){
     related:document.getElementById('nt-r').value.split(',').map(s=>s.trim()).filter(Boolean)
   });
   save();['nt-n','nt-a','nt-r'].forEach(id=>document.getElementById(id).value='');
-  renderTM();toast(`Tag "${name}" added.`);
+  renderTM();toast(`✅ Tag "${name}" added!`);
 }
 function editTag(i){
   const td=tagDefs[i];
@@ -1052,7 +838,7 @@ function editTag(i){
   tagDefs[i]={name:name.trim()||td.name,
     aliases:aliases.split(',').map(s=>s.trim().toLowerCase()).filter(Boolean),
     related:related.split(',').map(s=>s.trim()).filter(Boolean)};
-  save();renderTM();toast('Tag updated.');
+  save();renderTM();toast('✅ Tag updated!');
 }
 function delTag(i){
   if(!confirm(`Delete tag "${tagDefs[i].name}"?`))return;
@@ -1074,13 +860,13 @@ function exportPDF(){
   <div class="meta">QualityClarity · ${new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})} · ${f.length} entries · TJC v2026B</div></div>
   ${f.map((e,i)=>`<div class="qa">
     <div class="tags"><span class="tag tm">${esc(e.measure)}${e.specific?' · '+esc(e.specific):''}</span>
-    ${e.type==='edge'?'<span class="tag te">Edge Case</span>':e.type==='gray'?'<span class="tag tg">Gray Area</span>':'<span class="tag tr">Routine</span>'}
+    ${e.type==='edge'?'<span class="tag te">⚡ Edge</span>':e.type==='gray'?'<span class="tag tg">❓ Gray</span>':'<span class="tag tr">✅ Routine</span>'}
     ${(e.tags||[]).map(t=>`<span class="kw">${esc(t)}</span>`).join('')}</div>
     <div class="q">Q${i+1}. ${esc(e.question)}</div>
     <div class="a">${esc(e.answer)}</div>
     ${e.source?`<div class="src">Source: ${esc(e.source)}</div>`:''}
   </div>`).join('')}
-  <div class="foot">Educational use only. Always verify against the official TJC/CMS Specifications Manual. AbstractionDeskQA does not constitute compliance advice.</div>
+  <div class="foot">⚠️ Educational use only. Always verify against the official TJC/CMS Specifications Manual. QualityClarity does not constitute compliance advice.</div>
   </body></html>`);
   w.document.close();setTimeout(()=>w.print(),700);
 }
@@ -1093,12 +879,6 @@ function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t
 // ══════════════════════════════════════════════════
 //  INIT
 // ══════════════════════════════════════════════════
-// Check if welcome was previously dismissed
-try{if(localStorage.getItem('qc-welcome-dismissed')==='1'){const w=document.getElementById('welcomeBox');if(w)w.style.display='none';}}catch(e){}
-// Open stroke topic by default
-const strokeTopic=document.getElementById('topic-stroke');
-const strokeSub=document.getElementById('sub-stroke');
-if(strokeTopic&&strokeSub){strokeTopic.classList.add('open');strokeSub.classList.add('open');}
 load();render();
 </script>
 </body>
