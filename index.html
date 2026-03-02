@@ -3,11 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="AbstractionDeskQA — A free, growing clinical reference tool for core measure abstractors. Search real abstraction scenarios, get authoritative guidance.">
+<meta name="description" content="AbstractionDeskQA — A free clinical reference tool for core measure abstractors. Search real abstraction scenarios, get authoritative guidance.">
 <title>AbstractionDeskQA — Core Measure Reference for Abstractors</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
+  /* ── RESET & BASE ── */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
     --ink:       #0f1923;
@@ -19,45 +20,42 @@
     --teal:      #0a7c7a;
     --teal2:     #0da8a5;
     --teal-pale: #e4f5f4;
-    --amber:     #b86e00;
-    --amber-bg:  #fff8ec;
     --border:    #dbe2ec;
-    --heading:   'DM Sans', sans-serif;
-    --body:      'Atkinson Hyperlegible', sans-serif;
+    --accent:    #e8f0fe;
+    --serif:     'Syne', sans-serif;
+    --body:      'Source Sans 3', sans-serif;
     --radius:    10px;
     --shadow:    0 4px 24px rgba(13,34,64,.09);
     --shadow-sm: 0 2px 10px rgba(13,34,64,.06);
-    --max:       1040px;
   }
   html { scroll-behavior: smooth; }
   body {
     font-family: var(--body);
     background: var(--canvas);
     color: var(--ink);
-    line-height: 1.75;
-    font-size: 17px;
+    line-height: 1.6;
+    font-size: 16px;
     -webkit-font-smoothing: antialiased;
   }
   img { max-width: 100%; display: block; }
-  a { color: var(--teal); }
+  a { color: var(--teal); text-decoration: none; }
   a:hover { text-decoration: underline; }
-  a:focus-visible, button:focus-visible, input:focus-visible,
-  textarea:focus-visible, select:focus-visible {
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
     outline: 3px solid var(--teal2);
     outline-offset: 3px;
     border-radius: 4px;
   }
 
-  /* SKIP LINK */
+  /* ── SKIP LINK (ADA) ── */
   .skip-link {
-    position: absolute; top: -60px; left: 16px; z-index: 999;
+    position: absolute; top: -50px; left: 16px; z-index: 999;
     background: var(--navy); color: white; padding: 10px 18px;
-    border-radius: var(--radius); font-weight: 700; font-size: 15px;
-    transition: top .2s; text-decoration: none;
+    border-radius: var(--radius); font-weight: 600; font-size: 14px;
+    transition: top .2s;
   }
   .skip-link:focus { top: 16px; }
 
-  /* NAV */
+  /* ── NAV ── */
   .nav {
     background: var(--white);
     border-bottom: 1px solid var(--border);
@@ -65,320 +63,261 @@
     box-shadow: var(--shadow-sm);
   }
   .nav-inner {
-    max-width: var(--max); margin: 0 auto; padding: 0 24px;
+    max-width: 1080px; margin: 0 auto;
+    padding: 0 24px;
     display: flex; align-items: center; justify-content: space-between;
-    height: 62px;
+    height: 60px;
   }
   .nav-brand {
-    font-family: var(--heading);
-    font-size: 20px; font-weight: 700;
+    font-family: var(--serif);
+    font-size: 19px; font-weight: 800;
     color: var(--navy); letter-spacing: -.3px;
-    display: flex; align-items: center; gap: 7px;
-    text-decoration: none;
+    display: flex; align-items: center; gap: 8px;
   }
-  .nav-brand:hover { text-decoration: none; }
-  .qa-badge {
+  .nav-brand .qa-badge {
     background: var(--teal); color: white;
     font-size: 10px; font-weight: 700; padding: 2px 7px;
-    border-radius: 4px; letter-spacing: .6px; font-family: var(--body);
+    border-radius: 4px; letter-spacing: .5px; font-family: var(--body);
   }
-  .nav-links { display: flex; gap: 4px; align-items: center; }
+  .nav-links { display: flex; gap: 6px; align-items: center; }
   .nav-link {
-    font-family: var(--body); font-size: 15px; font-weight: 400;
-    color: var(--ink-mid); padding: 7px 14px; border-radius: 6px;
-    transition: all .15s; border: none; background: none;
-    cursor: pointer; text-decoration: none;
+    font-size: 14px; font-weight: 500; color: var(--ink-mid);
+    padding: 6px 14px; border-radius: 6px; transition: all .15s;
+    border: none; background: none; cursor: pointer; font-family: var(--body);
   }
   .nav-link:hover { background: var(--teal-pale); color: var(--teal); text-decoration: none; }
   .nav-cta {
     background: var(--teal); color: white;
-    font-family: var(--body); font-size: 15px; font-weight: 700;
-    padding: 9px 20px; border-radius: 7px; border: none;
-    cursor: pointer; transition: all .15s; text-decoration: none;
-    white-space: nowrap;
+    font-size: 14px; font-weight: 600; padding: 8px 18px;
+    border-radius: 7px; border: none; cursor: pointer; font-family: var(--body);
+    transition: all .15s; white-space: nowrap;
   }
   .nav-cta:hover { background: var(--teal2); text-decoration: none; color: white; }
 
-  /* WIP BANNER */
-  .wip-banner {
-    background: var(--amber-bg);
-    border-bottom: 2px solid #f0c060;
-    padding: 11px 24px;
-  }
-  .wip-inner {
-    max-width: var(--max); margin: 0 auto;
-    display: flex; align-items: flex-start; gap: 10px;
-    font-size: 15px; color: var(--amber); line-height: 1.6;
-  }
-  .wip-icon { font-size: 18px; flex-shrink: 0; margin-top: 2px; }
-  .wip-inner strong { font-weight: 700; }
-
-  /* HERO */
+  /* ── HERO ── */
   .hero {
     background: var(--navy);
-    padding: 72px 24px 64px;
-    position: relative; overflow: hidden;
+    padding: 80px 24px 72px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
   }
   .hero::before {
     content: '';
     position: absolute; inset: 0;
-    background: radial-gradient(ellipse 70% 55% at 30% 0%, rgba(10,124,122,.25) 0%, transparent 65%);
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(10,124,122,.28) 0%, transparent 70%);
     pointer-events: none;
   }
-  .hero-inner { max-width: var(--max); margin: 0 auto; position: relative; }
+  .hero-inner { max-width: 680px; margin: 0 auto; position: relative; }
   .hero-eyebrow {
     display: inline-flex; align-items: center; gap: 7px;
-    background: rgba(13,168,165,.14); border: 1px solid rgba(13,168,165,.3);
-    color: var(--teal2); font-size: 13px; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 1px;
-    padding: 5px 14px; border-radius: 20px; margin-bottom: 22px;
+    background: rgba(13,168,165,.15); border: 1px solid rgba(13,168,165,.3);
+    color: var(--teal2); font-size: 12px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1.2px;
+    padding: 5px 14px; border-radius: 20px; margin-bottom: 24px;
   }
-  .hero-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--teal2); animation: pulse 2.2s infinite; }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.35} }
+  .hero-eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal2); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:.4;} }
   .hero h1 {
-    font-family: var(--heading);
-    font-size: clamp(34px, 5.5vw, 56px);
-    font-weight: 700; color: white;
-    line-height: 1.12; letter-spacing: -.4px;
+    font-family: var(--serif);
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 800; color: white;
+    line-height: 1.15; letter-spacing: -.5px;
     margin-bottom: 20px;
-    max-width: 700px;
   }
   .hero h1 em { color: var(--teal2); font-style: normal; }
   .hero-sub {
-    font-size: clamp(16px, 2vw, 19px);
-    color: rgba(255,255,255,.72);
-    max-width: 560px;
-    line-height: 1.7; font-weight: 400;
-    margin-bottom: 36px;
+    font-size: clamp(15px, 2vw, 18px);
+    color: rgba(255,255,255,.7);
+    max-width: 540px; margin: 0 auto 36px;
+    line-height: 1.65;
+    font-weight: 300;
   }
-  .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+  .hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
   .btn-primary {
     background: var(--teal); color: white;
-    font-family: var(--body); font-size: 16px; font-weight: 700;
-    padding: 13px 28px; border-radius: 8px; border: none;
-    cursor: pointer; transition: all .15s;
-    display: inline-flex; align-items: center; gap: 8px;
-    text-decoration: none;
+    font-family: var(--body); font-size: 15px; font-weight: 600;
+    padding: 13px 28px; border-radius: 8px; border: none; cursor: pointer;
+    transition: all .15s; display: inline-flex; align-items: center; gap: 8px;
   }
-  .btn-primary:hover { background: var(--teal2); text-decoration: none; color: white; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(10,124,122,.32); }
+  .btn-primary:hover { background: var(--teal2); text-decoration: none; color: white; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(10,124,122,.35); }
   .btn-secondary {
     background: rgba(255,255,255,.1); color: white;
-    font-family: var(--body); font-size: 16px; font-weight: 400;
+    font-family: var(--body); font-size: 15px; font-weight: 500;
     padding: 13px 28px; border-radius: 8px;
-    border: 1px solid rgba(255,255,255,.22); cursor: pointer;
+    border: 1px solid rgba(255,255,255,.2); cursor: pointer;
     transition: all .15s; display: inline-flex; align-items: center; gap: 8px;
-    text-decoration: none;
   }
   .btn-secondary:hover { background: rgba(255,255,255,.18); text-decoration: none; color: white; }
 
-  /* STATS */
-  .stats { background: var(--white); border-bottom: 1px solid var(--border); padding: 18px 24px; }
+  /* ── STATS STRIP ── */
+  .stats {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 20px 24px;
+  }
   .stats-inner {
-    max-width: var(--max); margin: 0 auto;
-    display: flex; gap: 0; flex-wrap: wrap;
+    max-width: 1080px; margin: 0 auto;
+    display: flex; gap: 0; justify-content: center; flex-wrap: wrap;
   }
   .stat {
     display: flex; align-items: center; gap: 10px;
-    padding: 8px 28px 8px 0; margin-right: 28px;
+    padding: 8px 32px;
     border-right: 1px solid var(--border);
   }
-  .stat:last-child { border-right: none; margin-right: 0; }
-  .stat-icon { font-size: 19px; }
-  .stat-text { font-size: 14px; color: var(--ink-mid); font-weight: 400; line-height: 1.4; }
+  .stat:last-child { border-right: none; }
+  .stat-icon { font-size: 20px; }
+  .stat-text { font-size: 13px; color: var(--ink-mid); font-weight: 500; }
   .stat-text strong { color: var(--navy); font-weight: 700; }
 
-  /* SECTIONS */
-  .section { padding: 68px 24px; }
+  /* ── SECTION SHARED ── */
+  .section { padding: 72px 24px; }
   .section-alt { background: var(--white); }
-  .container { max-width: var(--max); margin: 0 auto; }
+  .container { max-width: 1080px; margin: 0 auto; }
   .section-label {
-    font-size: 11px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 1.6px; color: var(--teal); margin-bottom: 10px;
+    font-size: 11px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 1.5px; color: var(--teal); margin-bottom: 10px;
     display: flex; align-items: center; gap: 8px;
   }
-  .section-label::before { content: ''; display: block; width: 18px; height: 2px; background: var(--teal); border-radius: 1px; }
+  .section-label::before { content: ''; display: block; width: 20px; height: 2px; background: var(--teal); border-radius: 1px; }
   .section-title {
-    font-family: var(--heading);
-    font-size: clamp(22px, 3.2vw, 34px);
+    font-family: var(--serif); font-size: clamp(24px, 3.5vw, 36px);
     font-weight: 700; color: var(--navy); line-height: 1.2;
-    letter-spacing: -.2px; margin-bottom: 12px;
-    max-width: 640px;
+    letter-spacing: -.3px; margin-bottom: 14px;
   }
   .section-sub {
-    font-size: 16px; color: var(--ink-mid);
-    max-width: 580px; line-height: 1.75;
-    margin-bottom: 44px; font-weight: 400;
+    font-size: 16px; color: var(--ink-mid); max-width: 560px;
+    line-height: 1.7; margin-bottom: 48px; font-weight: 300;
   }
 
-  /* HOW IT WORKS */
+  /* ── HOW IT WORKS ── */
   .how-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
   }
   .how-card {
     background: var(--canvas); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 26px 22px;
+    border-radius: var(--radius); padding: 28px 24px;
     transition: box-shadow .15s;
   }
   .how-card:hover { box-shadow: var(--shadow); }
-  .how-step {
-    display: inline-flex; align-items: center; gap: 7px;
-    background: var(--teal-pale); color: var(--teal);
-    font-size: 12px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: .8px; padding: 3px 10px; border-radius: 5px;
-    margin-bottom: 12px; font-family: var(--body);
+  .how-num {
+    font-family: var(--serif); font-size: 36px; font-weight: 800;
+    color: var(--teal-pale); line-height: 1; margin-bottom: 12px;
+    -webkit-text-stroke: 2px var(--teal);
   }
-  .how-card h3 {
-    font-family: var(--heading); font-size: 17px;
-    font-weight: 700; color: var(--navy); margin-bottom: 8px;
-    line-height: 1.3;
-  }
-  .how-card p { font-size: 15px; color: var(--ink-mid); line-height: 1.75; }
+  .how-card h3 { font-family: var(--serif); font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+  .how-card p { font-size: 14px; color: var(--ink-mid); line-height: 1.65; }
 
-  /* FEATURES */
+  /* ── FEATURES ── */
   .features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-    gap: 18px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
   }
   .feat {
     background: var(--canvas); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 22px;
+    border-radius: var(--radius); padding: 24px;
     display: flex; gap: 16px; align-items: flex-start;
     transition: box-shadow .15s;
   }
   .feat:hover { box-shadow: var(--shadow); }
   .feat-icon {
-    width: 44px; height: 44px; border-radius: 9px;
+    width: 42px; height: 42px; border-radius: 9px;
     background: var(--teal-pale); display: flex; align-items: center;
-    justify-content: center; font-size: 21px; flex-shrink: 0;
+    justify-content: center; font-size: 20px; flex-shrink: 0;
   }
-  .feat-body h3 { font-family: var(--heading); font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 5px; line-height: 1.3; }
-  .feat-body p { font-size: 14px; color: var(--ink-mid); line-height: 1.75; }
+  .feat-body h3 { font-family: var(--serif); font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 5px; }
+  .feat-body p { font-size: 13.5px; color: var(--ink-mid); line-height: 1.6; }
 
-  /* CONTRIBUTE */
-  .contrib-box {
-    background: var(--teal-pale);
-    border: 1.5px solid rgba(10,124,122,.22);
-    border-radius: 12px; padding: 36px 40px;
-    display: flex; gap: 32px; align-items: flex-start; flex-wrap: wrap;
+  /* ── ABOUT ── */
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center;
   }
-  .contrib-icon { font-size: 40px; flex-shrink: 0; }
-  .contrib-body { flex: 1; min-width: 260px; }
-  .contrib-body h3 { font-family: var(--heading); font-size: 21px; font-weight: 700; color: var(--navy); margin-bottom: 10px; line-height: 1.3; }
-  .contrib-body p { font-size: 15px; color: var(--ink-mid); line-height: 1.75; margin-bottom: 14px; }
-  .contrib-list { list-style: none; padding: 0; margin-bottom: 16px; }
-  .contrib-list li {
-    font-size: 15px; color: var(--ink-mid); padding: 5px 0;
-    display: flex; align-items: flex-start; gap: 9px; line-height: 1.6;
+  @media(max-width:700px){ .about-grid{grid-template-columns:1fr;gap:32px;} }
+  .about-img-wrap {
+    background: var(--teal-pale); border-radius: 12px;
+    aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+    font-size: 80px;
   }
-  .contrib-list li::before { content: '→'; color: var(--teal); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+  .about-text .section-sub { margin-bottom: 20px; }
+  .about-detail {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14px; color: var(--ink-mid); margin-bottom: 10px;
+  }
+  .about-detail::before { content: '✓'; color: var(--teal); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
 
-  /* FEEDBACK FORM */
+  /* ── FEEDBACK FORM ── */
   .form-wrap {
     background: var(--white); border: 1px solid var(--border);
-    border-radius: 12px; padding: 38px; max-width: 580px;
+    border-radius: 12px; padding: 40px; max-width: 560px; margin: 0 auto;
     box-shadow: var(--shadow-sm);
   }
   .form-group { margin-bottom: 18px; }
   .form-label {
-    display: block; font-size: 14px; font-weight: 700;
+    display: block; font-size: 13px; font-weight: 600;
     color: var(--ink-mid); margin-bottom: 6px;
     text-transform: uppercase; letter-spacing: .5px;
   }
   .form-input, .form-textarea, .form-select {
     width: 100%; padding: 11px 14px;
     border: 1.5px solid var(--border); border-radius: 7px;
-    font-family: var(--body); font-size: 15px; color: var(--ink);
+    font-family: var(--body); font-size: 14px; color: var(--ink);
     background: var(--canvas); outline: none; transition: border-color .15s;
-    line-height: 1.5;
   }
-  .form-input:focus, .form-textarea:focus, .form-select:focus { border-color: var(--teal); background: white; }
+  .form-input:focus, .form-textarea:focus { border-color: var(--teal); background: white; }
   .form-textarea { min-height: 110px; resize: vertical; }
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  @media(max-width:520px){ .form-row { grid-template-columns: 1fr; } }
+  @media(max-width:500px){ .form-row{grid-template-columns:1fr;} }
   .form-submit {
-    width: 100%; padding: 14px;
+    width: 100%; padding: 13px;
     background: var(--teal); color: white;
-    font-family: var(--body); font-size: 16px; font-weight: 700;
+    font-family: var(--body); font-size: 15px; font-weight: 600;
     border: none; border-radius: 8px; cursor: pointer; transition: all .15s;
   }
   .form-submit:hover { background: var(--teal2); transform: translateY(-1px); }
-  .form-note { font-size: 13px; color: var(--ink-soft); margin-top: 10px; }
+  .form-note { font-size: 12px; color: var(--ink-soft); margin-top: 10px; text-align: center; }
   .form-success {
-    display: none; padding: 20px 24px;
+    display: none; text-align: center; padding: 24px;
     background: var(--teal-pale); border-radius: 8px; margin-top: 16px;
-    font-size: 16px; color: var(--teal); font-weight: 700; line-height: 1.6;
+    font-size: 15px; color: var(--teal); font-weight: 600;
   }
 
-  /* DISCLAIMER */
+  /* ── DISCLAIMER ── */
   .disclaimer {
-    background: #eef2f8; border-top: 1px solid var(--border);
-    padding: 26px 24px;
-  }
-  .disclaimer-inner {
-    max-width: var(--max); margin: 0 auto;
-    font-size: 13px; color: var(--ink-soft); line-height: 1.75;
-    display: flex; gap: 12px; align-items: flex-start;
-  }
-  .disclaimer-icon { font-size: 16px; flex-shrink: 0; margin-top: 2px; }
-
-  /* SUPPORT */
-  .support {
-    background: var(--navy);
-    padding: 44px 24px;
-    border-top: 1px solid rgba(255,255,255,.06);
-  }
-  .support-inner {
-    max-width: var(--max); margin: 0 auto;
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 24px; flex-wrap: wrap;
-  }
-  .support-text h3 {
-    font-family: var(--heading); font-size: 19px; font-weight: 700;
-    color: white; margin-bottom: 6px; line-height: 1.3;
-  }
-  .support-text p { font-size: 15px; color: rgba(255,255,255,.6); line-height: 1.7; max-width: 460px; }
-  .btn-coffee {
-    background: #FFDD00; color: #1a1a1a;
-    font-family: var(--body); font-size: 15px; font-weight: 700;
-    padding: 13px 26px; border-radius: 8px; border: none;
-    cursor: pointer; transition: all .15s; white-space: nowrap;
-    display: inline-flex; align-items: center; gap: 8px;
-    text-decoration: none; flex-shrink: 0;
-  }
-  .btn-coffee:hover { background: #ffe933; text-decoration: none; color: #1a1a1a; transform: translateY(-1px); box-shadow: 0 4px 14px rgba(255,221,0,.35); }
-
-  /* FOOTER */
-  footer {
-    background: #07131f;
-    color: rgba(255,255,255,.45);
+    background: #f0f4fa; border-top: 1px solid var(--border);
     padding: 28px 24px;
   }
-  .footer-inner {
-    max-width: var(--max); margin: 0 auto;
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 16px; flex-wrap: wrap;
+  .disclaimer-inner {
+    max-width: 1080px; margin: 0 auto;
+    font-size: 12px; color: var(--ink-soft); line-height: 1.7;
+    display: flex; gap: 12px; align-items: flex-start;
   }
-  .footer-brand { font-family: var(--heading); font-size: 16px; font-weight: 700; color: rgba(255,255,255,.7); margin-bottom: 4px; }
-  footer p { font-size: 13px; line-height: 1.65; }
-  footer a { color: var(--teal2); text-decoration: none; }
-  footer a:hover { text-decoration: underline; }
-  .footer-links { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; }
+  .disclaimer-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
 
-  /* RESPONSIVE */
-  @media(max-width:640px){
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy); color: rgba(255,255,255,.6);
+    padding: 32px 24px; text-align: center;
+  }
+  .footer-inner { max-width: 1080px; margin: 0 auto; }
+  .footer-brand {
+    font-family: var(--serif); font-size: 17px; font-weight: 800;
+    color: white; margin-bottom: 8px;
+  }
+  footer p { font-size: 13px; line-height: 1.7; }
+  footer a { color: var(--teal2); }
+
+  /* ── RESPONSIVE NAV ── */
+  @media(max-width:600px){
     .nav-links .nav-link { display: none; }
-    .stat { border-right: none; padding-right: 0; margin-right: 0; width: 100%; }
-    .contrib-box { padding: 24px 20px; }
-    .support-inner { flex-direction: column; }
-    .footer-inner { flex-direction: column; gap: 12px; }
-    .form-wrap { padding: 24px 20px; }
+    .stat { padding: 8px 16px; }
   }
 
-  /* SCROLL FADE */
-  .fade-up { opacity: 0; transform: translateY(20px); transition: opacity .45s ease, transform .45s ease; }
+  /* ── SCROLL ANIMATIONS ── */
+  .fade-up {
+    opacity: 0; transform: translateY(22px);
+    transition: opacity .5s ease, transform .5s ease;
+  }
   .fade-up.visible { opacity: 1; transform: translateY(0); }
 </style>
 </head>
@@ -394,57 +333,46 @@
     </a>
     <div class="nav-links">
       <a href="#how" class="nav-link">How It Works</a>
-      <a href="#contribute" class="nav-link">Contribute</a>
+      <a href="#about" class="nav-link">About</a>
       <a href="#feedback" class="nav-link">Feedback</a>
       <a href="lookup.html" class="nav-cta" aria-label="Open the Q&A lookup tool">Open Q&amp;A Tool →</a>
     </div>
   </div>
 </nav>
 
-<!-- WIP BANNER -->
-<div class="wip-banner" role="note" aria-label="Work in progress notice">
-  <div class="wip-inner">
-    <span class="wip-icon" aria-hidden="true">🚧</span>
-    <span>
-      <strong>This tool is a work in progress.</strong>
-      New Q&amp;As, measure sets, and features are added regularly. Content may be incomplete or updated as specifications change.
-      Found something incorrect? <a href="#feedback" style="color:var(--amber);font-weight:700;text-decoration:underline">Let us know →</a>
-    </span>
-  </div>
-</div>
-
 <main id="main">
 
   <!-- HERO -->
   <section class="hero" aria-labelledby="hero-heading">
     <div class="hero-inner">
-      <div class="hero-eyebrow">
-        <span class="hero-dot" aria-hidden="true"></span>
+      <div class="hero-eyebrow" aria-hidden="false">
+        <span class="hero-eyebrow-dot" aria-hidden="true"></span>
         Free Clinical Reference Tool
       </div>
       <h1 id="hero-heading">
-        Abstraction questions,<br><em>answered clearly.</em>
+        Abstraction questions,<br>
+        <em>answered clearly.</em>
       </h1>
       <p class="hero-sub">
-        A searchable reference for core measure abstractors. Real scenarios, plain-language guidance, built by someone who does this work — and growing every week.
+        A searchable reference for core measure abstractors. Real scenarios, authoritative guidance, plain language — built by someone who does this work.
       </p>
       <div class="hero-btns">
         <a href="lookup.html" class="btn-primary" aria-label="Open the Q&A lookup tool">
           <span aria-hidden="true">🔍</span> Open the Q&amp;A Tool
         </a>
-        <a href="#how" class="btn-secondary" aria-label="Learn how this tool works">
-          How It Works <span aria-hidden="true">↓</span>
+        <a href="#how" class="btn-secondary" aria-label="Learn how AbstractionDeskQA works">
+          <span aria-hidden="true">↓</span> How It Works
         </a>
       </div>
     </div>
   </section>
 
-  <!-- STATS -->
+  <!-- STATS STRIP -->
   <div class="stats" role="complementary" aria-label="Tool highlights">
     <div class="stats-inner">
       <div class="stat">
         <span class="stat-icon" aria-hidden="true">📋</span>
-        <span class="stat-text"><strong>Stroke &amp; ED Throughput</strong> — more measures coming</span>
+        <span class="stat-text"><strong>Stroke &amp; ED Throughput</strong> measures covered</span>
       </div>
       <div class="stat">
         <span class="stat-icon" aria-hidden="true">🏷</span>
@@ -452,7 +380,7 @@
       </div>
       <div class="stat">
         <span class="stat-icon" aria-hidden="true">✅</span>
-        <span class="stat-text"><strong>Always free</strong> — no login, no signup required</span>
+        <span class="stat-text"><strong>Free</strong> — no login, no signup</span>
       </div>
       <div class="stat">
         <span class="stat-icon" aria-hidden="true">📖</span>
@@ -465,28 +393,28 @@
   <section class="section" id="how" aria-labelledby="how-heading">
     <div class="container">
       <div class="section-label" aria-hidden="true">How It Works</div>
-      <h2 class="section-title" id="how-heading">Search the way you actually think</h2>
-      <p class="section-sub">No measure codes required. Type what you see in the chart and get a plain-language answer.</p>
+      <h2 class="section-title" id="how-heading">From confusion to clarity in seconds</h2>
+      <p class="section-sub">No measure codes required. Search the way you actually think when you're staring at a chart.</p>
       <div class="how-grid">
         <div class="how-card fade-up">
-          <div class="how-step" aria-label="Step one">Search</div>
+          <div class="how-num" aria-hidden="true">01</div>
           <h3>Type what you see</h3>
-          <p>Use chart language, abbreviations, or plain description — LKW, "woke up," "patient eloped," TNK, comfort measures. The tool finds it.</p>
+          <p>Search by chart language, abbreviations, or plain description — LKW, "woke up," "patient eloped," TNK, comfort measures. The tool finds it.</p>
         </div>
         <div class="how-card fade-up" style="transition-delay:.1s">
-          <div class="how-step" aria-label="Step two">Filter</div>
+          <div class="how-num" aria-hidden="true">02</div>
           <h3>Browse by keyword tag</h3>
           <p>Every Q&amp;A is tagged with the exact terms abstractors use. Click any tag to instantly filter — no searching required.</p>
         </div>
         <div class="how-card fade-up" style="transition-delay:.2s">
-          <div class="how-step" aria-label="Step three">Read</div>
+          <div class="how-num" aria-hidden="true">03</div>
           <h3>Get a clear answer</h3>
-          <p>Plain-language guidance with the spec rationale behind it. Know not just what to abstract, but why — so you can explain it confidently.</p>
+          <p>Plain-language guidance with the spec rationale behind it. Know not just what to abstract, but why — so you can explain it to anyone.</p>
         </div>
         <div class="how-card fade-up" style="transition-delay:.3s">
-          <div class="how-step" aria-label="Step four">Flag</div>
-          <h3>Know the gray areas</h3>
-          <p>Scenarios where even experienced abstractors disagree are clearly marked ❓ — so you know when to escalate vs. when the answer is settled.</p>
+          <div class="how-num" aria-hidden="true">04</div>
+          <h3>Flag gray areas</h3>
+          <p>Common inter-rater disagreements are marked ❓ Gray Area — the scenarios where even experienced abstractors get different answers.</p>
         </div>
       </div>
     </div>
@@ -500,52 +428,71 @@
       <p class="section-sub">Every design decision was made with real abstraction workflows in mind.</p>
       <div class="features-grid">
         <div class="feat fade-up">
-          <div class="feat-icon" role="img" aria-label="Search">🔍</div>
-          <div class="feat-body"><h3>Full-text search</h3><p>Search across questions, answers, data element names, tags, and sources all at once.</p></div>
+          <div class="feat-icon" role="img" aria-label="Search icon">🔍</div>
+          <div class="feat-body">
+            <h3>Full-text search</h3>
+            <p>Search across questions, answers, data element names, tags, and sources all at once.</p>
+          </div>
         </div>
         <div class="feat fade-up" style="transition-delay:.07s">
-          <div class="feat-icon" role="img" aria-label="Tag">🏷</div>
-          <div class="feat-body"><h3>Spec-grounded tags</h3><p>Tags are built from TJC inclusion/exclusion language — LKW, TLKW, TNK, CMO, PTA, AMA, and more.</p></div>
+          <div class="feat-icon" role="img" aria-label="Tag icon">🏷</div>
+          <div class="feat-body">
+            <h3>Spec-grounded tags</h3>
+            <p>Tags are built from TJC inclusion/exclusion language — LKW, TLKW, DLKW, TNK, CMO, PTA, AMA, and more.</p>
+          </div>
         </div>
         <div class="feat fade-up" style="transition-delay:.14s">
-          <div class="feat-icon" role="img" aria-label="Edge case warning">⚡</div>
-          <div class="feat-body"><h3>Edge cases flagged</h3><p>Common traps — same-system transfers, EMS antibiotics, wake-up strokes — are clearly marked and explained.</p></div>
+          <div class="feat-icon" role="img" aria-label="Warning icon">⚡</div>
+          <div class="feat-body">
+            <h3>Edge cases flagged</h3>
+            <p>Common traps — same-system transfers, EMS antibiotics, wake-up strokes — are clearly marked and explained.</p>
+          </div>
         </div>
         <div class="feat fade-up" style="transition-delay:.21s">
-          <div class="feat-icon" role="img" aria-label="Gray area">❓</div>
-          <div class="feat-body"><h3>Gray area guidance</h3><p>Scenarios where the spec is genuinely ambiguous are labeled — so you know when to escalate vs. when the answer is clear.</p></div>
+          <div class="feat-icon" role="img" aria-label="Question mark icon">❓</div>
+          <div class="feat-body">
+            <h3>Gray area guidance</h3>
+            <p>Scenarios where the spec is genuinely ambiguous are labeled — so you know when to escalate vs. when the answer is clear.</p>
+          </div>
         </div>
         <div class="feat fade-up" style="transition-delay:.28s">
-          <div class="feat-icon" role="img" aria-label="PDF export">📄</div>
-          <div class="feat-body"><h3>PDF export</h3><p>Print or save any filtered view as a clean reference PDF for training, desk guides, or team meetings.</p></div>
+          <div class="feat-icon" role="img" aria-label="Document icon">📄</div>
+          <div class="feat-body">
+            <h3>PDF export</h3>
+            <p>Print or save any filtered view as a clean reference PDF for training, desk guides, or team meetings.</p>
+          </div>
         </div>
         <div class="feat fade-up" style="transition-delay:.35s">
-          <div class="feat-icon" role="img" aria-label="Always free">✅</div>
-          <div class="feat-body"><h3>Always free to use</h3><p>No account, no login, no paywall on the lookup tool. Open it from any device, any time.</p></div>
+          <div class="feat-icon" role="img" aria-label="Checkmark icon">✅</div>
+          <div class="feat-body">
+            <h3>Always free to use</h3>
+            <p>No account, no login, no paywall on the lookup tool. Open it from any device, any time.</p>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- CONTRIBUTE -->
-  <section class="section" id="contribute" aria-labelledby="contrib-heading">
+  <!-- ABOUT -->
+  <section class="section" id="about" aria-labelledby="about-heading">
     <div class="container">
-      <div class="section-label" aria-hidden="true">Contribute</div>
-      <h2 class="section-title" id="contrib-heading">This tool grows because of people like you</h2>
-      <p class="section-sub" style="margin-bottom:32px">AbstractionDeskQA is a living reference — not a finished product. Subject matter experts are a core part of what makes it accurate and useful.</p>
-      <div class="contrib-box fade-up">
-        <div class="contrib-icon" aria-hidden="true">🤝</div>
-        <div class="contrib-body">
-          <h3>Nurses, abstractors, quality managers, and educators are welcome to contribute</h3>
-          <p>If you work with core measures — in any capacity — your knowledge matters here. Use the feedback form below to send anything that could improve this tool:</p>
-          <ul class="contrib-list" aria-label="Ways to contribute">
-            <li>A scenario or question you couldn't find in the tool</li>
-            <li>A tip or nuance from your own abstraction experience</li>
-            <li>An answer you believe is incorrect or outdated</li>
-            <li>A gray area your team has debated — with your reasoning</li>
-            <li>Feedback on clarity — if something was confusing, that matters too</li>
-          </ul>
-          <p style="font-size:14px;color:var(--ink-soft)">All contributions are reviewed before being added. Your name and role will never be published without your permission.</p>
+      <div class="about-grid">
+        <div class="about-img-wrap" role="img" aria-label="Illustration representing a quality analyst nurse working remotely">
+          🩺
+        </div>
+        <div class="about-text">
+          <div class="section-label" aria-hidden="true">About</div>
+          <h2 class="section-title" id="about-heading">Made by an abstractor, for abstractors</h2>
+          <p class="section-sub">
+            I'm a registered nurse working remotely in healthcare quality — specifically in core measure abstraction and reporting. I built AbstractionDeskQA because the questions my team and I wrestled with every day deserved better answers than digging through spec manuals alone.
+          </p>
+          <div class="about-detail">Over a decade of clinical and quality experience in acute care settings</div>
+          <div class="about-detail">Trained in TJC core measure abstraction across stroke, ED throughput, sepsis, and perinatal measures</div>
+          <div class="about-detail">Built this tool to support new abstractors and reduce variability across teams</div>
+          <div class="about-detail">All guidance is based on current TJC specifications — and I note clearly when something is a gray area</div>
+          <p style="font-size:13px;color:var(--ink-soft);margin-top:18px;font-style:italic">
+            <!-- Placeholder — replace with your own bio before going public -->
+          </p>
         </div>
       </div>
     </div>
@@ -554,52 +501,46 @@
   <!-- FEEDBACK -->
   <section class="section section-alt" id="feedback" aria-labelledby="feedback-heading">
     <div class="container">
-      <div class="section-label" aria-hidden="true">Feedback &amp; Contributions</div>
-      <h2 class="section-title" id="feedback-heading">Tell us what you think — or send a contribution</h2>
-      <p class="section-sub" style="margin-bottom:36px">
-        Is a scenario missing? Did an answer help you? Found an error? Want to contribute a tip or scenario?
-        This form is for all of it.
-      </p>
+      <div style="text-align:center;margin-bottom:40px">
+        <div class="section-label" style="justify-content:center" aria-hidden="true">Feedback</div>
+        <h2 class="section-title" id="feedback-heading">Tell us what you think</h2>
+        <p class="section-sub" style="margin:0 auto">
+          Is a scenario missing? Did an answer help you? Did something not make sense?
+          Your feedback makes this tool better for everyone.
+        </p>
+      </div>
       <div class="form-wrap">
-        <form id="feedbackForm" novalidate aria-label="Feedback and contribution form">
+        <form id="feedbackForm" novalidate aria-label="Feedback submission form">
           <div class="form-row">
             <div class="form-group">
-              <label class="form-label" for="fb-name">Your Name <span style="font-weight:400;text-transform:none;font-size:13px">(optional)</span></label>
+              <label class="form-label" for="fb-name">Your Name</label>
               <input class="form-input" type="text" id="fb-name" name="name" placeholder="Optional" autocomplete="name"/>
             </div>
             <div class="form-group">
-              <label class="form-label" for="fb-role">Your Role <span style="font-weight:400;text-transform:none;font-size:13px">(optional)</span></label>
-              <input class="form-input" type="text" id="fb-role" name="role" placeholder="e.g. Abstractor, Quality RN, Educator"/>
+              <label class="form-label" for="fb-role">Your Role <span aria-hidden="true">(optional)</span></label>
+              <input class="form-input" type="text" id="fb-role" name="role" placeholder="e.g. Abstractor, Quality Manager"/>
             </div>
           </div>
           <div class="form-group">
-            <label class="form-label" for="fb-email">Email <span style="font-weight:400;text-transform:none;font-size:13px">(optional — only if you want a reply)</span></label>
-            <input class="form-input" type="email" id="fb-email" name="email" placeholder="your@email.com" autocomplete="email"/>
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="fb-type">Type of Submission</label>
-            <select class="form-select" id="fb-type" name="type">
+            <label class="form-label" for="fb-type">Type of Feedback</label>
+            <select class="form-select form-input" id="fb-type" name="type">
               <option value="">Select one…</option>
               <option value="missing">A scenario or question is missing</option>
-              <option value="contribution">I want to contribute a tip or scenario</option>
               <option value="helpful">This tool helped me with something</option>
               <option value="correction">I think an answer needs correction</option>
-              <option value="unclear">Something wasn't clear to me</option>
-              <option value="other">Other feedback</option>
+              <option value="unclear">Something wasn't clear</option>
+              <option value="other">Other</option>
             </select>
           </div>
           <div class="form-group">
-            <label class="form-label" for="fb-msg">Your Message <span style="color:var(--teal);font-weight:700">*</span></label>
-            <textarea class="form-textarea" id="fb-msg" name="message"
-              placeholder="Describe a missing scenario, share a tip, flag an error, or tell us anything that would make this tool more useful…"
-              required aria-required="true"></textarea>
+            <label class="form-label" for="fb-msg">Your Feedback <span style="color:var(--teal)">*</span></label>
+            <textarea class="form-textarea" id="fb-msg" name="message" placeholder="Tell us anything — a scenario you couldn't find, a question that helped you, or something that seemed off…" required aria-required="true"></textarea>
           </div>
-          <button type="submit" class="form-submit">Send →</button>
-          <p class="form-note">Your email is used only to reply to your submission — never shared or used for marketing.</p>
+          <button type="submit" class="form-submit">Send Feedback →</button>
+          <p class="form-note">Your feedback is used only to improve this tool. No spam, ever.</p>
         </form>
         <div class="form-success" id="formSuccess" role="alert" aria-live="polite">
-          ✅ Thank you — your submission was received!<br>
-          <span style="font-weight:400;font-size:15px">If you included an email address, we will be in touch.</span>
+          ✅ Thank you — your feedback was received!
         </div>
       </div>
     </div>
@@ -610,22 +551,25 @@
     <div class="disclaimer-inner">
       <span class="disclaimer-icon" aria-hidden="true">⚠️</span>
       <span>
-        <strong>Educational use only.</strong> AbstractionDeskQA is a reference aid to support abstractor training and workflow. It does not constitute compliance advice and is not a substitute for the official TJC or CMS Specifications Manual. Always verify abstraction decisions against current specifications. Measure specifications change — confirm you are using the most current version of the spec manual for your abstraction period.
+        <strong>Educational use only.</strong> AbstractionDeskQA is a reference aid built to support abstractor training and workflow — it does not constitute compliance advice and is not a substitute for the official TJC or CMS Specifications Manual. Always verify abstraction decisions against current specifications. Measure specifications change; confirm you are using the most current version of the spec manual for your abstraction period.
       </span>
     </div>
   </div>
 
   <!--
-  ════════════════════════════════════════════════
-  PDF DOWNLOAD — hidden during testing
-  Uncomment this block when ready to launch
-  ════════════════════════════════════════════════
+  ═══════════════════════════════════════════════
+  PDF DOWNLOAD SECTION — hidden during testing
+  Uncomment this entire block when ready to launch
+  ═══════════════════════════════════════════════
 
   <section class="section" id="download" aria-labelledby="download-heading">
-    <div class="container">
-      <div class="section-label">Download</div>
+    <div class="container" style="text-align:center">
+      <div class="section-label" style="justify-content:center">Download</div>
       <h2 class="section-title" id="download-heading">Take it offline</h2>
-      <p class="section-sub">[ADD YOUR PRODUCT DESCRIPTION HERE]</p>
+      <p class="section-sub" style="margin:0 auto 32px">
+        Get the printable PDF reference guide — $1.
+        [DESCRIPTION PLACEHOLDER — add your product description here]
+      </p>
       <a href="YOUR_GUMROAD_LINK_HERE" class="btn-primary" target="_blank" rel="noopener noreferrer"
          aria-label="Purchase the PDF reference guide for $1 on Gumroad">
         ⬇ Download PDF — $1
@@ -633,72 +577,56 @@
     </div>
   </section>
 
-  ════════════════════════════════════════════════
-  NEWSLETTER — hidden during testing
-  Uncomment this block when ready to launch
-  ════════════════════════════════════════════════
+  ═══════════════════════════════════════════════
+  NEWSLETTER SECTION — hidden during testing
+  Uncomment this entire block when ready to launch
+  ═══════════════════════════════════════════════
 
   <section class="section section-alt" id="newsletter" aria-labelledby="newsletter-heading">
-    <div class="container" style="max-width:480px">
+    <div class="container" style="text-align:center;max-width:480px">
       <h2 class="section-title" id="newsletter-heading">Stay updated</h2>
-      <p class="section-sub">Get notified when new Q&As are added or spec changes affect your measures.</p>
-      PASTE MAILCHIMP EMBED CODE HERE
+      <p class="section-sub" style="margin:0 auto 24px">
+        Get notified when new Q&As are added or spec changes affect your measures.
+      </p>
+      PASTE YOUR MAILCHIMP EMBED CODE HERE
     </div>
   </section>
   -->
 
 </main>
 
-<!-- BUY ME A COFFEE -->
-<section class="support" aria-labelledby="support-heading">
-  <div class="support-inner">
-    <div class="support-text">
-      <h3 id="support-heading">Help keep this tool running</h3>
-      <p>AbstractionDeskQA is free to use and always will be. If it has saved you time or helped you get an answer, a small contribution helps cover hosting costs and keeps the content growing.</p>
-    </div>
-    <!-- Replace YOUR_USERNAME_HERE with your Buy Me a Coffee username after you create your account -->
-    <a href="https://www.buymeacoffee.com/YOUR_USERNAME_HERE"
-       class="btn-coffee"
-       target="_blank"
-       rel="noopener noreferrer"
-       aria-label="Support AbstractionDeskQA on Buy Me a Coffee">
-      ☕ Buy me a coffee
-    </a>
-  </div>
-</section>
-
 <!-- FOOTER -->
 <footer role="contentinfo">
   <div class="footer-inner">
-    <div>
-      <div class="footer-brand">AbstractionDesk<span style="color:var(--teal2)">QA</span></div>
-      <p>A free reference tool for core measure abstractors.<br>
-      &copy; <span id="yr"></span> AbstractionDeskQA. Educational use only.</p>
-    </div>
-    <div class="footer-links">
-      <a href="lookup.html">Q&amp;A Lookup</a>
-      <a href="#how">How It Works</a>
-      <a href="#contribute">Contribute</a>
-      <a href="#feedback">Feedback</a>
-    </div>
+    <div class="footer-brand">AbstractionDesk<span style="color:var(--teal2)">QA</span></div>
+    <p>A free reference tool for core measure abstractors.<br>
+    Built with care by a quality nurse. &copy; <span id="yr"></span> AbstractionDeskQA.</p>
+    <p style="margin-top:8px;font-size:12px">
+      <a href="lookup.html">Q&amp;A Lookup</a> &nbsp;·&nbsp;
+      <a href="#feedback">Feedback</a> &nbsp;·&nbsp;
+      <a href="#about">About</a>
+    </p>
   </div>
 </footer>
 
 <script>
+// Year
 document.getElementById('yr').textContent = new Date().getFullYear();
 
-// Scroll fade-in
-const obs = new IntersectionObserver(entries => {
+// Scroll animations
+const observer = new IntersectionObserver(entries => {
   entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.1 });
-document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+}, { threshold: 0.12 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
-// Feedback form submit handler
-// To make this actually send emails, sign up at formspree.io and replace the action below
+// Feedback form (demo — replace with Formspree or Netlify Forms endpoint)
 document.getElementById('feedbackForm').addEventListener('submit', function(e) {
   e.preventDefault();
   const msg = document.getElementById('fb-msg').value.trim();
-  if(!msg) { document.getElementById('fb-msg').focus(); return; }
+  if(!msg) {
+    document.getElementById('fb-msg').focus();
+    return;
+  }
   this.style.display = 'none';
   document.getElementById('formSuccess').style.display = 'block';
 });
