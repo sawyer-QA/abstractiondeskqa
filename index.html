@@ -229,23 +229,6 @@
   .feat-body h3 { font-family: var(--serif); font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 5px; }
   .feat-body p { font-size: 13.5px; color: var(--ink-mid); line-height: 1.6; }
 
-  /* ── ABOUT ── */
-  .about-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center;
-  }
-  @media(max-width:700px){ .about-grid{grid-template-columns:1fr;gap:32px;} }
-  .about-img-wrap {
-    background: var(--teal-pale); border-radius: 12px;
-    aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
-    font-size: 80px;
-  }
-  .about-text .section-sub { margin-bottom: 20px; }
-  .about-detail {
-    display: flex; gap: 10px; align-items: flex-start;
-    font-size: 14px; color: var(--ink-mid); margin-bottom: 10px;
-  }
-  .about-detail::before { content: '✓'; color: var(--teal); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
-
   /* ── FEEDBACK FORM ── */
   .form-wrap {
     background: var(--white); border: 1px solid var(--border);
@@ -333,7 +316,6 @@
     </a>
     <div class="nav-links">
       <a href="#how" class="nav-link">How It Works</a>
-      <a href="#about" class="nav-link">About</a>
       <a href="#feedback" class="nav-link">Feedback</a>
       <a href="lookup.html" class="nav-cta" aria-label="Open the Q&A lookup tool">Open Q&amp;A Tool →</a>
     </div>
@@ -579,7 +561,6 @@
     <p style="margin-top:8px;font-size:12px">
       <a href="lookup.html">Q&amp;A Lookup</a> &nbsp;·&nbsp;
       <a href="#feedback">Feedback</a> &nbsp;·&nbsp;
-      <a href="#about">About</a>
     </p>
   </div>
 </footer>
