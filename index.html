@@ -265,36 +265,6 @@
   }
   .feat-body p { font-size: 14px; color: var(--ink-mid); line-height: 1.75; }
 
-  /* CONTRIBUTE */
-  .contrib-box {
-    background: var(--teal-pale);
-    border: 1.5px solid rgba(10,124,122,.2);
-    border-radius: 12px; padding: 32px 36px;
-  }
-  .contrib-box h3 {
-    font-family: var(--heading); font-size: 20px;
-    font-weight: 700; color: var(--navy); margin-bottom: 10px; line-height: 1.3;
-  }
-  .contrib-box p {
-    font-size: 15px; color: var(--ink-mid);
-    line-height: 1.75; margin-bottom: 14px; max-width: 640px;
-  }
-  .contrib-list { list-style: none; padding: 0; margin-bottom: 16px; }
-  .contrib-list li {
-    font-size: 15px; color: var(--ink-mid);
-    padding: 5px 0; padding-left: 18px;
-    position: relative; line-height: 1.65;
-  }
-  .contrib-list li::before {
-    content: '–'; color: var(--teal);
-    font-weight: 700; position: absolute; left: 0;
-  }
-  .contrib-note {
-    font-size: 13px; color: var(--ink-soft);
-    border-top: 1px solid rgba(10,124,122,.15);
-    padding-top: 12px; margin-top: 4px;
-  }
-
   /* FEEDBACK FORM */
   .form-wrap {
     background: var(--white); border: 1px solid var(--border);
@@ -432,7 +402,6 @@
     </a>
     <div class="nav-links">
       <a href="#how" class="nav-link">How It Works</a>
-      <a href="#contribute" class="nav-link">Contribute</a>
       <a href="#feedback" class="nav-link">Feedback</a>
       <a href="lookup.html" class="nav-cta">Open Q&amp;A Tool</a>
     </div>
@@ -474,20 +443,20 @@
   <div class="stats" role="complementary" aria-label="Tool highlights">
     <div class="stats-inner">
       <div class="stat">
-        <strong>Stroke measures</strong>
-        STK, ASR-IP, CSTK — more sets coming
+        <strong>Core measures</strong>
+        Stroke, ED Throughput | more coming
       </div>
       <div class="stat">
         <strong>Tag-based search</strong>
-        Find entries by chart language, not codes
+        Find entries using easy terms
       </div>
       <div class="stat">
         <strong>Always free</strong>
         No login, no signup, no paywall
       </div>
       <div class="stat">
-        <strong>TJC v2026B</strong>
-        Based on the current spec manual
+        <strong>Current Spec Manual</strong>
+        Based on TJC v2026B
       </div>
     </div>
   </div>
@@ -502,7 +471,7 @@
         <div class="how-card fade-up">
           <div class="how-step">Search</div>
           <h3>Type what you see</h3>
-          <p>Use chart language, abbreviations, or plain description. LKW, "woke up," "patient eloped," TNK, comfort measures. The tool finds it.</p>
+          <p>Use chart language, abbreviations, or plain description. LKW, "disposition," "eloped," TNK, comfort measures. The tool finds it.</p>
         </div>
         <div class="how-card fade-up" style="transition-delay:.1s">
           <div class="how-step">Filter</div>
@@ -528,27 +497,26 @@
     <div class="container">
       <div class="section-label" aria-hidden="true">Features</div>
       <h2 class="section-title" id="features-heading">Built for how abstractors actually work</h2>
-      <p class="section-sub">Every design decision was made with real abstraction workflows in mind.</p>
       <div class="features-grid">
         <div class="feat fade-up">
           <div class="feat-icon" role="img" aria-label="Search">🔍</div>
           <div class="feat-body">
             <h3>Full-text search</h3>
-            <p>Search across questions, answers, data element names, tags, and sources all at once.</p>
+            <p>Search across questions, answers, data element names, or tags, all at once.</p>
           </div>
         </div>
         <div class="feat fade-up" style="transition-delay:.07s">
           <div class="feat-icon" role="img" aria-label="Tags">🏷</div>
           <div class="feat-body">
             <h3>Spec-grounded tags</h3>
-            <p>Tags are built from TJC inclusion and exclusion language. LKW, TLKW, TNK, CMO, PTA, AMA, and more.</p>
+            <p>Tags are built from TJC inclusion and exclusion language, acronyms, medical abbreviations, clinical shorthand, and more.</p>
           </div>
         </div>
         <div class="feat fade-up" style="transition-delay:.14s">
           <div class="feat-icon" role="img" aria-label="Edge cases">⚡</div>
           <div class="feat-body">
             <h3>Edge cases flagged</h3>
-            <p>Common traps like same-system transfers, EMS antibiotics, and wake-up strokes are clearly marked and explained.</p>
+            <p>Common abstraction traps are clearly marked. Example: clinician hierarchy for accepted documentation. </p>
           </div>
         </div>
         <div class="feat fade-up" style="transition-delay:.21s">
@@ -572,29 +540,6 @@
             <p>No account, no login, no paywall on the lookup tool. Open it from any device, any time.</p>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTRIBUTE -->
-  <section class="section" id="contribute" aria-labelledby="contrib-heading">
-    <div class="container">
-      <div class="section-label" aria-hidden="true">Contribute</div>
-      <h2 class="section-title" id="contrib-heading">This tool grows because of people like you</h2>
-      <p class="section-sub" style="margin-bottom:28px">
-        AbstractionDeskQA is a living reference shaped by real-world abstraction work.
-      </p>
-      <div class="contrib-box fade-up">
-        <h3>Nurses, abstractors, quality managers, and educators are welcome to contribute</h3>
-        <p>If you work with core measures, we invite you to use the feedback form below to send anything that could improve this tool.</p>
-        <ul class="contrib-list" aria-label="Ways to contribute">
-          <li>A scenario or question you could not find in the tool</li>
-          <li>A tip or nuance from your own abstraction experience</li>
-          <li>An answer you believe is incorrect or outdated</li>
-          <li>A gray area your team has debated, with your reasoning</li>
-          <li>Feedback on clarity — if something was confusing, that matters too</li>
-        </ul>
-        <p class="contrib-note">All submissions are reviewed. Your name and role will never be published without permission.</p>
       </div>
     </div>
   </section>
@@ -725,7 +670,6 @@
     <div class="footer-links">
       <a href="lookup.html">Q&amp;A Lookup</a>
       <a href="#how">How It Works</a>
-      <a href="#contribute">Contribute</a>
       <a href="#feedback">Feedback</a>
     </div>
   </div>
