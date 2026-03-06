@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -390,29 +391,10 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 <div id="tab-guided" class="panel">
   <div class="sh">Guided Workflow</div>
   <p class="ss">Answer each question to determine your LKW abstraction values step by step.</p>
-<div class="card" id="gq1">
+  <div class="card" id="gq1">
     <div class="card-label">Step 1 — Stroke Timing</div>
     <div style="font-weight:600;margin-bottom:12px;">Did LKW / stroke signs first occur <em>after</em> hospital arrival?</div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;">
-      <button class="btn" onclick="gAns(1,'inhouse')">Yes — in-house stroke</button>
-      <button class="btn ghost" onclick="gAns(1,'pre')">No — occurred before arrival</button>
-    </div>
-    <div id="gq1-inhouse-result" class="hidden" style="margin-top:16px;border-top:1px solid var(--border);padding-top:16px;">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
-        <span style="font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;">Result — Step 1 complete</span>
-        <span style="flex:1;height:1px;background:var(--border);"></span>
-      </div>
-      <div style="display:flex;flex-wrap:wrap;gap:20px;margin-bottom:12px;">
-        <div><div style="font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:3px;">Last Known Well (Y/N)</div><div style="font-family:var(--mono);font-size:26px;font-weight:500;color:var(--red);">NO</div></div>
-        <div><div style="font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:3px;">Date LKW</div><div style="font-family:var(--mono);font-size:18px;color:var(--amber);">UTD</div></div>
-        <div><div style="font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:3px;">Time LKW</div><div style="font-family:var(--mono);font-size:18px;color:var(--amber);">UTD</div></div>
-      </div>
-      <div style="font-size:12.5px;color:#c4d8ec;line-height:1.7;margin-bottom:14px;">
-        <strong style="font-family:var(--mono);font-size:10px;color:var(--red);letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:4px;">In-House Stroke</strong>
-        LKW first occurred after Arrival Time. Per spec: select <strong>No</strong>. Date LKW = UTD, Time LKW = UTD. No further steps needed.
-      </div>
-      <button class="btn ghost" onclick="resetGuided()" style="font-size:13px;">Start Over</button>
-    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;"><button class="btn" onclick="gAns(1,'inhouse')">Yes — in-house stroke</button><button class="btn ghost" onclick="gAns(1,'pre')">No — occurred before arrival</button></div>
   </div>
   <div class="card hidden" id="gq2">
     <div class="card-label">Step 2 — Documentation Exists?</div>
@@ -686,25 +668,12 @@ function clearGrid(){
 
 // ── GUIDED ──
 function gAns(q,val){
-  document.getElementById('gq1-inhouse-result').classList.add('hidden');
-  document.getElementById('guided-result').classList.add('hidden');
   for(let i=q+1;i<=5;i++){const e=document.getElementById('gq'+i);if(e)e.classList.add('hidden');}
-  if(q===1){
-    if(val==='inhouse'){
-      document.getElementById('gq1-inhouse-result').classList.remove('hidden');
-      setTimeout(()=>document.getElementById('gq1-inhouse-result').scrollIntoView({behavior:'smooth',block:'nearest'}),80);
-    } else {
-      document.getElementById('gq2').classList.remove('hidden');
-    }
-  }
+  document.getElementById('guided-result').classList.add('hidden');
+  if(q===1){val==='inhouse'?showGR('NO','UTD','UTD','In-house stroke — select No. Date and Time = UTD.'):document.getElementById('gq2').classList.remove('hidden');}
   else if(q===2){val==='no'?showGR('NO','UTD','UTD','No documentation found. LKW = No, Date = UTD, Time = UTD.'):document.getElementById('gq3').classList.remove('hidden');}
   else if(q===3){val==='yes'?showGR('NO','UTD','UTD','MD/APN/PA documented unknown. Priority 1 — cancels all. LKW = No. Check CSF exception and same-MD correction exception.'):document.getElementById('gq4').classList.remove('hidden');}
   else if(q===4){document.getElementById('gq5').classList.remove('hidden');}
-  else if(q===5){
-    const rats={single:'Single time documented. Enter in HH:MM military format as Time LKW.',csf:'Code Stroke Form has a specific time — use CSF time. It takes precedence over all positive sources.',mdmulti:'Multiple MD times, no CSF — use the <strong>earliest</strong> MD time documented.',episodes:'Multiple episodes with documented resolution — use the <strong>most recent episode</strong> before arrival.'};
-    showGR('YES','[Enter date — MM-DD-YYYY]','[Enter military time — HH:MM]',rats[val]);
-  }
-}
   else if(q===5){
     const rats={single:'Single time documented. Enter in HH:MM military format as Time LKW.',csf:'Code Stroke Form has a specific time — use CSF time. It takes precedence over all positive sources.',mdmulti:'Multiple MD times, no CSF — use the <strong>earliest</strong> MD time documented.',episodes:'Multiple episodes with documented resolution — use the <strong>most recent episode</strong> before arrival.'};
     showGR('YES','[Enter date — MM-DD-YYYY]','[Enter military time — HH:MM]',rats[val]);
@@ -723,7 +692,6 @@ function showGR(yn,d,t,rat){
 function resetGuided(){
   for(let i=2;i<=5;i++){const e=document.getElementById('gq'+i);if(e)e.classList.add('hidden');}
   document.getElementById('guided-result').classList.add('hidden');
-  document.getElementById('gq1-inhouse-result').classList.add('hidden');
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
