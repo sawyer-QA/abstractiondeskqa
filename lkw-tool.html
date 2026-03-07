@@ -543,7 +543,7 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 <!-- ══ TAB 5: CASES ══ -->
 <div id="tab-cases" class="panel">
   <div class="sh">Case Walkthroughs</div>
-  <p class="ss">Step-by-step trainer-guided cases — full abstraction reasoning revealed at every decision point.</p>
+  <p class="ss">Step-by-step cases that explain the abstraction reasoning at every decision point.</p>
   <div id="case-selector">
     <div class="cx tip"><span class="cx-icon">🩺</span><div><strong>How to use</strong>Select a case, then work through each step. The trainer's reasoning appears at each decision point.</div></div>
     <div class="case-grid" id="case-card-grid"></div>
@@ -795,7 +795,7 @@ function renderCaseStep(){
     html=`<div class="card"><div class="card-label">Step ${caseStep+1} of ${steps.length} — ${s.label}</div><div style="font-size:13.5px;color:#c4d8ec;line-height:1.7;margin-bottom:10px;">${s.content}</div><div class="cx ${s.cx}"><span class="cx-icon">${icons[s.cx]}</span><div>${s.cxt}</div></div><div class="btn-row"><button class="btn ghost" onclick="casePrev()">← Back</button><button class="btn" onclick="caseNext()">Continue →</button></div></div>`;
   }else if(s.type==='result'){
     const yn=s.yn==='YES';
-    html=`<div class="card"><div class="card-label">Step ${caseStep+1} of ${steps.length} — Final Abstraction</div><div class="res-fields" style="margin-bottom:14px;"><div><div class="res-field-label">LKW Y/N</div><div class="res-val ${yn?'yes':'no'}">${s.yn}</div></div><div><div class="res-field-label">Date LKW</div><div class="res-val plain">${s.date}</div></div><div><div class="res-field-label">Time LKW</div><div class="res-val plain">${s.time}</div></div></div><div class="cx ok"><span class="cx-icon">✅</span><div><strong>Trainer Rationale</strong>${s.rat}</div></div><div class="btn-row"><button class="btn ghost" onclick="casePrev()">← Back</button><button class="btn" onclick="backToCases()">← All Cases</button></div></div>`;
+    html=`<div class="card"><div class="card-label">Step ${caseStep+1} of ${steps.length} — Final Abstraction</div><div class="res-fields" style="margin-bottom:14px;"><div><div class="res-field-label">LKW Y/N</div><div class="res-val ${yn?'yes':'no'}">${s.yn}</div></div><div><div class="res-field-label">Date LKW</div><div class="res-val plain">${s.date}</div></div><div><div class="res-field-label">Time LKW</div><div class="res-val plain">${s.time}</div></div></div><div class="cx ok"><span class="cx-icon">✅</span><div><strong>Rationale</strong>${s.rat}</div></div><div class="btn-row"><button class="btn ghost" onclick="casePrev()">← Back</button><button class="btn" onclick="backToCases()">← All Cases</button></div></div>`;
   }
   document.getElementById('case-step-body').innerHTML=html;
 }
