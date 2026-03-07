@@ -274,42 +274,6 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
   .site-nav-links .site-nav-link { display: none; }
   .site-footer-inner { flex-direction: column; gap: 12px; }
 }
-  /* ---------- Tool Intro + Info Box ---------- */
-
-.tool-header{
-  margin:20px 0 10px 0;
-}
-
-.tool-header h1{
-  font-size:22px;
-  font-weight:700;
-}
-
-.tool-subtitle{
-  color:var(--muted);
-  font-size:14px;
-  margin-top:4px;
-}
-
-.info-box{
-  background:var(--bg3);
-  padding:14px;
-  border-radius:8px;
-  border:1px solid var(--border);
-  margin:16px 0 24px 0;
-}
-
-.info-box summary{
-  font-weight:600;
-  cursor:pointer;
-  margin-bottom:6px;
-}
-
-.result-explanation{
-  margin-top:10px;
-  font-size:13px;
-  color:var(--muted);
-}
 </style>
 </head>
 <body>
@@ -479,8 +443,8 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
   <p class="ss">v2026B · STK-4 / ASR-IP-1 / ASR-OP-1</p>
 
   <div class="card">
-    <div class="card-label">LKW Documentation Priority Matrix</div>
-    <div class="cx info" style="margin-bottom:12px;"><span class="cx-icon">ℹ️</span><div>Column priority determines which type of documentation takes precedence. Row priority determines which source takes precedence when multiple entries exist in the same column. The hierarchy shown here (1=Unknown, 2=CSF, 3=LKW/Normal, 4=S/Sx) reflects the abstraction rules derived from the stroke measure specifications.</div></div>
+    <div class="card-label">Priority Matrix — Based on Your PSC Form Grid Logic</div>
+    <div class="cx info" style="margin-bottom:12px;"><span class="cx-icon">ℹ️</span><div>Column priority determines what <em>type</em> of documentation wins. Row priority determines <em>who</em> wins when the same column has multiple entries. Your form's priority order (1=Unknown, 2=CSF, 3=LKW/Normal, 4=S/Sx) is the spec-derived hierarchy.</div></div>
     <div style="overflow-x:auto;">
     <table class="px-table">
       <thead><tr><th>Source</th><th>Row Priority</th><th><span class="pri-badge pri-4">4</span> S/Sx Only</th><th><span class="pri-badge pri-3">3</span> LKW/Normal</th><th><span class="pri-badge pri-1">1</span> Unknown</th><th><span class="pri-badge pri-2">2</span> Code Stroke Form</th></tr></thead>
@@ -633,7 +597,7 @@ function resolveGrid(){
   }
   // RULE 1: MD Unknown (Priority 1 — cancels ALL)
   if(mdUnk.val==='yes'){
-    showR('NO','UTD','UTD','MD/APN/PA — Unknown (Priority 1)','A physician, APN, or PA explicitly documented LKW as unknown/uncertain/unclear. <strong>"This overrides all other LKW or symptom-onset documentation from other sources."<br><br><span class="rule-tag">EXCEPTION CHECK</span> Verify: (a) Did the same MD later cross it out and document a specific time? (b) Is this stated as reason for no tPA on a CSF while another CSF entry has a specific time? If either applies, result may change to YES.');
+    showR('NO','UTD','UTD','MD/APN/PA — Unknown (Priority 1)','A physician, APN, or PA explicitly documented LKW as unknown/uncertain/unclear. <strong>This cancels all LKW/S/Sx documentation</strong> from nursing and EMS — your grid column Priority 1.<br><br><span class="rule-tag">EXCEPTION CHECK</span> Verify: (a) Did the same MD later cross it out and document a specific time? (b) Is this stated as reason for no tPA on a CSF while another CSF entry has a specific time? If either applies, result may change to YES.');
     return;
   }
   // RULE 2: Just prior to arrival
@@ -645,7 +609,7 @@ function resolveGrid(){
   if(ht(csfT)){
     const d=hd(csfD)?csfD:'[from CSF or associated documentation]';
     const epiNote=episodes?'<br><br>🔄 Multiple episodes flag set — CSF time still takes precedence unless an MD explicitly documented unknown.':'';
-    showR('YES',d,csfT,'Code Stroke Form — Priority 2','Code Stroke Form has a specific time. Per spec guidelines: CSF (Priority 2 column) takes precedence over other documented LKW times when present.'+epiNote+'<br><br><span class="rule-tag">CSF EXCEPTION CHECK</span> Confirm no physician has explicitly documented LKW as unknown.');
+    showR('YES',d,csfT,'Code Stroke Form — Priority 2','Code Stroke Form has a specific time. Per spec and your grid: CSF (Priority 2 column) takes precedence over all other positive sources including physician notes.'+epiNote+'<br><br><span class="rule-tag">CSF EXCEPTION CHECK</span> Confirm no physician has explicitly documented LKW as unknown.');
     return;
   }
   // RULE 4: MD LKW/Normal (Priority 3 col, Row 1)
@@ -742,7 +706,7 @@ const Qs=[
   {tags:['LKW Y/N','Clinician Hierarchy'],sc:`The ED nurse documents: "Time last known well: 0800." The attending H&P states: "Last known well unknown." No Code Stroke Form present.`,opts:['YES — nurse documented a specific time','NO — physician documented unknown','YES — nursing note is acceptable','YES — use nursing when MD is vague'],correct:1,fb:`<strong>NO.</strong> MD "unknown" (Priority 1) cancels all nursing documentation. Your grid: RN Unknown = ✕ irrelevant, but that doesn't help nursing's time override MD unknown. One MD saying unknown = NO.`},
   {tags:['Time LKW','Hours-Ago Calculation'],sc:`"Patient last known well approximately 3 hours ago." Arrival time: 19:24.`,opts:['16:24','16:00','UTD — no specific time','19:24'],correct:0,fb:`<strong>16:24.</strong> Subtract hours from arrival: 19:24 − 3h = 16:24. Use the calculator on the Quick Reference tab.`},
   {tags:['LKW Y/N','Code Stroke Form Exception'],sc:`ED physician documents "LKW unknown" as reason for not giving tPA. The Code Stroke Form also documents Time LKW = 14:30.`,opts:['NO — physician documented unknown','YES — Code Stroke Form exception applies','NO — tPA form is highest priority','Cannot determine'],correct:1,fb:`<strong>YES.</strong> CSF exception: when MD documents "unknown" as reason for no tPA AND the CSF has a specific time, disregard the "unknown." CSF time (14:30) is used.`},
-  {tags:['Time LKW','CSF Priority'],sc:`H&P: LKW = 09:00. Nursing note: LKW = 08:50. Code Stroke Form (stroke RN): Time LKW = 09:15.`,opts:['09:00 — physician note','08:50 — nursing note','09:15 — Code Stroke Form','09:00 — earliest time'],correct:2,fb:`<strong>09:15.</strong> CSF = Priority 2 column — beats physician and nursing notes when it has a specific time. Documentation priority: CSF (Priority 2) takes precedence over LKW/Normal documentation (Priority 3).`},
+  {tags:['Time LKW','CSF Priority'],sc:`H&P: LKW = 09:00. Nursing note: LKW = 08:50. Code Stroke Form (stroke RN): Time LKW = 09:15.`,opts:['09:00 — physician note','08:50 — nursing note','09:15 — Code Stroke Form','09:00 — earliest time'],correct:2,fb:`<strong>09:15.</strong> CSF = Priority 2 column — beats physician and nursing notes when it has a specific time. Your grid column priority: CSF (2) > LKW/Normal (3).`},
   {tags:['Date LKW','Relative Reference'],sc:`"Wife reports patient normal this evening until ~9 PM." Hospital arrival: 00:30 on 12-10-20xx.`,opts:['12-10-20xx','12-09-20xx (day before)','UTD','12-11-20xx'],correct:1,fb:`<strong>12-09-20xx.</strong> Arrival at 00:30 on 12-10 means "this evening" refers to 12-09. Relative date references are acceptable per spec.`},
   {tags:['Time LKW','Range — Use Maximum'],sc:`EMS: "Weakness 2–3 hours prior to arrival." ED arrival: 21:00.`,opts:['19:00 (subtract 2h)','18:00 (subtract 3h — max)','19:30 (average)','UTD'],correct:1,fb:`<strong>18:00.</strong> Time range → always use the MAXIMUM. Max = 3h. 21:00 − 3:00 = 18:00.`},
   {tags:['LKW Y/N','In-House Stroke'],sc:`Patient admitted for hip replacement. Post-op day 2: new onset facial droop and slurred speech. No stroke symptoms prior to admission.`,opts:['YES — pre-admission baseline exists','NO — in-house stroke','UTD','YES — nursing noted new deficit'],correct:1,fb:`<strong>NO.</strong> In-house stroke — LKW first occurred after Arrival Time. Check the In-House Stroke flag in the Resolution Grid.`},
@@ -792,7 +756,7 @@ const CASES=[
   {title:'Case A: MD vs. RN vs. Code Stroke Form',summary:'Three sources, three different times. Which wins?',diff:'int',steps:[
     {type:'chart',content:`<strong>Nursing Note (22:45):</strong> "Patient last known well at 20:00 per husband."<br><br><strong>Attending H&P (23:10):</strong> "Patient last known without symptoms at approximately 8 PM."<br><br><strong>Code Stroke Form (stroke RN, 22:50):</strong> Time LKW: 20:15<br><br><strong>Arrival:</strong> 22:35 on 04-22-20xx`},
     {type:'step',label:'Does any MD/APN/PA say unknown?',content:'The attending documents "approximately 8 PM" — no use of unknown, uncertain, or unclear. <strong>MD Unknown = No.</strong>',cx:'tip',cxt:'Scan the full physician note for: unknown, uncertain, unclear, unable to determine. If absent, move forward.'},
-    {type:'step',label:'Code Stroke Form present with a specific time?',content:'Yes — CSF documents 20:15. Per the documentation priority rules, the Code Stroke Form (Priority 2) takes precedence over other positive documentation.',cx:'warn',cxt:'CSF 20:15 beats MD ~20:00 and RN 20:00. Even though completed by a nurse, the CSF column is Priority 2 — higher than LKW/Normal column (Priority 3).'},
+    {type:'step',label:'Code Stroke Form present with a specific time?',content:'Yes — CSF documents 20:15. Your grid: CSF = Priority 2 column, beats all other positive documentation.',cx:'warn',cxt:'CSF 20:15 beats MD ~20:00 and RN 20:00. Even though completed by a nurse, the CSF column is Priority 2 — higher than LKW/Normal column (Priority 3).'},
     {type:'result',yn:'YES',date:'04-22-20xx',time:'20:15',rat:'CSF time (20:15) takes precedence. MD and RN times superseded. No MD "unknown" to override.'}
   ]},
   {title:'Case B: Wake-Up Stroke — RN Says Unknown',summary:'Classic trap: nursing unknown vs. MD bedtime.',diff:'int',steps:[
@@ -803,7 +767,7 @@ const CASES=[
   ]},
   {title:'Case C: Multiple Episodes with Resolution',summary:'Symptoms → resolved → returned. Which time?',diff:'adv',steps:[
     {type:'chart',content:`<strong>H&P (Attending):</strong> "Right arm tingling two days ago — resolved in 30 min. Woke this morning feeling well. At 07:30 difficulty speaking and right facial droop, ongoing."<br><br><strong>Arrival:</strong> 08:20 on 11-15-20xx`},
-    {type:'step',label:'Identify episodes and resolution',content:'Episode 1: Right arm tingling 2 days prior (11-13) — resolved.<br>Episode 2: New symptoms 07:30 on 11-15 — ongoing at presentation.<br><br>Key: documented resolution between episodes ("woke this morning feeling well").',cx:'warn',cxt:'Abstraction rule: "symptom onset/resolved → closest to arrival." This is the most-recent-episode rule.'},
+    {type:'step',label:'Identify episodes and resolution',content:'Episode 1: Right arm tingling 2 days prior (11-13) — resolved.<br>Episode 2: New symptoms 07:30 on 11-15 — ongoing at presentation.<br><br>Key: documented resolution between episodes ("woke this morning feeling well").',cx:'warn',cxt:'Your grid rule: "symptom onset/resolved → closest to arrival." This is the most-recent-episode rule.'},
     {type:'step',label:'Apply the most-recent-episode rule',content:'Per spec: documented resolution between episodes → use time of the most recent episode before arrival = 07:30 on 11-15-20xx.',cx:'danger',cxt:'New abstractors almost always pick the first episode (2 days ago). Wrong. The spec is explicit: most recent episode before arrival when resolution is documented between episodes.'},
     {type:'result',yn:'YES',date:'11-15-20xx',time:'07:30',rat:'Multiple episodes with documented resolution. Most recent episode before arrival = 07:30 on 11-15-20xx. Do NOT use the episode from two days prior.'}
   ]}
