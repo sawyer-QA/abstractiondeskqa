@@ -533,7 +533,13 @@
         Is a scenario missing? Did an answer help you? Found an error? Want to contribute a tip or scenario? This form is for all of it.
       </p>
       <div class="form-wrap">
-        <form id="feedbackForm" novalidate aria-label="Feedback and contribution form">
+        <form id="feedbackForm" 
+      action="https://formly.email/submit" 
+      method="POST" 
+      novalidate 
+      aria-label="Feedback and contribution form">
+         <input type="hidden" name="access_key" value="895f6777acd04a629d7eb27e888e6ac6">
+         <input type="hidden" name="subject" value="New Feedback – AbstractionDeskQA"> 
           <div class="form-row">
             <div class="form-group">
               <label class="form-label" for="fb-name">
@@ -653,11 +659,19 @@ const obs = new IntersectionObserver(entries => {
 document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
 
 document.getElementById('feedbackForm').addEventListener('submit', function(e) {
-  e.preventDefault();
   const msg = document.getElementById('fb-msg').value.trim();
-  if(!msg) { document.getElementById('fb-msg').focus(); return; }
-  this.style.display = 'none';
-  document.getElementById('formSuccess').style.display = 'block';
+
+  if (!msg) {
+    e.preventDefault();
+    document.getElementById('fb-msg').focus();
+    return;
+  }
+
+  // Allow form to submit to Formly
+  setTimeout(() => {
+    this.style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+  }, 500);
 });
 </script>
 </body>
