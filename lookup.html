@@ -149,7 +149,7 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 .tm-notice{font-size:11.5px;color:var(--amber);background:var(--amber-bg);border:1px solid rgba(194,122,0,.2);border-radius:5px;padding:8px 11px;margin-bottom:14px;line-height:1.55;}
 .tm-section{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--mid);margin:16px 0 8px;padding-bottom:4px;border-bottom:1px solid var(--border);}
 .tm-add{background:var(--teal-bg);border:1px solid rgba(11,122,120,.2);border-radius:7px;padding:14px;margin-bottom:6px;}
-.tm-add-grid{display:grid;grid-template-columns:120px 140px 1fr 1fr;gap:8px;margin-bottom:10px;align-items:end;}
+.tm-add-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px;}
 
 /* category filter bar inside TM */
 .cat-filter-bar{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px;}
@@ -189,6 +189,13 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 .toast{position:fixed;bottom:18px;right:18px;background:var(--navy);color:white;padding:9px 16px;border-radius:6px;font-size:12.5px;font-weight:600;box-shadow:0 4px 16px rgba(0,0,0,.25);transform:translateY(60px);opacity:0;transition:all .28s;z-index:999;}
 .toast.on{transform:translateY(0);opacity:1;}
 
+/* TAG BROWSER MODAL */
+.tb-search{width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:6px;font-family:var(--sans);font-size:13px;color:var(--ink);background:var(--slate);outline:none;transition:border-color .13s;margin-bottom:12px;}
+.tb-search:focus{border-color:var(--teal);background:white;}
+.tb-tag-name{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--purple);background:var(--purple-bg);border:1px solid rgba(84,48,168,.22);padding:3px 10px;border-radius:8px;cursor:pointer;display:inline-block;transition:all .12s;}
+.tb-tag-name:hover{background:var(--purple);color:white;}
+.tb-empty{text-align:center;padding:32px 16px;color:var(--mid);font-size:13px;}
+
 @media print{.bar,.sidebar,.frow,.search-wrap,.add-panel,.atbar,.bar-btns{display:none!important;}.layout{grid-template-columns:1fr;}.main{padding:0;}.qa-body{display:block!important;}.tog{display:none;}}
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QJPP46JWX3"></script>
@@ -226,8 +233,14 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
     <div class="sb-item" data-m="__gray" onclick="filterM('__gray',this)">❓ Gray Areas <span class="sb-cnt" id="cnt-gray">0</span></div>
     <div class="sb-item" data-m="__edge" onclick="filterM('__edge',this)">⚡ Edge Cases <span class="sb-cnt" id="cnt-edge">0</span></div>
     <div class="sb-div"></div>
-    <span class="sb-lbl">Browse Tags</span>
-    <div class="cloud-outer"><div class="cloud" id="tagCloud"></div></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 15px 4px;">
+      <span class="sb-lbl" style="padding:0;margin:0;">Browse Tags</span>
+      <span id="sb-tag-total" style="font-size:9px;color:var(--mid);font-family:var(--mono);"></span>
+    </div>
+    <div class="cloud-outer">
+      <div class="cloud" id="tagCloud"></div>
+      <button onclick="openTagBrowser()" style="margin-top:8px;width:100%;background:none;border:1px dashed var(--border);border-radius:6px;color:var(--teal);font-family:var(--sans);font-size:11px;font-weight:600;padding:6px;cursor:pointer;transition:all .12s;" onmouseover="this.style.background='var(--teal-bg)'" onmouseout="this.style.background='none'">Browse all tags →</button>
+    </div>
   </div>
 
   <div class="main">
@@ -286,8 +299,47 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
   </div>
 </div>
 
+<!-- TAG BROWSER MODAL -->
+<div class="moverlay" id="tagBrowserModal" onclick="if(event.target===this)closeTagBrowser()">
+  <div class="modal" style="max-width:780px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">
+      <h3>🏷 Tag Browser</h3>
+      <button onclick="closeTagBrowser()" style="background:none;border:none;color:var(--mid);font-size:22px;cursor:pointer;line-height:1;padding:0 4px;">×</button>
+    </div>
+    <p class="modal-sub">Click any tag name to apply it as a filter on the Q&amp;A list. Browse by category or search by name or alias.</p>
+
+    <input class="tb-search" id="tbSearch" placeholder="Search tags by name or alias…" oninput="renderTagBrowser()"/>
+
+    <div class="cat-filter-bar" id="tbCatBar">
+      <span class="cat-chip on" data-tbc="all" onclick="filterTBCat('all',this)">All</span>
+      <span class="cat-chip" data-tbc="Stroke Timing" onclick="filterTBCat('Stroke Timing',this)">Stroke Timing</span>
+      <span class="cat-chip" data-tbc="Treatment" onclick="filterTBCat('Treatment',this)">Treatment</span>
+      <span class="cat-chip" data-tbc="Goals of Care" onclick="filterTBCat('Goals of Care',this)">Goals of Care</span>
+      <span class="cat-chip" data-tbc="ED Throughput" onclick="filterTBCat('ED Throughput',this)">ED Throughput</span>
+      <span class="cat-chip" data-tbc="Imaging" onclick="filterTBCat('Imaging',this)">Imaging</span>
+      <span class="cat-chip" data-tbc="Disposition" onclick="filterTBCat('Disposition',this)">Disposition</span>
+      <span class="cat-chip" data-tbc="Uncategorized" onclick="filterTBCat('Uncategorized',this)">Uncategorized</span>
+    </div>
+
+    <table class="tm-table" id="tbTable">
+      <thead>
+        <tr>
+          <th style="width:120px">Tag</th>
+          <th style="width:110px">Category</th>
+          <th>Aliases</th>
+          <th>Related Tags</th>
+        </tr>
+      </thead>
+      <tbody id="tbBody"></tbody>
+    </table>
+    <div class="mactions">
+      <button class="btn btn-teal" onclick="closeTagBrowser()">Close</button>
+    </div>
+  </div>
+</div>
+
 <!-- TAG MANAGER MODAL -->
-<div class="moverlay" id="tmModal">
+<div class="moverlay" id="tmModal" onclick="if(event.target===this)closeTM()">
   <div class="modal">
     <h3>🏷 Tag Manager</h3>
     <p class="modal-sub">
@@ -304,8 +356,8 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
       <div class="tm-add-grid">
         <div><label class="flbl">Tag ID</label><input class="fi" id="nt-id" placeholder="e.g. stroke_lkw" style="font-family:var(--mono);"/></div>
         <div><label class="flbl">Tag Name</label><input class="fi" id="nt-n" placeholder="e.g. LKW" style="font-family:var(--mono);font-weight:600"/></div>
-        <div><label class="flbl">Aliases — comma separated</label><input class="fi" id="nt-a" placeholder="last known well, lkn, last seen normal"/></div>
-        <div><label class="flbl">Related Tags — comma separated</label><input class="fi" id="nt-r" placeholder="TLKW, DLKW, onset"/></div>
+        <div><label class="flbl">Aliases</label><input class="fi" id="nt-a" placeholder="last known well, lkn, last seen normal"/></div>
+        <div><label class="flbl">Related Tags</label><input class="fi" id="nt-r" placeholder="TLKW, DLKW, onset"/></div>
       </div>
       <div style="display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end;">
         <div><label class="flbl">Category</label>
@@ -346,7 +398,7 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 </div>
 
 <!-- PASTE MODAL -->
-<div class="moverlay" id="pasteModal">
+<div class="moverlay" id="pasteModal" onclick="if(event.target===this)closePaste()">
   <div class="modal" style="max-width:520px">
     <h3>📋 Paste Raw Q&amp;A</h3>
     <p class="modal-sub">Paste text from TJC PMN, CMS clarifications, or training notes. Preview tags before submitting for curator review.</p>
@@ -593,9 +645,14 @@ function updCounts(){
 function buildCloud(){
   const cnt={};
   entries.forEach(e=>(e.tags||[]).forEach(t=>{cnt[t]=(cnt[t]||0)+1;}));
-  document.getElementById('tagCloud').innerHTML=Object.entries(cnt).sort((a,b)=>b[1]-a[1]).map(([t,c])=>
+  const sorted=Object.entries(cnt).sort((a,b)=>b[1]-a[1]);
+  const top12=sorted.slice(0,12);
+  document.getElementById('tagCloud').innerHTML=top12.map(([t,c])=>
     `<span class="ctag${actTags.includes(t)?' on':''}" onclick="addTagFilter('${esc(t)}')">${esc(t)}<span class="ctag-n">${c}</span></span>`
   ).join('');
+  // update total tag count in sidebar label
+  const totalEl=document.getElementById('sb-tag-total');
+  if(totalEl) totalEl.textContent=tagDefs.length+' tags';
 }
 
 // ══════════════════════════════════════════════════
@@ -617,6 +674,58 @@ function filterCat(cat,el){
   document.querySelectorAll('[data-cat]').forEach(e=>e.classList.remove('on'));
   el.classList.add('on');
   renderTM();
+}
+
+// ══════════════════════════════════════════════════
+//  TAG BROWSER
+// ══════════════════════════════════════════════════
+let tbActiveCat='all';
+
+function openTagBrowser(){
+  tbActiveCat='all';
+  document.getElementById('tbSearch').value='';
+  document.querySelectorAll('[data-tbc]').forEach(e=>e.classList.toggle('on',e.dataset.tbc==='all'));
+  renderTagBrowser();
+  document.getElementById('tagBrowserModal').classList.add('open');
+}
+function closeTagBrowser(){
+  document.getElementById('tagBrowserModal').classList.remove('open');
+}
+function filterTBCat(cat,el){
+  tbActiveCat=cat;
+  document.querySelectorAll('[data-tbc]').forEach(e=>e.classList.remove('on'));
+  el.classList.add('on');
+  renderTagBrowser();
+}
+function renderTagBrowser(){
+  const q=(document.getElementById('tbSearch').value||'').toLowerCase().trim();
+  const visible=tagDefs.filter(td=>{
+    const catOk=tbActiveCat==='all'||(td.category||'Uncategorized')===tbActiveCat;
+    if(!catOk) return false;
+    if(!q) return true;
+    return td.name.toLowerCase().includes(q)||(td.aliases||[]).some(a=>a.includes(q));
+  });
+  if(!visible.length){
+    document.getElementById('tbBody').innerHTML=`<tr><td colspan="4"><div class="tb-empty">No tags match your search.</div></td></tr>`;
+    return;
+  }
+  // count Q&A usage per tag
+  const cnt={};
+  entries.forEach(e=>(e.tags||[]).forEach(t=>{cnt[t]=(cnt[t]||0)+1;}));
+  document.getElementById('tbBody').innerHTML=visible.map(td=>`
+    <tr>
+      <td>
+        <span class="tb-tag-name" onclick="applyTagFromBrowser('${esc(td.name)}')" title="Click to filter Q&As by this tag">${esc(td.name)}</span>
+        ${cnt[td.name]?`<div style="font-size:9px;color:var(--mid);margin-top:3px;font-family:var(--mono);">${cnt[td.name]} Q&amp;A${cnt[td.name]!==1?'s':''}</div>`:''}
+      </td>
+      <td><span class="cat-badge">${esc(td.category||'Uncategorized')}</span></td>
+      <td><div class="ta-list">${esc((td.aliases||[]).join(', '))}</div></td>
+      <td><div class="tr-list">${(td.related||[]).map(r=>`<span class="tr-item">${esc(r)}</span>`).join('')}</div></td>
+    </tr>`).join('');
+}
+function applyTagFromBrowser(tag){
+  closeTagBrowser();
+  addTagFilter(tag);
 }
 
 // ══════════════════════════════════════════════════
