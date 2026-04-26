@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Stroke & ED Throughput · Q&A Bank</title>
 <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+3:wght@300;400;500;600;700&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
 <style>
 :root{
   --ink:#1a1e2c; --navy:#0d1f3c; --navy2:#163560;
@@ -212,10 +213,10 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
   </div>
   <div class="bar-btns">
     <a href="index.html" class="btn btn-ghost" style="text-decoration:none">← Home</a>
-    <button class="btn btn-ghost" onclick="toggleAdd()">+ Add Q&amp;A</button>
-    <button class="btn btn-ghost" onclick="openPaste()">📋 Paste Raw</button>
-    <button class="btn btn-purple" onclick="openTM()">🏷 Manage Tags</button>
-    <button class="btn btn-teal" onclick="exportPDF()">⬇ Export</button>
+    <button class="btn btn-ghost" onclick="toggleAdd()"><i class="ph ph-plus" style="vertical-align:middle;margin-right:4px;"></i>Add Q&amp;A</button>
+    <button class="btn btn-ghost" onclick="openPaste()"><i class="ph-duotone ph-clipboard-text" style="vertical-align:middle;margin-right:4px;"></i>Paste Raw</button>
+    <button class="btn btn-purple" onclick="openTM()"><i class="ph-duotone ph-tag" style="vertical-align:middle;margin-right:4px;"></i>Manage Tags</button>
+    <button class="btn btn-teal" onclick="exportPDF()"><i class="ph ph-download-simple" style="vertical-align:middle;margin-right:4px;"></i>Export</button>
   </div>
 </div>
 
@@ -251,7 +252,7 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 
     <div class="add-panel" id="addPanel">
       <h3>Add New Q&amp;A Entry</h3>
-      <div class="add-notice">⏳ <strong>Submissions go to Google Sheets for curator review.</strong> Your entry will appear on the site once approved.</div>
+      <div class="add-notice"><i class="ph-duotone ph-clock" style="vertical-align:middle;margin-right:5px;"></i><strong>Submissions go to Google Sheets for curator review.</strong> Your entry will appear on the site once approved.</div>
       <div class="fg2">
         <div class="full"><label class="flbl">Question / Scenario</label><textarea class="fta" id="fq" placeholder="Describe the abstraction scenario…"></textarea></div>
         <div class="full"><label class="flbl">Answer / Guidance</label><textarea class="fta" id="fa" placeholder="The authoritative answer or interpretation…"></textarea></div>
@@ -276,13 +277,13 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
     </div>
 
     <div class="atbar" id="atbar">
-      <span class="atbar-lbl">🏷 Tag filter:</span>
+      <span class="atbar-lbl"><i class="ph-duotone ph-tag" style="vertical-align:middle;margin-right:4px;"></i>Tag filter:</span>
       <div id="atpills" style="display:flex;gap:5px;flex-wrap:wrap;"></div>
       <span class="clear-at" onclick="clearTagFilters()">Clear all</span>
     </div>
 
     <div class="search-wrap">
-      <span class="si">🔍</span>
+      <span class="si"><i class="ph ph-magnifying-glass"></i></span>
       <input class="search" id="srch" placeholder="Search by scenario, keyword, tag, data element…" oninput="render()"/>
     </div>
 
@@ -303,7 +304,7 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 <div class="moverlay" id="tagBrowserModal" onclick="if(event.target===this)closeTagBrowser()">
   <div class="modal" style="max-width:780px">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">
-      <h3>🏷 Tag Browser</h3>
+      <h3><i class="ph-duotone ph-tag-chevron" style="vertical-align:middle;margin-right:6px;color:var(--teal);"></i>Tag Browser</h3>
       <button onclick="closeTagBrowser()" style="background:none;border:none;color:var(--mid);font-size:22px;cursor:pointer;line-height:1;padding:0 4px;">×</button>
     </div>
     <p class="modal-sub">Click any tag name to apply it as a filter on the Q&amp;A list. Browse by category or search by name or alias.</p>
@@ -341,14 +342,14 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 <!-- TAG MANAGER MODAL -->
 <div class="moverlay" id="tmModal" onclick="if(event.target===this)closeTM()">
   <div class="modal">
-    <h3>🏷 Tag Manager</h3>
+    <h3><i class="ph-duotone ph-tag" style="vertical-align:middle;margin-right:6px;color:var(--teal);"></i>Tag Manager</h3>
     <p class="modal-sub">
       Each tag has <strong>aliases</strong> — chart words and phrases that trigger auto-detection — and <strong>related tags</strong> shown as suggestions when that tag is used.<br><br>
       Tags marked <span class="tag-src-pill tag-src-sheet">SHEET</span> are curator-approved and active for all users. Tags marked <span class="tag-src-pill tag-src-local">LOCAL</span> live in your browser until submitted for review. Suggest a new tag below and it saves locally right away while awaiting approval.
     </p>
 
     <div class="tm-notice">
-      ➕ <strong>Suggest a new tag below</strong> — it goes to Google Sheets for curator review before appearing site-wide. It saves locally in your browser so you can use it right away.
+      <i class="ph-duotone ph-plus-circle" style="vertical-align:middle;margin-right:5px;"></i><strong>Suggest a new tag below</strong> — it goes to Google Sheets for curator review before appearing site-wide. It saves locally in your browser so you can use it right away.
     </div>
 
     <div class="tm-section">Suggest a New Tag</div>
@@ -400,7 +401,7 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 <!-- PASTE MODAL -->
 <div class="moverlay" id="pasteModal" onclick="if(event.target===this)closePaste()">
   <div class="modal" style="max-width:520px">
-    <h3>📋 Paste Raw Q&amp;A</h3>
+    <h3><i class="ph-duotone ph-clipboard-text" style="vertical-align:middle;margin-right:6px;color:var(--teal);"></i>Paste Raw Q&amp;A</h3>
     <p class="modal-sub">Paste text from TJC PMN, CMS clarifications, or training notes. Preview tags before submitting for curator review.</p>
     <textarea id="pasteRaw" style="width:100%;font-family:var(--mono);font-size:11px;padding:9px;border:1.5px solid var(--border);border-radius:5px;min-height:120px;resize:vertical;margin-bottom:10px;outline:none;color:var(--ink);" placeholder="Q: If a patient woke up with stroke symptoms…&#10;&#10;A: Per TJC guidance…"></textarea>
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px">
@@ -409,13 +410,13 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
       <div><label class="flbl">Source</label><input class="fi" id="psrc" placeholder="TJC PMN, training…"/></div>
     </div>
     <div class="tag-review" id="tagReview" style="display:none">
-      <h4>🏷 Auto-detected tags — click to accept or reject:</h4>
+      <h4><i class="ph-duotone ph-tag" style="vertical-align:middle;margin-right:4px;"></i>Auto-detected tags — click to accept or reject:</h4>
       <div class="rrow" id="rrow"></div>
       <div style="font-size:10.5px;color:var(--mid);font-style:italic">Purple = accepted · Gray = rejected · Click to toggle</div>
     </div>
     <div class="mactions">
       <button class="btn btn-ghost" style="font-size:11px;padding:5px 11px" onclick="closePaste()">Cancel</button>
-      <button class="btn btn-purple" style="font-size:11px;padding:5px 11px" onclick="previewTags()">🏷 Preview Tags</button>
+      <button class="btn btn-purple" style="font-size:11px;padding:5px 11px" onclick="previewTags()"><i class="ph-duotone ph-tag" style="vertical-align:middle;margin-right:4px;"></i>Preview Tags</button>
       <button class="btn btn-teal" style="font-size:11px;padding:5px 11px" id="pasteSubmitBtn" onclick="savePaste()">Submit for Review</button>
     </div>
   </div>
