@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet"/>
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
 <style>
 :root {
   --bg: #0f1923;
@@ -215,6 +216,14 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
   white-space: nowrap;
 }
 .site-nav-cta:hover { background: #0da8a5; text-decoration: none; color: white; }
+.site-nav-cta-ghost {
+  background: transparent; color: #0a7c7a;
+  font-size: 15px; font-weight: 700;
+  padding: 9px 20px; border-radius: 7px;
+  border: 2px solid #0a7c7a; cursor: pointer;
+  transition: all .15s; text-decoration: none; white-space: nowrap;
+}
+.site-nav-cta-ghost:hover { background: #0a7c7a; color: white; text-decoration: none; }
 /* page title bar */
 .page-title-bar {
   background: #0d2240;
@@ -295,9 +304,10 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
     </a>
     <div class="site-nav-links">
       <a href="index.html#how" class="site-nav-link">How It Works</a>
+      <a href="index.html#tools" class="site-nav-link">Tools</a>
       <a href="index.html#feedback" class="site-nav-link">Feedback</a>
-      <a href="lkw-tool.html" class="site-nav-link active-page">LKW Tool</a>
-      <a href="lookup.html" class="site-nav-cta">Open Q&amp;A Tool</a>
+      <a href="lkw-tool.html" class="site-nav-cta-ghost active-page">LKW Tool</a>
+      <a href="lookup.html" class="site-nav-cta">Q&amp;A Tool</a>
     </div>
   </div>
 </nav>
@@ -307,7 +317,6 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
     <a href="index.html" class="page-back-link" aria-label="Back to home">&#8592; Home</a>
     <div class="page-title-text">
       <h1>Last Known Well — Abstraction Tool</h1>
-      <p>TJC v2026B &nbsp;·&nbsp; ASR-IP-1 · ASR-OP-1 · STK-4 &nbsp;·&nbsp; Discharges 3Q26–4Q26</p>
     </div>
   </div>
 </div>
@@ -315,11 +324,11 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 <span id="maincontent" aria-hidden="true"></span>
 
 <nav class="tabs" role="tablist">
-  <button class="tab on" onclick="showTab('grid')" data-t="grid">⊞ LKW Resolution Grid</button>
-  <button class="tab" onclick="showTab('guided')" data-t="guided">⚙ Guided Workflow</button>
-  <button class="tab" onclick="showTab('ref')" data-t="ref">📋 Quick Reference</button>
-  <button class="tab" onclick="showTab('quiz')" data-t="quiz">🎯 Practice Quiz</button>
-  <button class="tab" onclick="showTab('cases')" data-t="cases">🩺 Case Walkthroughs</button>
+  <button class="tab on" onclick="showTab('grid')" data-t="grid"><i class="ph-duotone ph-table" style="font-size:14px;vertical-align:middle;margin-right:5px;color:inherit;"></i>LKW Resolution Grid</button>
+  <button class="tab" onclick="showTab('guided')" data-t="guided"><i class="ph-duotone ph-git-branch" style="font-size:14px;vertical-align:middle;margin-right:5px;color:inherit;"></i>Guided Workflow</button>
+  <button class="tab" onclick="showTab('ref')" data-t="ref"><i class="ph-duotone ph-clipboard-text" style="font-size:14px;vertical-align:middle;margin-right:5px;color:inherit;"></i>Quick Reference</button>
+  <button class="tab" onclick="showTab('quiz')" data-t="quiz"><i class="ph-duotone ph-exam" style="font-size:14px;vertical-align:middle;margin-right:5px;color:inherit;"></i>Practice Quiz</button>
+  <button class="tab" onclick="showTab('cases')" data-t="cases"><i class="ph-duotone ph-stethoscope" style="font-size:14px;vertical-align:middle;margin-right:5px;color:inherit;"></i>Case Walkthroughs</button>
 </nav>
 <main>
 
@@ -327,7 +336,7 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 <div id="tab-grid" class="panel on">
   <div class="sh">LKW Resolution Grid</div>
   <p class="ss">Enter what you find in the chart for each source. The tool resolves your final abstraction values using spec priority rules.</p>
-  <div class="cx info"><span class="cx-icon">ℹ️</span><div><strong>How to use</strong>Fill in each row with what the chart shows — dates, times, whether LKW/normal is explicitly stated vs. S/Sx only, and whether unknown is documented. Leave blank if not present. Hit <strong style="display:inline;">Resolve</strong> when done.</div></div>
+  <div class="cx info"><span class="cx-icon"><i class="ph-duotone ph-info" style="font-size:18px;color:#60a5fa;"></i></span><div><strong>How to use</strong>Fill in each row with what the chart shows — dates, times, whether LKW/normal is explicitly stated vs. S/Sx only, and whether unknown is documented. Leave blank if not present. Hit <strong style="display:inline;">Resolve</strong> when done.</div></div>
 
   <div style="display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 6px;font-size:12px;align-items:center;">
     <span style="color:var(--muted);font-family:var(--mono);font-size:10px;letter-spacing:.08em;">COLUMN PRIORITY:</span>
@@ -377,7 +386,7 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
       <label style="display:flex;align-items:flex-start;gap:9px;cursor:pointer;"><input type="checkbox" id="flag-justprior" style="accent-color:var(--amber);width:15px;height:15px;margin-top:2px;"/><span><strong>"Just prior to ED arrival"</strong> — no specific time range documented</span></label>
       <label style="display:flex;align-items:flex-start;gap:9px;cursor:pointer;"><input type="checkbox" id="flag-episodes" style="accent-color:var(--teal);width:15px;height:15px;margin-top:2px;" onchange="toggleEpiNote()"/><span><strong>Multiple symptom episodes</strong> with documented resolution between them</span></label>
     </div>
-    <div class="cx warn hidden" id="epi-note" style="margin-top:12px;"><span class="cx-icon">⚠️</span><div><strong>Use Most Recent Episode</strong>When symptoms occurred, resolved, then recurred — use the time of the <strong>most recent episode</strong> before arrival. Not the first. Only applies when resolution is explicitly documented between episodes.</div></div>
+    <div class="cx warn hidden" id="epi-note" style="margin-top:12px;"><span class="cx-icon"><i class="ph-duotone ph-warning" style="font-size:18px;color:#fbbf24;"></i></span><div><strong>Use Most Recent Episode</strong>When symptoms occurred, resolved, then recurred — use the time of the <strong>most recent episode</strong> before arrival. Not the first. Only applies when resolution is explicitly documented between episodes.</div></div>
   </div>
 
   <button class="resolve-btn" onclick="resolveGrid()">Resolve → Determine LKW Abstraction Values</button>
@@ -391,7 +400,7 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
       <div><div class="res-field-label">Rule Applied</div><div class="res-val plain" id="r-rule" style="font-size:12px;line-height:1.5;max-width:200px;"></div></div>
     </div>
     <div class="res-rule" id="r-rationale"></div>
-    <div class="btn-row"><button class="btn" onclick="window.print()">🖨 Print</button><button class="btn ghost" onclick="clearGrid()">↩ Clear</button></div>
+    <div class="btn-row"><button class="btn" onclick="window.print()"><i class="ph ph-printer" style="vertical-align:middle;margin-right:4px;"></i>Print</button><button class="btn ghost" onclick="clearGrid()">↩ Clear</button></div>
   </div>
 </div>
 
@@ -406,25 +415,25 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
   </div>
   <div class="card hidden" id="gq2">
     <div class="card-label">Step 2 — Documentation Exists?</div>
-    <div class="cx warn"><span class="cx-icon">⚠️</span><div><strong>S/Sx ≠ LKW</strong>Symptom onset and Last Known Well are different. Prefer explicit LKW documentation. Only fall back to symptom onset if no LKW time is documented anywhere.</div></div>
+    <div class="cx warn"><span class="cx-icon"><i class="ph-duotone ph-warning" style="font-size:18px;color:#fbbf24;"></i></span><div><strong>S/Sx ≠ LKW</strong>Symptom onset and Last Known Well are different. Prefer explicit LKW documentation. Only fall back to symptom onset if no LKW time is documented anywhere.</div></div>
     <div style="font-weight:600;margin:12px 0 10px;">Is there any documentation of date/time LKW or at baseline prior to arrival?</div>
     <div style="display:flex;gap:8px;flex-wrap:wrap;"><button class="btn" onclick="gAns(2,'yes')">Yes</button><button class="btn ghost" onclick="gAns(2,'no')">No documentation at all</button></div>
   </div>
   <div class="card hidden" id="gq3">
     <div class="card-label">Step 3 — MD Documents Unknown?</div>
-    <div class="cx danger"><span class="cx-icon">🚨</span><div><strong>Priority 1 — MD Unknown cancels everything</strong>Any MD/APN/PA explicitly documenting "unknown/uncertain/unclear" cancels all nursing, EMS, and S/Sx times → NO.<br><br>Exceptions: (a) same MD corrects it later with a specific time, OR (b) stated as reason for no tPA on CSF and another part of record has a specific time.</div></div>
+    <div class="cx danger"><span class="cx-icon"><i class="ph-duotone ph-warning-octagon" style="font-size:18px;color:#f87171;"></i></span><div><strong>Priority 1 — MD Unknown cancels everything</strong>Any MD/APN/PA explicitly documenting "unknown/uncertain/unclear" cancels all nursing, EMS, and S/Sx times → NO.<br><br>Exceptions: (a) same MD corrects it later with a specific time, OR (b) stated as reason for no tPA on CSF and another part of record has a specific time.</div></div>
     <div style="font-weight:600;margin:12px 0 10px;">Does any MD/APN/PA explicitly document LKW as unknown, uncertain, or unclear?</div>
     <div style="display:flex;gap:8px;flex-wrap:wrap;"><button class="btn" onclick="gAns(3,'yes')">Yes — MD says unknown</button><button class="btn ghost" onclick="gAns(3,'no')">No</button></div>
   </div>
   <div class="card hidden" id="gq4">
     <div class="card-label">Step 4 — Best Source</div>
-    <div class="cx tip"><span class="cx-icon">📋</span><div><strong>Column priority</strong>Code Stroke Form (Priority 2) → MD LKW/Normal (Priority 3) → RN LKW/Normal (Priority 3, Row 2) → MD S/Sx (Priority 4) → RN S/Sx (Priority 4, Row 2)</div></div>
+    <div class="cx tip"><span class="cx-icon"><i class="ph-duotone ph-clipboard-text" style="font-size:18px;color:#2dd4bf;"></i></span><div><strong>Column priority</strong>Code Stroke Form (Priority 2) → MD LKW/Normal (Priority 3) → RN LKW/Normal (Priority 3, Row 2) → MD S/Sx (Priority 4) → RN S/Sx (Priority 4, Row 2)</div></div>
     <div style="font-weight:600;margin:12px 0 10px;">What is the highest-priority source with a documented date/time?</div>
     <div style="display:flex;gap:8px;flex-wrap:wrap;"><button class="btn" onclick="gAns(4,'csf')">Code Stroke Form</button><button class="btn ghost" onclick="gAns(4,'md')">MD/APN/PA note</button><button class="btn ghost" onclick="gAns(4,'rn')">Nursing / EMS only</button></div>
   </div>
   <div class="card hidden" id="gq5">
     <div class="card-label">Step 5 — Multiple Times?</div>
-    <div class="cx warn"><span class="cx-icon">⚠️</span><div><strong>Resolution rules</strong><ul style="margin-top:6px;padding-left:16px;line-height:1.9;"><li>CSF specific time → wins</li><li>Multiple MD times (no CSF) → use <strong>earliest</strong></li><li>Multiple episodes with resolution → use <strong>most recent</strong> episode</li><li>Date LKW multiple dates → use <strong>earliest</strong></li></ul></div></div>
+    <div class="cx warn"><span class="cx-icon"><i class="ph-duotone ph-warning" style="font-size:18px;color:#fbbf24;"></i></span><div><strong>Resolution rules</strong><ul style="margin-top:6px;padding-left:16px;line-height:1.9;"><li>CSF specific time → wins</li><li>Multiple MD times (no CSF) → use <strong>earliest</strong></li><li>Multiple episodes with resolution → use <strong>most recent</strong> episode</li><li>Date LKW multiple dates → use <strong>earliest</strong></li></ul></div></div>
     <div style="font-weight:600;margin:12px 0 10px;">Are multiple conflicting times documented?</div>
     <div style="display:flex;gap:8px;flex-wrap:wrap;">
       <button class="btn ghost" onclick="gAns(5,'single')">No — single time</button>
@@ -441,7 +450,7 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
       <div><div class="res-field-label">Time LKW</div><div class="res-val plain" id="gr-time">—</div></div>
     </div>
     <div class="res-rule" id="gr-rat"></div>
-    <div class="btn-row"><button class="btn" onclick="window.print()">🖨 Print</button><button class="btn ghost" onclick="resetGuided()">↩ Start Over</button></div>
+    <div class="btn-row"><button class="btn" onclick="window.print()"><i class="ph ph-printer" style="vertical-align:middle;margin-right:4px;"></i>Print</button><button class="btn ghost" onclick="resetGuided()">↩ Start Over</button></div>
   </div>
 </div>
 
@@ -452,7 +461,7 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 
   <div class="card">
     <div class="card-label">LKW Documentation Priority Matrix</div>
-    <div class="cx info" style="margin-bottom:12px;"><span class="cx-icon">ℹ️</span><div>Column priority determines what <em>type</em> of documentation wins. Row priority determines <em>who</em> wins when the same column has multiple entries. The hierarchy shown here (1=Unknown, 2=CSF, 3=LKW/Normal, 4=S/Sx) is the spec-derived hierarchy.</div></div>
+    <div class="cx info" style="margin-bottom:12px;"><span class="cx-icon"><i class="ph-duotone ph-info" style="font-size:18px;color:#60a5fa;"></i></span><div>Column priority determines what <em>type</em> of documentation wins. Row priority determines <em>who</em> wins when the same column has multiple entries. The hierarchy shown here (1=Unknown, 2=CSF, 3=LKW/Normal, 4=S/Sx) is the spec-derived hierarchy.</div></div>
     <div style="overflow-x:auto;">
     <table class="px-table">
       <thead><tr><th>Source</th><th>Row Priority</th><th><span class="pri-badge pri-4">4</span> S/Sx Only</th><th><span class="pri-badge pri-3">3</span> LKW/Normal</th><th><span class="pri-badge pri-1">1</span> Unknown</th><th><span class="pri-badge pri-2">2</span> Code Stroke Form</th></tr></thead>
@@ -463,8 +472,8 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
     </table>
     </div>
     <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;">
-      <div class="cx danger" style="flex:1;min-width:220px;"><span class="cx-icon">🚨</span><div><strong>Time LKW — Multiple times</strong>Multiple S/Sx episodes → most recent. Multiple MD times → earliest. MD unknown → cancels ALL. No CSF + multiple times → MD first.</div></div>
-      <div class="cx warn" style="flex:1;min-width:220px;"><span class="cx-icon">⚠️</span><div><strong>Date LKW — Multiple dates</strong>Always use the <strong style="display:inline;">earliest</strong> date when multiple are documented.</div></div>
+      <div class="cx danger" style="flex:1;min-width:220px;"><span class="cx-icon"><i class="ph-duotone ph-warning-octagon" style="font-size:18px;color:#f87171;"></i></span><div><strong>Time LKW — Multiple times</strong>Multiple S/Sx episodes → most recent. Multiple MD times → earliest. MD unknown → cancels ALL. No CSF + multiple times → MD first.</div></div>
+      <div class="cx warn" style="flex:1;min-width:220px;"><span class="cx-icon"><i class="ph-duotone ph-warning" style="font-size:18px;color:#fbbf24;"></i></span><div><strong>Date LKW — Multiple dates</strong>Always use the <strong style="display:inline;">earliest</strong> date when multiple are documented.</div></div>
       
     </div>
   </div>
@@ -496,7 +505,7 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
       <div class="qr-row"><span class="qr-k">"Less than X hrs ago"</span><span class="qr-v">Use X → Arrival − X</span></div>
       <div class="qr-row"><span class="qr-k">"Just prior to arrival"</span><span class="qr-v">Use arrival time</span></div>
     </div>
-    <div class="qr-card"><h3>⏱ Calculators</h3>
+    <div class="qr-card"><h3><i class="ph-duotone ph-calculator" style="vertical-align:middle;margin-right:4px;color:var(--teal);"></i> Calculators</h3>
       <div style="margin-bottom:10px;"><div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.08em;margin-bottom:6px;">MILITARY TIME CONVERTER</div>
         <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
           <input class="calc-in" id="conv-in" placeholder="5:31 PM" oninput="doConvert()" style="width:100px;"/>
@@ -518,12 +527,12 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
   </div>
 
   <div class="card"><div class="card-label">Top Abstractor Pitfalls</div>
-    <div class="cx danger"><span class="cx-icon">🚨</span><div><strong>Pitfall #1 — Using S/Sx when explicit LKW is documented</strong>"Patient normal at 8 PM" + "symptoms at 8:30 PM" → LKW = 20:00, not 20:30. Explicit LKW always beats symptom onset.</div></div>
-    <div class="cx danger"><span class="cx-icon">🚨</span><div><strong>Pitfall #2 — Ignoring MD "unknown" because nursing has a time</strong>MD Unknown (Priority 1) cancels everything. One MD saying unknown = NO. RN unknown = irrelevant.</div></div>
-    <div class="cx warn"><span class="cx-icon">⚠️</span><div><strong>Pitfall #3 — Forgetting to advance date at midnight</strong>24:00 on 11-24 → 00:00 on 11-25. Always change the Date LKW when converting midnight.</div></div>
-    <div class="cx warn"><span class="cx-icon">⚠️</span><div><strong>Pitfall #4 — Assuming wake-up stroke = unknown</strong>If the physician documents a bedtime as LKW — use it. Only "unknown" if MD explicitly states it.</div></div>
-    <div class="cx tip"><span class="cx-icon">💡</span><div><strong>Pitfall #5 — Stroke Education Form ≠ Code Stroke Form</strong>Stroke Education Form and Core Measure Form are excluded. Only acute stroke response forms qualify as CSF.</div></div>
-    <div class="cx tip"><span class="cx-icon">💡</span><div><strong>Pitfall #6 — Using first episode instead of last</strong>Symptoms → resolved → recurred = use most recent episode before arrival. Grid note: "symptom onset/resolved → closest to arrival."</div></div>
+    <div class="cx danger"><span class="cx-icon"><i class="ph-duotone ph-warning-octagon" style="font-size:18px;color:#f87171;"></i></span><div><strong>Pitfall #1 — Using S/Sx when explicit LKW is documented</strong>"Patient normal at 8 PM" + "symptoms at 8:30 PM" → LKW = 20:00, not 20:30. Explicit LKW always beats symptom onset.</div></div>
+    <div class="cx danger"><span class="cx-icon"><i class="ph-duotone ph-warning-octagon" style="font-size:18px;color:#f87171;"></i></span><div><strong>Pitfall #2 — Ignoring MD "unknown" because nursing has a time</strong>MD Unknown (Priority 1) cancels everything. One MD saying unknown = NO. RN unknown = irrelevant.</div></div>
+    <div class="cx warn"><span class="cx-icon"><i class="ph-duotone ph-warning" style="font-size:18px;color:#fbbf24;"></i></span><div><strong>Pitfall #3 — Forgetting to advance date at midnight</strong>24:00 on 11-24 → 00:00 on 11-25. Always change the Date LKW when converting midnight.</div></div>
+    <div class="cx warn"><span class="cx-icon"><i class="ph-duotone ph-warning" style="font-size:18px;color:#fbbf24;"></i></span><div><strong>Pitfall #4 — Assuming wake-up stroke = unknown</strong>If the physician documents a bedtime as LKW — use it. Only "unknown" if MD explicitly states it.</div></div>
+    <div class="cx tip"><span class="cx-icon"><i class="ph-duotone ph-lightbulb" style="font-size:18px;color:#2dd4bf;"></i></span><div><strong>Pitfall #5 — Stroke Education Form ≠ Code Stroke Form</strong>Stroke Education Form and Core Measure Form are excluded. Only acute stroke response forms qualify as CSF.</div></div>
+    <div class="cx tip"><span class="cx-icon"><i class="ph-duotone ph-lightbulb" style="font-size:18px;color:#2dd4bf;"></i></span><div><strong>Pitfall #6 — Using first episode instead of last</strong>Symptoms → resolved → recurred = use most recent episode before arrival. Grid note: "symptom onset/resolved → closest to arrival."</div></div>
   </div>
 </div>
 
@@ -543,7 +552,7 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
     <div class="card" id="quiz-card-body"></div>
   </div>
   <div id="quiz-wt-redirect" class="hidden">
-    <div class="cx tip"><span class="cx-icon">🩺</span><div>Full step-by-step case walkthroughs are in the <strong>Case Walkthroughs</strong> tab.</div></div>
+    <div class="cx tip"><span class="cx-icon"><i class="ph-duotone ph-stethoscope" style="font-size:18px;color:#2dd4bf;"></i></span><div>Full step-by-step case walkthroughs are in the <strong>Case Walkthroughs</strong> tab.</div></div>
     <button class="btn" style="margin-top:12px;" onclick="showTab('cases')">Go to Case Walkthroughs →</button>
   </div>
 </div>
@@ -553,7 +562,7 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
   <div class="sh">Case Walkthroughs</div>
   <p class="ss">Step-by-step cases that explain the abstraction reasoning at every decision point.</p>
   <div id="case-selector">
-    <div class="cx tip"><span class="cx-icon">🩺</span><div><strong>How to use</strong>Select a case, then work through each step. The trainer's reasoning appears at each decision point.</div></div>
+    <div class="cx tip"><span class="cx-icon"><i class="ph-duotone ph-stethoscope" style="font-size:18px;color:#2dd4bf;"></i></span><div><strong>How to use</strong>Select a case, then work through each step. The trainer's reasoning appears at each decision point.</div></div>
     <div class="case-grid" id="case-card-grid"></div>
   </div>
   <div id="case-runner" class="hidden">
@@ -631,7 +640,7 @@ function resolveGrid(){
   // RULE 5: RN LKW/Normal (Priority 3 col, Row 2) — no MD LKW
   if(ht(rnLkwT)){
     const d=hd(rnLkwD)?rnLkwD:'[confirm date]';
-    showR('YES',d,rnLkwT,'RN — LKW/Normal (Priority 3, Row 2)','No MD LKW time and no MD "unknown." Nursing documented LKW/Normal with a specific time. Use nursing LKW time. Last Known Well = Yes.<br><br>⚠️ Confirm no physician note conflicts with this — a conflicting physician time or "unknown" would change this result.');
+    showR('YES',d,rnLkwT,'RN — LKW/Normal (Priority 3, Row 2)','No MD LKW time and no MD "unknown." Nursing documented LKW/Normal with a specific time. Use nursing LKW time. Last Known Well = Yes.<br><br><i class="ph-duotone ph-warning" style="color:#fbbf24;vertical-align:middle;"></i> Confirm no physician note conflicts with this — a conflicting physician time or "unknown" would change this result.');
     return;
   }
   // RULE 6: MD S/Sx (Priority 4 col, Row 1)
@@ -644,7 +653,7 @@ function resolveGrid(){
   // RULE 7: RN S/Sx (Priority 4 col, Row 2) — lowest priority
   if(ht(rnSxT)){
     const d=hd(rnSxD)?rnSxD:'[confirm date]';
-    showR('YES',d,rnSxT,'RN — S/Sx Only (Priority 4, Row 2 — lowest)','No MD documentation of any kind. No CSF. Using nursing S/Sx onset time as last resort.<br><br>⚠️ <strong>Strongly verify</strong> there is truly no physician documentation or Code Stroke Form before relying on nursing S/Sx only.');
+    showR('YES',d,rnSxT,'RN — S/Sx Only (Priority 4, Row 2 — lowest)','No MD documentation of any kind. No CSF. Using nursing S/Sx onset time as last resort.<br><br><i class="ph-duotone ph-warning" style="color:#fbbf24;vertical-align:middle;"></i> <strong>Strongly verify</strong> there is truly no physician documentation or Code Stroke Form before relying on nursing S/Sx only.');
     return;
   }
   // RULE 8: Nothing
@@ -732,7 +741,7 @@ function renderQ(){
   document.getElementById('qscore-label').textContent=`Score: ${score} / ${answered}`;
   document.getElementById('quiz-card-body').innerHTML=`
     <div class="q-tags">${q.tags.map(t=>`<span class="qtag">${t}</span>`).join('')}</div>
-    <div class="scenario-box"><span class="slabel">📄 Clinical Scenario</span>${q.sc}</div>
+    <div class="scenario-box"><span class="slabel"><i class="ph-duotone ph-file-text" style="vertical-align:middle;margin-right:4px;color:#fbbf24;"></i>Clinical Scenario</span>${q.sc}</div>
     <div class="q-opts">${q.opts.map((o,i)=>`<button class="q-opt" onclick="ansQ(${i},this)">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}</div>
     <div class="q-feedback" id="qfb"></div>
     <div style="margin-top:10px;"><button class="btn" id="qnext" onclick="nextQ()" style="display:none;">Next →</button></div>`;
@@ -742,8 +751,8 @@ function ansQ(i,btn){
   document.querySelectorAll('.q-opt').forEach(b=>b.onclick=null);
   document.querySelectorAll('.q-opt').forEach((b,j)=>{if(j===q.correct)b.classList.add('correct');});
   const fb=document.getElementById('qfb');
-  if(i===q.correct){score++;btn.classList.add('correct');fb.className='q-feedback correct show';fb.innerHTML=`✅ <strong>Correct!</strong> ${q.fb}`;}
-  else{btn.classList.add('wrong');fb.className='q-feedback wrong show';fb.innerHTML=`❌ <strong>Incorrect.</strong> ${q.fb}`;}
+  if(i===q.correct){score++;btn.classList.add('correct');fb.className='q-feedback correct show';fb.innerHTML=`<i class="ph-duotone ph-check-circle" style="color:#4ade80;vertical-align:middle;margin-right:4px;"></i> <strong>Correct!</strong> ${q.fb}`;}
+  else{btn.classList.add('wrong');fb.className='q-feedback wrong show';fb.innerHTML=`<i class="ph-duotone ph-x-circle" style="color:#f87171;vertical-align:middle;margin-right:4px;"></i> <strong>Incorrect.</strong> ${q.fb}`;}
   document.getElementById('qscore-label').textContent=`Score: ${score} / ${answered}`;
   document.getElementById('qnext').style.display='inline-block';
 }
@@ -795,15 +804,19 @@ function renderCaseStep(){
   const steps=activeCase.steps;
   document.getElementById('case-dots').innerHTML=steps.map((_,i)=>`<div class="wt-dot ${i<caseStep?'done':i===caseStep?'cur':''}"></div>`).join('');
   const s=steps[caseStep];
-  const icons={tip:'💡',warn:'⚠️',danger:'🚨'};
+  const icons={
+    tip:'<i class="ph-duotone ph-lightbulb" style="font-size:18px;color:#2dd4bf;"></i>',
+    warn:'<i class="ph-duotone ph-warning" style="font-size:18px;color:#fbbf24;"></i>',
+    danger:'<i class="ph-duotone ph-warning-octagon" style="font-size:18px;color:#f87171;"></i>'
+  };
   let html='';
   if(s.type==='chart'){
-    html=`<div class="card"><div class="card-label">Step ${caseStep+1} of ${steps.length} — Chart Documentation</div><div class="chart-box"><span class="clabel">📄 Chart Excerpt</span>${s.content}</div><div class="btn-row"><button class="btn" onclick="caseNext()">Continue →</button></div></div>`;
+    html=`<div class="card"><div class="card-label">Step ${caseStep+1} of ${steps.length} — Chart Documentation</div><div class="chart-box"><span class="clabel"><i class="ph-duotone ph-file-text" style="vertical-align:middle;margin-right:4px;color:#fbbf24;"></i>Chart Excerpt</span>${s.content}</div><div class="btn-row"><button class="btn" onclick="caseNext()">Continue →</button></div></div>`;
   }else if(s.type==='step'){
     html=`<div class="card"><div class="card-label">Step ${caseStep+1} of ${steps.length} — ${s.label}</div><div style="font-size:13.5px;color:#c4d8ec;line-height:1.7;margin-bottom:10px;">${s.content}</div><div class="cx ${s.cx}"><span class="cx-icon">${icons[s.cx]}</span><div>${s.cxt}</div></div><div class="btn-row"><button class="btn ghost" onclick="casePrev()">← Back</button><button class="btn" onclick="caseNext()">Continue →</button></div></div>`;
   }else if(s.type==='result'){
     const yn=s.yn==='YES';
-    html=`<div class="card"><div class="card-label">Step ${caseStep+1} of ${steps.length} — Final Abstraction</div><div class="res-fields" style="margin-bottom:14px;"><div><div class="res-field-label">LKW Y/N</div><div class="res-val ${yn?'yes':'no'}">${s.yn}</div></div><div><div class="res-field-label">Date LKW</div><div class="res-val plain">${s.date}</div></div><div><div class="res-field-label">Time LKW</div><div class="res-val plain">${s.time}</div></div></div><div class="cx ok"><span class="cx-icon">✅</span><div><strong>Rationale</strong>${s.rat}</div></div><div class="btn-row"><button class="btn ghost" onclick="casePrev()">← Back</button><button class="btn" onclick="backToCases()">← All Cases</button></div></div>`;
+    html=`<div class="card"><div class="card-label">Step ${caseStep+1} of ${steps.length} — Final Abstraction</div><div class="res-fields" style="margin-bottom:14px;"><div><div class="res-field-label">LKW Y/N</div><div class="res-val ${yn?'yes':'no'}">${s.yn}</div></div><div><div class="res-field-label">Date LKW</div><div class="res-val plain">${s.date}</div></div><div><div class="res-field-label">Time LKW</div><div class="res-val plain">${s.time}</div></div></div><div class="cx ok"><span class="cx-icon"><i class="ph-duotone ph-check-circle" style="font-size:18px;color:#4ade80;"></i></span><div><strong>Rationale</strong>${s.rat}</div></div><div class="btn-row"><button class="btn ghost" onclick="casePrev()">← Back</button><button class="btn" onclick="backToCases()">← All Cases</button></div></div>`;
   }
   document.getElementById('case-step-body').innerHTML=html;
 }
