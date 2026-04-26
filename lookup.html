@@ -21,7 +21,6 @@
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height:100vh;font-size:14px;}
 
-/* BAR */
 .bar{background:var(--navy);color:white;height:50px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;position:sticky;top:0;z-index:90;box-shadow:0 2px 10px rgba(0,0,0,.3);}
 .brand{display:flex;align-items:baseline;gap:8px;}
 .brand-name{font-family:var(--serif);font-size:17px;font-weight:700;color:white;}
@@ -36,10 +35,8 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 .btn-purple{background:var(--purple);color:white;}
 .btn-purple:hover{background:var(--purple2);}
 
-/* LAYOUT */
 .layout{display:grid;grid-template-columns:228px 1fr;min-height:calc(100vh - 50px);}
 
-/* SIDEBAR */
 .sidebar{background:white;border-right:1px solid var(--border);position:sticky;top:50px;height:calc(100vh - 50px);overflow-y:auto;display:flex;flex-direction:column;}
 .sb-lbl{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:var(--mid);padding:13px 15px 4px;display:block;}
 .sb-item{display:flex;align-items:center;justify-content:space-between;padding:7px 15px;cursor:pointer;font-size:12.5px;color:#4a5268;font-weight:500;transition:all .12s;border-left:3px solid transparent;}
@@ -55,10 +52,8 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 .ctag.on{background:var(--purple);border-color:var(--purple);color:white;}
 .ctag-n{opacity:.5;font-size:8.5px;margin-left:1px;}
 
-/* MAIN */
 .main{padding:18px 22px;min-width:0;}
 
-/* LOADING BANNER */
 .loading-bar{display:flex;align-items:center;gap:10px;background:var(--teal-bg);border:1px solid rgba(11,122,120,.25);border-radius:7px;padding:10px 14px;margin-bottom:12px;font-size:12.5px;color:var(--teal);}
 .loading-bar.hidden{display:none;}
 .loading-bar.error{background:var(--red-bg);border-color:rgba(181,48,48,.25);color:var(--red);}
@@ -66,14 +61,12 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 .spin{width:14px;height:14px;border:2px solid rgba(11,122,120,.3);border-top-color:var(--teal);border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0;}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* SEARCH */
 .search-wrap{position:relative;margin-bottom:12px;}
 .si{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--mid);pointer-events:none;font-size:14px;}
 .search{width:100%;padding:10px 14px 10px 34px;border:1.5px solid var(--border);border-radius:7px;font-family:var(--sans);font-size:13.5px;color:var(--ink);background:white;outline:none;transition:border-color .13s;}
 .search:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(11,122,120,.09);}
 .search::placeholder{color:#a0aab8;}
 
-/* ACTIVE TAG BAR */
 .atbar{display:none;align-items:center;gap:6px;flex-wrap:wrap;background:var(--purple-bg);border:1px solid rgba(84,48,168,.18);border-radius:6px;padding:6px 11px;margin-bottom:11px;}
 .atbar.on{display:flex;}
 .atbar-lbl{font-size:10px;font-weight:800;color:var(--purple);text-transform:uppercase;letter-spacing:.6px;}
@@ -82,7 +75,6 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 .atpill button:hover{opacity:1;}
 .clear-at{font-size:10.5px;color:var(--purple);cursor:pointer;font-weight:700;margin-left:auto;text-decoration:underline;}
 
-/* FILTER CHIPS */
 .frow{display:flex;gap:5px;margin-bottom:12px;flex-wrap:wrap;align-items:center;}
 .fchip{font-size:11px;font-weight:600;padding:4px 11px;border-radius:14px;cursor:pointer;border:1.5px solid var(--border);background:white;color:#4a5268;transition:all .12s;}
 .fchip:hover{border-color:var(--teal);color:var(--teal);}
@@ -92,12 +84,10 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 .fchip.fg{border-color:#cc7070;color:var(--red);}
 .fchip.fg.on{background:var(--red);border-color:var(--red);color:white;}
 
-/* RESULTS */
 .rhdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px;}
 .rcnt{font-size:11.5px;color:var(--mid);font-weight:500;}
 .rcnt strong{color:var(--navy);}
 
-/* QA CARD */
 .qa{background:white;border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden;transition:box-shadow .13s;}
 .qa:hover{box-shadow:0 3px 12px rgba(0,0,0,.07);}
 .qa-hdr{padding:12px 14px 10px;cursor:pointer;display:flex;gap:10px;align-items:flex-start;}
@@ -121,10 +111,7 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 .qa-src{font-size:10px;color:var(--mid);font-style:italic;display:flex;align-items:center;gap:4px;}
 .sdot{width:5px;height:5px;border-radius:50%;background:var(--teal);flex-shrink:0;}
 .qa-tags{display:flex;gap:3px;flex-wrap:wrap;}
-.del-btn{font-family:var(--sans);font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;cursor:pointer;border:1px solid var(--red-bg);background:var(--red-bg);color:var(--red);transition:all .12s;white-space:nowrap;flex-shrink:0;}
-.del-btn:hover{background:var(--red);color:white;border-color:var(--red);}
 
-/* ADD PANEL */
 .add-panel{display:none;background:white;border:1.5px solid var(--teal);border-radius:8px;padding:16px 18px;margin-bottom:14px;box-shadow:0 3px 16px rgba(11,122,120,.1);}
 .add-panel.open{display:block;}
 .add-panel h3{font-family:var(--serif);font-size:16px;color:var(--navy);margin-bottom:4px;}
@@ -137,7 +124,6 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 .fta{min-height:76px;}
 .factions{display:flex;gap:7px;justify-content:flex-end;margin-top:3px;}
 
-/* TAG WIDGET */
 .tw{border:1.5px solid var(--border);border-radius:5px;padding:5px 7px;background:var(--slate);min-height:36px;cursor:text;display:flex;flex-wrap:wrap;gap:4px;align-items:center;transition:border-color .13s;}
 .tw:focus-within{border-color:var(--teal);background:white;}
 .tchip{font-family:var(--mono);font-size:10.5px;font-weight:600;background:var(--purple-bg);color:var(--purple);border:1px solid rgba(84,48,168,.25);border-radius:9px;padding:2px 6px 2px 8px;display:flex;align-items:center;gap:3px;}
@@ -145,7 +131,6 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 .tchip button:hover{opacity:1;}
 .ttxt{border:none;outline:none;font-family:var(--mono);font-size:11.5px;background:transparent;color:var(--ink);flex:1;min-width:90px;}
 
-/* SUGGESTION PANELS */
 .sug-panel{margin-top:6px;padding:8px 10px;background:#fafbfd;border:1px solid var(--border);border-radius:6px;display:none;}
 .sug-panel.on{display:block;}
 .sug-row{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px;}
@@ -155,7 +140,6 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 .sug-chip.match{border-style:solid;border-color:rgba(84,48,168,.5);}
 .sug-hint{font-size:9px;color:var(--mid);margin-left:4px;font-style:italic;}
 
-/* MODALS */
 .moverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.48);z-index:200;align-items:center;justify-content:center;}
 .moverlay.open{display:flex;}
 .modal{background:white;border-radius:10px;padding:22px;max-width:680px;width:94%;box-shadow:0 20px 60px rgba(0,0,0,.28);max-height:90vh;overflow-y:auto;}
@@ -163,7 +147,10 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 .modal-sub{font-size:12px;color:var(--mid);margin-bottom:15px;line-height:1.55;}
 
 /* TAG MANAGER */
-.tm-add{background:var(--teal-bg);border-radius:7px;padding:12px;margin-bottom:14px;display:grid;grid-template-columns:120px 1fr 1fr auto;gap:8px;align-items:end;}
+.tm-notice{font-size:11.5px;color:var(--amber);background:var(--amber-bg);border:1px solid rgba(194,122,0,.2);border-radius:5px;padding:8px 11px;margin-bottom:14px;line-height:1.55;}
+.tm-section{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--mid);margin:16px 0 8px;padding-bottom:4px;border-bottom:1px solid var(--border);}
+.tm-add{background:var(--teal-bg);border:1px solid rgba(11,122,120,.2);border-radius:7px;padding:14px;margin-bottom:6px;}
+.tm-add-grid{display:grid;grid-template-columns:130px 1fr 1fr;gap:8px;margin-bottom:10px;}
 .tm-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:14px;}
 .tm-table th{background:var(--navy);color:white;padding:7px 10px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;}
 .tm-table td{padding:7px 10px;border-bottom:1px solid var(--border);vertical-align:top;}
@@ -177,8 +164,10 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 .tb-del{background:var(--red-bg);color:var(--red);}
 .tb-edit:hover{background:var(--teal);color:white;}
 .tb-del:hover{background:var(--red);color:white;}
+.tag-src-pill{font-size:9px;font-weight:700;padding:1px 6px;border-radius:3px;text-transform:uppercase;margin-left:4px;}
+.tag-src-local{background:#eef0f5;color:var(--mid);}
+.tag-src-sheet{background:var(--teal-bg);color:var(--teal);}
 
-/* PASTE MODAL */
 .tag-review{background:var(--purple-bg);border:1px solid rgba(84,48,168,.18);border-radius:6px;padding:10px 13px;margin-bottom:12px;}
 .tag-review h4{font-size:10px;font-weight:800;color:var(--purple);text-transform:uppercase;letter-spacing:.6px;margin-bottom:7px;}
 .rrow{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px;}
@@ -187,24 +176,16 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 .rchip.rej{border-color:var(--border);background:#eef0f5;color:var(--mid);text-decoration:line-through;}
 .mactions{display:flex;gap:7px;justify-content:flex-end;margin-top:14px;}
 
-/* EMPTY */
 .empty{text-align:center;padding:48px 20px;color:var(--mid);}
 .empty h3{font-family:var(--serif);font-size:19px;color:#5a6478;margin-bottom:6px;}
 
-/* TOAST */
 .toast{position:fixed;bottom:18px;right:18px;background:var(--navy);color:white;padding:9px 16px;border-radius:6px;font-size:12.5px;font-weight:600;box-shadow:0 4px 16px rgba(0,0,0,.25);transform:translateY(60px);opacity:0;transition:all .28s;z-index:999;}
 .toast.on{transform:translateY(0);opacity:1;}
 
 @media print{.bar,.sidebar,.frow,.search-wrap,.add-panel,.atbar,.bar-btns{display:none!important;}.layout{grid-template-columns:1fr;}.main{padding:0;}.qa-body{display:block!important;}.tog{display:none;}}
 </style>
-  <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QJPP46JWX3"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-QJPP46JWX3');
-</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-QJPP46JWX3');</script>
 </head>
 <body>
 
@@ -216,7 +197,7 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
     <span class="brand-scope">Stroke &amp; ED Throughput · Q&amp;A Lookup</span>
   </div>
   <div class="bar-btns">
-    <a href="index.html" class="btn btn-ghost" style="text-decoration:none" aria-label="Back to home">← Home</a>
+    <a href="index.html" class="btn btn-ghost" style="text-decoration:none">← Home</a>
     <button class="btn btn-ghost" onclick="toggleAdd()">+ Add Q&amp;A</button>
     <button class="btn btn-ghost" onclick="openPaste()">📋 Paste Raw</button>
     <button class="btn btn-purple" onclick="openTM()">🏷 Manage Tags</button>
@@ -243,20 +224,14 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
   </div>
 
   <div class="main">
-
-    <!-- LOADING BANNER -->
     <div class="loading-bar" id="loadingBar">
       <div class="spin"></div>
-      <span id="loadingMsg">Loading Q&amp;A entries from Google Sheets…</span>
+      <span id="loadingMsg">Loading entries from Google Sheets…</span>
     </div>
 
-    <!-- ADD PANEL -->
     <div class="add-panel" id="addPanel">
       <h3>Add New Q&amp;A Entry</h3>
-      <div class="add-notice">
-        ⏳ <strong>Submissions go to Google Sheets for curator review.</strong>
-        Your entry will appear on the site once approved — usually within 24 hours.
-      </div>
+      <div class="add-notice">⏳ <strong>Submissions go to Google Sheets for curator review.</strong> Your entry will appear on the site once approved.</div>
       <div class="fg2">
         <div class="full"><label class="flbl">Question / Scenario</label><textarea class="fta" id="fq" placeholder="Describe the abstraction scenario…"></textarea></div>
         <div class="full"><label class="flbl">Answer / Guidance</label><textarea class="fta" id="fa" placeholder="The authoritative answer or interpretation…"></textarea></div>
@@ -269,12 +244,9 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
         <div class="full">
           <label class="flbl">Keyword Tags — type &amp; press Enter, or click suggestions</label>
           <div class="tw" id="tw" onclick="document.getElementById('ttxt').focus()">
-            <input class="ttxt" id="ttxt" placeholder="LKW, TNK, comfort measures, AMA…" onkeydown="handleTagKey(event)" oninput="onTagType(this.value)"/>
+            <input class="ttxt" id="ttxt" placeholder="LKW, TNK, comfort measures…" onkeydown="handleTagKey(event)" oninput="onTagType(this.value)"/>
           </div>
-          <div class="sug-panel" id="sugPanel">
-            <div class="sug-lbl" id="sugLbl">Suggestions</div>
-            <div class="sug-row" id="sugRow"></div>
-          </div>
+          <div class="sug-panel" id="sugPanel"><div class="sug-lbl" id="sugLbl">Suggestions</div><div class="sug-row" id="sugRow"></div></div>
         </div>
       </div>
       <div class="factions">
@@ -283,7 +255,6 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
       </div>
     </div>
 
-    <!-- ACTIVE TAG FILTER -->
     <div class="atbar" id="atbar">
       <span class="atbar-lbl">🏷 Tag filter:</span>
       <div id="atpills" style="display:flex;gap:5px;flex-wrap:wrap;"></div>
@@ -292,7 +263,7 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 
     <div class="search-wrap">
       <span class="si">🔍</span>
-      <input class="search" id="srch" placeholder="Search by scenario, keyword, tag, data element, abbreviation…" oninput="render()"/>
+      <input class="search" id="srch" placeholder="Search by scenario, keyword, tag, data element…" oninput="render()"/>
     </div>
 
     <div class="frow">
@@ -308,34 +279,46 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
   </div>
 </div>
 
-<!-- ══ TAG MANAGER MODAL ══ -->
+<!-- TAG MANAGER MODAL -->
 <div class="moverlay" id="tmModal">
-  <div class="modal" style="max-width:700px">
+  <div class="modal" style="max-width:740px">
     <h3>🏷 Tag Manager</h3>
     <p class="modal-sub">
-      Each tag has <strong>aliases</strong> — the words and phrases that trigger it during auto-detection.
-      <strong>Related tags</strong> are shown as suggestions when an abstractor uses this tag.
-      Changes save locally.
+      Tags from Google Sheets <span class="tag-src-pill tag-src-sheet">SHEET</span> are curator-approved and shared across all users.
+      Tags you add here <span class="tag-src-pill tag-src-local">LOCAL</span> are browser-only until you submit them for review.
     </p>
-    <div class="tm-add">
-      <div><label class="flbl">Tag Name</label><input class="fi" id="nt-n" placeholder="e.g. LKW" style="font-family:var(--mono);font-weight:600"/></div>
-      <div><label class="flbl">Aliases — comma separated</label><input class="fi" id="nt-a" placeholder="last known well, lkn, lnk, last seen normal"/></div>
-      <div><label class="flbl">Related Tags — comma separated</label><input class="fi" id="nt-r" placeholder="TLKW, DLKW, onset, PTA"/></div>
-      <div><label class="flbl">&nbsp;</label><button class="btn btn-teal" style="font-size:11px;padding:6px 12px;white-space:nowrap" onclick="addTagDef()">+ Add</button></div>
+
+    <div class="tm-notice">
+      ➕ <strong>Suggest a new tag below</strong> — it goes to Google Sheets for curator review before appearing site-wide.
+      In the meantime it saves locally in your browser so you can use it right away.
     </div>
+
+    <div class="tm-section">Suggest a New Tag</div>
+    <div class="tm-add">
+      <div class="tm-add-grid">
+        <div><label class="flbl">Tag Name</label><input class="fi" id="nt-n" placeholder="e.g. LKW" style="font-family:var(--mono);font-weight:600"/></div>
+        <div><label class="flbl">Aliases — comma separated</label><input class="fi" id="nt-a" placeholder="last known well, lkn, last seen normal"/></div>
+        <div><label class="flbl">Related Tags — comma separated</label><input class="fi" id="nt-r" placeholder="TLKW, DLKW, onset"/></div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;">
+        <button class="btn btn-teal" style="font-size:11px;padding:6px 14px;" id="addTagBtn" onclick="addTagDef()">Submit Tag for Review</button>
+      </div>
+    </div>
+
+    <div class="tm-section">Active Tags</div>
     <table class="tm-table">
-      <thead><tr><th style="width:100px">Tag</th><th>Aliases</th><th>Related Tags</th><th style="width:75px">Edit</th></tr></thead>
+      <thead><tr><th style="width:110px">Tag</th><th>Aliases</th><th>Related Tags</th><th style="width:60px">Source</th><th style="width:75px">Actions</th></tr></thead>
       <tbody id="tmBody"></tbody>
     </table>
     <div class="mactions"><button class="btn btn-teal" onclick="closeTM()">Done</button></div>
   </div>
 </div>
 
-<!-- ══ PASTE MODAL ══ -->
+<!-- PASTE MODAL -->
 <div class="moverlay" id="pasteModal">
   <div class="modal" style="max-width:520px">
     <h3>📋 Paste Raw Q&amp;A</h3>
-    <p class="modal-sub">Paste text from TJC PMN, CMS clarifications, or training notes. Click "Preview Tags" to review auto-detected tags before submitting for curator review.</p>
+    <p class="modal-sub">Paste text from TJC PMN, CMS clarifications, or training notes. Preview tags before submitting for curator review.</p>
     <textarea id="pasteRaw" style="width:100%;font-family:var(--mono);font-size:11px;padding:9px;border:1.5px solid var(--border);border-radius:5px;min-height:120px;resize:vertical;margin-bottom:10px;outline:none;color:var(--ink);" placeholder="Q: If a patient woke up with stroke symptoms…&#10;&#10;A: Per TJC guidance…"></textarea>
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px">
       <div><label class="flbl">Measure</label><select class="fsel" id="pm"><option value="STK">STK</option><option value="ASR-IP">ASR-IP</option><option value="ED-OP">ED-OP</option></select></div>
@@ -345,7 +328,7 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
     <div class="tag-review" id="tagReview" style="display:none">
       <h4>🏷 Auto-detected tags — click to accept or reject:</h4>
       <div class="rrow" id="rrow"></div>
-      <div style="font-size:10.5px;color:var(--mid);font-style:italic">Purple = accepted &nbsp;·&nbsp; Gray = rejected &nbsp;·&nbsp; Click to toggle</div>
+      <div style="font-size:10.5px;color:var(--mid);font-style:italic">Purple = accepted · Gray = rejected · Click to toggle</div>
     </div>
     <div class="mactions">
       <button class="btn btn-ghost" style="font-size:11px;padding:5px 11px" onclick="closePaste()">Cancel</button>
@@ -359,67 +342,66 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 
 <script>
 // ══════════════════════════════════════════════════
-//  GOOGLE SHEETS CONFIG
+//  CONFIG
 // ══════════════════════════════════════════════════
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzTuYLUTw9dCPPjCzts68c_xGO1NCkaG3Sy2XpNRr8wQtcLLkeZeHWh5zE21M0Q1hurIg/exec';
-const SHEET_ID   = '1q3wyNfmBQgZMMvfTD0Qt7L7FEz3na2fzL-LGJuAqido';
-const CACHE_KEY  = 'qc-sheets-cache-v1';
-const TAGS_KEY   = 'qc-s-ed-tags-v1';
-const CACHE_TTL  = 5 * 60 * 1000; // 5 minutes
+const SCRIPT_URL  = 'https://script.google.com/macros/s/AKfycbzTuYLUTw9dCPPjCzts68c_xGO1NCkaG3Sy2XpNRr8wQtcLLkeZeHWh5zE21M0Q1hurIg/exec';
+const CACHE_KEY   = 'qc-sheets-cache-v1';
+const TAGS_KEY    = 'qc-local-tags-v2';        // local-only / pending tags
+const CACHE_TTL   = 5 * 60 * 1000;
 
 // ══════════════════════════════════════════════════
-//  TAG TAXONOMY (unchanged from original)
+//  DEFAULT TAG TAXONOMY
 // ══════════════════════════════════════════════════
 const DEFAULT_TAGS = [
-  { name:'LKW', aliases:['last known well','lkw','last known normal','last seen normal','last seen well','lkn','lnk','known well','last neuro normal','neurological baseline','seen normal','known to be well','well at'], related:['TLKW','DLKW','onset','PTA','in-house stroke','found down'] },
-  { name:'TLKW', aliases:['time last known well','tlkw','time lkw','time of lkw','lkw time','what time lkw','time last seen normal','time last seen well'], related:['LKW','DLKW','onset','arrival time'] },
-  { name:'DLKW', aliases:['date last known well','dlkw','date lkw','date of lkw','lkw date'], related:['LKW','TLKW'] },
-  { name:'onset', aliases:['onset','symptom onset','symptoms began','symptoms started','signs began','first symptoms','first noted','first sign','began having','started having','noticed','deficits began','deficits started','neurological symptoms'], related:['LKW','TLKW','PTA','in-house stroke'] },
-  { name:'PTA', aliases:['pta','prior to arrival','pre-hospital','prehospital','before arrival','ems','ambulance','brought in by ems','911','transported by ems','ems report','paramedic','run report','field'], related:['LKW','onset','arrival time','transfer','in-house stroke'] },
-  { name:'in-house stroke', aliases:['in-house stroke','in house stroke','in-hospital stroke','hospital acquired stroke','developed after arrival','symptoms after arrival','stroke after arrival','developed in hospital','while admitted','inpatient stroke','occurred in-house'], related:['LKW','onset','arrival time'] },
-  { name:'found down', aliases:['found down','found unresponsive','found on floor','unwitnessed','unknown onset','unknown lkw','last seen','last seen at','unable to determine lkw','unknown last known well'], related:['LKW','TLKW','onset','wake-up stroke'] },
-  { name:'wake-up stroke', aliases:['wake up stroke','wake-up stroke','woke up','woke with','awakened with','awoke with','sleep onset','woke to find','found upon awakening','morning symptoms','overnight stroke'], related:['LKW','found down','TLKW','onset'] },
-  { name:'TNK', aliases:['tnk','tenecteplase','tpa','t-pa','tissue plasminogen activator','alteplase','activase','thrombolytic','clot buster','iv tpa','iv alteplase','lytic','lytics','rtpa','r-tpa'], related:['time window','reason not given','extending tPA','LKW','TLKW'] },
-  { name:'time window', aliases:['time window','within window','3.5 hours','210 minutes','3 hours','outside window','beyond window','door to needle','dtn','needle time','time to tpa','tpa window','within 3','within 210'], related:['TNK','LKW','TLKW','extending tPA'] },
-  { name:'extending tPA', aliases:['extending','reason for extending','extended window','beyond 3 hours','beyond 3.5','late tpa','tpa delay','delay in tpa','reason extending','after window'], related:['TNK','time window','reason not given'] },
-  { name:'reason not given', aliases:['reason not given','reason not initiating','contraindication','contraindicated','why no tpa','tpa not given','refused tpa','declined tpa','patient refused','patient declined','rapid improvement','neurological improvement','resolving'], related:['TNK','extending tPA','comfort measures','CMO'] },
-  { name:'antithrombotic', aliases:['antithrombotic','antithrombotic therapy','antiplatelet','aspirin','asa','plavix','clopidogrel','anticoagulation','warfarin','coumadin','xa inhibitor','eliquis','apixaban','xarelto','rivaroxaban','heparin','lovenox','enoxaparin','blood thinner','anticoag'], related:['reason no antithrombotic','comfort measures','CMO','discharge disposition'] },
-  { name:'reason no antithrombotic', aliases:['reason not administering antithrombotic','reason not prescribing antithrombotic','why no antithrombotic','antithrombotic not given','antithrombotic not prescribed','bleeding risk','hemorrhage risk','contraindication antithrombotic','hemorrhagic conversion'], related:['antithrombotic','comfort measures','CMO'] },
-  { name:'comfort measures', aliases:['comfort measures','comfort measures only','comfort care','comfort focused','comfort directed','comfort oriented','supportive care only','symptom management only','medical management comfort','comfort-focused treatment','changed to comfort'], related:['CMO','EOL','hospice','ACP','POLST','code status','death','family'] },
-  { name:'CMO', aliases:['cmo','comfort measures only order','order for cmo','transitioned to cmo','changed to cmo','placed on cmo','comfort measures only ordered','cmo order','cmo initiated'], related:['comfort measures','EOL','hospice','code status','death'] },
-  { name:'comfort care', aliases:['comfort care','palliative care','palliative','palliative consult','palliative team','supportive care','goals of care comfort','goc comfort','goals shifted to comfort','care goals comfort'], related:['CMO','EOL','hospice','ACP','POLST','family'] },
-  { name:'EOL', aliases:['eol','end of life','end-of-life','end of life care','dying','terminal','terminally ill','actively dying','imminently dying','near death','not expected to survive','life expectancy'], related:['CMO','comfort measures','hospice','death','family','ACP'] },
-  { name:'hospice', aliases:['hospice','hospice care','inpatient hospice','home hospice','hospice facility','referred to hospice','hospice consult','transitioned to hospice','hospice enrolled','discharge to hospice','hospice services'], related:['EOL','comfort measures','CMO','discharge disposition','death'] },
-  { name:'ACP', aliases:['acp','advance care planning','advance directive','living will','healthcare proxy','healthcare power of attorney','durable poa','poa','power of attorney','advance care plan','advance directives on file'], related:['POLST','code status','family','CMO','EOL','comfort care'] },
-  { name:'POLST', aliases:['polst','post','physician orders for life sustaining treatment','molst','most','dnr','do not resuscitate','dni','do not intubate','dnr/dni','comfort code','limited code','full code','polst form','post form'], related:['ACP','code status','CMO','EOL','comfort measures'] },
-  { name:'code status', aliases:['code status','full code','dnr','do not resuscitate','dni','do not intubate','changed code','code changed','updated code status','code discussion','code conversation','resuscitation preference'], related:['POLST','ACP','CMO','EOL','family'] },
-  { name:'death', aliases:['death','died','expired','deceased','passed away','inpatient death','patient death','mortality','fatal','did not survive','time of death','pronounced dead','declared dead'], related:['EOL','CMO','hospice','discharge disposition','family'] },
-  { name:'family', aliases:['family','family member','family present','family notified','family meeting','family decision','next of kin','nok','spouse','significant other','surrogate','decision maker','healthcare representative','guardian','power of attorney'], related:['ACP','CMO','EOL','code status','comfort measures','LKW'] },
-  { name:'disposition', aliases:['disposition','discharge disposition','discharged to','where discharged','discharge destination','discharge to','discharge planning','discharge status'], related:['home','AMA','transfer','hospice','death','other facility'] },
-  { name:'home', aliases:['home','discharged home','home with services','home health','home care','going home','sent home','routine discharge','self care at home','home with family'], related:['disposition','AMA'] },
-  { name:'AMA', aliases:['ama','against medical advice','left ama','signed ama','refused to stay','self discharge','patient directed discharge','pdd','eloped','elopement','walked out','left without discharge','left without being seen','lwbs'], related:['disposition','home','family'] },
-  { name:'transfer', aliases:['transfer','transferred','transfer out','transfer to','intra-system','same system','same hospital system','sister hospital','outside hospital','osh','acute care transfer','transferred in','transferred from','receiving facility','sending facility'], related:['disposition','PTA','arrival time','other facility'] },
-  { name:'other facility', aliases:['other facility','other health care facility','rehab','snf','skilled nursing','skilled nursing facility','long term care','ltc','nursing home','nursing facility','assisted living','inpatient rehab','irf','acute rehab'], related:['disposition','transfer','hospice'] },
-  { name:'arrival time', aliases:['arrival time','time of arrival','ed arrival','arrived at','triage time','registration time','ed face sheet','face sheet','earliest documented time','when arrived','door time','time in'], related:['TLKW','PTA','departure time','ED patient','in-house stroke'] },
-  { name:'departure time', aliases:['departure time','ed departure','left the ed','left emergency department','time left ed','time of departure','ed departure time','physically left','time to disposition','moved from ed','obs order','observation order','inpatient order','admission order'], related:['arrival time','admit time','boarding','transfer'] },
-  { name:'admit time', aliases:['admit time','admission time','time of admission','admitted to','admitted as inpatient','bed placement','inpatient order time','obs order time','observation status','inpatient status'], related:['departure time','arrival time','boarding'] },
-  { name:'boarding', aliases:['boarding','ed boarding','left without being seen','door to admit','ed length of stay','ed los','time in ed','length of time in ed','prolonged ed stay','bed not available'], related:['departure time','admit time','arrival time'] },
-  { name:'ED patient', aliases:['ed patient','ed encounter','came through ed','emergency department patient','er patient','presented to ed','ed visit','ed arrival','came through emergency','emergency room'], related:['arrival time','PTA','transfer','in-house stroke'] },
-  { name:'CT scan', aliases:['ct','ct scan','head ct','brain ct','noncontrast ct','nchct','mri','mri brain','head mri','imaging','neuro imaging','brain imaging','scan','ct result','mri result'], related:['CT interpretation time','door to CT','arrival time'] },
-  { name:'CT interpretation time', aliases:['ct interpretation time','scan interpretation time','time of read','time ct was read','radiologist read','preliminary ct','preliminary read','final ct','final read','dictated','verbal read','communicated results'], related:['CT scan','door to CT','arrival time'] },
-  { name:'door to CT', aliases:['door to ct','door to imaging','time to ct','ct within','arrival to ct','time from arrival','ct timing','how long to ct'], related:['CT scan','CT interpretation time','arrival time'] },
+  {name:'LKW',aliases:['last known well','lkw','last known normal','last seen normal','last seen well','lkn','lnk','known well','last neuro normal','neurological baseline','seen normal','known to be well','well at'],related:['TLKW','DLKW','onset','PTA','in-house stroke','found down']},
+  {name:'TLKW',aliases:['time last known well','tlkw','time lkw','time of lkw','lkw time','what time lkw','time last seen normal','time last seen well'],related:['LKW','DLKW','onset','arrival time']},
+  {name:'DLKW',aliases:['date last known well','dlkw','date lkw','date of lkw','lkw date'],related:['LKW','TLKW']},
+  {name:'onset',aliases:['onset','symptom onset','symptoms began','symptoms started','signs began','first symptoms','first noted','first sign','began having','started having','noticed','deficits began','deficits started','neurological symptoms'],related:['LKW','TLKW','PTA','in-house stroke']},
+  {name:'PTA',aliases:['pta','prior to arrival','pre-hospital','prehospital','before arrival','ems','ambulance','brought in by ems','911','transported by ems','ems report','paramedic','run report','field'],related:['LKW','onset','arrival time','transfer','in-house stroke']},
+  {name:'in-house stroke',aliases:['in-house stroke','in house stroke','in-hospital stroke','hospital acquired stroke','developed after arrival','symptoms after arrival','stroke after arrival','developed in hospital','while admitted','inpatient stroke','occurred in-house'],related:['LKW','onset','arrival time']},
+  {name:'found down',aliases:['found down','found unresponsive','found on floor','unwitnessed','unknown onset','unknown lkw','last seen','last seen at','unable to determine lkw','unknown last known well'],related:['LKW','TLKW','onset','wake-up stroke']},
+  {name:'wake-up stroke',aliases:['wake up stroke','wake-up stroke','woke up','woke with','awakened with','awoke with','sleep onset','woke to find','found upon awakening','morning symptoms','overnight stroke'],related:['LKW','found down','TLKW','onset']},
+  {name:'TNK',aliases:['tnk','tenecteplase','tpa','t-pa','tissue plasminogen activator','alteplase','activase','thrombolytic','clot buster','iv tpa','iv alteplase','lytic','lytics','rtpa','r-tpa'],related:['time window','reason not given','extending tPA','LKW','TLKW']},
+  {name:'time window',aliases:['time window','within window','3.5 hours','210 minutes','3 hours','outside window','beyond window','door to needle','dtn','needle time','time to tpa','tpa window','within 3','within 210'],related:['TNK','LKW','TLKW','extending tPA']},
+  {name:'extending tPA',aliases:['extending','reason for extending','extended window','beyond 3 hours','beyond 3.5','late tpa','tpa delay','delay in tpa','reason extending','after window'],related:['TNK','time window','reason not given']},
+  {name:'reason not given',aliases:['reason not given','reason not initiating','contraindication','contraindicated','why no tpa','tpa not given','refused tpa','declined tpa','patient refused','patient declined','rapid improvement','neurological improvement','resolving'],related:['TNK','extending tPA','comfort measures','CMO']},
+  {name:'antithrombotic',aliases:['antithrombotic','antithrombotic therapy','antiplatelet','aspirin','asa','plavix','clopidogrel','anticoagulation','warfarin','coumadin','xa inhibitor','eliquis','apixaban','xarelto','rivaroxaban','heparin','lovenox','enoxaparin','blood thinner','anticoag'],related:['reason no antithrombotic','comfort measures','CMO','discharge disposition']},
+  {name:'reason no antithrombotic',aliases:['reason not administering antithrombotic','reason not prescribing antithrombotic','why no antithrombotic','antithrombotic not given','antithrombotic not prescribed','bleeding risk','hemorrhage risk','contraindication antithrombotic','hemorrhagic conversion'],related:['antithrombotic','comfort measures','CMO']},
+  {name:'comfort measures',aliases:['comfort measures','comfort measures only','comfort care','comfort focused','comfort directed','comfort oriented','supportive care only','symptom management only','comfort-focused treatment','changed to comfort'],related:['CMO','EOL','hospice','ACP','POLST','code status','death','family']},
+  {name:'CMO',aliases:['cmo','comfort measures only order','order for cmo','transitioned to cmo','changed to cmo','placed on cmo','comfort measures only ordered','cmo order','cmo initiated'],related:['comfort measures','EOL','hospice','code status','death']},
+  {name:'comfort care',aliases:['comfort care','palliative care','palliative','palliative consult','palliative team','supportive care','goals of care comfort','goc comfort','goals shifted to comfort','care goals comfort'],related:['CMO','EOL','hospice','ACP','POLST','family']},
+  {name:'EOL',aliases:['eol','end of life','end-of-life','end of life care','dying','terminal','terminally ill','actively dying','imminently dying','near death','not expected to survive','life expectancy'],related:['CMO','comfort measures','hospice','death','family','ACP']},
+  {name:'hospice',aliases:['hospice','hospice care','inpatient hospice','home hospice','hospice facility','referred to hospice','hospice consult','transitioned to hospice','hospice enrolled','discharge to hospice','hospice services'],related:['EOL','comfort measures','CMO','discharge disposition','death']},
+  {name:'ACP',aliases:['acp','advance care planning','advance directive','living will','healthcare proxy','healthcare power of attorney','durable poa','poa','power of attorney','advance care plan','advance directives on file'],related:['POLST','code status','family','CMO','EOL','comfort care']},
+  {name:'POLST',aliases:['polst','post','physician orders for life sustaining treatment','molst','most','dnr','do not resuscitate','dni','do not intubate','dnr/dni','comfort code','limited code','full code','polst form','post form'],related:['ACP','code status','CMO','EOL','comfort measures']},
+  {name:'code status',aliases:['code status','full code','dnr','do not resuscitate','dni','do not intubate','changed code','code changed','updated code status','code discussion','code conversation','resuscitation preference'],related:['POLST','ACP','CMO','EOL','family']},
+  {name:'death',aliases:['death','died','expired','deceased','passed away','inpatient death','patient death','mortality','fatal','did not survive','time of death','pronounced dead','declared dead'],related:['EOL','CMO','hospice','discharge disposition','family']},
+  {name:'family',aliases:['family','family member','family present','family notified','family meeting','family decision','next of kin','nok','spouse','significant other','surrogate','decision maker','healthcare representative','guardian','power of attorney'],related:['ACP','CMO','EOL','code status','comfort measures','LKW']},
+  {name:'disposition',aliases:['disposition','discharge disposition','discharged to','where discharged','discharge destination','discharge to','discharge planning','discharge status'],related:['home','AMA','transfer','hospice','death','other facility']},
+  {name:'home',aliases:['home','discharged home','home with services','home health','home care','going home','sent home','routine discharge','self care at home','home with family'],related:['disposition','AMA']},
+  {name:'AMA',aliases:['ama','against medical advice','left ama','signed ama','refused to stay','self discharge','patient directed discharge','pdd','eloped','elopement','walked out','left without discharge','left without being seen','lwbs'],related:['disposition','home','family']},
+  {name:'transfer',aliases:['transfer','transferred','transfer out','transfer to','intra-system','same system','same hospital system','sister hospital','outside hospital','osh','acute care transfer','transferred in','transferred from','receiving facility','sending facility'],related:['disposition','PTA','arrival time','other facility']},
+  {name:'other facility',aliases:['other facility','other health care facility','rehab','snf','skilled nursing','skilled nursing facility','long term care','ltc','nursing home','nursing facility','assisted living','inpatient rehab','irf','acute rehab'],related:['disposition','transfer','hospice']},
+  {name:'arrival time',aliases:['arrival time','time of arrival','ed arrival','arrived at','triage time','registration time','ed face sheet','face sheet','earliest documented time','when arrived','door time','time in'],related:['TLKW','PTA','departure time','ED patient','in-house stroke']},
+  {name:'departure time',aliases:['departure time','ed departure','left the ed','left emergency department','time left ed','time of departure','ed departure time','physically left','time to disposition','moved from ed','obs order','observation order','inpatient order','admission order'],related:['arrival time','admit time','boarding','transfer']},
+  {name:'admit time',aliases:['admit time','admission time','time of admission','admitted to','admitted as inpatient','bed placement','inpatient order time','obs order time','observation status','inpatient status'],related:['departure time','arrival time','boarding']},
+  {name:'boarding',aliases:['boarding','ed boarding','left without being seen','door to admit','ed length of stay','ed los','time in ed','length of time in ed','prolonged ed stay','bed not available'],related:['departure time','admit time','arrival time']},
+  {name:'ED patient',aliases:['ed patient','ed encounter','came through ed','emergency department patient','er patient','presented to ed','ed visit','ed arrival','came through emergency','emergency room'],related:['arrival time','PTA','transfer','in-house stroke']},
+  {name:'CT scan',aliases:['ct','ct scan','head ct','brain ct','noncontrast ct','nchct','mri','mri brain','head mri','imaging','neuro imaging','brain imaging','scan','ct result','mri result'],related:['CT interpretation time','door to CT','arrival time']},
+  {name:'CT interpretation time',aliases:['ct interpretation time','scan interpretation time','time of read','time ct was read','radiologist read','preliminary ct','preliminary read','final ct','final read','dictated','verbal read','communicated results'],related:['CT scan','door to CT','arrival time']},
+  {name:'door to CT',aliases:['door to ct','door to imaging','time to ct','ct within','arrival to ct','time from arrival','ct timing','how long to ct'],related:['CT scan','CT interpretation time','arrival time']},
 ];
 
 // ══════════════════════════════════════════════════
-//  SEED Q&As (shown while Sheets loads / as fallback)
+//  SEED Q&As
 // ══════════════════════════════════════════════════
-const SEED = [
-  {id:'q1',measure:'ASR-IP',specific:'ASR-IP-1',type:'gray',question:'Patient woke up with stroke symptoms ("wake-up stroke"). Family states he was "fine when he went to bed around 11 PM." No specific LKW time is documented in the chart by clinical staff. How do we abstract Last Known Well?',answer:'"Around 11 PM" may be abstracted as 23:00 if — and only if — that time is documented in the medical record by clinical staff (nurse, physician, or APP). Family-reported times are acceptable when charted. If no time appears in the record, LKW = Unknown and the case excludes from the denominator. A verbal family report that was never charted cannot be used.',source:'TJC Spec Manual v2026B; Data Element: Last Known Well',tags:['LKW','TLKW','wake-up stroke','family','found down']},
+const SEED=[
+  {id:'q1',measure:'ASR-IP',specific:'ASR-IP-1',type:'gray',question:'Patient woke up with stroke symptoms ("wake-up stroke"). Family states he was "fine when he went to bed around 11 PM." No specific LKW time is documented in the chart by clinical staff. How do we abstract Last Known Well?',answer:'"Around 11 PM" may be abstracted as 23:00 if — and only if — that time is documented in the medical record by clinical staff (nurse, physician, or APP). Family-reported times are acceptable when charted. If no time appears in the record, LKW = Unknown.',source:'TJC Spec Manual v2026B; Data Element: Last Known Well',tags:['LKW','TLKW','wake-up stroke','family','found down']},
   {id:'q2',measure:'ASR-IP',specific:'ASR-IP-1',type:'edge',question:'EMS documented LKW as 09:15 on the run report. The ED physician note documents LKW as 09:45. Which time takes precedence?',answer:'Use the hospital medical record time — the ED physician\'s 09:45. EMS run reports are pre-hospital documents and are not part of the hospital record unless explicitly referenced and incorporated by clinical staff.',source:'TJC Spec Manual v2026B; Data Element: Last Known Well',tags:['LKW','TLKW','PTA','onset','found down']},
   {id:'q3',measure:'ASR-IP',specific:'ASR-IP-1',type:'edge',question:'IV alteplase initiated at 3 hours 22 minutes from LKW. Physician did not document a reason for extending past 3 hours. Does this pass?',answer:'Yes — ASR-IP-1 uses a 3.5-hour (210-minute) window. Three hours 22 minutes = 202 minutes, within the window. No "Reason for Extending" is needed.',source:'TJC Spec Manual v2026B; MIF ASR-IP-1',tags:['TNK','LKW','time window','extending tPA']},
   {id:'q4',measure:'ASR-IP',specific:'ASR-IP-2,ASR-IP-3',type:'routine',question:'Family requests comfort measures only. Physician documents CMO in the progress note. Patient did not receive antithrombotic therapy. How do you answer ASR-IP-2 and ASR-IP-3?',answer:'CMO is a denominator exclusion for both ASR-IP-2 and ASR-IP-3. When CMO is documented by a physician or APP, the case is excluded (MCA = B) — not counted as a failure.',source:'TJC Spec Manual v2026B; Data Element: Comfort Measures Only',tags:['comfort measures','CMO','antithrombotic','reason no antithrombotic','family','EOL']},
   {id:'q5',measure:'ASR-IP',specific:'ASR-IP-3',type:'edge',question:'Patient discharged to hospice. No physician note specifically using the words "comfort measures only." Does hospice discharge alone satisfy the Comfort Measures Only data element for ASR-IP-3?',answer:'No — hospice discharge alone does not satisfy CMO. The Comfort Measures Only data element requires explicit documentation that care has been redirected to comfort.',source:'TJC Spec Manual v2026B; Data Elements: Comfort Measures Only, Discharge Disposition',tags:['hospice','comfort measures','CMO','POLST','antithrombotic','disposition','reason no antithrombotic']},
-  {id:'q6',measure:'STK',specific:'STK',type:'gray',question:'Patient has a POLST on file documenting DNR/DNI, but no physician note using "comfort measures only" language. Does the POLST alone satisfy the Comfort Measures Only data element?',answer:'Gray area — and a frequent source of inter-rater variation. A POLST/DNR documents resuscitation preferences, not necessarily a global comfort-focused care goal. CMO requires documentation that the entire care approach has shifted to comfort.',source:'TJC PMN guidance; Data Element: Comfort Measures Only',tags:['POLST','CMO','comfort measures','ACP','code status','EOL']},
+  {id:'q6',measure:'STK',specific:'STK',type:'gray',question:'Patient has a POLST on file documenting DNR/DNI, but no physician note using "comfort measures only" language. Does the POLST alone satisfy the Comfort Measures Only data element?',answer:'Gray area. A POLST/DNR documents resuscitation preferences, not necessarily a global comfort-focused care goal. CMO requires documentation that the entire care approach has shifted to comfort.',source:'TJC PMN guidance; Data Element: Comfort Measures Only',tags:['POLST','CMO','comfort measures','ACP','code status','EOL']},
   {id:'q7',measure:'STK',specific:'STK',type:'gray',question:'Patient arrives at ED at 2330 with fatigue, SOB, and productive cough. Two hours after arrival develops right-sided weakness and facial drooping. How do you answer the Last Known Well data element?',answer:'No. If there is no documentation that LKW or stroke symptoms occurred prior to hospital arrival, AND there is documentation that LKW first occurred after arrival time, this is an in-house stroke.',source:'TJC Spec Manual v2026B; Data Element: Last Known Well',tags:['LKW','in-house stroke','onset','arrival time']},
   {id:'q8',measure:'STK',specific:'STK',type:'edge',question:'Preliminary CT dictated by radiologist at 2205. ED physician documents "Findings discussed directly with the radiologist at 2209." Final CT dictated at 2220. What is the CT/MRI Scan Interpretation Time?',answer:'2205 — the preliminary read. Interpretation time is the earliest time a radiologist or physician interpreted the results.',source:'TJC Spec Manual v2026B; Data Element: CT/MRI Scan Interpretation Time',tags:['CT scan','CT interpretation time','arrival time']},
   {id:'q9',measure:'ED-OP',specific:'ED-OP',type:'routine',question:'ED face sheet lists arrival time 1320. ED Registration Time 1325. ED Triage Time 1330. Consent to treat form has 1:17 AM. What is the Arrival Time?',answer:'1320 — the face sheet time. Use the earliest documented time from acceptable sources.',source:'TJC Spec Manual v2026B; Data Element: Arrival Time',tags:['arrival time','ED patient']},
@@ -431,159 +413,157 @@ const SEED = [
 // ══════════════════════════════════════════════════
 //  STATE
 // ══════════════════════════════════════════════════
-let entries = [], tagDefs = [];
-let actM = 'all', actT = 'all', actTags = [];
-let formTags = [], reviewStates = [];
+let entries=[], tagDefs=[], localTags=[];
+let actM='all', actT='all', actTags=[];
+let formTags=[], reviewStates=[];
 
-function loadTagDefs() {
-  try { const s = localStorage.getItem(TAGS_KEY); tagDefs = s ? JSON.parse(s) : DEFAULT_TAGS.map(t=>({...t})); }
-  catch(e) { tagDefs = DEFAULT_TAGS.map(t=>({...t})); }
-  if (!tagDefs.length) tagDefs = DEFAULT_TAGS.map(t=>({...t}));
+// ══════════════════════════════════════════════════
+//  TAG LOADING — merges default + sheet + local
+// ══════════════════════════════════════════════════
+function loadLocalTags(){
+  try{ const s=localStorage.getItem(TAGS_KEY); localTags=s?JSON.parse(s):[]; }
+  catch(e){ localTags=[]; }
 }
-function saveTagDefs() {
-  try { localStorage.setItem(TAGS_KEY, JSON.stringify(tagDefs)); } catch(e) {}
+function saveLocalTags(){
+  try{ localStorage.setItem(TAGS_KEY,JSON.stringify(localTags)); }catch(e){}
+}
+function mergeTagDefs(sheetTags){
+  // Start with defaults, overlay sheet tags (by name), then add local extras
+  const map=new Map();
+  DEFAULT_TAGS.forEach(t=>map.set(t.name,{...t,_src:'default'}));
+  (sheetTags||[]).forEach(t=>map.set(t.name,{...t,_src:'sheet'}));
+  localTags.forEach(t=>{ if(!map.has(t.name)) map.set(t.name,{...t,_src:'local'}); });
+  tagDefs=[...map.values()];
 }
 
 // ══════════════════════════════════════════════════
 //  GOOGLE SHEETS FETCH
 // ══════════════════════════════════════════════════
-async function fetchFromSheets() {
-  showLoading('loading', 'Loading Q&A entries from Google Sheets…');
-  try {
-    // Try cache first for instant display
-    const cached = getCached();
-    if (cached) {
-      entries = cached;
-      render();
-      showLoading('hidden');
-      // Still refresh in background
-      refreshInBackground();
-      return;
-    }
-    // No cache — fetch fresh
-    const data = await fetchSheets();
-    if (data && data.entries && data.entries.length > 0) {
-      entries = data.entries;
-      setCache(entries);
-    } else {
-      // Sheet is empty or has no approved entries yet — use seed
-      entries = [...SEED];
-    }
+async function fetchFromSheets(){
+  showLoading('loading','Loading entries from Google Sheets…');
+  loadLocalTags();
+  const cached=getCached();
+  if(cached){
+    entries=cached.entries||[...SEED];
+    mergeTagDefs(cached.sheetTags||[]);
     render();
     showLoading('hidden');
-  } catch(err) {
-    console.warn('Sheets fetch failed, using seed data:', err);
-    // Try cache
-    const cached = getCached();
-    entries = cached && cached.length ? cached : [...SEED];
+    refreshInBackground();
+    return;
+  }
+  try{
+    const [qaData,tagData]=await Promise.all([
+      fetchJSON(SCRIPT_URL),
+      fetchJSON(SCRIPT_URL+'?type=tags')
+    ]);
+    entries=(qaData.entries&&qaData.entries.length)?qaData.entries:[...SEED];
+    const sheetTags=tagData.tags||[];
+    mergeTagDefs(sheetTags);
+    setCache({entries,sheetTags});
     render();
-    showLoading('warn', '⚠️ Could not reach Google Sheets — showing cached or seed data. Changes will sync when connection restores.');
+    showLoading('hidden');
+  }catch(err){
+    console.warn('Sheets fetch failed:',err);
+    entries=[...SEED];
+    mergeTagDefs([]);
+    render();
+    showLoading('warn','⚠️ Could not reach Google Sheets — showing seed data. Changes will sync when connection restores.');
   }
 }
 
-async function fetchSheets() {
-  const res = await fetch(SCRIPT_URL);
-  if (!res.ok) throw new Error('HTTP ' + res.status);
+async function refreshInBackground(){
+  try{
+    const [qaData,tagData]=await Promise.all([
+      fetchJSON(SCRIPT_URL),
+      fetchJSON(SCRIPT_URL+'?type=tags')
+    ]);
+    const sheetTags=tagData.tags||[];
+    entries=(qaData.entries&&qaData.entries.length)?qaData.entries:[...SEED];
+    mergeTagDefs(sheetTags);
+    setCache({entries,sheetTags});
+    render();
+  }catch(e){}
+}
+
+async function fetchJSON(url){
+  const res=await fetch(url);
+  if(!res.ok) throw new Error('HTTP '+res.status);
+  return res.json();
+}
+async function postJSON(payload){
+  const res=await fetch(SCRIPT_URL,{method:'POST',body:JSON.stringify(payload)});
+  if(!res.ok) throw new Error('HTTP '+res.status);
   return res.json();
 }
 
-async function refreshInBackground() {
-  try {
-    const data = await fetchSheets();
-    if (data && data.entries && data.entries.length > 0) {
-      entries = data.entries;
-      setCache(entries);
-      render();
-    }
-  } catch(e) { /* silent */ }
+function getCached(){
+  try{const raw=localStorage.getItem(CACHE_KEY);if(!raw)return null;const{ts,data}=JSON.parse(raw);if(Date.now()-ts>CACHE_TTL)return null;return data;}
+  catch(e){return null;}
 }
-
-function getCached() {
-  try {
-    const raw = localStorage.getItem(CACHE_KEY);
-    if (!raw) return null;
-    const { ts, data } = JSON.parse(raw);
-    if (Date.now() - ts > CACHE_TTL) return null;
-    return data;
-  } catch(e) { return null; }
+function setCache(data){
+  try{localStorage.setItem(CACHE_KEY,JSON.stringify({ts:Date.now(),data}));}catch(e){}
 }
-function setCache(data) {
-  try { localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), data })); } catch(e) {}
-}
-
-function showLoading(state, msg) {
-  const bar = document.getElementById('loadingBar');
-  if (state === 'hidden') { bar.classList.add('hidden'); return; }
-  bar.className = 'loading-bar' + (state === 'error' ? ' error' : state === 'warn' ? ' warn' : '');
-  document.getElementById('loadingMsg').textContent = msg || '';
-}
-
-// ══════════════════════════════════════════════════
-//  SUBMIT TO SHEETS
-// ══════════════════════════════════════════════════
-async function postToSheets(payload) {
-  const res = await fetch(SCRIPT_URL, {
-    method: 'POST',
-    body: JSON.stringify(payload)
-  });
-  if (!res.ok) throw new Error('HTTP ' + res.status);
-  return res.json();
+function showLoading(state,msg){
+  const bar=document.getElementById('loadingBar');
+  if(state==='hidden'){bar.classList.add('hidden');return;}
+  bar.className='loading-bar'+(state==='error'?' error':state==='warn'?' warn':'');
+  document.getElementById('loadingMsg').textContent=msg||'';
 }
 
 // ══════════════════════════════════════════════════
 //  TAG LOGIC
 // ══════════════════════════════════════════════════
-function autoDetect(text) {
-  const lo = text.toLowerCase();
-  const found = new Set();
-  tagDefs.forEach(td => { if (td.aliases.some(a => lo.includes(a))) found.add(td.name); });
-  return [...found];
+function autoDetect(text){
+  const lo=text.toLowerCase();
+  const found=new Set();
+  tagDefs.forEach(td=>{if(td.aliases&&td.aliases.some(a=>lo.includes(a)))found.add(td.name);});
+  return[...found];
 }
-function getRelated(names) {
-  const rel = new Set();
-  names.forEach(n => { const d = tagDefs.find(t => t.name === n); if (d) d.related.forEach(r => { if (!names.includes(r)) rel.add(r); }); });
-  return [...rel];
+function getRelated(names){
+  const rel=new Set();
+  names.forEach(n=>{const d=tagDefs.find(t=>t.name===n);if(d&&d.related)d.related.forEach(r=>{if(!names.includes(r))rel.add(r);});});
+  return[...rel];
 }
-function normTag(raw) {
-  const lo = raw.trim().toLowerCase();
-  const known = tagDefs.find(t => t.name.toLowerCase() === lo || t.aliases.includes(lo));
-  return known ? known.name : raw.trim();
+function normTag(raw){
+  const lo=raw.trim().toLowerCase();
+  const known=tagDefs.find(t=>t.name.toLowerCase()===lo||(t.aliases&&t.aliases.includes(lo)));
+  return known?known.name:raw.trim();
 }
 
 // ══════════════════════════════════════════════════
 //  RENDER
 // ══════════════════════════════════════════════════
-function filtered() {
-  const q = (document.getElementById('srch')?.value || '').toLowerCase();
-  return entries.filter(e => {
-    const mOk = actM === 'all' || (actM === '__gray' && e.type === 'gray') || (actM === '__edge' && e.type === 'edge') || e.measure === actM;
-    const tOk = actT === 'all' || e.type === actT;
-    const tagOk = actTags.length === 0 || actTags.every(t => (e.tags || []).includes(t));
-    const tx = [e.question, e.answer, e.specific || '', e.source || '', ...(e.tags || [])].join(' ').toLowerCase();
-    return mOk && tOk && tagOk && (!q || tx.includes(q));
+function filtered(){
+  const q=(document.getElementById('srch')?.value||'').toLowerCase();
+  return entries.filter(e=>{
+    const mOk=actM==='all'||(actM==='__gray'&&e.type==='gray')||(actM==='__edge'&&e.type==='edge')||e.measure===actM;
+    const tOk=actT==='all'||e.type===actT;
+    const tagOk=actTags.length===0||actTags.every(t=>(e.tags||[]).includes(t));
+    const tx=[e.question,e.answer,e.specific||'',e.source||'',...(e.tags||[])].join(' ').toLowerCase();
+    return mOk&&tOk&&tagOk&&(!q||tx.includes(q));
   });
 }
-const esc = s => (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-function typeBadge(t) {
-  if (t === 'edge') return '<span class="badge be">⚡ Edge</span>';
-  if (t === 'gray') return '<span class="badge bg">❓ Gray</span>';
-  return '<span class="badge br">✅ Routine</span>';
+const esc=s=>(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+function typeBadge(t){
+  if(t==='edge')return'<span class="badge be">⚡ Edge</span>';
+  if(t==='gray')return'<span class="badge bg">❓ Gray</span>';
+  return'<span class="badge br">✅ Routine</span>';
 }
-function render() {
-  const f = filtered();
-  document.getElementById('rcnt').innerHTML = `Showing <strong>${f.length}</strong> of <strong>${entries.length}</strong> entries`;
-  updCounts(); buildCloud();
-  if (!f.length) { document.getElementById('cards').innerHTML = `<div class="empty"><h3>No results</h3><p>Try a different search or tag filter.</p></div>`; return; }
-  document.getElementById('cards').innerHTML = f.map(e => `
+function render(){
+  const f=filtered();
+  document.getElementById('rcnt').innerHTML=`Showing <strong>${f.length}</strong> of <strong>${entries.length}</strong> entries`;
+  updCounts();buildCloud();
+  if(!f.length){document.getElementById('cards').innerHTML=`<div class="empty"><h3>No results</h3><p>Try a different search or tag filter.</p></div>`;return;}
+  document.getElementById('cards').innerHTML=f.map(e=>`
     <div class="qa" id="c-${e.id}">
       <div class="qa-hdr" onclick="togCard('c-${e.id}')">
         <div class="tog">+</div>
         <div class="qa-hdr-c">
           <div class="meta">
-            <span class="badge bm">${esc(e.measure)}${e.specific ? ' · ' + esc(e.specific) : ''}</span>
+            <span class="badge bm">${esc(e.measure)}${e.specific?' · '+esc(e.specific):''}</span>
             ${typeBadge(e.type)}
-            ${e.source ? `<span class="badge bs">📎 ${esc(e.source.split(';')[0].split(',')[0].trim())}</span>` : ''}
-            ${(e.tags || []).map(t => `<span class="ktag" onclick="event.stopPropagation();addTagFilter('${esc(t)}')">${esc(t)}</span>`).join('')}
+            ${e.source?`<span class="badge bs">📎 ${esc(e.source.split(';')[0].split(',')[0].trim())}</span>`:''}
+            ${(e.tags||[]).map(t=>`<span class="ktag" onclick="event.stopPropagation();addTagFilter('${esc(t)}')">${esc(t)}</span>`).join('')}
           </div>
           <div class="q-text">${esc(e.question)}</div>
         </div>
@@ -591,225 +571,234 @@ function render() {
       <div class="qa-body">
         <div class="ans">${esc(e.answer)}</div>
         <div class="qa-foot">
-          <div class="qa-src"><span class="sdot"></span>${esc(e.source || '')}${e.date ? ' · ' + e.date : ''}</div>
-          <div class="qa-tags">${(e.tags || []).map(t => `<span class="ktag" onclick="addTagFilter('${esc(t)}')">${esc(t)}</span>`).join('')}</div>
+          <div class="qa-src"><span class="sdot"></span>${esc(e.source||'')}${e.date?' · '+e.date:''}</div>
+          <div class="qa-tags">${(e.tags||[]).map(t=>`<span class="ktag" onclick="addTagFilter('${esc(t)}')">${esc(t)}</span>`).join('')}</div>
         </div>
       </div>
     </div>`).join('');
 }
-function togCard(id) { document.getElementById(id)?.classList.toggle('open'); }
-function updCounts() {
-  ['STK','ASR-IP','ED-OP'].forEach(m => { const el = document.getElementById('cnt-' + m); if (el) el.textContent = entries.filter(e => e.measure === m).length; });
-  document.getElementById('cnt-all').textContent = entries.length;
-  document.getElementById('cnt-gray').textContent = entries.filter(e => e.type === 'gray').length;
-  document.getElementById('cnt-edge').textContent = entries.filter(e => e.type === 'edge').length;
+function togCard(id){document.getElementById(id)?.classList.toggle('open');}
+function updCounts(){
+  ['STK','ASR-IP','ED-OP'].forEach(m=>{const el=document.getElementById('cnt-'+m);if(el)el.textContent=entries.filter(e=>e.measure===m).length;});
+  document.getElementById('cnt-all').textContent=entries.length;
+  document.getElementById('cnt-gray').textContent=entries.filter(e=>e.type==='gray').length;
+  document.getElementById('cnt-edge').textContent=entries.filter(e=>e.type==='edge').length;
 }
-function buildCloud() {
-  const cnt = {};
-  entries.forEach(e => (e.tags || []).forEach(t => { cnt[t] = (cnt[t] || 0) + 1; }));
-  document.getElementById('tagCloud').innerHTML = Object.entries(cnt).sort((a,b) => b[1] - a[1]).map(([t,c]) =>
-    `<span class="ctag${actTags.includes(t) ? ' on' : ''}" onclick="addTagFilter('${esc(t)}')">${esc(t)}<span class="ctag-n">${c}</span></span>`
+function buildCloud(){
+  const cnt={};
+  entries.forEach(e=>(e.tags||[]).forEach(t=>{cnt[t]=(cnt[t]||0)+1;}));
+  document.getElementById('tagCloud').innerHTML=Object.entries(cnt).sort((a,b)=>b[1]-a[1]).map(([t,c])=>
+    `<span class="ctag${actTags.includes(t)?' on':''}" onclick="addTagFilter('${esc(t)}')">${esc(t)}<span class="ctag-n">${c}</span></span>`
   ).join('');
 }
 
 // ══════════════════════════════════════════════════
 //  FILTERS
 // ══════════════════════════════════════════════════
-function filterM(v, el) { actM = v; document.querySelectorAll('[data-m]').forEach(e => e.classList.remove('on')); el.classList.add('on'); render(); }
-function filterT(v, el) { actT = v; document.querySelectorAll('[data-t]').forEach(e => e.classList.remove('on')); el.classList.add('on'); render(); }
-function addTagFilter(t) { if (!actTags.includes(t)) actTags.push(t); renderAtBar(); render(); }
-function removeTagFilter(t) { actTags = actTags.filter(x => x !== t); renderAtBar(); render(); }
-function clearTagFilters() { actTags = []; renderAtBar(); render(); }
-function renderAtBar() {
-  const bar = document.getElementById('atbar');
-  if (!actTags.length) { bar.classList.remove('on'); return; }
+function filterM(v,el){actM=v;document.querySelectorAll('[data-m]').forEach(e=>e.classList.remove('on'));el.classList.add('on');render();}
+function filterT(v,el){actT=v;document.querySelectorAll('[data-t]').forEach(e=>e.classList.remove('on'));el.classList.add('on');render();}
+function addTagFilter(t){if(!actTags.includes(t))actTags.push(t);renderAtBar();render();}
+function removeTagFilter(t){actTags=actTags.filter(x=>x!==t);renderAtBar();render();}
+function clearTagFilters(){actTags=[];renderAtBar();render();}
+function renderAtBar(){
+  const bar=document.getElementById('atbar');
+  if(!actTags.length){bar.classList.remove('on');return;}
   bar.classList.add('on');
-  document.getElementById('atpills').innerHTML = actTags.map(t => `<span class="atpill">${esc(t)}<button onclick="removeTagFilter('${esc(t)}')">×</button></span>`).join('');
+  document.getElementById('atpills').innerHTML=actTags.map(t=>`<span class="atpill">${esc(t)}<button onclick="removeTagFilter('${esc(t)}')">×</button></span>`).join('');
 }
 
 // ══════════════════════════════════════════════════
-//  TAG INPUT — form
+//  TAG INPUT — Q&A form
 // ══════════════════════════════════════════════════
-function handleTagKey(e) {
-  if ((e.key === 'Enter' || e.key === ',') && e.target.value.trim()) {
-    e.preventDefault(); addFormTag(e.target.value.trim().replace(/,$/, '')); e.target.value = ''; showSuggestions();
-  } else if (e.key === 'Backspace' && !e.target.value && formTags.length) {
-    removeFormTag(formTags[formTags.length - 1]);
-  }
+function handleTagKey(e){
+  if((e.key==='Enter'||e.key===',')&&e.target.value.trim()){e.preventDefault();addFormTag(e.target.value.trim().replace(/,$/,''));e.target.value='';showSuggestions();}
+  else if(e.key==='Backspace'&&!e.target.value&&formTags.length){removeFormTag(formTags[formTags.length-1]);}
 }
-function onTagType(val) {
-  if (!val || val.length < 2) { hideSug(); return; }
-  const lo = val.toLowerCase();
-  const matches = tagDefs.filter(td => td.name.toLowerCase().includes(lo) || td.aliases.some(a => a.includes(lo))).map(td => td.name).filter(n => !formTags.includes(n)).slice(0, 8);
-  if (matches.length) {
-    document.getElementById('sugLbl').textContent = 'Matching tags — click to add:';
-    document.getElementById('sugRow').innerHTML = matches.map(t => `<span class="sug-chip match" onclick="addFormTag('${esc(t)}');document.getElementById('ttxt').value='';hideSug()">${esc(t)}</span>`).join('');
+function onTagType(val){
+  if(!val||val.length<2){hideSug();return;}
+  const lo=val.toLowerCase();
+  const matches=tagDefs.filter(td=>td.name.toLowerCase().includes(lo)||(td.aliases&&td.aliases.some(a=>a.includes(lo)))).map(td=>td.name).filter(n=>!formTags.includes(n)).slice(0,8);
+  if(matches.length){
+    document.getElementById('sugLbl').textContent='Matching tags — click to add:';
+    document.getElementById('sugRow').innerHTML=matches.map(t=>`<span class="sug-chip match" onclick="addFormTag('${esc(t)}');document.getElementById('ttxt').value='';hideSug()">${esc(t)}</span>`).join('');
     document.getElementById('sugPanel').classList.add('on');
-  } else { hideSug(); }
+  }else{hideSug();}
 }
-function addFormTag(raw) { const tag = normTag(raw); if (!tag || formTags.includes(tag)) return; formTags.push(tag); renderFormTags(); showSuggestions(); }
-function removeFormTag(tag) { formTags = formTags.filter(t => t !== tag); renderFormTags(); showSuggestions(); }
-function renderFormTags() {
-  const w = document.getElementById('tw');
-  w.querySelectorAll('.tchip').forEach(c => c.remove());
-  const inp = document.getElementById('ttxt');
-  formTags.forEach(t => {
-    const c = document.createElement('span'); c.className = 'tchip';
-    c.innerHTML = `${esc(t)}<button type="button" onclick="removeFormTag('${esc(t)}')">×</button>`;
-    w.insertBefore(c, inp);
-  });
+function addFormTag(raw){const tag=normTag(raw);if(!tag||formTags.includes(tag))return;formTags.push(tag);renderFormTags();showSuggestions();}
+function removeFormTag(tag){formTags=formTags.filter(t=>t!==tag);renderFormTags();showSuggestions();}
+function renderFormTags(){
+  const w=document.getElementById('tw');
+  w.querySelectorAll('.tchip').forEach(c=>c.remove());
+  const inp=document.getElementById('ttxt');
+  formTags.forEach(t=>{const c=document.createElement('span');c.className='tchip';c.innerHTML=`${esc(t)}<button type="button" onclick="removeFormTag('${esc(t)}')">×</button>`;w.insertBefore(c,inp);});
 }
-function showSuggestions() {
-  if (!formTags.length) { hideSug(); return; }
-  const related = getRelated(formTags).filter(r => !formTags.includes(r));
-  if (!related.length) { hideSug(); return; }
-  document.getElementById('sugLbl').textContent = 'Related tags — click to add:';
-  document.getElementById('sugRow').innerHTML = related.map(t => {
-    const d = tagDefs.find(x => x.name === t);
-    const hint = d ? `<span class="sug-hint">${d.aliases.slice(0,2).join(', ')}</span>` : '';
-    return `<span class="sug-chip" onclick="addFormTag('${esc(t)}')">${esc(t)} ${hint}</span>`;
+function showSuggestions(){
+  if(!formTags.length){hideSug();return;}
+  const related=getRelated(formTags).filter(r=>!formTags.includes(r));
+  if(!related.length){hideSug();return;}
+  document.getElementById('sugLbl').textContent='Related tags — click to add:';
+  document.getElementById('sugRow').innerHTML=related.map(t=>{
+    const d=tagDefs.find(x=>x.name===t);
+    const hint=d?`<span class="sug-hint">${(d.aliases||[]).slice(0,2).join(', ')}</span>`:'';
+    return`<span class="sug-chip" onclick="addFormTag('${esc(t)}')">${esc(t)} ${hint}</span>`;
   }).join('');
   document.getElementById('sugPanel').classList.add('on');
 }
-function hideSug() { document.getElementById('sugPanel').classList.remove('on'); }
+function hideSug(){document.getElementById('sugPanel').classList.remove('on');}
 
 // ══════════════════════════════════════════════════
-//  ADD ENTRY — posts to Google Sheets
+//  ADD Q&A ENTRY
 // ══════════════════════════════════════════════════
-function toggleAdd() {
-  document.getElementById('addPanel').classList.toggle('open');
-  formTags = []; renderFormTags(); hideSug();
-}
-async function submitEntry() {
-  const q = document.getElementById('fq').value.trim();
-  const a = document.getElementById('fa').value.trim();
-  if (!q || !a) { toast('Please enter both question and answer.'); return; }
-  const auto = autoDetect(q + ' ' + a);
-  const merged = [...new Set([...formTags, ...auto])];
-  const payload = {
-    measure: document.getElementById('fm').value,
-    specific: document.getElementById('fspec').value.trim(),
-    type: document.getElementById('ftype').value,
-    question: q, answer: a,
-    source: document.getElementById('fsrc').value.trim(),
-    tags: merged
-  };
-  const btn = document.getElementById('submitBtn');
-  btn.textContent = 'Submitting…'; btn.disabled = true;
-  try {
-    await postToSheets(payload);
+function toggleAdd(){document.getElementById('addPanel').classList.toggle('open');formTags=[];renderFormTags();hideSug();}
+async function submitEntry(){
+  const q=document.getElementById('fq').value.trim();
+  const a=document.getElementById('fa').value.trim();
+  if(!q||!a){toast('Please enter both question and answer.');return;}
+  const auto=autoDetect(q+' '+a);
+  const merged=[...new Set([...formTags,...auto])];
+  const payload={measure:document.getElementById('fm').value,specific:document.getElementById('fspec').value.trim(),type:document.getElementById('ftype').value,question:q,answer:a,source:document.getElementById('fsrc').value.trim(),tags:merged};
+  const btn=document.getElementById('submitBtn');
+  btn.textContent='Submitting…';btn.disabled=true;
+  try{
+    await postJSON(payload);
     toast('✅ Submitted! Entry will appear after curator approval.');
     toggleAdd();
-    ['fq','fa','fspec','fsrc'].forEach(id => document.getElementById(id).value = '');
-    formTags = []; renderFormTags();
-  } catch(err) {
+    ['fq','fa','fspec','fsrc'].forEach(id=>document.getElementById(id).value='');
+    formTags=[];renderFormTags();
+  }catch(err){
     toast('❌ Submission failed — check your connection and try again.');
-    console.error(err);
-  } finally {
-    btn.textContent = 'Submit for Review'; btn.disabled = false;
+  }finally{
+    btn.textContent='Submit for Review';btn.disabled=false;
   }
 }
 
 // ══════════════════════════════════════════════════
-//  PASTE MODAL — posts to Google Sheets
+//  TAG MANAGER
 // ══════════════════════════════════════════════════
-function openPaste() { document.getElementById('pasteModal').classList.add('open'); }
-function closePaste() { document.getElementById('pasteModal').classList.remove('open'); document.getElementById('tagReview').style.display = 'none'; reviewStates = []; }
-function previewTags() {
-  const raw = document.getElementById('pasteRaw').value.trim();
-  if (!raw) { toast('Nothing to preview.'); return; }
-  const suggested = autoDetect(raw);
-  reviewStates = suggested.map(t => ({ tag: t, on: true }));
-  if (!reviewStates.length) { document.getElementById('tagReview').style.display = 'none'; toast('No tags auto-detected — add manually after saving.'); return; }
-  renderReview(); document.getElementById('tagReview').style.display = 'block';
+function openTM(){renderTM();document.getElementById('tmModal').classList.add('open');}
+function closeTM(){document.getElementById('tmModal').classList.remove('open');render();}
+function renderTM(){
+  document.getElementById('tmBody').innerHTML=tagDefs.map((td,i)=>{
+    const srcLabel=td._src==='sheet'
+      ?'<span class="tag-src-pill tag-src-sheet">SHEET</span>'
+      :td._src==='local'
+        ?'<span class="tag-src-pill tag-src-local">LOCAL</span>'
+        :'<span class="tag-src-pill tag-src-local">DEFAULT</span>';
+    const canEdit=td._src!=='sheet'; // sheet tags are curator-managed
+    return`<tr>
+      <td><span class="tn">${esc(td.name)}</span></td>
+      <td><div class="ta-list">${esc((td.aliases||[]).join(', '))}</div></td>
+      <td><div class="tr-list">${(td.related||[]).map(r=>`<span class="tr-item">${esc(r)}</span>`).join('')}</div></td>
+      <td>${srcLabel}</td>
+      <td style="white-space:nowrap">
+        ${canEdit?`<button class="tb-btn tb-edit" onclick="editLocalTag('${esc(td.name)}')">Edit</button>
+        <button class="tb-btn tb-del" onclick="delLocalTag('${esc(td.name)}')">Del</button>`
+        :'<span style="font-size:10px;color:var(--mid);">Curator</span>'}
+      </td>
+    </tr>`;
+  }).join('');
 }
-function renderReview() {
-  document.getElementById('rrow').innerHTML = reviewStates.map((r, i) =>
-    `<span class="rchip ${r.on ? 'acc' : 'rej'}" onclick="togReview(${i})">${r.on ? '✓' : '✕'} ${esc(r.tag)}</span>`).join('');
+
+async function addTagDef(){
+  const name=document.getElementById('nt-n').value.trim();
+  if(!name){toast('Tag name required.');return;}
+  if(tagDefs.find(t=>t.name.toLowerCase()===name.toLowerCase())){toast('A tag with that name already exists.');return;}
+  const aliases=document.getElementById('nt-a').value.split(',').map(s=>s.trim().toLowerCase()).filter(Boolean);
+  const related=document.getElementById('nt-r').value.split(',').map(s=>s.trim()).filter(Boolean);
+  const newTag={name,aliases,related};
+
+  // Save locally right away so user can use it immediately
+  localTags.push({...newTag,_src:'local'});
+  saveLocalTags();
+  mergeTagDefs(getCached()?.sheetTags||[]);
+
+  // Submit to Sheets for curator review
+  const btn=document.getElementById('addTagBtn');
+  btn.textContent='Submitting…';btn.disabled=true;
+  try{
+    await postJSON({_type:'tag',...newTag});
+    toast(`✅ Tag "${name}" saved locally and submitted for curator review!`);
+  }catch(err){
+    toast(`⚠️ Tag "${name}" saved locally but could not reach Sheets — will retry on next load.`);
+  }finally{
+    btn.textContent='Submit Tag for Review';btn.disabled=false;
+  }
+  ['nt-n','nt-a','nt-r'].forEach(id=>document.getElementById(id).value='');
+  renderTM();
 }
-function togReview(i) { reviewStates[i].on = !reviewStates[i].on; renderReview(); }
-async function savePaste() {
-  const raw = document.getElementById('pasteRaw').value.trim();
-  if (!raw) { toast('Nothing to save.'); return; }
-  let q = '', a = raw;
-  const m = raw.match(/^Q[:\.\)]\s*([\s\S]+?)\n\n?A[:\.\)]\s*([\s\S]+)$/i);
-  if (m) { q = m[1].trim(); a = m[2].trim(); }
-  else { const p = raw.split(/\n\n/); q = p[0].replace(/^Q[:\.\)]\s*/i, '').trim(); a = p.slice(1).join('\n\n').replace(/^A[:\.\)]\s*/i, '').trim() || raw; }
-  const tags = reviewStates.length ? reviewStates.filter(r => r.on).map(r => r.tag) : autoDetect(raw);
-  const lo = (q + a).toLowerCase();
-  const isGray = ['unclear','gray','ambiguous','conflict','varies','depends','debate','inconsistent'].some(k => lo.includes(k));
-  const isEdge = ['transfer','ems','same system','woke up','discrepancy','exception','contraindic','eloped'].some(k => lo.includes(k));
-  const payload = {
-    measure: document.getElementById('pm').value,
-    specific: document.getElementById('pspec').value.trim(),
-    type: isGray ? 'gray' : isEdge ? 'edge' : 'routine',
-    question: q, answer: a,
-    source: document.getElementById('psrc').value.trim() || 'Pasted source',
-    tags
-  };
-  const btn = document.getElementById('pasteSubmitBtn');
-  btn.textContent = 'Submitting…'; btn.disabled = true;
-  try {
-    await postToSheets(payload);
+
+function editLocalTag(name){
+  const idx=localTags.findIndex(t=>t.name===name);
+  if(idx===-1){toast('Only locally-added tags can be edited here.');return;}
+  const td=localTags[idx];
+  const newName=prompt('Tag name:',td.name);if(newName===null)return;
+  const aliases=prompt('Aliases (comma-separated):',(td.aliases||[]).join(', '));if(aliases===null)return;
+  const related=prompt('Related tags (comma-separated):',(td.related||[]).join(', '));if(related===null)return;
+  localTags[idx]={name:newName.trim()||td.name,aliases:aliases.split(',').map(s=>s.trim().toLowerCase()).filter(Boolean),related:related.split(',').map(s=>s.trim()).filter(Boolean),_src:'local'};
+  saveLocalTags();mergeTagDefs(getCached()?.sheetTags||[]);renderTM();toast('✅ Tag updated locally.');
+}
+
+function delLocalTag(name){
+  const idx=localTags.findIndex(t=>t.name===name);
+  if(idx===-1){toast('Only locally-added tags can be deleted here.');return;}
+  if(!confirm(`Delete local tag "${name}"?`))return;
+  localTags.splice(idx,1);
+  saveLocalTags();mergeTagDefs(getCached()?.sheetTags||[]);renderTM();toast('Tag removed locally.');
+}
+
+// ══════════════════════════════════════════════════
+//  PASTE MODAL
+// ══════════════════════════════════════════════════
+function openPaste(){document.getElementById('pasteModal').classList.add('open');}
+function closePaste(){document.getElementById('pasteModal').classList.remove('open');document.getElementById('tagReview').style.display='none';reviewStates=[];}
+function previewTags(){
+  const raw=document.getElementById('pasteRaw').value.trim();
+  if(!raw){toast('Nothing to preview.');return;}
+  reviewStates=autoDetect(raw).map(t=>({tag:t,on:true}));
+  if(!reviewStates.length){document.getElementById('tagReview').style.display='none';toast('No tags auto-detected — add manually after saving.');return;}
+  renderReview();document.getElementById('tagReview').style.display='block';
+}
+function renderReview(){
+  document.getElementById('rrow').innerHTML=reviewStates.map((r,i)=>
+    `<span class="rchip ${r.on?'acc':'rej'}" onclick="togReview(${i})">${r.on?'✓':'✕'} ${esc(r.tag)}</span>`).join('');
+}
+function togReview(i){reviewStates[i].on=!reviewStates[i].on;renderReview();}
+async function savePaste(){
+  const raw=document.getElementById('pasteRaw').value.trim();
+  if(!raw){toast('Nothing to save.');return;}
+  let q='',a=raw;
+  const m=raw.match(/^Q[:\.\)]\s*([\s\S]+?)\n\n?A[:\.\)]\s*([\s\S]+)$/i);
+  if(m){q=m[1].trim();a=m[2].trim();}
+  else{const p=raw.split(/\n\n/);q=p[0].replace(/^Q[:\.\)]\s*/i,'').trim();a=p.slice(1).join('\n\n').replace(/^A[:\.\)]\s*/i,'').trim()||raw;}
+  const tags=reviewStates.length?reviewStates.filter(r=>r.on).map(r=>r.tag):autoDetect(raw);
+  const lo=(q+a).toLowerCase();
+  const isGray=['unclear','gray','ambiguous','conflict','varies','depends','debate','inconsistent'].some(k=>lo.includes(k));
+  const isEdge=['transfer','ems','same system','woke up','discrepancy','exception','contraindic','eloped'].some(k=>lo.includes(k));
+  const payload={measure:document.getElementById('pm').value,specific:document.getElementById('pspec').value.trim(),type:isGray?'gray':isEdge?'edge':'routine',question:q,answer:a,source:document.getElementById('psrc').value.trim()||'Pasted source',tags};
+  const btn=document.getElementById('pasteSubmitBtn');
+  btn.textContent='Submitting…';btn.disabled=true;
+  try{
+    await postJSON(payload);
     toast('✅ Submitted for curator review!');
     closePaste();
-    document.getElementById('pasteRaw').value = '';
-    document.getElementById('pspec').value = '';
-    document.getElementById('psrc').value = '';
-  } catch(err) {
+    document.getElementById('pasteRaw').value='';
+    document.getElementById('pspec').value='';
+    document.getElementById('psrc').value='';
+  }catch(err){
     toast('❌ Submission failed — check your connection and try again.');
-    console.error(err);
-  } finally {
-    btn.textContent = 'Submit for Review'; btn.disabled = false;
+  }finally{
+    btn.textContent='Submit for Review';btn.disabled=false;
   }
-}
-
-// ══════════════════════════════════════════════════
-//  TAG MANAGER (local only — browser storage)
-// ══════════════════════════════════════════════════
-function openTM() { renderTM(); document.getElementById('tmModal').classList.add('open'); }
-function closeTM() { document.getElementById('tmModal').classList.remove('open'); render(); }
-function renderTM() {
-  document.getElementById('tmBody').innerHTML = tagDefs.map((td, i) => `
-    <tr>
-      <td><span class="tn">${esc(td.name)}</span></td>
-      <td><div class="ta-list">${esc(td.aliases.join(', '))}</div></td>
-      <td><div class="tr-list">${td.related.map(r => `<span class="tr-item">${esc(r)}</span>`).join('')}</div></td>
-      <td style="white-space:nowrap">
-        <button class="tb-btn tb-edit" onclick="editTag(${i})">Edit</button>
-        <button class="tb-btn tb-del" onclick="delTag(${i})">Del</button>
-      </td>
-    </tr>`).join('');
-}
-function addTagDef() {
-  const name = document.getElementById('nt-n').value.trim();
-  if (!name) { toast('Tag name required.'); return; }
-  if (tagDefs.find(t => t.name.toLowerCase() === name.toLowerCase())) { toast('Tag already exists.'); return; }
-  tagDefs.push({ name, aliases: document.getElementById('nt-a').value.split(',').map(s => s.trim().toLowerCase()).filter(Boolean), related: document.getElementById('nt-r').value.split(',').map(s => s.trim()).filter(Boolean) });
-  saveTagDefs(); ['nt-n','nt-a','nt-r'].forEach(id => document.getElementById(id).value = '');
-  renderTM(); toast(`✅ Tag "${name}" added!`);
-}
-function editTag(i) {
-  const td = tagDefs[i];
-  const name = prompt('Tag name:', td.name); if (name === null) return;
-  const aliases = prompt('Aliases (comma-separated):', td.aliases.join(', ')); if (aliases === null) return;
-  const related = prompt('Related tags (comma-separated):', td.related.join(', ')); if (related === null) return;
-  tagDefs[i] = { name: name.trim() || td.name, aliases: aliases.split(',').map(s => s.trim().toLowerCase()).filter(Boolean), related: related.split(',').map(s => s.trim()).filter(Boolean) };
-  saveTagDefs(); renderTM(); toast('✅ Tag updated!');
-}
-function delTag(i) {
-  if (!confirm(`Delete tag "${tagDefs[i].name}"?`)) return;
-  tagDefs.splice(i, 1); saveTagDefs(); renderTM(); toast('Tag deleted.');
 }
 
 // ══════════════════════════════════════════════════
 //  EXPORT PDF
 // ══════════════════════════════════════════════════
-function exportPDF() {
-  const f = filtered();
-  const lbl = actM === 'all' ? 'Stroke & ED Throughput' : actM;
-  const tlbl = actTags.length ? ` · Tags: ${actTags.join(', ')}` : ' ';
-  const w = window.open('', '_blank');
+function exportPDF(){
+  const f=filtered();
+  const lbl=actM==='all'?'Stroke & ED Throughput':actM;
+  const tlbl=actTags.length?` · Tags: ${actTags.join(', ')}`:'';
+  const w=window.open('','_blank');
   w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Q&A — ${lbl}</title>
   <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;700&family=Source+Sans+3:wght@400;500;600&family=Source+Code+Pro:wght@400&display=swap" rel="stylesheet">
   <style>body{font-family:'Source Sans 3',sans-serif;font-size:11.5px;color:#1a1e2c;padding:28px 36px;max-width:720px;margin:0 auto}.hdr{border-bottom:3px solid #0d1f3c;padding-bottom:12px;margin-bottom:20px}.hdr h1{font-family:'Bitter',serif;font-size:20px;color:#0d1f3c;margin-bottom:3px}.meta{font-size:10px;color:#7a8499}.qa{margin-bottom:15px;padding-bottom:14px;border-bottom:1px solid #edf0f5;page-break-inside:avoid}.tags{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:5px}.tag{font-size:8.5px;font-weight:700;padding:1px 6px;border-radius:3px;text-transform:uppercase}.tm{background:#eef0f5;color:#163560}.te{background:#fdf3dc;color:#7a4e00}.tg{background:#fceaea;color:#b53030}.tr{background:#e5f4ea;color:#1a6e30}.kw{font-family:'Source Code Pro',monospace;font-size:9px;background:#f0ebff;color:#5430a8;border:1px solid rgba(84,48,168,.2);padding:1px 5px;border-radius:6px}.q{font-weight:700;font-size:12px;margin-bottom:6px;color:#0d1f3c;line-height:1.4}.a{line-height:1.65;color:#2b3347}.src{font-size:9.5px;color:#7a8499;margin-top:6px;font-style:italic}.foot{margin-top:28px;font-size:9.5px;color:#7a8499;border-top:1px solid #edf0f5;padding-top:8px}</style></head><body>
@@ -825,30 +814,16 @@ function exportPDF() {
   </div>`).join('')}
   <div class="foot">⚠️ Educational use only. Always verify against the official TJC/CMS Specifications Manual.</div>
   </body></html>`);
-  w.document.close(); setTimeout(() => w.print(), 700);
+  w.document.close();setTimeout(()=>w.print(),700);
 }
 
 // ══════════════════════════════════════════════════
-//  TOAST
+//  TOAST + INIT
 // ══════════════════════════════════════════════════
-function toast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('on'); setTimeout(() => t.classList.remove('on'), 3500); }
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),3500);}
 
-// ══════════════════════════════════════════════════
-//  INIT
-// ══════════════════════════════════════════════════
-loadTagDefs();
 fetchFromSheets();
 </script>
-<script data-name="BMC-Widget"
-  data-cfasync="false"
-  src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
-  data-id="abstractiondeskqa"
-  data-description="Support AbstractionDeskQA"
-  data-message="Support ongoing development of this free reference tool."
-  data-color="#0a7c7a"
-  data-position="Right"
-  data-x_margin="18"
-  data-y_margin="18">
-</script>
+<script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="abstractiondeskqa" data-description="Support AbstractionDeskQA" data-message="Support ongoing development of this free reference tool." data-color="#0a7c7a" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
 </body>
 </html>
