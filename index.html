@@ -7,6 +7,8 @@
 <title>AbstractionDeskQA — Core Measure Reference for Abstractors</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Phosphor Icons -->
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -98,6 +100,14 @@
     white-space: nowrap;
   }
   .nav-cta:hover { background: var(--teal2); text-decoration: none; color: white; }
+  .nav-cta-ghost {
+    background: transparent; color: var(--teal);
+    font-family: var(--body); font-size: 15px; font-weight: 700;
+    padding: 9px 20px; border-radius: 7px;
+    border: 2px solid var(--teal); cursor: pointer;
+    transition: all .15s; text-decoration: none; white-space: nowrap;
+  }
+  .nav-cta-ghost:hover { background: var(--teal); color: white; text-decoration: none; }
 
   /* WIP BANNER */
   .wip-banner {
@@ -169,7 +179,7 @@
   }
   .btn-secondary:hover { background: rgba(255,255,255,.18); text-decoration: none; color: white; }
 
-  /* STATS — tight 2-col grid */
+  /* STATS */
   .stats {
     background: var(--white);
     border-bottom: 1px solid var(--border);
@@ -241,6 +251,15 @@
   }
   .how-card p { font-size: 14px; color: var(--ink-mid); line-height: 1.75; }
 
+  /* PHOSPHOR ICON WRAPPER */
+  .ph-icon-wrap {
+    width: 42px; height: 42px; border-radius: 8px;
+    background: var(--teal-pale);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .ph-icon-wrap i { color: var(--teal); font-size: 22px; }
+
   /* FEATURES */
   .features-grid {
     display: grid;
@@ -254,16 +273,64 @@
     transition: box-shadow .15s;
   }
   .feat:hover { box-shadow: var(--shadow); }
-  .feat-icon {
-    width: 42px; height: 42px; border-radius: 8px;
-    background: var(--teal-pale); display: flex; align-items: center;
-    justify-content: center; font-size: 20px; flex-shrink: 0;
-  }
   .feat-body h3 {
     font-family: var(--heading); font-size: 15px;
     font-weight: 700; color: var(--navy); margin-bottom: 4px; line-height: 1.3;
   }
   .feat-body p { font-size: 14px; color: var(--ink-mid); line-height: 1.75; }
+
+  /* TOOLS SECTION */
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 20px;
+    margin-top: 4px;
+  }
+  .tool-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 24px;
+    display: flex; flex-direction: column; gap: 14px;
+    transition: box-shadow .18s, transform .18s;
+    text-decoration: none; color: inherit;
+    position: relative; overflow: hidden;
+  }
+  .tool-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 3px; background: var(--teal);
+    opacity: 0; transition: opacity .18s;
+  }
+  .tool-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); text-decoration: none; color: inherit; }
+  .tool-card:hover::before { opacity: 1; }
+  .tool-card-icon {
+    width: 52px; height: 52px; border-radius: 12px;
+    background: var(--teal-pale);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .tool-card-icon i { color: var(--teal); font-size: 26px; }
+  .tool-card h3 {
+    font-family: var(--heading); font-size: 17px;
+    font-weight: 700; color: var(--navy); margin-bottom: 6px; line-height: 1.25;
+  }
+  .tool-card p { font-size: 14px; color: var(--ink-mid); line-height: 1.75; flex: 1; }
+  .tool-card-link {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 13px; font-weight: 700; color: var(--teal);
+    text-decoration: none; margin-top: 4px;
+    transition: gap .15s;
+  }
+  .tool-card:hover .tool-card-link { gap: 8px; }
+  .tool-card-link i { font-size: 14px; }
+  .tool-tag {
+    display: inline-block;
+    background: var(--teal-pale); color: var(--teal);
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .7px; padding: 2px 8px; border-radius: 4px;
+    margin-bottom: 2px; align-self: flex-start;
+  }
 
   /* FEEDBACK FORM */
   .form-wrap {
@@ -318,7 +385,6 @@
     font-size: 13px; color: var(--ink-soft); line-height: 1.75;
   }
 
-  
   /* FOOTER */
   footer {
     background: #07131f;
@@ -347,8 +413,6 @@
     .stat:nth-child(even) { padding-left: 0; }
     .stat:nth-last-child(-n+2) { border-bottom: 1px solid var(--border); }
     .stat:last-child { border-bottom: none; }
-    .contrib-box { padding: 24px 20px; }
-    .support-inner { flex-direction: column; }
     .footer-inner { flex-direction: column; gap: 12px; }
     .form-wrap { padding: 24px 18px; }
   }
@@ -360,7 +424,6 @@
   }
   .fade-up.visible { opacity: 1; transform: translateY(0); }
 </style>
- <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QJPP46JWX3"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -381,9 +444,10 @@
     </a>
     <div class="nav-links">
       <a href="#how" class="nav-link">How It Works</a>
+      <a href="#tools" class="nav-link">Tools</a>
       <a href="#feedback" class="nav-link">Feedback</a>
-      <a href="lkw-tool.html" class="nav-link">LKW Tool</a>
-      <a href="lookup.html" class="nav-cta">Open Q&amp;A Tool</a>
+      <a href="lkw-tool.html" class="nav-cta-ghost">LKW Tool</a>
+      <a href="lookup.html" class="nav-cta">Q&amp;A Tool</a>
     </div>
   </div>
 </nav>
@@ -413,7 +477,7 @@
         A searchable reference tool for core measure abstractors.
       </p>
       <div class="hero-btns">
-        <a href="lookup.html" class="btn-primary">Open the Q&amp;A Tool</a>
+        <a href="lookup.html" class="btn-primary">Q&amp;A Tool</a>
         <a href="#how" class="btn-secondary">How It Works</a>
       </div>
     </div>
@@ -428,7 +492,7 @@
       </div>
       <div class="stat">
         <strong>Tag-based search</strong>
-        Find entries using easy terms
+        Find entries using chart language
       </div>
       <div class="stat">
         <strong>Always free</strong>
@@ -479,47 +543,116 @@
       <h2 class="section-title" id="features-heading">Built for how abstractors actually work</h2>
       <div class="features-grid">
         <div class="feat fade-up">
-          <div class="feat-icon" role="img" aria-label="Search">🔍</div>
+          <div class="ph-icon-wrap" role="img" aria-label="Search">
+            <i class="ph-duotone ph-magnifying-glass"></i>
+          </div>
           <div class="feat-body">
             <h3>Full-text search</h3>
             <p>Search questions, answers, data elements, and tags at once.</p>
           </div>
         </div>
         <div class="feat fade-up" style="transition-delay:.07s">
-          <div class="feat-icon" role="img" aria-label="Tags">🏷</div>
+          <div class="ph-icon-wrap" role="img" aria-label="Tags">
+            <i class="ph-duotone ph-tag"></i>
+          </div>
           <div class="feat-body">
             <h3>Spec-grounded tags</h3>
-            <p>Built from inclusion/exclusion language, acronyms, medical abbreviations, clinical shorthand, etc.</p>
+            <p>Built from inclusion/exclusion language, acronyms, medical abbreviations, and clinical shorthand.</p>
           </div>
         </div>
         <div class="feat fade-up" style="transition-delay:.14s">
-          <div class="feat-icon" role="img" aria-label="Edge cases">⚡</div>
+          <div class="ph-icon-wrap" role="img" aria-label="Edge cases">
+            <i class="ph-duotone ph-lightning"></i>
+          </div>
           <div class="feat-body">
             <h3>Edge cases flagged</h3>
-            <p>Common abstraction traps are clearly marked (e.g., clinician hierarchy for LKW). </p>
+            <p>Common abstraction traps are clearly marked (e.g., clinician hierarchy for LKW).</p>
           </div>
         </div>
         <div class="feat fade-up" style="transition-delay:.21s">
-          <div class="feat-icon" role="img" aria-label="Gray areas">❓</div>
+          <div class="ph-icon-wrap" role="img" aria-label="Gray areas">
+            <i class="ph-duotone ph-question"></i>
+          </div>
           <div class="feat-body">
-            <h3>Gray area labled</h3>
+            <h3>Gray areas labeled</h3>
             <p>Ambiguous scenarios identified so you know when to escalate.</p>
           </div>
         </div>
         <div class="feat fade-up" style="transition-delay:.28s">
-          <div class="feat-icon" role="img" aria-label="PDF export">📄</div>
+          <div class="ph-icon-wrap" role="img" aria-label="PDF export">
+            <i class="ph-duotone ph-file-pdf"></i>
+          </div>
           <div class="feat-body">
             <h3>PDF export</h3>
             <p>Save any filtered view as a clean reference PDF for training, desk guides, or team meetings.</p>
           </div>
         </div>
         <div class="feat fade-up" style="transition-delay:.35s">
-          <div class="feat-icon" role="img" aria-label="Free to use">✅</div>
+          <div class="ph-icon-wrap" role="img" aria-label="Free to use">
+            <i class="ph-duotone ph-lock-open"></i>
+          </div>
           <div class="feat-body">
             <h3>Always free to use</h3>
             <p>No account, no login, no paywall on the lookup tool. Open it from any device, any time.</p>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOOLS -->
+  <section class="section" id="tools" aria-labelledby="tools-heading">
+    <div class="container">
+      <div class="section-label" aria-hidden="true">What's Inside</div>
+      <h2 class="section-title" id="tools-heading">Three tools, one workflow</h2>
+      <p class="section-sub">Everything on this site is free, no login required. Here's what's available and what each tool does.</p>
+      <div class="tools-grid">
+
+        <!-- Q&A Lookup -->
+        <a href="lookup.html" class="tool-card fade-up" aria-label="Open the Q&A Lookup tool">
+          <span class="tool-tag">Q&amp;A Lookup</span>
+          <div class="tool-card-icon" aria-hidden="true">
+            <i class="ph-duotone ph-books"></i>
+          </div>
+          <div>
+            <h3>Q&amp;A Lookup</h3>
+            <p>Searchable bank of abstraction scenarios with spec-grounded answers. Filter by measure set (STK, ASR-IP, ED-OP), difficulty, or keyword tag. Export any filtered view as a clean PDF for training or desk reference.</p>
+          </div>
+          <span class="tool-card-link">
+            Open tool <i class="ph ph-arrow-right"></i>
+          </span>
+        </a>
+
+        <!-- LKW Tool -->
+        <a href="lkw-tool.html" class="tool-card fade-up" style="transition-delay:.1s" aria-label="Open the LKW Resolution Tool">
+          <span class="tool-tag">LKW Tool</span>
+          <div class="tool-card-icon" aria-hidden="true">
+            <i class="ph-duotone ph-clock-countdown"></i>
+          </div>
+          <div>
+            <h3>LKW Resolution Tool</h3>
+            <p>Interactive calculator for Last Known Well abstraction. Enter what the chart shows — the tool resolves your date, time, and Y/N values using TJC v2026B priority rules. Includes a practice quiz and step-by-step case walkthroughs.</p>
+          </div>
+          <span class="tool-card-link">
+            Open tool <i class="ph ph-arrow-right"></i>
+          </span>
+        </a>
+
+        <!-- Tag System -->
+        <a href="lookup.html" class="tool-card fade-up" style="transition-delay:.2s" aria-label="Open the Tag System in the Q&A tool">
+          <span class="tool-tag">Tag System</span>
+          <div class="tool-card-icon" aria-hidden="true">
+            <i class="ph-duotone ph-tag-chevron"></i>
+          </div>
+          <div>
+            <h3>Tag System</h3>
+            <p>Built into the Q&amp;A Tool — every entry is tagged with the chart language abstractors actually use, organized by category (Stroke Timing, Treatment, Goals of Care, ED Throughput, and more). Browse by category, filter by tag, or suggest new tags for curator review to help build a shared clinical vocabulary.</p>
+          </div>
+          <span class="tool-card-link">
+            Open Q&amp;A Tool → Tags <i class="ph ph-arrow-right"></i>
+          </span>
+        </a>
+
       </div>
     </div>
   </section>
@@ -533,13 +666,13 @@
         Is a scenario missing? Did an answer help you? Found an error? Want to contribute a tip or scenario? This form is for all of it.
       </p>
       <div class="form-wrap">
-        <form id="feedbackForm" 
-      action="https://formly.email/submit" 
-      method="POST" 
-      novalidate 
-      aria-label="Feedback and contribution form">
-         <input type="hidden" name="access_key" value="895f6777acd04a629d7eb27e888e6ac6">
-         <input type="hidden" name="subject" value="New Feedback – AbstractionDeskQA"> 
+        <form id="feedbackForm"
+          action="https://formly.email/submit"
+          method="POST"
+          novalidate
+          aria-label="Feedback and contribution form">
+          <input type="hidden" name="access_key" value="895f6777acd04a629d7eb27e888e6ac6">
+          <input type="hidden" name="subject" value="New Feedback – AbstractionDeskQA">
           <div class="form-row">
             <div class="form-group">
               <label class="form-label" for="fb-name">
@@ -602,7 +735,6 @@
   <!--
   ════════════════════════════════════
   PDF DOWNLOAD — hidden during testing
-  Uncomment this block when ready to launch publicly
   ════════════════════════════════════
 
   <section class="section" id="download" aria-labelledby="download-heading">
@@ -618,7 +750,6 @@
 
   ════════════════════════════════════
   NEWSLETTER — hidden during testing
-  Uncomment this block when ready to launch publicly
   ════════════════════════════════════
 
   <section class="section section-alt" id="newsletter" aria-labelledby="newsletter-heading">
@@ -632,7 +763,6 @@
 
 </main>
 
-
 <!-- FOOTER -->
 <footer role="contentinfo">
   <div class="footer-inner">
@@ -645,6 +775,7 @@
       <a href="lookup.html">Q&amp;A Lookup</a>
       <a href="lkw-tool.html">LKW Tool</a>
       <a href="#how">How It Works</a>
+      <a href="#tools">Tools</a>
       <a href="#feedback">Feedback</a>
     </div>
   </div>
@@ -660,30 +791,27 @@ document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
 
 document.getElementById('feedbackForm').addEventListener('submit', function(e) {
   const msg = document.getElementById('fb-msg').value.trim();
-
   if (!msg) {
     e.preventDefault();
     document.getElementById('fb-msg').focus();
     return;
   }
-
-  // Allow form to submit to Formly
   setTimeout(() => {
     this.style.display = 'none';
     document.getElementById('formSuccess').style.display = 'block';
   }, 500);
 });
 </script>
- <script data-name="BMC-Widget" 
-        data-cfasync="false"
-        src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
-        data-id="abstractiondeskqa"
-        data-description="Support AbstractionDeskQA"
-        data-message="If this tool helped you, consider supporting its development ☕"
-        data-color="#0a7c7a"
-        data-position="Right"
-        data-x_margin="18"
-        data-y_margin="18">
+<script data-name="BMC-Widget"
+  data-cfasync="false"
+  src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
+  data-id="abstractiondeskqa"
+  data-description="Support AbstractionDeskQA"
+  data-message="If this tool helped you, consider supporting its development ☕"
+  data-color="#0a7c7a"
+  data-position="Right"
+  data-x_margin="18"
+  data-y_margin="18">
 </script>
 </body>
 </html>
