@@ -875,17 +875,6 @@ function exportPDF(){
     ${e.source?`<div class="src">Source: ${esc(e.source)}</div>`:''}
   </div>`).join('')}
   <div class="foot">⚠️ Educational use only. Always verify against the official TJC/CMS Specifications Manual. QualityClarity does not constitute compliance advice.</div>
-  <script data-name="BMC-Widget" 
-        data-cfasync="false"
-        src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
-        data-id="abstractiondeskqa"
-        data-description="Support AbstractionDeskQA"
-        data-message="Support ongoing development of this free reference tool."
-        data-color="#0a7c7a"
-        data-position="Right"
-        data-x_margin="18"
-        data-y_margin="18">
-</script>
   </body></html>`);
   w.document.close();setTimeout(()=>w.print(),700);
 }
@@ -899,6 +888,17 @@ function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t
 //  INIT
 // ══════════════════════════════════════════════════
 load();render();
+</script>
+   <script data-name="BMC-Widget" 
+        data-cfasync="false"
+        src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
+        data-id="abstractiondeskqa"
+        data-description="Support AbstractionDeskQA"
+        data-message="Support ongoing development of this free reference tool."
+        data-color="#0a7c7a"
+        data-position="Right"
+        data-x_margin="18"
+        data-y_margin="18">
 </script>
 </body>
 </html>
