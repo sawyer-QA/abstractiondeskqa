@@ -149,7 +149,7 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 .tm-notice{font-size:11.5px;color:var(--amber);background:var(--amber-bg);border:1px solid rgba(194,122,0,.2);border-radius:5px;padding:8px 11px;margin-bottom:14px;line-height:1.55;}
 .tm-section{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--mid);margin:16px 0 8px;padding-bottom:4px;border-bottom:1px solid var(--border);}
 .tm-add{background:var(--teal-bg);border:1px solid rgba(11,122,120,.2);border-radius:7px;padding:14px;margin-bottom:6px;}
-.tm-add-grid{display:grid;grid-template-columns:120px 140px 1fr 1fr;gap:8px;margin-bottom:10px;}
+.tm-add-grid{display:grid;grid-template-columns:120px 140px 1fr 1fr;gap:8px;margin-bottom:10px;align-items:end;}
 
 /* category filter bar inside TM */
 .cat-filter-bar{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px;}
@@ -302,7 +302,7 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
     <div class="tm-section">Suggest a New Tag</div>
     <div class="tm-add">
       <div class="tm-add-grid">
-        <div><label class="flbl">Tag ID <span style="font-weight:400;font-style:italic;">(short, no spaces)</span></label><input class="fi" id="nt-id" placeholder="e.g. stroke_lkw" style="font-family:var(--mono);"/></div>
+        <div><label class="flbl">Tag ID</label><input class="fi" id="nt-id" placeholder="e.g. stroke_lkw" style="font-family:var(--mono);"/></div>
         <div><label class="flbl">Tag Name</label><input class="fi" id="nt-n" placeholder="e.g. LKW" style="font-family:var(--mono);font-weight:600"/></div>
         <div><label class="flbl">Aliases — comma separated</label><input class="fi" id="nt-a" placeholder="last known well, lkn, last seen normal"/></div>
         <div><label class="flbl">Related Tags — comma separated</label><input class="fi" id="nt-r" placeholder="TLKW, DLKW, onset"/></div>
