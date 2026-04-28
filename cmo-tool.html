@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CMO Abstraction Tool — AbstractionDeskQA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet"/>
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+<style>
+:root {
+  --bg: #0f1923;
+  --bg2: #172030;
+  --bg3: #1e2d40;
+  --bg4: #243448;
+  --teal: #2dd4bf;
+  --teal2: #14b8a6;
+  --teal-dim: rgba(45,212,191,0.12);
+  --teal-border: rgba(45,212,191,0.25);
+  --amber: #fbbf24;
+  --amber-dim: rgba(251,191,36,0.12);
+  --amber-border: rgba(251,191,36,0.3);
+  --red: #f87171;
+  --red-dim: rgba(248,113,113,0.12);
+  --red-border: rgba(248,113,113,0.3);
+  --green: #4ade80;
+  --green-dim: rgba(74,222,128,0.1);
+  --green-border: rgba(74,222,128,0.3);
+  --blue: #60a5fa;
+  --blue-dim: rgba(96,165,250,0.1);
+  --purple: #a78bfa;
+  --purple-dim: rgba(167,139,250,0.12);
+  --purple-border: rgba(167,139,250,0.3);
+  --text: #e2eaf4;
+  --muted: #7a96b0;
+  --border: rgba(255,255,255,0.07);
+  --mono: 'DM Mono', monospace;
+  --sans: 'DM Sans', sans-serif;
+  --radius: 8px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.6;min-height:100vh;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 10% 0%,rgba(45,212,191,0.06) 0%,transparent 70%),radial-gradient(ellipse 40% 60% at 90% 100%,rgba(167,139,250,0.05) 0%,transparent 70%);pointer-events:none;z-index:0;}
+header{position:sticky;top:0;z-index:200;background:rgba(15,25,35,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:12px 20px;display:flex;align-items:center;gap:14px;}
+.hbadge{background:var(--teal);color:var(--bg);font-family:var(--mono);font-size:10px;font-weight:500;padding:3px 9px;border-radius:4px;letter-spacing:0.1em;white-space:nowrap;}
+.htitle{font-size:15px;font-weight:700;}
+.hsub{font-size:11px;color:var(--muted);font-family:var(--mono);}
+.tabs{background:var(--bg2);border-bottom:1px solid var(--border);display:flex;gap:0;padding:0 16px;overflow-x:auto;position:sticky;top:114px;z-index:199;}
+.tab{background:none;border:none;color:var(--muted);font-family:var(--sans);font-size:13px;font-weight:600;padding:12px 16px;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .18s;display:flex;align-items:center;gap:6px;}
+.tab i{font-size:15px;}
+.tab:hover{color:var(--text);}
+.tab.on{color:var(--teal);border-bottom-color:var(--teal);}
+main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:1;}
+.panel{display:none;}
+.panel.on{display:block;animation:fadeUp .22s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-bottom:14px;}
+.card-label{font-family:var(--mono);font-size:10px;font-weight:500;color:var(--teal);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:12px;}
+.sh{font-size:20px;font-weight:700;margin-bottom:4px;}
+.ss{font-size:13px;color:var(--muted);margin-bottom:20px;}
+.cx{border-radius:var(--radius);padding:11px 14px;margin:10px 0;display:flex;gap:10px;font-size:13px;line-height:1.55;}
+.cx-icon{font-size:16px;flex-shrink:0;margin-top:1px;line-height:1;}.cx-icon i{font-size:16px;}
+.cx strong{display:block;font-size:10px;letter-spacing:.07em;text-transform:uppercase;margin-bottom:2px;}
+.cx.tip{background:var(--teal-dim);border-left:3px solid var(--teal);color:#99f6e4;}
+.cx.warn{background:var(--amber-dim);border-left:3px solid var(--amber);color:#fde68a;}
+.cx.danger{background:var(--red-dim);border-left:3px solid var(--red);color:#fca5a5;}
+.cx.ok{background:var(--green-dim);border-left:3px solid var(--green);color:#bbf7d0;}
+.cx.info{background:var(--blue-dim);border-left:3px solid var(--blue);color:#bfdbfe;}
+.cx.purple{background:var(--purple-dim);border-left:3px solid var(--purple);color:#ddd6fe;}
+
+/* ── CLASSIFIER ── */
+.doc-type-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin:14px 0;}
+.doc-type-btn{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;cursor:pointer;transition:all .18s;text-align:left;}
+.doc-type-btn:hover{border-color:var(--teal);}
+.doc-type-btn.selected{border-color:var(--teal);background:var(--teal-dim);}
+.doc-type-btn .dti{font-size:22px;margin-bottom:6px;color:var(--teal);line-height:1;}.doc-type-btn .dti i{font-size:22px;}
+.doc-type-btn .dtn{font-size:12px;font-weight:700;margin-bottom:2px;}
+.doc-type-btn .dtd{font-size:11px;color:var(--muted);}
+.resolve-btn{width:100%;background:var(--teal);color:var(--bg);border:none;font-family:var(--sans);font-size:14px;font-weight:700;padding:13px 20px;border-radius:var(--radius);cursor:pointer;transition:background .18s;margin-top:4px;}
+.resolve-btn:hover{background:var(--teal2);}
+.result-box{background:var(--bg3);border:2px solid var(--teal);border-radius:var(--radius);padding:20px 22px;margin-top:16px;display:none;}
+.result-box.show{display:block;animation:fadeUp .3s ease;}
+.res-fields{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:16px;}
+.res-field-label{font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:3px;}
+.res-val{font-family:var(--mono);font-size:22px;font-weight:500;}
+.res-val.yes{color:var(--green);}
+.res-val.no{color:var(--red);}
+.res-val.plain{color:var(--teal);font-size:15px;line-height:1.5;}
+.res-rule{font-size:12.5px;line-height:1.7;color:#c4d8ec;border-top:1px solid var(--border);padding-top:14px;margin-top:4px;}
+.rule-tag{display:inline-block;background:var(--bg4);border:1px solid var(--border);font-family:var(--mono);font-size:10px;color:var(--amber);padding:1px 7px;border-radius:3px;margin-right:6px;vertical-align:middle;}
+
+/* ── BUTTONS ── */
+.btn{background:var(--teal);color:var(--bg);border:none;font-family:var(--sans);font-size:13px;font-weight:700;padding:9px 18px;border-radius:6px;cursor:pointer;transition:background .18s;}
+.btn:hover{background:var(--teal2);}
+.btn.ghost{background:transparent;border:1px solid var(--border);color:var(--muted);}
+.btn.ghost:hover{border-color:var(--teal);color:var(--teal);}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;}
+
+/* ── QUICK REF ── */
+.qr-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+@media(max-width:600px){.qr-grid{grid-template-columns:1fr;}}
+.qr-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;}
+.qr-card h3{font-family:var(--mono);font-size:10px;color:var(--teal);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;}
+.qr-row{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:12px;}
+.qr-row:last-child{border-bottom:none;}
+.qr-k{color:var(--muted);flex-shrink:0;max-width:60%;}
+.qr-v{font-family:var(--mono);font-size:11px;text-align:right;}
+.qr-v.y{color:var(--green);}
+.qr-v.n{color:var(--red);}
+.qr-v.w{color:var(--amber);}
+.px-table{width:100%;border-collapse:collapse;font-size:12.5px;}
+.px-table th{background:var(--bg3);padding:8px 12px;font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:left;border:1px solid var(--border);}
+.px-table td{padding:8px 12px;border:1px solid var(--border);color:#c4d8ec;line-height:1.5;vertical-align:top;}
+.px-table tr:hover td{background:rgba(45,212,191,0.03);}
+
+/* ── QUIZ ── */
+.q-prog-wrap{margin-bottom:16px;}
+.q-prog-bar-track{height:3px;background:var(--bg3);border-radius:3px;margin-top:6px;overflow:hidden;}
+.q-prog-bar-fill{height:100%;background:var(--teal);border-radius:3px;transition:width .3s;}
+.q-prog-meta{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--muted);}
+.scenario-box{background:rgba(0,0,0,0.2);border:1px solid var(--border);border-left:3px solid var(--amber);border-radius:var(--radius);padding:14px 16px;font-size:13px;color:#ddeeff;line-height:1.7;margin-bottom:14px;font-style:italic;}
+.scenario-box .slabel{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--amber);letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:6px;}
+.q-opts{display:flex;flex-direction:column;gap:7px;margin-bottom:14px;}
+.q-opt{background:var(--bg3);border:1px solid var(--border);color:var(--text);font-family:var(--sans);font-size:13px;padding:10px 14px;border-radius:6px;cursor:pointer;text-align:left;transition:all .15s;}
+.q-opt:hover{border-color:var(--teal);}
+.q-opt.correct{border-color:var(--green);background:var(--green-dim);color:#bbf7d0;}
+.q-opt.wrong{border-color:var(--red);background:var(--red-dim);color:#fca5a5;}
+.q-feedback{display:none;font-size:13px;line-height:1.6;padding:12px 14px;border-radius:6px;margin-top:6px;}
+.q-feedback.show{display:block;animation:fadeUp .25s ease;}
+.q-feedback.correct{background:var(--green-dim);border-left:3px solid var(--green);color:#bbf7d0;}
+.q-feedback.wrong{background:var(--red-dim);border-left:3px solid var(--red);color:#fca5a5;}
+.q-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;}
+.qtag{padding:2px 9px;border-radius:10px;font-family:var(--mono);font-size:10px;font-weight:500;background:var(--teal-dim);color:var(--teal);border:1px solid var(--teal-border);}
+
+/* ── CASES ── */
+.case-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-top:16px;}
+.case-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;cursor:pointer;transition:border-color .18s;}
+.case-card:hover{border-color:var(--teal);}
+.case-card h3{font-size:13px;font-weight:700;margin-bottom:6px;}
+.case-card p{font-size:12px;color:var(--muted);margin-bottom:12px;}
+.diff-pill{display:inline-block;padding:2px 9px;border-radius:10px;font-family:var(--mono);font-size:10px;font-weight:500;}
+.diff-int{background:var(--teal-dim);color:var(--teal);border:1px solid var(--teal-border);}
+.diff-adv{background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber-border);}
+.wt-dots{display:flex;gap:5px;margin-bottom:18px;flex-wrap:wrap;}
+.wt-dot{width:26px;height:5px;border-radius:3px;background:var(--bg3);transition:background .2s;}
+.wt-dot.done{background:var(--teal);}
+.wt-dot.cur{background:var(--amber);}
+.chart-box{background:rgba(0,0,0,0.2);border:1px solid var(--border);border-left:3px solid var(--amber);border-radius:var(--radius);padding:14px 16px;font-size:13px;color:#ddeeff;line-height:1.7;margin-bottom:12px;}
+.chart-box .clabel{font-family:var(--mono);font-size:10px;color:var(--amber);letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:6px;}
+.hidden{display:none!important;}
+@media print{body{background:#fff;color:#111;}header,.tabs{display:none;}.result-box{border:2px solid #14b8a6;}}
+
+/* ── GUIDED ── */
+.gstep-badge{display:inline-block;background:var(--bg4);border:1px solid var(--border);font-family:var(--mono);font-size:10px;color:var(--muted);padding:2px 8px;border-radius:4px;margin-bottom:10px;}
+
+/* ── SITE NAV ── */
+.site-nav{background:#ffffff;border-bottom:1px solid #dbe2ec;position:sticky;top:0;z-index:300;box-shadow:0 2px 10px rgba(13,34,64,.06);font-family:'Atkinson Hyperlegible',sans-serif;}
+.site-nav-inner{max-width:1040px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:62px;}
+.site-nav-brand{font-family:'DM Sans',sans-serif;font-size:20px;font-weight:700;color:#0d2240;letter-spacing:-.3px;display:flex;align-items:center;gap:7px;text-decoration:none;}
+.site-nav-brand:hover{text-decoration:none;}
+.site-qa-badge{background:#0a7c7a;color:white;font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;letter-spacing:.6px;}
+.site-nav-links{display:flex;gap:4px;align-items:center;}
+.site-nav-link{font-size:15px;font-weight:400;color:#3d4f62;padding:7px 14px;border-radius:6px;transition:all .15s;border:none;background:none;cursor:pointer;text-decoration:none;}
+.site-nav-link:hover{background:#e4f5f4;color:#0a7c7a;text-decoration:none;}
+.site-nav-link.active-page{color:#0a7c7a;font-weight:700;}
+.site-nav-cta{background:#0a7c7a;color:white;font-size:15px;font-weight:700;padding:9px 20px;border-radius:7px;border:none;cursor:pointer;transition:all .15s;text-decoration:none;white-space:nowrap;}
+.site-nav-cta:hover{background:#0da8a5;text-decoration:none;color:white;}
+.page-title-bar{background:#0d2240;padding:28px 24px 24px;position:relative;overflow:hidden;}
+.page-title-bar::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 55% at 30% 0%,rgba(10,124,122,.22) 0%,transparent 65%);pointer-events:none;}
+.page-title-inner{max-width:1040px;margin:0 auto;position:relative;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.page-back-link{color:rgba(255,255,255,.55);font-size:13px;text-decoration:none;display:flex;align-items:center;gap:5px;transition:color .15s;}
+.page-back-link:hover{color:#0da8a5;text-decoration:none;}
+.page-title-text{color:white;}
+.page-title-text h1{font-family:'DM Sans',sans-serif;font-size:22px;font-weight:700;line-height:1.2;margin-bottom:2px;}
+.page-title-text p{font-size:12px;color:rgba(255,255,255,.5);font-family:'DM Mono',monospace;}
+.site-footer{background:#07131f;color:rgba(255,255,255,.45);padding:28px 24px;font-family:'Atkinson Hyperlegible',sans-serif;}
+.site-footer-inner{max-width:1040px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.site-footer-brand{font-family:'DM Sans',sans-serif;font-size:16px;font-weight:700;color:rgba(255,255,255,.7);margin-bottom:4px;}
+.site-footer p{font-size:13px;line-height:1.65;}
+.site-footer a{color:#0da8a5;text-decoration:none;}
+.site-footer a:hover{text-decoration:underline;}
+.site-footer-links{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;}
+.site-disclaimer{background:#eef2f8;border-top:1px solid #dbe2ec;padding:20px 24px;}
+.site-disclaimer-inner{max-width:1040px;margin:0 auto;font-size:13px;color:#6b7f94;line-height:1.75;font-family:'Atkinson Hyperlegible',sans-serif;}
+@media(max-width:640px){.site-nav-links .site-nav-link{display:none;}.site-footer-inner{flex-direction:column;gap:12px;}}
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QJPP46JWX3"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-QJPP46JWX3');</script>
+</head>
+<body>
+
+<a href="#maincontent" style="position:absolute;top:-60px;left:16px;z-index:999;background:#0d2240;color:white;padding:10px 18px;border-radius:10px;font-weight:700;font-size:15px;transition:top .2s;text-decoration:none;" onfocus="this.style.top='16px'" onblur="this.style.top='-60px'">Skip to main content</a>
+
+<nav class="site-nav" role="navigation" aria-label="Main navigation">
+  <div class="site-nav-inner">
+    <a href="index.html" class="site-nav-brand" aria-label="AbstractionDeskQA home">
+      AbstractionDesk<span class="site-qa-badge">QA</span>
+    </a>
+    <div class="site-nav-links">
+      <a href="index.html#how" class="site-nav-link">How It Works</a>
+      <a href="index.html#feedback" class="site-nav-link">Feedback</a>
+      <a href="lkw-tool.html" class="site-nav-link">LKW Tool</a>
+      <a href="cmo-tool.html" class="site-nav-link active-page">CMO Tool</a>
+      <a href="lookup.html" class="site-nav-cta">Open Q&amp;A Tool</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-title-bar">
+  <div class="page-title-inner">
+    <a href="index.html" class="page-back-link" aria-label="Back to home">&#8592; Home</a>
+    <div class="page-title-text">
+      <h1>Comfort Measures Only — Abstraction Tool</h1>
+      <p>TJC v2026A &nbsp;·&nbsp; STK-6 / ASR-IP &nbsp;·&nbsp; Denominator Exclusion — Comfort Measures Only</p>
+    </div>
+  </div>
+</div>
+
+<span id="maincontent" aria-hidden="true"></span>
+
+<nav class="tabs" role="tablist">
+  <button class="tab on" onclick="showTab('classifier')" data-t="classifier"><i class="ph-duotone ph-funnel"></i> Case Classifier</button>
+  <button class="tab" onclick="showTab('guided')" data-t="guided"><i class="ph-duotone ph-git-branch"></i> Guided Workflow</button>
+  <button class="tab" onclick="showTab('ref')" data-t="ref"><i class="ph-duotone ph-clipboard-text"></i> Quick Reference</button>
+  <button class="tab" onclick="showTab('quiz')" data-t="quiz"><i class="ph-duotone ph-target"></i> Practice Quiz</button>
+  <button class="tab" onclick="showTab('cases')" data-t="cases"><i class="ph-duotone ph-stethoscope"></i> Case Walkthroughs</button>
+</nav>
+
+<main>
+
+<!-- ══ TAB 1: CASE CLASSIFIER ══ -->
+<div id="tab-classifier" class="panel on">
+  <div class="sh">CMO Case Classifier</div>
+  <p class="ss">Identify what type of CMO documentation is in your chart, then resolve whether it satisfies the denominator exclusion.</p>
+
+  <div class="cx info"><span class="cx-icon"><i class="ph-duotone ph-info"></i></span><div><strong>How to use</strong>Select every documentation type present in the chart. The tool evaluates whether any combination meets the specification. Multiple selections are allowed — check all that apply, then hit <strong style="display:inline;">Evaluate</strong>.</div></div>
+
+  <div class="card">
+    <div class="card-label">Step 1 — What documentation is present?</div>
+    <div class="doc-type-grid" id="doc-grid">
+      <div class="doc-type-btn" data-key="md_order" onclick="toggleDoc(this)">
+        <div class="dti"><i class="ph-duotone ph-clipboard-text"></i></div>
+        <div class="dtn">Physician Order</div>
+        <div class="dtd">Explicit CMO order by MD/APN/PA in the order set or written orders</div>
+      </div>
+      <div class="doc-type-btn" data-key="md_note" onclick="toggleDoc(this)">
+        <div class="dti"><i class="ph-duotone ph-note-pencil"></i></div>
+        <div class="dtn">Physician Note — Discussion</div>
+        <div class="dtd">Progress note or H&P documenting a goals-of-care discussion with CMO decision</div>
+      </div>
+      <div class="doc-type-btn" data-key="polst" onclick="toggleDoc(this)">
+        <div class="dti"><i class="ph-duotone ph-file-text"></i></div>
+        <div class="dtn">POLST / MOST / MOLST</div>
+        <div class="dtd">Portable medical order form signed by physician</div>
+      </div>
+      <div class="doc-type-btn" data-key="hospice" onclick="toggleDoc(this)">
+        <div class="dti"><i class="ph-duotone ph-house-line"></i></div>
+        <div class="dtn">Hospice Enrollment/Referral</div>
+        <div class="dtd">Documentation of hospice referral, enrollment, or transfer during this admission</div>
+      </div>
+      <div class="doc-type-btn" data-key="comfort_only" onclick="toggleDoc(this)">
+        <div class="dti"><i class="ph-duotone ph-pill"></i></div>
+        <div class="dtn">Comfort Care Orders Only</div>
+        <div class="dtd">Symptom management orders (pain, positioning, mouth care) without a CMO designation</div>
+      </div>
+      <div class="doc-type-btn" data-key="family_note" onclick="toggleDoc(this)">
+        <div class="dti"><i class="ph-duotone ph-users-three"></i></div>
+        <div class="dtn">Family/Care Conference Note</div>
+        <div class="dtd">Nursing or social work note documenting family meeting; no physician co-sign</div>
+      </div>
+      <div class="doc-type-btn" data-key="dnr_only" onclick="toggleDoc(this)">
+        <div class="dti"><i class="ph-duotone ph-prohibit"></i></div>
+        <div class="dtn">DNR/DNI Order Only</div>
+        <div class="dtd">Do-not-resuscitate or do-not-intubate order without explicit CMO language</div>
+      </div>
+      <div class="doc-type-btn" data-key="palliative" onclick="toggleDoc(this)">
+        <div class="dti"><i class="ph-duotone ph-handshake"></i></div>
+        <div class="dtn">Palliative Care Consult</div>
+        <div class="dtd">Palliative care team note documenting CMO recommendation or plan</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="timing-card">
+    <div class="card-label">Step 2 — Timing Flags</div>
+    <div style="display:flex;flex-direction:column;gap:10px;font-size:13px;">
+      <label style="display:flex;align-items:flex-start;gap:9px;cursor:pointer;"><input type="checkbox" id="flag-prehosp" style="accent-color:var(--amber);width:15px;height:15px;margin-top:2px;"/><span><strong>Pre-hospital CMO</strong> — CMO was established before this hospital encounter (e.g., existing POLST from prior admission or outpatient setting)</span></label>
+      <label style="display:flex;align-items:flex-start;gap:9px;cursor:pointer;"><input type="checkbox" id="flag-postbrain" style="accent-color:var(--red);width:15px;height:15px;margin-top:2px;"/><span><strong>After brain death declaration</strong> — CMO documented only after formal brain death determination</span></label>
+      <label style="display:flex;align-items:flex-start;gap:9px;cursor:pointer;"><input type="checkbox" id="flag-conflict" style="accent-color:var(--red);width:15px;height:15px;margin-top:2px;"/><span><strong>Conflicting documentation</strong> — CMO is documented but aggressive treatment continues (e.g., full code status maintained alongside comfort note)</span></label>
+      <label style="display:flex;align-items:flex-start;gap:9px;cursor:pointer;"><input type="checkbox" id="flag-withdrawn" style="accent-color:var(--amber);width:15px;height:15px;margin-top:2px;"/><span><strong>CMO later rescinded</strong> — CMO was ordered but subsequently reversed or updated to full treatment during this admission</span></label>
+    </div>
+  </div>
+
+  <button class="resolve-btn" onclick="resolveClassifier()">Evaluate → Determine CMO Exclusion Status</button>
+
+  <div class="result-box" id="classifier-result">
+    <div class="card-label" style="margin-bottom:14px;">Exclusion Result</div>
+    <div class="res-fields">
+      <div><div class="res-field-label">CMO Exclusion</div><div class="res-val" id="r-cmo">—</div></div>
+      <div><div class="res-field-label">Basis</div><div class="res-val plain" id="r-basis" style="font-size:13px;max-width:280px;">—</div></div>
+    </div>
+    <div class="res-rule" id="r-rationale"></div>
+    <div class="btn-row"><button class="btn" onclick="window.print()"><i class="ph ph-printer"></i> Print</button><button class="btn ghost" onclick="clearClassifier()">↩ Clear</button></div>
+  </div>
+</div>
+
+<!-- ══ TAB 2: GUIDED ══ -->
+<div id="tab-guided" class="panel">
+  <div class="sh">Guided Workflow</div>
+  <p class="ss">Answer each question to determine CMO exclusion eligibility step by step.</p>
+
+  <div class="card" id="gq1">
+    <div class="gstep-badge">Step 1 — Document Type</div>
+    <div style="font-weight:600;margin-bottom:12px;">Is there a physician, APN, or PA order or documented discussion designating the patient as Comfort Measures Only?</div>
+    <div class="cx warn"><span class="cx-icon"><i class="ph-duotone ph-warning"></i></span><div><strong>This is the threshold question</strong>The source must come from a licensed independent practitioner — MD, DO, APN, or PA. Nursing notes, social work notes, or family conference documentation alone do not qualify without an LIP co-signature or a corresponding physician order.</div></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;"><button class="btn" onclick="gAns(1,'yes')">Yes — LIP order or note present</button><button class="btn ghost" onclick="gAns(1,'no')">No LIP documentation</button></div>
+  </div>
+
+  <div class="card hidden" id="gq2">
+    <div class="gstep-badge">Step 2 — POLST Evaluation</div>
+    <div class="cx purple"><span class="cx-icon"><i class="ph-duotone ph-file-text"></i></span><div><strong>POLST is a physician order — but check what's selected</strong>A POLST in the chart is a signed medical order. However, you must verify the POLST section that addresses medical interventions. A POLST with "Full Treatment" or "Limited Interventions" checked does NOT satisfy CMO. Only a POLST with "Comfort-Focused Treatment" (or equivalent) checked qualifies.</div></div>
+    <div style="font-weight:600;margin:12px 0 10px;">Does this include a POLST/MOST/MOLST?</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;"><button class="btn" onclick="gAns(2,'polst_cmo')">Yes — Comfort-Focused Treatment is checked</button><button class="btn ghost" onclick="gAns(2,'polst_other')">Yes — but Full Treatment or Limited is checked</button><button class="btn ghost" onclick="gAns(2,'no_polst')">No POLST present</button></div>
+  </div>
+
+  <div class="card hidden" id="gq3">
+    <div class="gstep-badge">Step 3 — Timing</div>
+    <div class="cx danger"><span class="cx-icon"><i class="ph-duotone ph-warning-octagon"></i></span><div><strong>Timing is critical</strong>The CMO designation must be established as the care plan for this admission — not documented after brain death, and not a pre-admission-only status that was not reaffirmed or continued during this encounter.</div></div>
+    <div style="font-weight:600;margin:12px 0 10px;">Was the CMO documentation established during this admission (prior to death, discharge, or brain death declaration)?</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;"><button class="btn" onclick="gAns(3,'yes')">Yes — documented during this admission</button><button class="btn ghost" onclick="gAns(3,'postbrain')">Only after brain death declaration</button><button class="btn ghost" onclick="gAns(3,'prehosp_only')">Pre-hospital only, not reaffirmed</button></div>
+  </div>
+
+  <div class="card hidden" id="gq4">
+    <div class="gstep-badge">Step 4 — Conflicting Documentation</div>
+    <div class="cx warn"><span class="cx-icon"><i class="ph-duotone ph-warning"></i></span><div><strong>Conflicting documentation is a red flag</strong>If CMO is ordered but the medical record simultaneously shows aggressive interventions being pursued (full-code resuscitation, ongoing aggressive chemotherapy, ICU-level interventions), you should flag this for review. A CMO exclusion applies when CMO is the established plan — not when it's documented alongside conflicting treatment goals.</div></div>
+    <div style="font-weight:600;margin:12px 0 10px;">Is the CMO plan consistent with the overall treatment record?</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;"><button class="btn" onclick="gAns(4,'consistent')">Yes — care aligns with CMO</button><button class="btn ghost" onclick="gAns(4,'conflict')">Conflicting documentation present</button></div>
+  </div>
+
+  <div class="result-box hidden" id="guided-result">
+    <div class="card-label" style="margin-bottom:14px;">Abstraction Result</div>
+    <div class="res-fields">
+      <div><div class="res-field-label">CMO Exclusion</div><div class="res-val" id="gr-yn">—</div></div>
+    </div>
+    <div class="res-rule" id="gr-rat"></div>
+    <div class="btn-row"><button class="btn" onclick="window.print()"><i class="ph ph-printer"></i> Print</button><button class="btn ghost" onclick="resetGuided()">↩ Start Over</button></div>
+  </div>
+</div>
+
+<!-- ══ TAB 3: QUICK REFERENCE ══ -->
+<div id="tab-ref" class="panel">
+  <div class="sh">Quick Reference</div>
+  <p class="ss">v2026A · CMO Denominator Exclusion — STK-6 / ASR-IP</p>
+
+  <div class="card">
+    <div class="card-label">Documentation Eligibility Matrix</div>
+    <div class="cx info" style="margin-bottom:12px;"><span class="cx-icon"><i class="ph-duotone ph-info"></i></span><div>Not all comfort-related documentation is equal. This matrix shows what qualifies, what does not, and what requires additional scrutiny before counting.</div></div>
+    <div style="overflow-x:auto;">
+    <table class="px-table">
+      <thead><tr><th>Documentation Type</th><th>Qualifies?</th><th>Key Condition / Caveat</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Physician/APN/PA explicit CMO order</strong></td><td style="color:var(--green);font-weight:700;">✓ Yes</td><td>Strongest basis. Confirm order was not subsequently rescinded.</td></tr>
+        <tr><td><strong>Physician progress note — CMO discussion</strong></td><td style="color:var(--green);font-weight:700;">✓ Yes</td><td>Must document the decision, not just that a conversation occurred. "Discussed goals of care" alone is insufficient.</td></tr>
+        <tr><td><strong>POLST — Comfort-Focused Treatment checked</strong></td><td style="color:var(--green);font-weight:700;">✓ Yes</td><td>POLST is a physician order. Verify the correct section is completed and signed.</td></tr>
+        <tr><td><strong>POLST — Full Treatment or Limited checked</strong></td><td style="color:var(--red);font-weight:700;">✗ No</td><td>POLST is present but does not indicate CMO. Section checked matters, not just presence of form.</td></tr>
+        <tr><td><strong>Hospice enrollment during admission</strong></td><td style="color:var(--amber);font-weight:700;">⚠ Review</td><td>Hospice referral ≠ automatic CMO. Verify accompanying physician order or note explicitly designating CMO.</td></tr>
+        <tr><td><strong>Palliative care consult note — CMO plan</strong></td><td style="color:var(--amber);font-weight:700;">⚠ Review</td><td>Palliative consult recommending CMO is not sufficient alone. Requires attending order or documentation adopting the plan.</td></tr>
+        <tr><td><strong>DNR/DNI order without CMO language</strong></td><td style="color:var(--red);font-weight:700;">✗ No</td><td>DNR ≠ CMO. Resuscitation limitation is not the same as comfort-focused care designation.</td></tr>
+        <tr><td><strong>Nursing/social work comfort care note</strong></td><td style="color:var(--red);font-weight:700;">✗ No</td><td>Non-LIP documentation does not satisfy the exclusion alone. Nursing "comfort care" charting is not a CMO order.</td></tr>
+        <tr><td><strong>Symptom management orders only</strong></td><td style="color:var(--red);font-weight:700;">✗ No</td><td>"Comfort care measures" (pain meds, positioning, mouth care) ordered without CMO designation do not qualify.</td></tr>
+        <tr><td><strong>Family meeting note — comfort decision</strong></td><td style="color:var(--red);font-weight:700;">✗ No</td><td>Family agreement documented without an LIP order or co-signed note does not satisfy the exclusion.</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="qr-grid">
+    <div class="qr-card"><h3>Counts as CMO</h3>
+      <div class="qr-row"><span class="qr-k">Explicit physician CMO order</span><span class="qr-v y">✓ Yes</span></div>
+      <div class="qr-row"><span class="qr-k">MD note documenting CMO decision</span><span class="qr-v y">✓ Yes</span></div>
+      <div class="qr-row"><span class="qr-k">POLST — comfort-focused section checked</span><span class="qr-v y">✓ Yes</span></div>
+      <div class="qr-row"><span class="qr-k">Hospice + explicit CMO order</span><span class="qr-v y">✓ Yes</span></div>
+      <div class="qr-row"><span class="qr-k">Attending adopts palliative CMO plan</span><span class="qr-v y">✓ Yes</span></div>
+    </div>
+    <div class="qr-card"><h3>Does NOT Count as CMO</h3>
+      <div class="qr-row"><span class="qr-k">DNR/DNI only</span><span class="qr-v n">✗ No</span></div>
+      <div class="qr-row"><span class="qr-k">Nursing comfort care charting alone</span><span class="qr-v n">✗ No</span></div>
+      <div class="qr-row"><span class="qr-k">Symptom management orders only</span><span class="qr-v n">✗ No</span></div>
+      <div class="qr-row"><span class="qr-k">POLST — full/limited treatment checked</span><span class="qr-v n">✗ No</span></div>
+      <div class="qr-row"><span class="qr-k">Family meeting note without LIP order</span><span class="qr-v n">✗ No</span></div>
+      <div class="qr-row"><span class="qr-k">Hospice referral without CMO order</span><span class="qr-v n">✗ No</span></div>
+      <div class="qr-row"><span class="qr-k">Palliative consult without attending adoption</span><span class="qr-v n">✗ No</span></div>
+    </div>
+    <div class="qr-card"><h3>Timing Rules</h3>
+      <div class="qr-row"><span class="qr-k">Must be established during admission</span><span class="qr-v">Before death/discharge</span></div>
+      <div class="qr-row"><span class="qr-k">After brain death only</span><span class="qr-v n">Does NOT count</span></div>
+      <div class="qr-row"><span class="qr-k">Pre-hospital POLST, not reaffirmed</span><span class="qr-v w">⚠ Review</span></div>
+      <div class="qr-row"><span class="qr-k">CMO then rescinded</span><span class="qr-v n">Does NOT count</span></div>
+      <div class="qr-row"><span class="qr-k">CMO established, death follows</span><span class="qr-v y">Counts</span></div>
+    </div>
+    <div class="qr-card"><h3>POLST Checklist</h3>
+      <div class="qr-row"><span class="qr-k">Is the form signed by a physician?</span><span class="qr-v">Required</span></div>
+      <div class="qr-row"><span class="qr-k">Which section is checked?</span><span class="qr-v">Must verify</span></div>
+      <div class="qr-row"><span class="qr-k">"Comfort-Focused" or equivalent?</span><span class="qr-v y">✓ Qualifies</span></div>
+      <div class="qr-row"><span class="qr-k">"Full Treatment" checked?</span><span class="qr-v n">✗ No</span></div>
+      <div class="qr-row"><span class="qr-k">"Limited Interventions" checked?</span><span class="qr-v n">✗ No</span></div>
+      <div class="qr-row"><span class="qr-k">Was it enacted this admission?</span><span class="qr-v">Confirm</span></div>
+    </div>
+  </div>
+
+  <div class="card"><div class="card-label">Top Abstractor Pitfalls</div>
+    <div class="cx danger"><span class="cx-icon"><i class="ph-duotone ph-warning-octagon"></i></span><div><strong>Pitfall #1 — Comfort care orders ≠ CMO</strong>"Comfort care measures" ordered (morphine drip, repositioning q2h, oral care) does not equal a CMO designation. The presence of symptom-focused orders without an explicit CMO plan does not satisfy the exclusion.</div></div>
+    <div class="cx danger"><span class="cx-icon"><i class="ph-duotone ph-warning-octagon"></i></span><div><strong>Pitfall #2 — DNR is not CMO</strong>A DNR or DNI order limits resuscitation — it does not establish a comfort-only care plan. A patient can have a full DNR and still be receiving aggressive curative treatment. Never equate code status with CMO.</div></div>
+    <div class="cx danger"><span class="cx-icon"><i class="ph-duotone ph-warning-octagon"></i></span><div><strong>Pitfall #3 — Discussion ≠ Decision</strong>A physician note that says "discussed goals of care with family" without documenting the outcome of that discussion does not satisfy the exclusion. The note must reflect that CMO was decided upon as the plan.</div></div>
+    <div class="cx warn"><span class="cx-icon"><i class="ph-duotone ph-warning"></i></span><div><strong>Pitfall #4 — POLST section check</strong>A POLST in the chart does not automatically equal CMO. You must look at which section is checked. "Full Treatment" and "Limited Interventions" do not qualify. Only "Comfort-Focused Treatment" (or state equivalent) satisfies the exclusion.</div></div>
+    <div class="cx warn"><span class="cx-icon"><i class="ph-duotone ph-warning"></i></span><div><strong>Pitfall #5 — Hospice referral without accompanying order</strong>Hospice referral or enrollment documentation suggests CMO intent but is not sufficient alone. Always look for an accompanying physician order or note explicitly establishing CMO. Hospice can overlap with non-CMO designations in some edge cases.</div></div>
+    <div class="cx warn"><span class="cx-icon"><i class="ph-duotone ph-warning"></i></span><div><strong>Pitfall #6 — Palliative care consult without attending adoption</strong>A palliative care team can recommend CMO, but that recommendation does not bind the plan of care. The attending of record must document adoption of the CMO plan, or issue a corresponding order.</div></div>
+    <div class="cx tip"><span class="cx-icon"><i class="ph-duotone ph-lightbulb"></i></span><div><strong>Pitfall #7 — Pre-hospital POLST not reaffirmed</strong>A POLST from a prior admission or outpatient setting may be in the chart. Verify whether it was acknowledged, reaffirmed, or updated during this admission. A stale POLST that was not reviewed by the treating team during this encounter is questionable.</div></div>
+    <div class="cx tip"><span class="cx-icon"><i class="ph-duotone ph-lightbulb"></i></span><div><strong>Pitfall #8 — Post-brain death CMO only</strong>CMO documented solely after a formal brain death declaration does not satisfy the exclusion. The CMO plan must have been established as the care plan for this living patient during the admission — not as a documentation step after brain death is pronounced.</div></div>
+  </div>
+</div>
+
+<!-- ══ TAB 4: QUIZ ══ -->
+<div id="tab-quiz" class="panel">
+  <div class="sh">Practice Quiz</div>
+  <p class="ss">10 scenario-based questions covering CMO documentation, POLST interpretation, timing rules, and common pitfalls.</p>
+  <div class="q-prog-wrap">
+    <div class="q-prog-meta"><span id="qprog-label">Question 1 of 10</span><span id="qscore-label">Score: 0 / 0</span></div>
+    <div class="q-prog-bar-track"><div class="q-prog-bar-fill" id="qprog-fill" style="width:10%"></div></div>
+  </div>
+  <div class="card" id="quiz-card-body"></div>
+</div>
+
+<!-- ══ TAB 5: CASES ══ -->
+<div id="tab-cases" class="panel">
+  <div class="sh">Case Walkthroughs</div>
+  <p class="ss">Step-by-step cases that walk through CMO abstraction reasoning at every decision point.</p>
+  <div id="case-selector">
+    <div class="cx tip"><span class="cx-icon"><i class="ph-duotone ph-stethoscope"></i></span><div><strong>How to use</strong>Select a case, then work through each step. The trainer's reasoning appears at each decision point — including why certain documentation counts or does not count.</div></div>
+    <div class="case-grid" id="case-card-grid"></div>
+  </div>
+  <div id="case-runner" class="hidden">
+    <button class="btn ghost" onclick="backToCases()" style="margin-bottom:14px;">← Back to Cases</button>
+    <div class="wt-dots" id="case-dots"></div>
+    <div id="case-step-body"></div>
+  </div>
+</div>
+
+</main>
+
+<script>
+// ── TABS ──
+function showTab(id){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.getElementById('tab-'+id).classList.add('on');
+  document.querySelector('[data-t="'+id+'"]').classList.add('on');
+}
+
+// ── CLASSIFIER ──
+const selectedDocs = new Set();
+function toggleDoc(el){
+  const key = el.dataset.key;
+  if(selectedDocs.has(key)){selectedDocs.delete(key);el.classList.remove('selected');}
+  else{selectedDocs.add(key);el.classList.add('selected');}
+}
+
+function resolveClassifier(){
+  const prehosp = document.getElementById('flag-prehosp').checked;
+  const postbrain = document.getElementById('flag-postbrain').checked;
+  const conflict = document.getElementById('flag-conflict').checked;
+  const withdrawn = document.getElementById('flag-withdrawn').checked;
+
+  // RULE: CMO was withdrawn
+  if(withdrawn){
+    showCR('NO','CMO Rescinded','A CMO designation was documented but subsequently reversed or changed back to a full treatment plan during this admission. The exclusion does not apply when CMO was not the final care plan at time of discharge or death.<br><br><span class="rule-tag">VERIFY</span> Review the full order history and physician notes to confirm the rescission and its timing.');
+    return;
+  }
+
+  // RULE: Post-brain death only
+  if(postbrain){
+    showCR('NO','Post-Brain Death Only','CMO was documented only after a formal brain death declaration. The exclusion requires that CMO be established as the active care plan for a living patient during the admission — not as a procedural documentation step after death is pronounced.');
+    return;
+  }
+
+  // RULE: Conflicting documentation
+  if(conflict && !selectedDocs.has('md_order') && !selectedDocs.has('md_note')){
+    showCR('NO','Conflicting Documentation — No Clear LIP CMO Plan','Conflicting documentation is present and there is no explicit physician order or note establishing CMO as the plan. This case requires clinical review.');
+    return;
+  }
+
+  // RULE: Strongest — explicit MD order
+  if(selectedDocs.has('md_order')){
+    let rat = 'A physician, APN, or PA issued an explicit comfort measures only order — the strongest possible basis for this exclusion.<br><br><span class="rule-tag">VERIFY</span> Confirm the order was not subsequently rescinded and that no conflicting full-treatment orders were placed after it.';
+    if(conflict) rat += '<br><br><span class="rule-tag">⚠ FLAG</span> Conflicting documentation was noted. Review whether the CMO order was the active plan at time of death/discharge.';
+    showCR('YES','Physician CMO Order',rat);
+    return;
+  }
+
+  // RULE: MD note with CMO decision
+  if(selectedDocs.has('md_note')){
+    let rat = 'A physician progress note documents a goals-of-care discussion with a CMO decision.<br><br><span class="rule-tag">VERIFY</span> The note must document the <em>decision</em> — not merely that a discussion occurred. Phrases like "discussed goals of care" without an outcome documented are insufficient. Look for language such as "patient/family agreed to comfort measures only," "transitioned to CMO," or equivalent.';
+    if(conflict) rat += '<br><br><span class="rule-tag">⚠ FLAG</span> Conflicting documentation noted. Ensure the CMO decision in the note was the operative plan.';
+    showCR('YES','Physician Documentation of CMO Decision',rat);
+    return;
+  }
+
+  // RULE: POLST — needs to check which section
+  if(selectedDocs.has('polst')){
+    showCR('REVIEW','POLST Present — Verify Section','A POLST/MOST/MOLST is in the chart. This is a physician order, but you must verify which section is completed.<br><br>✓ <strong style="display:inline;">Comfort-Focused Treatment</strong> (or state equivalent) checked → Exclusion applies.<br>✗ <strong style="display:inline;">Full Treatment</strong> checked → Does NOT qualify.<br>✗ <strong style="display:inline;">Limited Interventions</strong> checked → Does NOT qualify.<br><br><span class="rule-tag">ACTION REQUIRED</span> Open the POLST form, identify which medical intervention option is checked, and rerun this classifier with that information.');
+    return;
+  }
+
+  // RULE: Hospice without accompanying CMO order/note
+  if(selectedDocs.has('hospice')){
+    showCR('REVIEW','Hospice Documentation — Verify CMO Order','Hospice enrollment or referral is documented. This strongly suggests CMO intent but is not sufficient alone.<br><br><span class="rule-tag">ACTION REQUIRED</span> Look for an accompanying physician order or note explicitly establishing CMO. If a physician order or CMO discussion note is also present, rerun with that selection added.<br><br>If only hospice documentation exists and no explicit CMO order or physician CMO note is present → the exclusion does not apply.');
+    return;
+  }
+
+  // RULE: Palliative care consult only
+  if(selectedDocs.has('palliative')){
+    showCR('NO','Palliative Consult Without Attending Adoption','A palliative care consult documented a CMO recommendation or plan. However, a consulting team recommendation does not establish CMO — the attending of record must adopt the plan via a corresponding order or documentation.<br><br><span class="rule-tag">CHECK</span> Is there an attending or covering physician note that adopts the CMO plan? If yes, rerun selecting "Physician Note — Discussion."');
+    return;
+  }
+
+  // RULE: Comfort care orders / DNR / family note / no qualifying doc
+  if(selectedDocs.has('comfort_only') || selectedDocs.has('dnr_only') || selectedDocs.has('family_note')){
+    let specifics = [];
+    if(selectedDocs.has('dnr_only')) specifics.push('A DNR/DNI order is present — code status limitation is not a CMO designation.');
+    if(selectedDocs.has('comfort_only')) specifics.push('Comfort care or symptom management orders are present — these are not the same as a CMO plan.');
+    if(selectedDocs.has('family_note')) specifics.push('A family/care conference note is present — without a physician order or LIP co-signature, this does not qualify.');
+    showCR('NO','No Qualifying Documentation',specifics.join('<br><br>')+'<br><br>None of the selected documentation meets the CMO exclusion criteria. A licensed independent practitioner (MD, DO, APN, or PA) must explicitly designate the patient as Comfort Measures Only via an order or progress note.');
+    return;
+  }
+
+  // Nothing selected
+  showCR('NO','No Documentation Selected','No CMO-related documentation was selected. If no relevant documentation is present in the chart, the exclusion does not apply.');
+}
+
+function showCR(val, basis, rat){
+  const box = document.getElementById('classifier-result');
+  const el = document.getElementById('r-cmo');
+  el.textContent = val;
+  el.className = 'res-val ' + (val==='YES'?'yes':val==='NO'?'no':'utd');
+  document.getElementById('r-basis').textContent = basis;
+  document.getElementById('r-rationale').innerHTML = rat;
+  box.style.display = 'block';
+  box.classList.add('show');
+  setTimeout(()=>box.scrollIntoView({behavior:'smooth',block:'nearest'}),80);
+}
+
+function clearClassifier(){
+  selectedDocs.clear();
+  document.querySelectorAll('.doc-type-btn').forEach(b=>b.classList.remove('selected'));
+  ['flag-prehosp','flag-postbrain','flag-conflict','flag-withdrawn'].forEach(id=>document.getElementById(id).checked=false);
+  const box = document.getElementById('classifier-result');
+  box.classList.remove('show');
+  box.style.display = 'none';
+}
+
+// ── GUIDED ──
+function gAns(q,val){
+  for(let i=q+1;i<=4;i++){const e=document.getElementById('gq'+i);if(e)e.classList.add('hidden');}
+  document.getElementById('guided-result').classList.add('hidden');
+  if(q===1){
+    val==='yes'?document.getElementById('gq2').classList.remove('hidden'):showGR('NO','No licensed independent practitioner (MD, APN, or PA) has documented a CMO order or CMO decision for this patient. Nursing notes, family meeting notes, social work documentation, and comfort care orders alone do not satisfy the exclusion.');
+  } else if(q===2){
+    if(val==='polst_cmo') document.getElementById('gq3').classList.remove('hidden');
+    else if(val==='polst_other') showGR('NO','A POLST is present but the section checked indicates Full Treatment or Limited Interventions — not Comfort-Focused Treatment. The CMO exclusion requires that the comfort-focused option be selected on the POLST. The presence of the form alone is not sufficient.');
+    else document.getElementById('gq3').classList.remove('hidden');
+  } else if(q===3){
+    if(val==='yes') document.getElementById('gq4').classList.remove('hidden');
+    else if(val==='postbrain') showGR('NO','CMO was documented only after a formal brain death declaration. The exclusion applies to living patients where CMO is established as the active care plan during the admission — not as a procedural step following brain death.');
+    else if(val==='prehosp_only') showGR('NO','A pre-hospital CMO designation (e.g., POLST from prior admission) is present but was not reaffirmed or continued during this encounter. The treating team during this admission did not document adoption of the CMO plan. The exclusion does not apply based on a prior designation alone.');
+  } else if(q===4){
+    if(val==='consistent') showGR('YES','CMO is documented by a licensed independent practitioner during this admission, established before brain death or discharge, and consistent with the overall record. The denominator exclusion for Comfort Measures Only applies.');
+    else showGR('REVIEW','Conflicting documentation is present alongside CMO. This case requires additional review. Verify whether the CMO order or note was the operative plan at time of discharge or death, and whether the conflicting documentation predates or postdates the CMO designation.');
+  }
+}
+
+function showGR(yn,rat){
+  const box = document.getElementById('guided-result');
+  const el = document.getElementById('gr-yn');
+  el.textContent = yn;
+  el.className = 'res-val '+(yn==='YES'?'yes':yn==='NO'?'no':'utd');
+  document.getElementById('gr-rat').innerHTML = rat;
+  box.classList.remove('hidden');
+  setTimeout(()=>box.scrollIntoView({behavior:'smooth',block:'nearest'}),80);
+}
+
+function resetGuided(){
+  for(let i=2;i<=4;i++){const e=document.getElementById('gq'+i);if(e)e.classList.add('hidden');}
+  document.getElementById('guided-result').classList.add('hidden');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ── QUIZ ──
+const Qs=[
+  {tags:['CMO vs. Comfort Care','Order vs. Note'],sc:`Nursing notes document "comfort care measures" ordered: morphine PCA, repositioning q2h, and mouth care. The attending's note reads "Continue supportive care." No CMO order is present. No POLST in chart.`,opts:['YES — comfort care measures are documented','YES — nursing documentation is sufficient','NO — "comfort care measures" ordered ≠ CMO designation','NO — morphine orders are excluded from CMO'],correct:2,fb:`<strong>NO.</strong> "Comfort care measures" as a set of symptom management orders is not the same as a Comfort Measures Only designation. CMO requires an explicit physician order or physician note documenting that CMO is the care plan. Nursing orders for pain and hygiene management do not satisfy the exclusion.`},
+  {tags:['DNR','CMO vs. Code Status'],sc:`The chart contains a DNR/DNI order signed by the attending. No other CMO-related documentation is present. The patient is receiving aggressive IV antibiotics and nutrition.`,opts:['YES — DNR means no further aggressive treatment','YES — attending physician signed the order','NO — DNR ≠ CMO','NO — the patient is still receiving antibiotics'],correct:2,fb:`<strong>NO.</strong> A DNR/DNI limits resuscitation — it does not establish comfort-only care. A patient can have a full DNR and still be receiving curative or aggressive treatment. CMO requires an explicit designation that comfort is the entire focus of care.`},
+  {tags:['POLST','Section Evaluation'],sc:`A POLST is present in the chart, signed by the attending. On examination, the "Limited Additional Interventions" option is checked. The patient was admitted with acute stroke and later died.`,opts:['YES — POLST is a physician order','YES — patient died, so CMO is implied','NO — Limited Interventions ≠ Comfort-Focused Treatment','NO — POLST is only valid outpatient'],correct:2,fb:`<strong>NO.</strong> The POLST is a physician order and would qualify — but only if the "Comfort-Focused Treatment" section is checked. "Limited Additional Interventions" is a middle tier that does not equal CMO. You must check the specific section selected, not just the presence of the form.`},
+  {tags:['Palliative Consult','Attending Adoption'],sc:`Palliative care was consulted on day 2. Their note reads: "Recommend transitioning to comfort measures only. Family is in agreement." The attending's notes do not reference this recommendation. No CMO order is present.`,opts:['YES — palliative care team documented CMO','YES — family agreement is documented','NO — palliative recommendation requires attending adoption','NO — consult notes never count'],correct:2,fb:`<strong>NO.</strong> A palliative care consult recommendation does not bind the plan of care. The attending of record must adopt the CMO plan via a corresponding order or progress note. "Recommend CMO" without attending documentation is insufficient.`},
+  {tags:['Timing','Brain Death'],sc:`The patient was admitted with massive hemorrhagic stroke. On day 3, brain death was declared per protocol. Immediately following the declaration, the attending wrote: "Transitioning to comfort measures only. Family agrees."`,opts:['YES — physician documented CMO','YES — CMO was established before discharge','NO — CMO documented only after brain death declaration','NO — family agreement is not a CMO order'],correct:2,fb:`<strong>NO.</strong> CMO must be established as the care plan for a living patient during the admission. Documentation of CMO that occurs only after a formal brain death declaration does not satisfy the exclusion — it is a post-death procedural notation, not a care plan decision.`},
+  {tags:['Hospice','Documentation Requirements'],sc:`Discharge documentation shows the patient was transferred to an inpatient hospice facility. The chart contains a hospice transfer note signed by the discharge planner. No physician CMO note or order is present.`,opts:['YES — hospice transfer implies CMO','YES — discharge documentation is sufficient','YES — transfer note is signed','NO — hospice enrollment alone does not satisfy the exclusion'],correct:3,fb:`<strong>NO.</strong> Hospice enrollment or transfer strongly suggests CMO intent, but is not sufficient alone. The exclusion requires an explicit physician (LIP) order or documentation. Always look for an accompanying physician order or CMO-designating note. A social work or discharge planner transfer note alone does not qualify.`},
+  {tags:['Discussion vs. Decision','Physician Note'],sc:`The attending's progress note on day 2 reads: "Long discussion with family today regarding goals of care. Family has questions and will need more time to decide. Will continue to support them." No CMO order present.`,opts:['YES — physician documented a goals of care discussion','YES — physician note qualifies as CMO documentation','NO — note documents a discussion, not a CMO decision','NO — family has not agreed yet'],correct:2,fb:`<strong>NO.</strong> A physician note must document the <em>outcome</em> of the discussion — not merely that a discussion occurred. "Family has questions and needs more time" indicates an ongoing process, not a CMO decision. For the exclusion to apply, the note must reflect that CMO was decided upon as the plan.`},
+  {tags:['Pre-hospital POLST','Timing'],sc:`An outpatient POLST with "Comfort-Focused Treatment" checked was found in the chart from a prior admission 8 months ago. The treating team during this admission has no documented reference to the POLST. The patient had capacity on admission.`,opts:['YES — POLST is a physician order with correct section checked','YES — prior POLST carries forward automatically','NO — POLST not reaffirmed this admission','NO — POLST is only valid for 1 year'],correct:2,fb:`<strong>NO — requires review.</strong> A pre-hospital POLST is a physician order, but when the treating team has not acknowledged, reaffirmed, or referenced it during this admission for a patient with documented capacity, the POLST's application to this admission is uncertain. Verify whether the treating team adopted the prior POLST as the current plan.`},
+  {tags:['Conflicting Documentation','Order Precedence'],sc:`A CMO order was placed on day 3. On day 4, the covering physician placed an order for "full resuscitation — patient expressing desire to change goals." The patient died on day 5.`,opts:['YES — CMO was ordered at some point during admission','NO — CMO was rescinded by subsequent order','YES — first CMO order takes priority','NO — patient died so status is irrelevant'],correct:1,fb:`<strong>NO.</strong> CMO was ordered but subsequently rescinded. When a patient's goals change and the CMO designation is reversed, the exclusion does not apply — the CMO was not the operative care plan at the time of death. Always verify the full order history and whether CMO was the final status.`},
+  {tags:['Combined Documentation','Best Answer'],sc:`Chart contains: (1) Palliative care note recommending CMO, (2) Nursing note documenting "patient on comfort measures per family wishes," (3) Attending H&P: "After discussion with family, patient will be transitioned to comfort measures only — no further aggressive interventions." No formal order set CMO checkbox but the H&P note is present.`,opts:['YES — attending H&P documents the CMO decision','YES — three separate sources document comfort intent','NO — need a formal order checkbox, not just a note','NO — palliative must also document before counting'],correct:0,fb:`<strong>YES.</strong> The attending H&P explicitly documents that the patient is transitioning to comfort measures only — this is physician documentation of a CMO decision, which satisfies the exclusion. Nursing notes and palliative notes add context but the attending's note is the qualifying document. A formal order checkbox is not required when clear physician documentation of the CMO decision is present.`}
+];
+
+let curQ=0,score=0,answered=0;
+function initQuiz(){curQ=0;score=0;answered=0;renderQ();}
+function renderQ(){
+  if(curQ>=Qs.length){showQComplete();return;}
+  const q=Qs[curQ];
+  document.getElementById('qprog-label').textContent=`Question ${curQ+1} of ${Qs.length}`;
+  document.getElementById('qprog-fill').style.width=`${((curQ+1)/Qs.length)*100}%`;
+  document.getElementById('qscore-label').textContent=`Score: ${score} / ${answered}`;
+  document.getElementById('quiz-card-body').innerHTML=`
+    <div class="q-tags">${q.tags.map(t=>`<span class="qtag">${t}</span>`).join('')}</div>
+    <div class="scenario-box"><span class="slabel"><i class="ph-duotone ph-file-text"></i> Clinical Scenario</span>${q.sc}</div>
+    <div class="q-opts">${q.opts.map((o,i)=>`<button class="q-opt" onclick="ansQ(${i},this)">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}</div>
+    <div class="q-feedback" id="qfb"></div>
+    <div style="margin-top:10px;"><button class="btn" id="qnext" onclick="nextQ()" style="display:none;">Next →</button></div>`;
+}
+function ansQ(i,btn){
+  const q=Qs[curQ];answered++;
+  document.querySelectorAll('.q-opt').forEach(b=>b.onclick=null);
+  document.querySelectorAll('.q-opt').forEach((b,j)=>{if(j===q.correct)b.classList.add('correct');});
+  const fb=document.getElementById('qfb');
+  if(i===q.correct){score++;btn.classList.add('correct');fb.className='q-feedback correct show';fb.innerHTML=`<i class="ph-duotone ph-check-circle"></i> <strong>Correct!</strong> ${q.fb}`;}
+  else{btn.classList.add('wrong');fb.className='q-feedback wrong show';fb.innerHTML=`<i class="ph-duotone ph-x-circle"></i> <strong>Incorrect.</strong> ${q.fb}`;}
+  document.getElementById('qscore-label').textContent=`Score: ${score} / ${answered}`;
+  document.getElementById('qnext').style.display='inline-block';
+}
+function nextQ(){curQ++;renderQ();}
+function showQComplete(){
+  const pct=Math.round(score/Qs.length*100);
+  document.getElementById('quiz-card-body').innerHTML=`<div style="text-align:center;padding:20px 0"><div style="font-size:52px;font-weight:700;font-family:var(--mono);color:${pct>=80?'var(--green)':pct>=60?'var(--amber)':'var(--red)'}">${pct}%</div><div style="font-size:16px;font-weight:700;margin:8px 0;">${score} / ${Qs.length} correct</div><div style="font-size:13px;color:var(--muted);margin-bottom:20px;">${pct>=80?'Strong command of CMO documentation rules.':pct>=60?'Good. Review the pitfalls that tripped you up.':'Recommend reviewing the Quick Reference tab before live abstraction.'}</div><button class="btn" onclick="initQuiz()">Try Again</button></div>`;
+}
+
+// ── CASES ──
+const CASES=[
+  {title:'Case A: Comfort Orders vs. CMO Order',summary:'Common mix-up — symptom management vs. an actual CMO plan.',diff:'int',steps:[
+    {type:'chart',content:`<strong>Nursing orders (day 1):</strong> Morphine 2mg IV q4h PRN pain. Repositioning q2h. Oral care q4h. Low-stimulation environment.<br><br><strong>Nursing note (day 2):</strong> "Patient on comfort care per family wishes. Continuing current comfort care measures."<br><br><strong>Attending progress note (day 2):</strong> "Continue supportive care. Family updated."<br><br><strong>Discharge disposition:</strong> Expired. No POLST, no CMO order, no hospice referral.`},
+    {type:'step',label:'Is there a physician order or note designating CMO?',content:'The attending\'s note says "continue supportive care" — this is not a CMO designation. Supportive care, comfort care measures, and CMO are distinct concepts. No CMO order appears in the chart.',cx:'danger',cxt:'Never equate symptom management orders or vague "supportive" language with a CMO designation. A physician must explicitly state that the patient is being designated comfort measures only.'},
+    {type:'step',label:'Does the nursing documentation change the answer?',content:'Nursing documents "comfort care per family wishes" — this reflects nursing\'s care approach but is not a physician order or LIP documentation of a CMO plan. Nursing documentation alone never satisfies the exclusion.',cx:'warn',cxt:'Common abstraction error: seeing nursing "comfort care" charting and counting it as CMO. Nursing notes document care — they do not establish care plans that satisfy the CMO exclusion.'},
+    {type:'result',yn:'NO',date:'N/A',time:'N/A',rat:'No physician order or physician note designating CMO. Comfort care measures (pain management, mouth care) are present but these are symptom management orders — not a CMO designation. Nursing documentation is not a qualifying source.'}
+  ]},
+  {title:'Case B: POLST in Chart — Which Section?',summary:'POLST present but you must verify which option is checked.',diff:'int',steps:[
+    {type:'chart',content:`<strong>Chart contains a POLST signed by the attending physician 6 days prior to admission.</strong><br><br><em>Section A — Cardiopulmonary Resuscitation:</em> "Do Not Attempt Resuscitation" ✓<br><em>Section B — Medical Interventions:</em> "Limited Additional Interventions" ✓<br>&nbsp;&nbsp;&nbsp;- Treat medical conditions. IV fluids if indicated. No intubation.<br><br><strong>No other CMO-related documentation in chart.</strong><br><br><strong>Admission was for ischemic stroke. Patient discharged to skilled nursing facility.</strong>`},
+    {type:'step',label:'Is a POLST with a physician signature present?',content:'Yes — the POLST is signed by the attending. This is a physician order. However, the critical question is: which section is checked?',cx:'tip',cxt:'Always identify which Medical Interventions option is selected before counting a POLST. The form can be in the chart and signed but still not qualify.'},
+    {type:'step',label:'Which Medical Interventions option is checked?',content:'"Limited Additional Interventions" is checked — this is the middle tier. It allows medical treatment including IV fluids, and explicitly excludes intubation. It does NOT equal Comfort-Focused Treatment.',cx:'danger',cxt:'The three options on most POLST forms are: Full Treatment / Limited Additional Interventions / Comfort-Focused Treatment. Only the third option satisfies the CMO exclusion. "Limited" is not the same as "comfort only."'},
+    {type:'result',yn:'NO',date:'N/A',time:'N/A',rat:'POLST is present and physician-signed, but "Limited Additional Interventions" is checked — not "Comfort-Focused Treatment." The CMO exclusion requires the comfort-focused option specifically. A DNR status (Section A) does not change this analysis. Exclusion does not apply.'}
+  ]},
+  {title:'Case C: Palliative Consult + Attending Adoption',summary:'When does a palliative recommendation become a CMO plan?',diff:'adv',steps:[
+    {type:'chart',content:`<strong>Day 1 — Palliative care consult note:</strong> "Family meeting held. Goals discussed at length. Patient's expressed wishes favor comfort-focused care. Recommend transitioning to comfort measures only. Discussed symptom management goals."<br><br><strong>Day 2 — Attending progress note:</strong> "Reviewed palliative care recommendations with patient and family. Agree with plan to transition to CMO. Comfort measures only effective today. Will discontinue aggressive interventions."<br><br><strong>Day 2 — CMO order entered by attending.</strong><br><br><strong>Day 4 — Patient expired.</strong>`},
+    {type:'step',label:'Is the palliative consult note alone sufficient?',content:'No. The palliative team\'s recommendation is a consulting service opinion. Until the attending of record adopts and documents the plan, it is a recommendation — not an operative care plan.',cx:'warn',cxt:'Many abstractors stop at the palliative note. The attending adoption is the qualifying event, not the recommendation.'},
+    {type:'step',label:'Did the attending document adoption of the CMO plan?',content:'Yes — the attending\'s Day 2 note explicitly states "agree with plan to transition to CMO. Comfort measures only effective today." This is physician documentation of the CMO decision, timed to this admission, consistent with care.',cx:'tip',cxt:'This is exactly the language that satisfies the exclusion. The attending explicitly adopted the plan and documented the CMO designation.'},
+    {type:'step',label:'Is timing consistent?',content:'CMO was established on Day 2 of a 4-day admission — before death, before discharge, and with no indication of brain death declaration. The CMO order was also entered. No conflicting documentation of aggressive treatment after Day 2.',cx:'ok',cxt:'Timing is clean. The exclusion applies.'},
+    {type:'result',yn:'YES',date:'Day 2 of admission',time:'Per attending note and order',rat:'Palliative care consult recommended CMO; attending of record adopted the recommendation via explicit progress note and CMO order on Day 2. Documentation is consistent with the care record. Timing is appropriate — established before death during the admission. Exclusion applies.'}
+  ]},
+  {title:'Case D: Pre-Hospital POLST — Was It Reaffirmed?',summary:'A prior POLST is in the chart. Does it count for this admission?',diff:'adv',steps:[
+    {type:'chart',content:`<strong>POLST in chart:</strong> Signed 14 months ago during a prior admission. "Comfort-Focused Treatment" checked. Physician signature present.<br><br><strong>This admission — Day 1:</strong> Patient presented with aphasia and right-sided weakness. GCS 12. Patient alert, oriented to self only.<br><br><strong>Attending H&P:</strong> "Past medical history significant for prior stroke with residual deficits. Advance directives on file." No explicit reference to the POLST. No CMO order placed.<br><br><strong>Neurology consult:</strong> "Recommend IV tPA if no contraindications. Discussed with family." tPA administered.<br><br><strong>Day 3:</strong> Patient deteriorated. Attending note: "Family requesting comfort measures." CMO order placed Day 3.`},
+    {type:'step',label:'Is the prior POLST applicable to this admission?',content:'The POLST is 14 months old from a prior admission. On this admission, the treating team administered IV tPA — an aggressive intervention inconsistent with CMO. The attending H&P did not reference or adopt the prior POLST as the current plan.',cx:'warn',cxt:'A prior POLST does not automatically apply to a new admission, especially when the treating team is actively providing aggressive care. The team\'s actions (tPA administration) are the clearest evidence that the prior CMO status was not the operative plan on admission.'},
+    {type:'step',label:'When was CMO actually established?',content:'CMO was established on Day 3 when the attending placed the order, prompted by family request. This is valid CMO documentation — during the admission, prior to death, by a physician.',cx:'tip',cxt:'Day 3 CMO order is the qualifying event. The prior POLST does not help or hurt at this point.'},
+    {type:'step',label:'Is the Day 3 CMO documentation clean?',content:'Yes — attending order on Day 3, during the admission, no subsequent rescission, and care transitioned accordingly. No conflicting orders after Day 3.',cx:'ok',cxt:'The exclusion applies based on the Day 3 CMO order — not the prior POLST.'},
+    {type:'result',yn:'YES',date:'Day 3 of admission',time:'Per attending CMO order',rat:'Exclusion applies based on the Day 3 physician CMO order — not the prior POLST (which was not adopted by this admission\'s treating team). Prior POLST is not the qualifying event; the attending order during this admission is. Timing is appropriate.'}
+  ]}
+];
+
+function renderCaseCards(){
+  document.getElementById('case-card-grid').innerHTML=CASES.map((c,i)=>`
+    <div class="case-card" onclick="startCase(${i})">
+      <h3>${c.title}</h3><p>${c.summary}</p>
+      <span class="diff-pill diff-${c.diff}">${c.diff==='int'?'Intermediate':'Advanced'}</span>
+      <div style="margin-top:12px;"><button class="btn">Start →</button></div>
+    </div>`).join('');
+}
+
+let activeCase=null,caseStep=0;
+function startCase(i){activeCase=CASES[i];caseStep=0;document.getElementById('case-selector').classList.add('hidden');document.getElementById('case-runner').classList.remove('hidden');renderCaseStep();}
+function backToCases(){document.getElementById('case-selector').classList.remove('hidden');document.getElementById('case-runner').classList.add('hidden');}
+function renderCaseStep(){
+  const steps=activeCase.steps;
+  document.getElementById('case-dots').innerHTML=steps.map((_,i)=>`<div class="wt-dot ${i<caseStep?'done':i===caseStep?'cur':''}"></div>`).join('');
+  const s=steps[caseStep];
+  const icons={tip:'<i class="ph-duotone ph-lightbulb"></i>',warn:'<i class="ph-duotone ph-warning"></i>',danger:'<i class="ph-duotone ph-warning-octagon"></i>',ok:'<i class="ph-duotone ph-check-circle"></i>'};
+  let html='';
+  if(s.type==='chart'){
+    html=`<div class="card"><div class="card-label">Step ${caseStep+1} of ${steps.length} — Chart Documentation</div><div class="chart-box"><span class="clabel"><i class="ph-duotone ph-file-text"></i> Chart Excerpt</span>${s.content}</div><div class="btn-row"><button class="btn" onclick="caseNext()">Continue →</button></div></div>`;
+  }else if(s.type==='step'){
+    html=`<div class="card"><div class="card-label">Step ${caseStep+1} of ${steps.length} — ${s.label}</div><div style="font-size:13.5px;color:#c4d8ec;line-height:1.7;margin-bottom:10px;">${s.content}</div><div class="cx ${s.cx}"><span class="cx-icon">${icons[s.cx]}</span><div>${s.cxt}</div></div><div class="btn-row"><button class="btn ghost" onclick="casePrev()">← Back</button><button class="btn" onclick="caseNext()">Continue →</button></div></div>`;
+  }else if(s.type==='result'){
+    const yn=s.yn==='YES';
+    html=`<div class="card"><div class="card-label">Step ${caseStep+1} of ${steps.length} — Final Abstraction</div><div class="res-fields" style="margin-bottom:14px;"><div><div class="res-field-label">CMO Exclusion</div><div class="res-val ${yn?'yes':'no'}">${s.yn}</div></div></div><div class="cx ok"><span class="cx-icon"><i class="ph-duotone ph-check-circle"></i></span><div><strong>Rationale</strong>${s.rat}</div></div><div class="btn-row"><button class="btn ghost" onclick="casePrev()">← Back</button><button class="btn" onclick="backToCases()">← All Cases</button></div></div>`;
+  }
+  document.getElementById('case-step-body').innerHTML=html;
+}
+function caseNext(){if(caseStep<activeCase.steps.length-1){caseStep++;renderCaseStep();}}
+function casePrev(){if(caseStep>0){caseStep--;renderCaseStep();}}
+
+initQuiz();
+renderCaseCards();
+</script>
+
+<div class="site-disclaimer" role="note">
+  <div class="site-disclaimer-inner">
+    <strong>Educational use only.</strong>
+    AbstractionDeskQA is a reference aid to support abstractor training and workflow. It does not constitute compliance advice and is not a substitute for the official TJC or CMS Specifications Manual. Always verify abstraction decisions against the current specifications.
+  </div>
+</div>
+
+<footer class="site-footer" role="contentinfo">
+  <div class="site-footer-inner">
+    <div>
+      <div class="site-footer-brand">AbstractionDesk<span style="color:#0da8a5">QA</span></div>
+      <p>A free reference tool for core measure abstractors.<br>
+      &copy; <span id="siteYr"></span> AbstractionDeskQA. Educational use only.</p>
+    </div>
+    <div class="site-footer-links">
+      <a href="lookup.html">Q&amp;A Lookup</a>
+      <a href="lkw-tool.html">LKW Tool</a>
+      <a href="cmo-tool.html">CMO Tool</a>
+      <a href="index.html#how">How It Works</a>
+      <a href="index.html#feedback">Feedback</a>
+    </div>
+  </div>
+</footer>
+<script>document.getElementById('siteYr').textContent=new Date().getFullYear();</script>
+<script data-name="BMC-Widget"
+        data-cfasync="false"
+        src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
+        data-id="abstractiondeskqa"
+        data-description="Support AbstractionDeskQA"
+        data-message="Support ongoing development of this free reference tool."
+        data-color="#0a7c7a"
+        data-position="Right"
+        data-x_margin="18"
+        data-y_margin="18">
+</script>
+</body>
+</html>
