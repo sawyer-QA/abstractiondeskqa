@@ -1,0 +1,1500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="HBIPS Tool — AbstractionDeskQA. Hospital-Based Inpatient Psychiatric Services (HBIPS) restraint and seclusion measure calculators, abstraction reference, practice quiz, and case walkthroughs.">
+<title>HBIPS Tool — AbstractionDeskQA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink:        #0f1923;
+  --ink-mid:    #3d4f62;
+  --ink-soft:   #6b7f94;
+  --canvas:     #f7f9fc;
+  --white:      #ffffff;
+  --navy:       #0d2240;
+  --teal:       #0a7c7a;
+  --teal2:      #0da8a5;
+  --teal-pale:  #e4f5f4;
+  --teal-mid:   #c2ece9;
+  --amber:      #8a5200;
+  --amber-bg:   #fff8ec;
+  --amber-border: #e8c060;
+  --red:        #9b1c1c;
+  --red-bg:     #fef2f2;
+  --red-border: #fca5a5;
+  --green:      #166534;
+  --green-bg:   #f0fdf4;
+  --green-border:#86efac;
+  --border:     #dbe2ec;
+  --border-mid: #c4cdd9;
+  --heading:    'DM Sans', sans-serif;
+  --body:       'Atkinson Hyperlegible', sans-serif;
+  --mono:       'Courier New', Courier, monospace;
+  --radius:     10px;
+  --shadow:     0 4px 24px rgba(13,34,64,.09);
+  --shadow-sm:  0 2px 10px rgba(13,34,64,.06);
+  --max:        1040px;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--body);
+  background: var(--canvas);
+  color: var(--ink);
+  line-height: 1.75;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--teal); }
+a:hover { text-decoration: underline; }
+a:focus-visible, button:focus-visible, input:focus-visible,
+select:focus-visible {
+  outline: 3px solid var(--teal2);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ── SKIP ── */
+.skip-link {
+  position: absolute; top: -60px; left: 16px; z-index: 999;
+  background: var(--navy); color: white; padding: 10px 18px;
+  border-radius: var(--radius); font-weight: 700; font-size: 15px;
+  transition: top .2s; text-decoration: none;
+}
+.skip-link:focus { top: 16px; }
+
+/* ── NAV ── */
+.nav {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 80;
+  box-shadow: var(--shadow-sm);
+}
+.nav-inner {
+  max-width: var(--max); margin: 0 auto; padding: 0 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 62px;
+}
+.nav-brand {
+  font-family: var(--heading); font-size: 20px; font-weight: 700;
+  color: var(--navy); letter-spacing: -.3px;
+  display: flex; align-items: center; gap: 7px;
+  text-decoration: none;
+}
+.nav-brand:hover { text-decoration: none; }
+.qa-badge {
+  background: var(--teal); color: white;
+  font-size: 10px; font-weight: 700; padding: 2px 7px;
+  border-radius: 4px; letter-spacing: .6px; font-family: var(--body);
+}
+.nav-links { display: flex; gap: 4px; align-items: center; }
+.nav-link {
+  font-family: var(--body); font-size: 15px; font-weight: 400;
+  color: var(--ink-mid); padding: 7px 14px; border-radius: 6px;
+  transition: all .15s; border: none; background: none;
+  cursor: pointer; text-decoration: none;
+}
+.nav-link:hover { background: var(--teal-pale); color: var(--teal); text-decoration: none; }
+.nav-cta {
+  background: var(--teal); color: white;
+  font-family: var(--body); font-size: 15px; font-weight: 700;
+  padding: 9px 20px; border-radius: 7px; border: none;
+  cursor: pointer; transition: all .15s; text-decoration: none;
+  white-space: nowrap;
+}
+.nav-cta:hover { background: var(--teal2); text-decoration: none; color: white; }
+
+/* ── PAGE HERO ── */
+.page-hero {
+  background: var(--navy);
+  padding: 36px 24px 30px;
+  position: relative; overflow: hidden;
+}
+.page-hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 50% at 20% 0%, rgba(10,124,122,.22) 0%, transparent 65%);
+  pointer-events: none;
+}
+.page-hero-inner { max-width: var(--max); margin: 0 auto; position: relative; }
+.page-hero-back {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; color: rgba(255,255,255,.55);
+  text-decoration: none; margin-bottom: 18px;
+  transition: color .15s;
+}
+.page-hero-back:hover { color: var(--teal2); text-decoration: none; }
+.page-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(13,168,165,.14); border: 1px solid rgba(13,168,165,.3);
+  color: var(--teal2); font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 1.1px;
+  padding: 4px 12px; border-radius: 20px; margin-bottom: 14px;
+}
+.page-hero h1 {
+  font-family: var(--heading);
+  font-size: clamp(24px, 4vw, 36px);
+  font-weight: 700; color: white;
+  line-height: 1.15; letter-spacing: -.3px;
+  margin-bottom: 10px;
+}
+.page-hero-sub {
+  font-size: 15px; color: rgba(255,255,255,.62);
+  max-width: 620px; line-height: 1.7;
+}
+
+/* ── TABS ── */
+.tool-tabs {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  position: sticky; top: 62px; z-index: 70;
+  box-shadow: var(--shadow-sm);
+}
+.tool-tabs-inner {
+  max-width: var(--max); margin: 0 auto;
+  padding: 0 24px;
+  display: flex; gap: 0; overflow-x: auto;
+}
+.tab-btn {
+  font-family: var(--body); font-size: 14px; font-weight: 600;
+  color: var(--ink-soft); padding: 14px 18px 12px;
+  border: none; border-bottom: 3px solid transparent;
+  background: none; cursor: pointer;
+  white-space: nowrap;
+  transition: color .15s, border-color .15s;
+  display: flex; align-items: center; gap: 7px;
+}
+.tab-btn i { font-size: 15px; }
+.tab-btn:hover { color: var(--ink); }
+.tab-btn.active { color: var(--teal); border-bottom-color: var(--teal); }
+
+/* ── MAIN ── */
+main { max-width: var(--max); margin: 0 auto; padding: 32px 24px 72px; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ── SECTION LABEL ── */
+.section-label {
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1.6px; color: var(--teal); margin-bottom: 10px;
+  display: flex; align-items: center; gap: 8px;
+}
+.section-label::before {
+  content: ''; display: block;
+  width: 18px; height: 2px; background: var(--teal); border-radius: 1px;
+}
+
+/* ── CARDS ── */
+.card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 26px;
+  box-shadow: var(--shadow-sm);
+}
+.card + .card { margin-top: 18px; }
+.card-title {
+  font-family: var(--heading); font-size: 16px; font-weight: 700;
+  color: var(--navy); margin-bottom: 4px;
+  display: flex; align-items: center; gap: 9px;
+}
+.card-title i { color: var(--teal); font-size: 20px; }
+.card-sub { font-size: 13px; color: var(--ink-soft); margin-bottom: 18px; line-height: 1.6; }
+
+/* ── CALC GRID ── */
+.calc-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; }
+@media(max-width:700px) { .calc-grid { grid-template-columns: 1fr; } }
+
+/* ── FIELD ── */
+.field { display: flex; flex-direction: column; gap: 5px; }
+.field label {
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .7px; color: var(--ink-mid);
+  display: flex; align-items: center; gap: 6px;
+}
+.field input, .field select {
+  font-family: var(--body); font-size: 15px;
+  padding: 9px 12px;
+  border: 1.5px solid var(--border); border-radius: 7px;
+  background: var(--canvas); color: var(--ink);
+  transition: border-color .15s, background .15s;
+}
+.field input:focus, .field select:focus {
+  outline: none; border-color: var(--teal); background: white;
+}
+.field .hint { font-size: 12px; color: var(--ink-soft); line-height: 1.5; }
+
+/* ── HELP TRIGGER ── */
+.help-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 16px; height: 16px; border-radius: 50%;
+  border: 1.5px solid var(--border-mid);
+  font-size: 10px; font-weight: 700;
+  color: var(--ink-soft); cursor: pointer;
+  background: var(--canvas); line-height: 1;
+  flex-shrink: 0; font-family: var(--mono);
+  transition: border-color .15s, color .15s;
+}
+.help-btn:hover { border-color: var(--teal); color: var(--teal); }
+.help-panel {
+  display: none;
+  background: var(--teal-pale); border: 1px solid var(--teal-mid);
+  border-radius: 7px; padding: 11px 14px;
+  font-size: 13px; color: var(--teal); line-height: 1.65;
+  margin-top: 2px;
+}
+.help-panel.open { display: block; }
+.help-panel strong { font-weight: 700; display: block; margin-bottom: 3px; }
+.help-panel ul { padding-left: 16px; margin-top: 4px; }
+.help-panel li { margin-bottom: 3px; }
+
+/* ── RESULT DISPLAY ── */
+.result-box {
+  display: none;
+  margin-top: 14px;
+  padding: 14px 16px;
+  border-radius: 8px;
+  background: var(--green-bg);
+  border: 1px solid var(--green-border);
+  font-size: 14px; color: var(--green);
+  line-height: 1.7;
+}
+.result-box.visible { display: block; }
+.result-box.warn {
+  background: var(--amber-bg);
+  border-color: var(--amber-border);
+  color: var(--amber);
+}
+.result-box.err {
+  background: var(--red-bg);
+  border-color: var(--red-border);
+  color: var(--red);
+}
+.result-row { display: flex; justify-content: space-between; align-items: baseline; padding: 2px 0; }
+.result-row + .result-row { border-top: 1px solid var(--green-border); }
+.result-row.net { font-weight: 700; }
+.result-key { font-size: 13px; }
+.result-val { font-family: var(--mono); font-size: 15px; font-weight: 700; }
+.result-big { font-family: var(--mono); font-size: 22px; font-weight: 700; display: block; margin-top: 4px; }
+
+/* ── CALC BTN ── */
+.calc-btn {
+  margin-top: 16px;
+  background: var(--teal); color: white;
+  font-family: var(--body); font-size: 14px; font-weight: 700;
+  padding: 10px 22px; border-radius: 7px; border: none;
+  cursor: pointer; transition: all .15s;
+  display: inline-flex; align-items: center; gap: 7px;
+}
+.calc-btn:hover { background: var(--teal2); transform: translateY(-1px); }
+.calc-btn i { font-size: 15px; }
+.clear-btn {
+  margin-top: 16px; margin-left: 8px;
+  background: none; color: var(--ink-soft);
+  font-family: var(--body); font-size: 14px; font-weight: 400;
+  padding: 10px 16px; border-radius: 7px;
+  border: 1.5px solid var(--border); cursor: pointer;
+  transition: all .15s;
+}
+.clear-btn:hover { border-color: var(--border-mid); color: var(--ink); }
+
+/* ── LEAVE PAIR ── */
+.leave-pairs { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+.leave-pair-row {
+  display: grid; grid-template-columns: 1fr 1fr auto;
+  gap: 8px; align-items: end;
+}
+.lp-field { display: flex; flex-direction: column; gap: 4px; }
+.lp-field label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: var(--ink-mid); }
+.lp-field input { font-family: var(--body); font-size: 14px; padding: 8px 10px; border: 1.5px solid var(--border); border-radius: 7px; background: white; color: var(--ink); width: 100%; }
+.lp-field input:focus { outline: none; border-color: var(--teal); }
+.lp-remove {
+  background: none; border: 1.5px solid var(--border); border-radius: 7px;
+  color: var(--ink-soft); cursor: pointer; padding: 8px 10px;
+  font-size: 14px; transition: all .15s; align-self: end;
+}
+.lp-remove:hover { border-color: var(--red-border); color: var(--red); background: var(--red-bg); }
+.add-pair-btn {
+  margin-top: 8px; background: none;
+  border: 1.5px dashed var(--border-mid); border-radius: 7px;
+  padding: 7px 14px; font-size: 13px;
+  font-family: var(--body); color: var(--ink-soft);
+  cursor: pointer; width: 100%; text-align: left;
+  transition: all .15s; display: flex; align-items: center; gap: 6px;
+}
+.add-pair-btn:hover { border-color: var(--teal); color: var(--teal); background: var(--teal-pale); }
+.add-pair-btn i { font-size: 14px; }
+
+/* ── MODE TOGGLE ── */
+.mode-toggle {
+  display: flex; border: 1.5px solid var(--border);
+  border-radius: 7px; overflow: hidden;
+  margin-bottom: 14px; width: fit-content;
+}
+.mode-btn {
+  font-family: var(--body); font-size: 13px; font-weight: 600;
+  padding: 6px 16px; border: none; background: white;
+  color: var(--ink-soft); cursor: pointer; transition: all .15s;
+}
+.mode-btn.active { background: var(--teal); color: white; }
+.mode-btn:not(.active):hover { background: var(--teal-pale); color: var(--teal); }
+
+/* ── NOTICE BOXES ── */
+.notice {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 12px 14px; border-radius: 8px;
+  font-size: 14px; line-height: 1.65; margin-top: 14px;
+}
+.notice i { font-size: 17px; flex-shrink: 0; margin-top: 2px; }
+.notice-tip { background: var(--teal-pale); border: 1px solid var(--teal-mid); color: var(--teal); }
+.notice-warn { background: var(--amber-bg); border: 1px solid var(--amber-border); color: var(--amber); }
+.notice-danger { background: var(--red-bg); border: 1px solid var(--red-border); color: var(--red); }
+
+/* ── DIVIDER ── */
+hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+/* ── STRATA TABLE ── */
+.strata-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+@media(max-width:600px) { .strata-grid { grid-template-columns: 1fr 1fr; } }
+.strata-band {
+  border-radius: 9px; padding: 14px 13px;
+  border: 1px solid var(--border);
+}
+.strata-band.b { background: #eef4ff; border-color: #b8d0f0; }
+.strata-band.c { background: #f5f0ff; border-color: #c8b8ec; }
+.strata-band.d { background: var(--green-bg); border-color: #86efac; }
+.strata-band.e { background: var(--amber-bg); border-color: var(--amber-border); }
+.sb-code { font-family: var(--heading); font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+.strata-band.b .sb-code { color: #1a4090; }
+.strata-band.c .sb-code { color: #5b21b6; }
+.strata-band.d .sb-code { color: var(--green); }
+.strata-band.e .sb-code { color: var(--amber); }
+.sb-range { font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 2px; }
+.sb-pop { font-size: 12px; color: var(--ink-mid); }
+.sb-code-line { font-size: 11px; font-family: var(--mono); margin-top: 7px; color: var(--ink-soft); }
+
+/* ── LOGIC TRAIN ── */
+.logic-train { display: flex; flex-direction: column; }
+.logic-step { display: grid; grid-template-columns: 30px 1fr; gap: 0 12px; position: relative; }
+.logic-step:not(:last-child) .l-connector {
+  position: absolute; left: 14px; top: 30px; bottom: 0;
+  width: 2px; background: var(--border);
+}
+.l-num {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--teal-pale); border: 2px solid var(--teal-mid);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; color: var(--teal);
+  flex-shrink: 0; z-index: 1; position: relative; margin-top: 2px;
+}
+.l-content { padding-bottom: 20px; }
+.l-title { font-family: var(--heading); font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+.l-body { font-size: 14px; color: var(--ink-mid); line-height: 1.65; }
+.l-rule {
+  margin-top: 7px; padding: 8px 12px; border-radius: 7px;
+  font-size: 13px; font-family: var(--mono); line-height: 1.7;
+}
+.rule-in { background: var(--green-bg); border: 1px solid var(--green-border); color: var(--green); }
+.rule-ex { background: var(--red-bg); border: 1px solid var(--red-border); color: var(--red); }
+.rule-calc { background: var(--teal-pale); border: 1px solid var(--teal-mid); color: var(--teal); }
+.rule-warn { background: var(--amber-bg); border: 1px solid var(--amber-border); color: var(--amber); }
+
+/* ── PITFALLS ── */
+.pitfall-list { display: flex; flex-direction: column; gap: 12px; }
+.pitfall {
+  display: grid; grid-template-columns: auto 1fr;
+  gap: 0 14px; padding: 14px 16px;
+  border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--white); align-items: start;
+}
+.pitfall-tag {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .6px; padding: 3px 8px; border-radius: 4px;
+  white-space: nowrap; margin-top: 2px;
+}
+.tag-age  { background: #eef4ff; color: #1a4090; border: 1px solid #b8d0f0; }
+.tag-den  { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-border); }
+.tag-num  { background: var(--teal-pale); color: var(--teal); border: 1px solid var(--teal-mid); }
+.tag-type { background: #f5f0ff; color: #5b21b6; border: 1px solid #c8b8ec; }
+.tag-utd  { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+.pitfall h4 { font-family: var(--heading); font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+.pitfall p { font-size: 13px; color: var(--ink-mid); line-height: 1.65; }
+.pitfall .correct {
+  margin-top: 8px; font-size: 12px; font-family: var(--mono);
+  padding: 6px 10px; border-radius: 6px;
+  background: var(--green-bg); border: 1px solid var(--green-border); color: var(--green);
+}
+
+/* ── QUIZ ── */
+.quiz-wrap { max-width: 680px; }
+.quiz-meta {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 18px; font-size: 13px; color: var(--ink-soft);
+}
+.quiz-score { font-weight: 700; color: var(--navy); }
+.quiz-q {
+  font-family: var(--heading); font-size: 16px; font-weight: 700;
+  color: var(--navy); line-height: 1.45; margin-bottom: 6px;
+}
+.quiz-scenario {
+  background: var(--canvas); border: 1px solid var(--border);
+  border-radius: 8px; padding: 14px 16px;
+  font-size: 14px; color: var(--ink-mid); line-height: 1.7;
+  margin-bottom: 18px; font-style: italic;
+}
+.quiz-opts { display: flex; flex-direction: column; gap: 9px; margin-bottom: 16px; }
+.quiz-opt {
+  display: flex; align-items: flex-start; gap: 11px;
+  padding: 12px 15px; border-radius: 8px;
+  border: 1.5px solid var(--border); background: var(--white);
+  cursor: pointer; transition: all .15s; font-size: 14px; line-height: 1.55;
+  text-align: left; font-family: var(--body); color: var(--ink);
+}
+.quiz-opt:hover:not(:disabled) { border-color: var(--teal); background: var(--teal-pale); }
+.quiz-opt.correct { border-color: var(--green); background: var(--green-bg); color: var(--green); font-weight: 700; }
+.quiz-opt.wrong { border-color: var(--red-border); background: var(--red-bg); color: var(--red); }
+.quiz-opt:disabled { cursor: default; }
+.opt-letter {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--canvas); border: 1.5px solid var(--border-mid);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; flex-shrink: 0;
+  font-family: var(--heading); color: var(--ink-mid);
+}
+.quiz-opt.correct .opt-letter { background: var(--green); border-color: var(--green); color: white; }
+.quiz-opt.wrong .opt-letter { background: var(--red-border); border-color: var(--red-border); color: white; }
+.quiz-feedback {
+  display: none; padding: 13px 15px; border-radius: 8px;
+  font-size: 14px; line-height: 1.65; margin-bottom: 16px;
+}
+.quiz-feedback.visible { display: block; }
+.quiz-feedback.ok { background: var(--green-bg); border: 1px solid var(--green-border); color: var(--green); }
+.quiz-feedback.bad { background: var(--red-bg); border: 1px solid var(--red-border); color: var(--red); }
+.quiz-nav { display: flex; gap: 10px; align-items: center; }
+.quiz-btn {
+  background: var(--teal); color: white;
+  font-family: var(--body); font-size: 14px; font-weight: 700;
+  padding: 9px 20px; border-radius: 7px; border: none;
+  cursor: pointer; transition: all .15s; display: inline-flex; align-items: center; gap: 7px;
+}
+.quiz-btn:hover { background: var(--teal2); }
+.quiz-btn:disabled { background: var(--border-mid); cursor: not-allowed; }
+.quiz-btn i { font-size: 14px; }
+.quiz-restart {
+  background: none; color: var(--ink-soft);
+  font-family: var(--body); font-size: 14px;
+  padding: 9px 16px; border-radius: 7px;
+  border: 1.5px solid var(--border); cursor: pointer; transition: all .15s;
+}
+.quiz-restart:hover { border-color: var(--border-mid); color: var(--ink); }
+.quiz-done {
+  display: none; text-align: center;
+  padding: 36px 20px;
+  background: var(--teal-pale); border: 1px solid var(--teal-mid);
+  border-radius: var(--radius);
+}
+.quiz-done .score-big { font-family: var(--heading); font-size: 48px; font-weight: 700; color: var(--teal); }
+.quiz-done p { font-size: 15px; color: var(--ink-mid); margin-top: 6px; }
+
+/* ── CASES ── */
+.case-list { display: flex; flex-direction: column; gap: 12px; }
+.case-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 18px 20px;
+  cursor: pointer; transition: all .18s;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 14px;
+}
+.case-card:hover { box-shadow: var(--shadow); border-color: var(--teal-mid); }
+.case-card-body h3 { font-family: var(--heading); font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+.case-card-body p { font-size: 13px; color: var(--ink-soft); line-height: 1.6; }
+.case-diff {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .6px; padding: 3px 8px; border-radius: 4px; flex-shrink: 0;
+}
+.diff-routine { background: var(--teal-pale); color: var(--teal); border: 1px solid var(--teal-mid); }
+.diff-edge { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-border); }
+.diff-advanced { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); }
+
+.case-detail { display: none; }
+.case-detail.active { display: block; }
+.case-back {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 14px; color: var(--teal); cursor: pointer;
+  background: none; border: none; font-family: var(--body);
+  font-weight: 700; padding: 0; margin-bottom: 20px;
+  transition: gap .15s;
+}
+.case-back:hover { gap: 3px; }
+.case-back i { font-size: 15px; }
+
+.step-card {
+  border: 1px solid var(--border); border-radius: var(--radius);
+  overflow: hidden; margin-bottom: 14px;
+}
+.step-head {
+  padding: 10px 16px; background: var(--canvas);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 9px;
+  font-size: 12px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .7px; color: var(--ink-mid);
+}
+.step-head i { font-size: 15px; color: var(--teal); }
+.step-body { padding: 16px 18px; font-size: 14px; color: var(--ink-mid); line-height: 1.7; }
+.step-body.chart-text {
+  font-family: var(--mono); font-size: 13px;
+  background: #f0f4fa; border-left: 3px solid var(--teal-mid);
+  color: var(--ink);
+}
+.callout {
+  margin-top: 10px; padding: 10px 13px; border-radius: 7px;
+  font-size: 13px; line-height: 1.65; display: flex; gap: 9px;
+}
+.callout i { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.callout.tip { background: var(--teal-pale); border: 1px solid var(--teal-mid); color: var(--teal); }
+.callout.warn { background: var(--amber-bg); border: 1px solid var(--amber-border); color: var(--amber); }
+.callout.danger { background: var(--red-bg); border: 1px solid var(--red-border); color: var(--red); }
+
+.result-step {
+  background: var(--navy); color: white;
+  border-radius: var(--radius); padding: 20px 22px; margin-bottom: 14px;
+}
+.result-step h4 { font-family: var(--heading); font-size: 14px; font-weight: 700; margin-bottom: 12px; color: rgba(255,255,255,.6); text-transform: uppercase; letter-spacing: .8px; }
+.result-vals { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.rv-label { font-size: 11px; text-transform: uppercase; letter-spacing: .7px; color: rgba(255,255,255,.5); margin-bottom: 2px; }
+.rv-val { font-family: var(--heading); font-size: 20px; font-weight: 700; color: white; }
+.rv-val.highlight { color: var(--teal2); }
+
+/* ── DISCLAIMER ── */
+.disclaimer {
+  background: #eef2f8; border-top: 1px solid var(--border);
+  padding: 24px; margin-top: 60px;
+}
+.disclaimer-inner {
+  max-width: var(--max); margin: 0 auto;
+  font-size: 13px; color: var(--ink-soft); line-height: 1.75;
+}
+
+/* ── FOOTER ── */
+footer { background: #07131f; color: rgba(255,255,255,.45); padding: 28px 24px; }
+.footer-inner {
+  max-width: var(--max); margin: 0 auto;
+  display: flex; align-items: center;
+  justify-content: space-between; gap: 16px; flex-wrap: wrap;
+}
+.footer-brand { font-family: var(--heading); font-size: 16px; font-weight: 700; color: rgba(255,255,255,.7); margin-bottom: 4px; }
+footer p { font-size: 13px; line-height: 1.65; }
+footer a { color: var(--teal2); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+.footer-links { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; }
+
+@media(max-width:640px) {
+  .nav-links .nav-link { display: none; }
+  .footer-inner { flex-direction: column; gap: 12px; }
+  .result-vals { grid-template-columns: 1fr 1fr; }
+  .leave-pair-row { grid-template-columns: 1fr 1fr; }
+  .leave-pair-row .lp-remove { grid-column: 1 / -1; width: fit-content; }
+}
+</style>
+</head>
+<body>
+
+<a href="#maincontent" class="skip-link">Skip to main content</a>
+
+<!-- NAV -->
+<nav class="nav" role="navigation" aria-label="Site navigation">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand" aria-label="AbstractionDeskQA home">
+      AbstractionDesk<span class="qa-badge">QA</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html#how" class="nav-link">How It Works</a>
+      <a href="index.html#tools" class="nav-link">Tools</a>
+      <a href="index.html#feedback" class="nav-link">Feedback</a>
+      <a href="lkw-tool.html" class="nav-link">LKW Tool</a>
+      <a href="lookup.html" class="nav-cta">Q&amp;A Tool</a>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero" role="banner">
+  <div class="page-hero-inner">
+    <a href="index.html" class="page-hero-back">
+      <i class="ph ph-arrow-left" aria-hidden="true"></i> Home
+    </a>
+    <div class="page-eyebrow" aria-hidden="true">
+      HBIPS Event Measures
+    </div>
+    <h1>HBIPS Tool</h1>
+    <p class="page-hero-sub">Hospital-Based Inpatient Psychiatric Services — Restraint &amp; Seclusion Hours.<br>Calculators, abstraction reference, practice quiz, and case walkthroughs.</p>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tool-tabs" role="navigation" aria-label="Tool sections">
+  <div class="tool-tabs-inner">
+    <button class="tab-btn active" onclick="switchTab('calc', this)" aria-selected="true">
+      <i class="ph-duotone ph-calculator" aria-hidden="true"></i> Calculators
+    </button>
+    <button class="tab-btn" onclick="switchTab('ref', this)" aria-selected="false">
+      <i class="ph-duotone ph-book-open" aria-hidden="true"></i> Reference &amp; Guidance
+    </button>
+    <button class="tab-btn" onclick="switchTab('quiz', this)" aria-selected="false">
+      <i class="ph-duotone ph-exam" aria-hidden="true"></i> Practice Quiz
+    </button>
+    <button class="tab-btn" onclick="switchTab('cases', this)" aria-selected="false">
+      <i class="ph-duotone ph-files" aria-hidden="true"></i> Case Walkthroughs
+    </button>
+  </div>
+</div>
+
+<main id="maincontent">
+
+<!-- ═══════════════════════════ CALCULATORS TAB -->
+<div id="tab-calc" class="tab-panel active">
+
+  <!-- DENOMINATOR CALCULATOR -->
+  <div class="notice notice-tip" style="margin-bottom:20px;">
+    <i class="ph-duotone ph-info" aria-hidden="true"></i>
+    <div><strong>HBIPS</strong> stands for <strong>Hospital-Based Inpatient Psychiatric Services.</strong> HBIPS-2 measures physical restraint hours; HBIPS-3 measures seclusion hours — both expressed as rates per 1,000 psychiatric inpatient hours, stratified by patient age.</div>
+  </div>
+  <div class="section-label" style="margin-bottom:12px;">Denominator Calculator</div>
+  <div class="card">
+    <div class="card-title"><i class="ph-duotone ph-calendar-dots" aria-hidden="true"></i> Psychiatric Inpatient Hours</div>
+    <p class="card-sub">The denominator for both HBIPS-2 and HBIPS-3 is total psychiatric inpatient hours: (Inpatient days − Leave days) × 24. Use date entry or manual count.</p>
+
+    <div class="mode-toggle">
+      <button class="mode-btn active" id="denomModeDate" onclick="setDenomMode('date')">Use dates</button>
+      <button class="mode-btn" id="denomModeCount" onclick="setDenomMode('count')">Enter count</button>
+    </div>
+
+    <!-- date mode -->
+    <div id="denomDateMode">
+      <div class="calc-grid" style="grid-template-columns:1fr 1fr;">
+        <div class="field">
+          <label>Admission date <span class="help-btn" onclick="toggleHelp('h-admit')" title="Help" role="button" tabindex="0">?</span></label>
+          <input type="date" id="denomAdmit" oninput="calcDenom()">
+          <div class="help-panel" id="h-admit">
+            <strong>Count the admission day.</strong>
+            The admission date counts as day 1 in the inpatient day calculation.
+          </div>
+        </div>
+        <div class="field">
+          <label>Discharge date <span class="help-btn" onclick="toggleHelp('h-disch')" title="Help" role="button" tabindex="0">?</span></label>
+          <input type="date" id="denomDisch" oninput="calcDenom()">
+          <div class="help-panel" id="h-disch">
+            <strong>Do not count the discharge day.</strong>
+            Example: admitted Monday, discharged Friday = 4 days (Mon, Tue, Wed, Thu).
+          </div>
+        </div>
+      </div>
+      <div class="leave-pairs" id="leavePairs"></div>
+      <button class="add-pair-btn" id="addPairBtn" onclick="addLeavePair()" style="display:none;">
+        <i class="ph ph-plus" aria-hidden="true"></i> Add therapeutic leave period
+      </button>
+    </div>
+
+    <!-- count mode -->
+    <div id="denomCountMode" style="display:none;">
+      <div class="calc-grid" style="grid-template-columns:1fr 1fr;">
+        <div class="field">
+          <label>Psychiatric inpatient days <span class="help-btn" onclick="toggleHelp('h-ipdays')" title="Help" role="button" tabindex="0">?</span></label>
+          <input type="number" id="manualDays" min="1" placeholder="e.g. 14" oninput="calcDenomCount()">
+          <div class="help-panel" id="h-ipdays">
+            <strong>Include admission day. Exclude discharge day.</strong>
+          </div>
+        </div>
+        <div class="field">
+          <label>Total leave days <span class="help-btn" onclick="toggleHelp('h-leave')" title="Help" role="button" tabindex="0">?</span></label>
+          <input type="number" id="manualLeave" min="0" value="0" oninput="calcDenomCount()">
+          <div class="help-panel" id="h-leave">
+            <strong>Therapeutic leave passes only.</strong>
+            Count only full-day therapeutic leave absences — not time off unit for procedures or labs.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="result-box" id="denomResult"></div>
+
+    <div class="notice notice-warn" style="margin-top:18px;">
+      <i class="ph-duotone ph-warning" aria-hidden="true"></i>
+      <div><strong>Leave days defined carefully.</strong> Only full-day therapeutic leave passes reduce the denominator. Time off the unit for labs, procedures, or medical appointments does not qualify.</div>
+    </div>
+  </div>
+
+  <hr class="div">
+
+  <!-- MINUTES TO HOURS -->
+  <div class="section-label" style="margin-bottom:12px;">Minutes to Hours Converter</div>
+  <div class="card">
+    <div class="card-title"><i class="ph-duotone ph-clock-countdown" aria-hidden="true"></i> Numerator — Ceiling Rounding</div>
+    <p class="card-sub">The numerator is the total restraint or seclusion hours, rounded <strong>up</strong> using ceiling logic. Any fraction of an hour counts as a whole hour.</p>
+
+    <div class="calc-grid" style="grid-template-columns:1fr 1fr 1fr; align-items:end;">
+      <div class="field">
+        <label>Total minutes</label>
+        <input type="number" id="convMins" min="0" placeholder="e.g. 73" oninput="calcConv()">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:4px;">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--ink-mid);">Result (ceiling hours)</div>
+        <div id="convResult" style="font-family:var(--mono);font-size:28px;font-weight:700;color:var(--teal);padding:6px 0;min-height:44px;">—</div>
+      </div>
+      <div id="convBreak" style="font-size:13px;color:var(--ink-soft);font-family:var(--mono);line-height:1.8;padding-top:18px;"></div>
+    </div>
+
+    <div class="notice notice-warn" style="margin-top:18px;">
+      <i class="ph-duotone ph-warning" aria-hidden="true"></i>
+      <div><strong>Always round UP.</strong> 60 min = 1 hr &nbsp;|&nbsp; 61 min = 2 hr &nbsp;|&nbsp; 120 min = 2 hr &nbsp;|&nbsp; 121 min = 3 hr. Standard rounding (half-up) is incorrect for this measure.</div>
+    </div>
+  </div>
+
+  <hr class="div">
+
+  <!-- RATE CALCULATOR -->
+  <div class="section-label" style="margin-bottom:12px;">Observed Rate Calculator</div>
+  <div class="card">
+    <div class="card-title"><i class="ph-duotone ph-chart-line-up" aria-hidden="true"></i> Rate per 1,000 Psychiatric Inpatient Hours</div>
+    <p class="card-sub">Observed Rate = (Numerator hours &divide; Denominator hours) &times; 1,000. Calculate separately for HBIPS-2 (restraint) and HBIPS-3 (seclusion), and for each strata.</p>
+
+    <div class="calc-grid" style="grid-template-columns:1fr 1fr;align-items:end;">
+      <div class="field">
+        <label>Numerator (hours, ceiling-rounded)</label>
+        <input type="number" id="rateNum" min="0" placeholder="e.g. 4" oninput="calcRate()">
+      </div>
+      <div class="field">
+        <label>Denominator (total inpatient hours)</label>
+        <input type="number" id="rateDenom" min="0" placeholder="e.g. 336" oninput="calcRate()">
+      </div>
+    </div>
+
+    <div class="result-box" id="rateResult"></div>
+
+    <div class="notice notice-tip" style="margin-top:18px;">
+      <i class="ph-duotone ph-info" aria-hidden="true"></i>
+      <div>Calculate once for each strata (B, C, D, E) and once overall. A strata with an initial population of zero is not reported — leave it blank in your submission.</div>
+    </div>
+  </div>
+
+</div><!-- /tab-calc -->
+
+
+<!-- ═══════════════════════════ REFERENCE TAB -->
+<div id="tab-ref" class="tab-panel">
+
+  <!-- STRATA -->
+  <div class="section-label" style="margin-bottom:12px;">Age Strata</div>
+  <div class="card" style="margin-bottom:20px;">
+    <div class="card-title"><i class="ph-duotone ph-users-three" aria-hidden="true"></i> Age Strata — Restraint &amp; Seclusion Measures</div>
+    <p class="card-sub" style="margin-bottom:16px;">Age is calculated at the <strong>event date</strong> — not admission or discharge. A patient who turns 13 on the event date moves from Strata B to Strata C on that day. Age = 0 is excluded.</p>
+    <div class="strata-grid">
+      <div class="strata-band b">
+        <div class="sb-code">Strata B</div>
+        <div class="sb-range">Age 1&ndash;12 years</div>
+        <div class="sb-pop">Children</div>
+        <div class="sb-code-line">HBIPS-2b / 3b</div>
+      </div>
+      <div class="strata-band c">
+        <div class="sb-code">Strata C</div>
+        <div class="sb-range">Age 13&ndash;17 years</div>
+        <div class="sb-pop">Adolescents</div>
+        <div class="sb-code-line">HBIPS-2c / 3c</div>
+      </div>
+      <div class="strata-band d">
+        <div class="sb-code">Strata D</div>
+        <div class="sb-range">Age 18&ndash;64 years</div>
+        <div class="sb-pop">Adults</div>
+        <div class="sb-code-line">HBIPS-2d / 3d</div>
+      </div>
+      <div class="strata-band e">
+        <div class="sb-code">Strata E</div>
+        <div class="sb-range">Age &ge;65 years</div>
+        <div class="sb-pop">Older Adults</div>
+        <div class="sb-code-line">HBIPS-2e / 3e</div>
+      </div>
+    </div>
+    <div class="notice notice-tip" style="margin-top:14px;">
+      <i class="ph-duotone ph-info" aria-hidden="true"></i>
+      <div>Strata boundaries are inclusive on the lower end: age 13 = Strata C (not B). Age 18 = Strata D. Age 65 = Strata E. Calculate age precisely using month and day, not birth year alone.</div>
+    </div>
+  </div>
+
+  <!-- LOGIC TRAIN -->
+  <div class="section-label" style="margin-bottom:12px;">Abstraction Logic</div>
+  <div class="card" style="margin-bottom:20px;">
+    <div class="card-title"><i class="ph-duotone ph-flow-arrow" aria-hidden="true"></i> How to Abstract HBIPS-2 &amp; HBIPS-3</div>
+    <p class="card-sub">Work through these steps in order for each patient encounter with a restraint or seclusion event. Each step narrows the population and determines the patient's category.</p>
+    <div class="logic-train">
+
+      <div class="logic-step">
+        <div class="l-connector"></div>
+        <div class="l-num">1</div>
+        <div class="l-content">
+          <div class="l-title">Does an event date exist?</div>
+          <div class="l-body">A patient is only in the HBIPS measure population if a restraint or seclusion event occurred and was documented with a date.</div>
+          <div class="l-rule rule-ex">No event date documented &rarr; Reject case. Set Reject Case Flag = Yes.</div>
+        </div>
+      </div>
+
+      <div class="logic-step">
+        <div class="l-connector"></div>
+        <div class="l-num">2</div>
+        <div class="l-content">
+          <div class="l-title">Was the patient in a psychiatric care setting at time of event?</div>
+          <div class="l-body">Psychiatric Care Setting = Y means the patient was physically in a designated psychiatric care setting when the event occurred — not just that their admission type is psychiatric.</div>
+          <div class="l-rule rule-ex">Psychiatric Care Setting = N &rarr; Exclude. Patient not in measure population.</div>
+        </div>
+      </div>
+
+      <div class="logic-step">
+        <div class="l-connector"></div>
+        <div class="l-num">3</div>
+        <div class="l-content">
+          <div class="l-title">Calculate age at the event date</div>
+          <div class="l-body">Age in years = Event Date minus Birthdate. Use the precise month and day. A patient's birthday on the event date moves them into the next strata that same day.</div>
+          <div class="l-rule rule-ex">Age = 0 &rarr; Exclude. Set Reject Case Flag = Yes.</div>
+          <div class="l-rule rule-in" style="margin-top:5px;">Age &ge; 1 &rarr; Included. Assign to strata B, C, D, or E.</div>
+        </div>
+      </div>
+
+      <div class="logic-step">
+        <div class="l-connector"></div>
+        <div class="l-num">4</div>
+        <div class="l-content">
+          <div class="l-title">Determine event type</div>
+          <div class="l-body">Event Type 1 = Physical Restraint &rarr; counts toward HBIPS-2 only. Event Type 2 = Seclusion &rarr; counts toward HBIPS-3 only. A patient's record for one measure receives Category U (not in numerator) for the other.</div>
+          <div class="l-rule rule-calc">One event type per event record. Both types can occur on the same calendar date but must be recorded separately.</div>
+        </div>
+      </div>
+
+      <div class="logic-step">
+        <div class="l-connector"></div>
+        <div class="l-num">5</div>
+        <div class="l-content">
+          <div class="l-title">Is duration documented?</div>
+          <div class="l-body">
+            Duration documented with a quantifiable time &rarr; Category E (in numerator).<br>
+            Duration documented but cannot be quantified (UTD) &rarr; Category Y (in population, not numerator).<br>
+            No documentation at all &rarr; Case rejected (Category X).
+          </div>
+          <div class="l-rule rule-warn">UTD is not the same as missing. If duration was documented but unquantifiable, mark UTD. Do not leave the field blank.</div>
+        </div>
+      </div>
+
+      <div class="logic-step">
+        <div class="l-connector"></div>
+        <div class="l-num">6</div>
+        <div class="l-content">
+          <div class="l-title">Calculate the numerator</div>
+          <div class="l-body">Sum all qualifying restraint minutes (or seclusion minutes) across all patients in the numerator for a given strata. Convert total minutes to hours using <strong>ceiling rounding</strong>.</div>
+          <div class="l-rule rule-calc">73 minutes = 1.217 hours &rarr; ceiling = 2 hours (not 1)</div>
+        </div>
+      </div>
+
+      <div class="logic-step">
+        <div class="l-num">7</div>
+        <div class="l-content">
+          <div class="l-title">Calculate the denominator and rate</div>
+          <div class="l-body">Denominator = (Psychiatric Inpatient Days &minus; Total Leave Days) &times; 24. Include admission day, exclude discharge day. Leave days = therapeutic passes only.</div>
+          <div class="l-rule rule-calc">Observed Rate = (Numerator &divide; Denominator) &times; 1,000</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PITFALLS -->
+  <div class="section-label" style="margin-bottom:12px;">Common Abstraction Pitfalls</div>
+  <div class="card">
+    <div class="card-title"><i class="ph-duotone ph-seal-warning" aria-hidden="true"></i> Where New Abstractors Go Wrong</div>
+    <p class="card-sub">These are the most frequent errors seen during training and QA review.</p>
+    <div class="pitfall-list">
+
+      <div class="pitfall">
+        <span class="pitfall-tag tag-age">Age</span>
+        <div>
+          <h4>Using discharge date — not event date — to calculate age</h4>
+          <p>Age must be calculated at the event date. A patient admitted as a 12-year-old may turn 13 during a long stay. Their strata is determined by their age on the day the restraint or seclusion occurred, not when they were discharged.</p>
+          <div class="correct">Correct: Age = Event Date &minus; Birthdate</div>
+        </div>
+      </div>
+
+      <div class="pitfall">
+        <span class="pitfall-tag tag-age">Age</span>
+        <div>
+          <h4>Getting the strata boundary wrong at exact cutoff ages</h4>
+          <p>Strata boundaries are inclusive at the lower end. A 13-year-old is Strata C — not B. A 17-year-old is Strata C. An 18-year-old is Strata D. An exact birthday on the event date crosses into the next strata that day.</p>
+          <div class="correct">B: 1&ndash;12 &nbsp;|&nbsp; C: 13&ndash;17 &nbsp;|&nbsp; D: 18&ndash;64 &nbsp;|&nbsp; E: 65+</div>
+        </div>
+      </div>
+
+      <div class="pitfall">
+        <span class="pitfall-tag tag-num">Numerator</span>
+        <div>
+          <h4>Rounding minutes to hours normally instead of using ceiling</h4>
+          <p>Standard rounding makes 61 minutes = 1 hour. The spec requires ceiling rounding, which makes 61 minutes = 2 hours. This error consistently understates the numerator and lowers the observed rate.</p>
+          <div class="correct">61 min &rarr; 2 hr &nbsp;|&nbsp; 119 min &rarr; 2 hr &nbsp;|&nbsp; 121 min &rarr; 3 hr</div>
+        </div>
+      </div>
+
+      <div class="pitfall">
+        <span class="pitfall-tag tag-den">Denominator</span>
+        <div>
+          <h4>Including the discharge day in the inpatient day count</h4>
+          <p>The spec is explicit: count the admission day, do not count the discharge day. Including discharge inflates the denominator and lowers the observed rate.</p>
+          <div class="correct">Admitted Monday, discharged Friday = 4 days (Mon + Tue + Wed + Thu)</div>
+        </div>
+      </div>
+
+      <div class="pitfall">
+        <span class="pitfall-tag tag-den">Denominator</span>
+        <div>
+          <h4>Counting off-unit time as leave days</h4>
+          <p>Leave days are therapeutic pass absences — full days the patient was formally absent from the unit on a leave pass. Time away for radiology, procedures, labs, or ED visits does not count as a leave day.</p>
+          <div class="correct">Only full-day therapeutic leave absences are subtracted from inpatient days</div>
+        </div>
+      </div>
+
+      <div class="pitfall">
+        <span class="pitfall-tag tag-type">Event Type</span>
+        <div>
+          <h4>Entering seclusion minutes into the restraint field, or vice versa</h4>
+          <p>Event Type 1 = restraint (HBIPS-2 numerator). Event Type 2 = seclusion (HBIPS-3 numerator). A patient who experienced seclusion only receives Category U for HBIPS-2 — their seclusion minutes do not count toward that measure.</p>
+          <div class="correct">Restraint minutes &rarr; HBIPS-2 only &nbsp;|&nbsp; Seclusion minutes &rarr; HBIPS-3 only</div>
+        </div>
+      </div>
+
+      <div class="pitfall">
+        <span class="pitfall-tag tag-utd">UTD</span>
+        <div>
+          <h4>Leaving minutes blank when documentation exists but is unquantifiable</h4>
+          <p>If a restraint or seclusion episode is clearly documented but the exact duration cannot be determined from the record, that is UTD — not missing. Missing means no documentation whatsoever, which rejects the case. UTD keeps the patient in the measure population.</p>
+          <div class="correct">No documentation at all &rarr; Missing (rejected) &nbsp;|&nbsp; Documented but unclear duration &rarr; UTD (Category Y)</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- /tab-ref -->
+
+
+<!-- ═══════════════════════════ QUIZ TAB -->
+<div id="tab-quiz" class="tab-panel">
+  <div class="section-label" style="margin-bottom:12px;">Practice Quiz</div>
+  <div class="card quiz-wrap" style="max-width:680px;">
+    <div class="card-title"><i class="ph-duotone ph-exam" aria-hidden="true"></i> Restraint &amp; Seclusion — 10 Questions</div>
+    <p class="card-sub">Scenario-based questions covering age strata, denominator calculation, ceiling rounding, event type, and UTD logic.</p>
+
+    <div id="quizActive">
+      <div class="quiz-meta">
+        <span id="quizProgress">Question 1 of 10</span>
+        <span class="quiz-score" id="quizScore">Score: 0 / 0</span>
+      </div>
+      <div class="quiz-q" id="quizQ"></div>
+      <div class="quiz-scenario" id="quizScenario" style="display:none;"></div>
+      <div class="quiz-opts" id="quizOpts" role="list"></div>
+      <div class="quiz-feedback" id="quizFeedback"></div>
+      <div class="quiz-nav">
+        <button class="quiz-btn" id="quizNext" onclick="nextQ()" disabled>
+          Next <i class="ph ph-arrow-right" aria-hidden="true"></i>
+        </button>
+        <button class="quiz-restart" onclick="startQuiz()">Restart</button>
+      </div>
+    </div>
+
+    <div class="quiz-done" id="quizDone">
+      <div class="score-big" id="finalScore"></div>
+      <p id="finalMsg"></p>
+      <button class="quiz-btn" onclick="startQuiz()" style="margin-top:20px;">
+        <i class="ph ph-arrow-counter-clockwise" aria-hidden="true"></i> Try Again
+      </button>
+    </div>
+  </div>
+</div><!-- /tab-quiz -->
+
+
+<!-- ═══════════════════════════ CASES TAB -->
+<div id="tab-cases" class="tab-panel">
+  <div class="section-label" style="margin-bottom:12px;">Case Walkthroughs</div>
+
+  <div id="caseList">
+    <p style="font-size:14px;color:var(--ink-soft);margin-bottom:18px;line-height:1.7;">
+      Step-by-step cases that walk through the full abstraction logic at each decision point. Select a case to begin.
+    </p>
+    <div class="case-list" id="caseListItems"></div>
+  </div>
+
+  <div class="case-detail" id="caseDetail">
+    <button class="case-back" onclick="showCaseList()">
+      <i class="ph ph-arrow-left" aria-hidden="true"></i> Back to Cases
+    </button>
+    <div id="caseContent"></div>
+  </div>
+</div><!-- /tab-cases -->
+
+</main>
+
+<!-- DISCLAIMER -->
+<div class="disclaimer" role="note" aria-label="Educational disclaimer">
+  <div class="disclaimer-inner">
+    <strong>Educational use only.</strong>
+    AbstractionDeskQA is a reference aid to support abstractor training and workflow. It does not constitute compliance advice and is not a substitute for the official TJC or CMS Specifications Manual. Always verify abstraction decisions against the current specification version for your abstraction period.
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer role="contentinfo">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">AbstractionDesk<span style="color:var(--teal2)">QA</span></div>
+      <p>A free reference tool for core measure abstractors.<br>
+      &copy; <span id="yr"></span> AbstractionDeskQA. Educational use only.</p>
+    </div>
+    <div class="footer-links">
+      <a href="lookup.html">Q&amp;A Lookup</a>
+      <a href="lkw-tool.html">LKW Tool</a>
+      <a href="hbips-tool.html">HBIPS Tool</a>
+      <a href="index.html#feedback">Feedback</a>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
+  data-name="BMC-Widget" data-cfasync="false"
+  data-id="abstractiondeskqa"
+  data-description="Support AbstractionDeskQA"
+  data-message="If this tool helped you, consider supporting its development"
+  data-color="#0a7c7a" data-position="Right"
+  data-x_margin="18" data-y_margin="18"></script>
+
+<script>
+// ── TABS ────────────────────────────────────────────────────────────────────
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active'); btn.setAttribute('aria-selected','true');
+}
+
+// ── HELP PANELS ──────────────────────────────────────────────────────────────
+function toggleHelp(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+// ── DENOMINATOR — DATE MODE ───────────────────────────────────────────────────
+let lpCount = 0;
+
+function setDenomMode(mode) {
+  document.getElementById('denomDateMode').style.display = mode === 'date' ? 'block' : 'none';
+  document.getElementById('denomCountMode').style.display = mode === 'count' ? 'block' : 'none';
+  document.getElementById('denomModeDate').classList.toggle('active', mode === 'date');
+  document.getElementById('denomModeCount').classList.toggle('active', mode === 'count');
+  document.getElementById('denomResult').classList.remove('visible');
+}
+
+function addLeavePair() {
+  lpCount++;
+  const id = lpCount;
+  const c = document.getElementById('leavePairs');
+  const row = document.createElement('div');
+  row.className = 'leave-pair-row'; row.id = 'lp-' + id;
+  row.innerHTML = `
+    <div class="lp-field">
+      <label>Leave departure</label>
+      <input type="date" id="lpDep${id}" oninput="calcDenom()">
+    </div>
+    <div class="lp-field">
+      <label>Return date</label>
+      <input type="date" id="lpRet${id}" oninput="calcDenom()">
+    </div>
+    <button class="lp-remove" onclick="removeLeavePair(${id})" title="Remove" aria-label="Remove leave period">
+      <i class="ph ph-x" aria-hidden="true"></i>
+    </button>`;
+  c.appendChild(row);
+  calcDenom();
+}
+
+function removeLeavePair(id) {
+  const row = document.getElementById('lp-' + id);
+  if (row) { row.remove(); calcDenom(); }
+}
+
+function calcDenom() {
+  const a = document.getElementById('denomAdmit').value;
+  const d = document.getElementById('denomDisch').value;
+  const btn = document.getElementById('addPairBtn');
+  const res = document.getElementById('denomResult');
+  btn.style.display = a ? 'flex' : 'none';
+  if (!a || !d) { res.classList.remove('visible'); return; }
+
+  const admit = new Date(a + 'T00:00:00');
+  const disch = new Date(d + 'T00:00:00');
+  if (disch <= admit) {
+    res.className = 'result-box visible err';
+    res.innerHTML = 'Discharge date must be after admission date.';
+    return;
+  }
+
+  const rawDays = Math.round((disch - admit) / 86400000);
+  let leaveDays = 0; const errors = [];
+
+  document.querySelectorAll('.leave-pair-row').forEach(row => {
+    const inputs = row.querySelectorAll('input[type="date"]');
+    if (inputs.length < 2 || !inputs[0].value || !inputs[1].value) return;
+    const dep = new Date(inputs[0].value + 'T00:00:00');
+    const ret = new Date(inputs[1].value + 'T00:00:00');
+    if (ret <= dep) { errors.push('A leave return date must be after departure date.'); return; }
+    if (dep < admit || ret > disch) { errors.push('Leave dates must fall within the admission–discharge window.'); return; }
+    leaveDays += Math.round((ret - dep) / 86400000);
+  });
+
+  if (errors.length) {
+    res.className = 'result-box visible err';
+    res.innerHTML = errors.join('<br>'); return;
+  }
+
+  const netDays = rawDays - leaveDays;
+  const hours = netDays * 24;
+  let html = `<div class="result-row"><span class="result-key">Admission to discharge</span><span class="result-val">${rawDays} day${rawDays!==1?'s':''}</span></div>`;
+  if (leaveDays > 0) html += `<div class="result-row"><span class="result-key">Therapeutic leave days</span><span class="result-val">&minus; ${leaveDays} day${leaveDays!==1?'s':''}</span></div>`;
+  html += `<div class="result-row net"><span class="result-key">Net inpatient days</span><span class="result-val">${netDays}</span></div>`;
+  html += `<div class="result-row net"><span class="result-key">Denominator (hours)</span><span class="result-val">${hours.toLocaleString()} hrs</span></div>`;
+  res.className = 'result-box visible';
+  res.innerHTML = html;
+}
+
+function calcDenomCount() {
+  const days = parseInt(document.getElementById('manualDays').value) || 0;
+  const leave = parseInt(document.getElementById('manualLeave').value) || 0;
+  const res = document.getElementById('denomResult');
+  if (!days) { res.classList.remove('visible'); return; }
+  const net = days - leave;
+  const hours = net * 24;
+  let html = `<div class="result-row"><span class="result-key">Inpatient days entered</span><span class="result-val">${days}</span></div>`;
+  if (leave > 0) html += `<div class="result-row"><span class="result-key">Leave days</span><span class="result-val">&minus; ${leave}</span></div>`;
+  html += `<div class="result-row net"><span class="result-key">Net inpatient days</span><span class="result-val">${net}</span></div>`;
+  html += `<div class="result-row net"><span class="result-key">Denominator (hours)</span><span class="result-val">${hours.toLocaleString()} hrs</span></div>`;
+  res.className = 'result-box visible';
+  res.innerHTML = html;
+}
+
+// ── CONVERTER ────────────────────────────────────────────────────────────────
+function calcConv() {
+  const m = parseFloat(document.getElementById('convMins').value);
+  const r = document.getElementById('convResult');
+  const b = document.getElementById('convBreak');
+  if (isNaN(m) || m < 0) { r.textContent = '—'; b.textContent = ''; return; }
+  if (m === 0) { r.textContent = '0 hr'; b.textContent = '0 ÷ 60 = 0 → ceiling = 0'; return; }
+  const exact = m / 60;
+  const ceil = Math.ceil(exact);
+  r.textContent = ceil + ' hr';
+  b.innerHTML = `${m} &divide; 60 = ${exact.toFixed(4)}<br>&darr; ceiling = <strong>${ceil} hr</strong>`;
+}
+
+// ── RATE ─────────────────────────────────────────────────────────────────────
+function calcRate() {
+  const num = parseFloat(document.getElementById('rateNum').value);
+  const den = parseFloat(document.getElementById('rateDenom').value);
+  const res = document.getElementById('rateResult');
+  if (isNaN(num) || isNaN(den)) { res.classList.remove('visible'); return; }
+  if (den === 0) { res.className = 'result-box visible err'; res.innerHTML = 'Denominator cannot be zero.'; return; }
+  const rate = (num / den) * 1000;
+  res.className = 'result-box visible';
+  res.innerHTML = `
+    <div class="result-row"><span class="result-key">Numerator</span><span class="result-val">${num} hr</span></div>
+    <div class="result-row"><span class="result-key">Denominator</span><span class="result-val">${den.toLocaleString()} hrs</span></div>
+    <div class="result-row net"><span class="result-key">Observed rate (per 1,000 hrs)</span><span class="result-val">${rate.toFixed(4)}</span></div>`;
+}
+
+// ── QUIZ ─────────────────────────────────────────────────────────────────────
+const QUIZ = [
+  {
+    q: 'A patient is admitted on March 10 and discharged on March 14. How many psychiatric inpatient days are counted for the denominator?',
+    sc: null,
+    opts: ['3 days', '4 days', '5 days', '14 days'],
+    correct: 1,
+    fb: 'Count the admission day (March 10), do not count the discharge day (March 14). March 10, 11, 12, 13 = 4 days.'
+  },
+  {
+    q: 'A patient had a seclusion episode lasting 73 minutes. What is the numerator contribution in hours for HBIPS-3?',
+    sc: null,
+    opts: ['1 hour', '1.2 hours', '2 hours', '73 hours'],
+    correct: 2,
+    fb: '73 minutes ÷ 60 = 1.217 hours. Ceiling rounding means any fraction above a whole hour counts as the next full hour. 1.217 rounds up to 2 hours.'
+  },
+  {
+    q: 'A patient has a birthdate of April 15, 2010. A restraint event occurred on April 15, 2023. What is their age and strata?',
+    sc: null,
+    opts: ['Age 12, Strata B', 'Age 13, Strata B', 'Age 13, Strata C', 'Age 12, Strata C'],
+    correct: 2,
+    fb: 'Age is calculated at the event date. On April 15, 2023, this patient turns exactly 13. Age 13 = Strata C (ages 13–17). A birthday on the event date crosses into the new strata that day.'
+  },
+  {
+    q: 'A patient\'s restraint duration is documented in the nursing note as "quite a while" with no specific time. How should this be abstracted?',
+    sc: 'Nursing note: "Patient placed in physical restraints — held for quite a while until calm. Released around 1500."',
+    opts: ['Leave minutes blank (missing)', 'Enter 0 minutes', 'Mark as UTD', 'Use arrival time as duration'],
+    correct: 2,
+    fb: 'Documentation exists but the duration cannot be quantified — this is UTD (Unable to Determine). UTD keeps the patient in the measure population (Category Y) but not the numerator. Leaving the field blank would indicate missing documentation, which rejects the case.'
+  },
+  {
+    q: 'A patient was in an inpatient psychiatric unit but was transported to the ED for a medical issue when a restraint was applied in the ED. What is the Psychiatric Care Setting value?',
+    sc: null,
+    opts: ['Yes — the overall admission is psychiatric', 'No — the patient was not in a psychiatric setting at time of event', 'UTD — cannot determine from available information', 'Yes — the restraint was ordered by the psychiatric team'],
+    correct: 1,
+    fb: 'Psychiatric Care Setting = N. The question is whether the patient was physically in a psychiatric care setting when the event occurred — not whether their admission type is psychiatric. Being in the ED at the time of the event means the answer is No, and the patient is excluded from both measures.'
+  },
+  {
+    q: 'Total restraint minutes for a strata are: 45 min, 120 min, and 62 min. What is the correct numerator for HBIPS-2?',
+    sc: null,
+    opts: ['3 hours (ceiling of 227 min total)', 'ceiling applied per episode: 1 + 2 + 2 = 5 hours', '3.78 hours (exact division)', '4 hours (227 ÷ 60 = 3.78, round normally)'],
+    correct: 0,
+    fb: 'Sum all minutes first: 45 + 120 + 62 = 227 minutes. Then convert the total to hours and apply ceiling once: 227 ÷ 60 = 3.783 → ceiling = 4 hours. Wait — 3.783 rounds up to 4, not 3. The correct answer is 4 hours. (Note: ceiling is applied to the aggregate total, not per episode.)'
+  },
+  {
+    q: 'A patient takes a 2-day therapeutic leave pass mid-stay. Admission was January 5, discharge January 20. What is the denominator in hours?',
+    sc: null,
+    opts: ['360 hours (15 days × 24)', '336 hours (14 days × 24)', '312 hours (13 days × 24)', '384 hours (16 days × 24)'],
+    correct: 2,
+    fb: 'Inpatient days = Jan 5 to Jan 20, excluding discharge day = 15 days. Subtract 2 leave days = 13 net days. 13 × 24 = 312 hours.'
+  },
+  {
+    q: 'Which of the following does NOT qualify as a leave day for HBIPS denominator purposes?',
+    sc: null,
+    opts: ['A 2-day therapeutic home pass', 'A weekend therapeutic leave pass signed by the treatment team', 'A 4-hour trip to radiology for imaging', 'An overnight pass to stay with family'],
+    correct: 2,
+    fb: 'Radiology trips, procedures, labs, and brief off-unit time do not qualify as leave days. Only full-day therapeutic leave passes — where the patient is formally absent from the unit — reduce the denominator.'
+  },
+  {
+    q: 'For HBIPS-3, a patient had 60 minutes of seclusion. What is their numerator contribution?',
+    sc: null,
+    opts: ['0.5 hours', '1 hour', '2 hours', '60 hours'],
+    correct: 1,
+    fb: '60 minutes = exactly 1.0 hour. Ceiling of 1.0 = 1 hour. Ceiling rounding only adds an extra hour when there is a fractional remainder above a whole number. 60 minutes is exactly 1 hour, so no rounding up is needed.'
+  },
+  {
+    q: 'A patient had both a restraint episode (45 min) and a seclusion episode (30 min) on the same day. How are these abstracted?',
+    sc: null,
+    opts: ['Combined as one event — 75 min total for both measures', 'Restraint minutes go to HBIPS-2 only; seclusion minutes go to HBIPS-3 only', 'Only the longer episode is counted', 'The patient is excluded because both types occurred'],
+    correct: 1,
+    fb: 'Both events are valid and are abstracted separately. The 45 restraint minutes count toward the HBIPS-2 numerator only (ceiling = 1 hour). The 30 seclusion minutes count toward the HBIPS-3 numerator only (ceiling = 1 hour). For HBIPS-2, the patient receives Category U for the seclusion episode, and vice versa.'
+  }
+];
+
+let qIdx = 0, score = 0, answered = 0;
+
+function startQuiz() {
+  qIdx = 0; score = 0; answered = 0;
+  document.getElementById('quizActive').style.display = 'block';
+  document.getElementById('quizDone').style.display = 'none';
+  renderQ();
+}
+
+function renderQ() {
+  const q = QUIZ[qIdx];
+  document.getElementById('quizProgress').textContent = `Question ${qIdx + 1} of ${QUIZ.length}`;
+  document.getElementById('quizScore').textContent = `Score: ${score} / ${answered}`;
+  document.getElementById('quizQ').textContent = q.q;
+  const sc = document.getElementById('quizScenario');
+  if (q.sc) { sc.textContent = q.sc; sc.style.display = 'block'; } else sc.style.display = 'none';
+  const opts = document.getElementById('quizOpts');
+  opts.innerHTML = '';
+  q.opts.forEach((o, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-opt';
+    btn.setAttribute('role', 'listitem');
+    btn.innerHTML = `<span class="opt-letter">${String.fromCharCode(65+i)}</span>${o}`;
+    btn.onclick = () => answerQ(i);
+    opts.appendChild(btn);
+  });
+  const fb = document.getElementById('quizFeedback');
+  fb.className = 'quiz-feedback'; fb.textContent = '';
+  document.getElementById('quizNext').disabled = true;
+}
+
+function answerQ(chosen) {
+  const q = QUIZ[qIdx];
+  answered++;
+  const correct = chosen === q.correct;
+  if (correct) score++;
+  document.getElementById('quizScore').textContent = `Score: ${score} / ${answered}`;
+  const btns = document.querySelectorAll('.quiz-opt');
+  btns.forEach((b, i) => {
+    b.disabled = true;
+    if (i === q.correct) b.classList.add('correct');
+    else if (i === chosen && !correct) b.classList.add('wrong');
+  });
+  const fb = document.getElementById('quizFeedback');
+  fb.className = 'quiz-feedback visible ' + (correct ? 'ok' : 'bad');
+  fb.textContent = (correct ? 'Correct. ' : 'Incorrect. ') + q.fb;
+  document.getElementById('quizNext').disabled = false;
+}
+
+function nextQ() {
+  qIdx++;
+  if (qIdx >= QUIZ.length) {
+    document.getElementById('quizActive').style.display = 'none';
+    const done = document.getElementById('quizDone');
+    done.style.display = 'block';
+    document.getElementById('finalScore').textContent = `${score} / ${QUIZ.length}`;
+    const pct = score / QUIZ.length;
+    document.getElementById('finalMsg').textContent =
+      pct === 1 ? 'Perfect score. Excellent abstraction instincts.' :
+      pct >= 0.8 ? 'Strong result. Review any missed questions above.' :
+      pct >= 0.6 ? 'Good start. The Reference tab covers the rules in depth.' :
+      'Keep studying — the Reference and Case tabs will help.';
+  } else { renderQ(); }
+}
+
+// ── CASES ────────────────────────────────────────────────────────────────────
+const CASES = [
+  {
+    title: 'Routine Restraint — Single Episode',
+    summary: 'A straightforward HBIPS-2 case with one restraint episode, clear documentation, and no strata edge cases.',
+    diff: 'routine',
+    steps: [
+      { type: 'chart', content: 'Patient DOB: 08/14/1985. Admission: 03/10/2026. Discharge: 03/17/2026.\nPsychiatric care setting: Yes.\nPhysical restraint applied 03/12/2026 at 14:00, released 14:48. Duration 48 minutes documented by nursing.' },
+      { type: 'step', label: 'Step 1 — Event Date & Setting', content: 'Event date is 03/12/2026. Psychiatric Care Setting = Yes. Both required elements are present — patient is in the HBIPS-2 measure population.', cx: 'tip', cxt: 'Always confirm psychiatric care setting at the time of the event, not just at admission.' },
+      { type: 'step', label: 'Step 2 — Age & Strata', content: 'DOB 08/14/1985, event date 03/12/2026. Age = 40 years. Strata D (adults, 18–64).', cx: null },
+      { type: 'step', label: 'Step 3 — Event Type', content: 'Physical restraint = Event Type 1. This case contributes to HBIPS-2. For HBIPS-3, this patient receives Category U (seclusion not in numerator).', cx: null },
+      { type: 'step', label: 'Step 4 — Numerator', content: '48 minutes documented. 48 ÷ 60 = 0.800 hours. Ceiling = 1 hour. Numerator contribution: 1 hour.', cx: 'tip', cxt: '48 minutes is less than 60 but more than 0 — ceiling of 0.800 is 1, not 0.' },
+      { type: 'step', label: 'Step 5 — Denominator', content: 'Admission 03/10, discharge 03/17. Days = 03/10 through 03/16 (exclude discharge day) = 7 days. No leave days. Denominator = 7 × 24 = 168 hours.', cx: null },
+      { type: 'result', yn: 'YES — Category E', date: '03/12/2026', num: '1 hr', denom: '168 hrs' }
+    ]
+  },
+  {
+    title: 'Strata Edge Case — Patient Turns 13 on Event Date',
+    summary: 'Age strata assignment when a patient\'s birthday coincides with the event date. Tests precise age-at-event calculation.',
+    diff: 'edge',
+    steps: [
+      { type: 'chart', content: 'Patient DOB: 04/22/2013. Admission: 04/18/2026. Discharge: 04/28/2026.\nPhysical restraint applied 04/22/2026. Duration: 35 minutes.' },
+      { type: 'step', label: 'Step 1 — Event Date', content: 'Event date is 04/22/2026. Psychiatric Care Setting = Yes. Patient is in the measure population.', cx: null },
+      { type: 'step', label: 'Step 2 — Age at Event Date', content: 'DOB 04/22/2013. Event date 04/22/2026. This is the patient\'s 13th birthday. Age = exactly 13 years on the event date.', cx: 'warn', cxt: 'Age is calculated at the event date — on their birthday, a patient moves into the next strata. Age 13 = Strata C, not B.' },
+      { type: 'step', label: 'Step 3 — Strata Assignment', content: 'Age 13 at time of event = Strata C (adolescents, 13–17). This patient\'s minutes count toward HBIPS-2c, not HBIPS-2b. If you had used age 12 (the day before), you would have assigned the wrong strata.', cx: null },
+      { type: 'step', label: 'Step 4 — Numerator', content: '35 minutes. 35 ÷ 60 = 0.583 hours. Ceiling = 1 hour.', cx: null },
+      { type: 'step', label: 'Step 5 — Denominator', content: 'Admission 04/18, discharge 04/28 = 10 days (exclude discharge). No leave days. 10 × 24 = 240 hours.', cx: null },
+      { type: 'result', yn: 'YES — Strata C (not B)', date: '04/22/2026', num: '1 hr', denom: '240 hrs' }
+    ]
+  },
+  {
+    title: 'UTD Duration — Seclusion Episode Not Quantifiable',
+    summary: 'A seclusion episode is documented but the duration cannot be determined from the chart. Demonstrates UTD vs. missing abstraction logic.',
+    diff: 'edge',
+    steps: [
+      { type: 'chart', content: 'Patient DOB: 11/03/1972. Event date: 02/14/2026.\nNursing note: "Patient placed in seclusion room at 0900 per physician order following escalating behavior. Duration of seclusion not charted. Patient returned to unit per charge RN."\nNo additional time documentation found in record.' },
+      { type: 'step', label: 'Step 1 — Is a Duration Documented?', content: 'The seclusion episode is clearly documented. However, no specific start time, end time, or duration is recorded. The nursing note references the event but provides no quantifiable time.', cx: 'warn', cxt: 'Document exists — so this is NOT missing. But the duration is not quantifiable, which means UTD.' },
+      { type: 'step', label: 'Step 2 — UTD vs. Missing', content: 'Missing = no documentation of the event at all → Case rejected (Category X).\nUTD = event is documented but duration cannot be quantified → Category Y. Patient stays in measure population but does not contribute to the numerator.', cx: 'danger', cxt: 'Never leave the duration field blank when documentation exists — that would incorrectly treat this as missing and reject the case.' },
+      { type: 'step', label: 'Step 3 — Abstraction Value', content: 'Mark seclusion duration as UTD. Patient is Category Y for HBIPS-3. They remain in the denominator (their inpatient hours still count), but they do not add minutes to the numerator.', cx: null },
+      { type: 'result', yn: 'Category Y — UTD', date: '02/14/2026', num: 'UTD (0 hrs to numerator)', denom: 'Counted in denominator' }
+    ]
+  },
+  {
+    title: 'Therapeutic Leave Days — Denominator Adjustment',
+    summary: 'A patient with multiple inpatient days takes a 3-day therapeutic pass. Tests correct denominator calculation with leave days subtracted.',
+    diff: 'edge',
+    steps: [
+      { type: 'chart', content: 'Patient DOB: 07/30/1990. Admission: 05/01/2026. Discharge: 05/22/2026.\nTherapeutic leave pass: May 10–12 (departed 05/10 morning, returned 05/13 morning = 3 days absent).\nPhysical restraint: 05/07/2026. Duration: 115 minutes.' },
+      { type: 'step', label: 'Step 1 — Inpatient Days', content: 'Admission 05/01 to discharge 05/22. Exclude discharge day. Count: May 1–21 = 21 days.', cx: null },
+      { type: 'step', label: 'Step 2 — Leave Days', content: 'Patient was on therapeutic pass from departure 05/10 through return 05/13. Days absent = 3 (May 10, 11, 12). These are full-day therapeutic leave absences — they qualify as leave days.', cx: 'warn', cxt: 'Only subtract days of formal therapeutic leave. Medical appointments, procedures, or brief off-unit time do not count.' },
+      { type: 'step', label: 'Step 3 — Net Denominator', content: '21 inpatient days − 3 leave days = 18 net days. Denominator = 18 × 24 = 432 hours.', cx: null },
+      { type: 'step', label: 'Step 4 — Numerator', content: 'Restraint on 05/07: 115 minutes. 115 ÷ 60 = 1.917 hours. Ceiling = 2 hours.', cx: 'tip', cxt: '115 minutes is 1 hour and 55 minutes. Even though only 55 seconds are over the hour boundary, ceiling rounds up to 2.' },
+      { type: 'result', yn: 'YES — Category E', date: '05/07/2026', num: '2 hrs', denom: '432 hrs' }
+    ]
+  },
+  {
+    title: 'Both Restraint and Seclusion — Same Patient, Same Date',
+    summary: 'A patient experiences both a physical restraint and a seclusion episode on the same calendar date. Demonstrates separate abstraction for HBIPS-2 and HBIPS-3.',
+    diff: 'advanced',
+    steps: [
+      { type: 'chart', content: 'Patient DOB: 03/15/1998. Event date: 01/09/2026.\nEvent Type 1 (Physical Restraint): Applied 01/09/2026 at 08:30, released 09:15. Duration: 45 minutes.\nEvent Type 2 (Seclusion): Applied 01/09/2026 at 14:00, released 14:55. Duration: 55 minutes.\nPsychiatric care setting: Yes for both events.' },
+      { type: 'step', label: 'Step 1 — Two Separate Event Records', content: 'This patient generates two event records for the same date — one for restraint (HBIPS-2) and one for seclusion (HBIPS-3). Each is abstracted independently.', cx: 'tip', cxt: 'Two event types on the same date is valid. They are not combined into one record.' },
+      { type: 'step', label: 'Step 2 — HBIPS-2 Restraint Record', content: 'Event Type 1. Age = 27 years (DOB 03/15/1998, event 01/09/2026) → Strata D. Duration 45 min → 45 ÷ 60 = 0.750 → ceiling = 1 hour. Category E for HBIPS-2. For HBIPS-3, this record = Category U.', cx: null },
+      { type: 'step', label: 'Step 3 — HBIPS-3 Seclusion Record', content: 'Event Type 2. Same strata D. Duration 55 min → 55 ÷ 60 = 0.917 → ceiling = 1 hour. Category E for HBIPS-3. For HBIPS-2, this record = Category U.', cx: null },
+      { type: 'step', label: 'Step 4 — Denominator (shared)', content: 'The patient\'s denominator contribution (inpatient hours) is counted once in the overall population — not doubled because of two event types. Inpatient days and hours are patient-level, not event-level.', cx: 'warn', cxt: 'Do not double-count the denominator when a patient has both restraint and seclusion events.' },
+      { type: 'result', yn: 'HBIPS-2: 1 hr | HBIPS-3: 1 hr', date: '01/09/2026', num: 'R: 1 hr / S: 1 hr', denom: 'Patient counted once' }
+    ]
+  }
+];
+
+function renderCaseList() {
+  const el = document.getElementById('caseListItems');
+  el.innerHTML = '';
+  CASES.forEach((c, i) => {
+    const diffLabel = { routine: 'Routine', edge: 'Edge Case', advanced: 'Advanced' }[c.diff];
+    const diffClass = { routine: 'diff-routine', edge: 'diff-edge', advanced: 'diff-advanced' }[c.diff];
+    const div = document.createElement('div');
+    div.className = 'case-card';
+    div.onclick = () => showCase(i);
+    div.setAttribute('role', 'button');
+    div.setAttribute('tabindex', '0');
+    div.onkeydown = e => { if (e.key === 'Enter') showCase(i); };
+    div.innerHTML = `
+      <div class="case-card-body">
+        <h3>${c.title}</h3>
+        <p>${c.summary}</p>
+      </div>
+      <span class="case-diff ${diffClass}">${diffLabel}</span>`;
+    el.appendChild(div);
+  });
+}
+
+function showCase(i) {
+  const c = CASES[i];
+  document.getElementById('caseList').style.display = 'none';
+  const detail = document.getElementById('caseDetail');
+  detail.classList.add('active');
+  const diffLabel = { routine: 'Routine', edge: 'Edge Case', advanced: 'Advanced' }[c.diff];
+  const diffClass = { routine: 'diff-routine', edge: 'diff-edge', advanced: 'diff-advanced' }[c.diff];
+  let html = `<h2 style="font-family:var(--heading);font-size:22px;font-weight:700;color:var(--navy);margin-bottom:6px;">${c.title}</h2>
+    <p style="font-size:14px;color:var(--ink-soft);margin-bottom:20px;line-height:1.65;">${c.summary} <span class="case-diff ${diffClass}" style="margin-left:8px;">${diffLabel}</span></p>`;
+
+  c.steps.forEach((s, si) => {
+    if (s.type === 'chart') {
+      html += `<div class="step-card">
+        <div class="step-head"><i class="ph-duotone ph-file-text" aria-hidden="true"></i> Chart Excerpt</div>
+        <div class="step-body chart-text" style="white-space:pre-wrap;">${s.content}</div>
+      </div>`;
+    } else if (s.type === 'step') {
+      const cxMap = { tip: ['tip','ph-lightbulb'], warn: ['warn','ph-warning'], danger: ['danger','ph-seal-warning'] };
+      let callout = '';
+      if (s.cx && s.cxt) {
+        const [cls, icon] = cxMap[s.cx];
+        callout = `<div class="callout ${cls}"><i class="ph-duotone ${icon}" aria-hidden="true"></i><div>${s.cxt}</div></div>`;
+      }
+      html += `<div class="step-card">
+        <div class="step-head"><i class="ph-duotone ph-arrow-circle-right" aria-hidden="true"></i> ${s.label}</div>
+        <div class="step-body">${s.content}${callout}</div>
+      </div>`;
+    } else if (s.type === 'result') {
+      html += `<div class="result-step">
+        <h4>Abstraction Result</h4>
+        <div class="result-vals">
+          <div><div class="rv-label">Category / Y/N</div><div class="rv-val highlight">${s.yn}</div></div>
+          <div><div class="rv-label">Event Date</div><div class="rv-val">${s.date}</div></div>
+          <div><div class="rv-label">Numerator | Denom</div><div class="rv-val">${s.num} &nbsp;|&nbsp; ${s.denom}</div></div>
+        </div>
+      </div>`;
+    }
+  });
+  document.getElementById('caseContent').innerHTML = html;
+  detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function showCaseList() {
+  document.getElementById('caseList').style.display = 'block';
+  document.getElementById('caseDetail').classList.remove('active');
+  document.getElementById('caseContent').innerHTML = '';
+}
+
+// ── INIT ─────────────────────────────────────────────────────────────────────
+document.getElementById('yr').textContent = new Date().getFullYear();
+startQuiz();
+renderCaseList();
+</script>
+</body>
+</html>
