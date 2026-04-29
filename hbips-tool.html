@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="HBIPS Tool — AbstractionDeskQA. Hospital-Based Inpatient Psychiatric Services (HBIPS) restraint and seclusion measure calculators, abstraction reference, practice quiz, and case walkthroughs.">
+<link rel="canonical" href="https://abstractiondeskqa.com/hbips-tool.html">
 <title>HBIPS Tool — AbstractionDeskQA</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -107,6 +108,15 @@ select:focus-visible {
   white-space: nowrap;
 }
 .nav-cta:hover { background: var(--teal2); text-decoration: none; color: white; }
+.nav-cta-ghost {
+  background: transparent; color: var(--teal);
+  font-family: var(--body); font-size: 15px; font-weight: 700;
+  padding: 9px 20px; border-radius: 7px;
+  border: 2px solid var(--teal); cursor: pointer;
+  transition: all .15s; text-decoration: none; white-space: nowrap;
+}
+.nav-cta-ghost:hover { background: var(--teal); color: white; text-decoration: none; }
+.nav-cta-ghost.active-page { background: var(--teal); color: white; }
 
 /* ── PAGE HERO ── */
 .page-hero {
@@ -292,6 +302,33 @@ main { max-width: var(--max); margin: 0 auto; padding: 32px 24px 72px; }
 }
 .calc-btn:hover { background: var(--teal2); transform: translateY(-1px); }
 .calc-btn i { font-size: 15px; }
+
+/* ── EPISODE ROWS ── */
+.episode-row {
+  display: flex; align-items: center; gap: 10px;
+}
+.episode-input {
+  font-family: var(--mono); font-size: 15px;
+  padding: 9px 12px; width: 140px;
+  border: 1.5px solid var(--border); border-radius: 7px;
+  background: var(--canvas); color: var(--ink);
+  transition: border-color .15s;
+}
+.episode-input:focus { outline: none; border-color: var(--teal); background: white; }
+.ep-remove {
+  background: none; border: none; cursor: pointer;
+  color: var(--border-mid); font-size: 16px; line-height: 1;
+  padding: 4px; transition: color .15s; display: flex; align-items: center;
+}
+.ep-remove:hover { color: var(--red); }
+.add-ep-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: none; border: 1.5px dashed var(--border);
+  border-radius: 7px; padding: 7px 14px;
+  font-size: 13px; font-family: var(--body); font-weight: 600;
+  color: var(--ink-soft); cursor: pointer; transition: all .15s;
+}
+.add-ep-btn:hover { border-color: var(--teal); color: var(--teal); background: var(--teal-pale); }
 .clear-btn {
   margin-top: 16px; margin-left: 8px;
   background: none; color: var(--ink-soft);
@@ -608,16 +645,16 @@ footer a:hover { text-decoration: underline; }
 <!-- NAV -->
 <nav class="nav" role="navigation" aria-label="Site navigation">
   <div class="nav-inner">
-    <a href="index.html" class="nav-brand" aria-label="AbstractionDeskQA home">
+    <a href="/" class="nav-brand" aria-label="AbstractionDeskQA home">
       AbstractionDesk<span class="qa-badge">QA</span>
     </a>
     <div class="nav-links">
       <a href="index.html#how" class="nav-link">How It Works</a>
       <a href="index.html#tools" class="nav-link">Tools</a>
       <a href="index.html#feedback" class="nav-link">Feedback</a>
-      <a href="lkw-tool.html" class="nav-link">LKW Tool</a>
-      <a href="cmo-tool.html" class="nav-link">CMO Tool</a>
-      <a href="hbips-tool.html" class="nav-link active-page">HBIPS Tool</a>
+      <a href="lkw-tool.html" class="nav-cta-ghost">LKW Tool</a>
+      <a href="cmo-tool.html" class="nav-cta-ghost">CMO Tool</a>
+      <a href="hbips-tool.html" class="nav-cta-ghost active-page">HBIPS Tool</a>
       <a href="lookup.html" class="nav-cta">Q&amp;A Tool</a>
     </div>
   </div>
@@ -626,7 +663,7 @@ footer a:hover { text-decoration: underline; }
 <!-- PAGE HERO -->
 <div class="page-hero" role="banner">
   <div class="page-hero-inner">
-    <a href="index.html" class="page-hero-back">
+    <a href="/" class="page-hero-back">
       <i class="ph ph-arrow-left" aria-hidden="true"></i> Home
     </a>
     <div class="page-eyebrow" aria-hidden="true">
@@ -660,127 +697,145 @@ footer a:hover { text-decoration: underline; }
 <!-- ═══════════════════════════ CALCULATORS TAB -->
 <div id="tab-calc" class="tab-panel active">
 
-  <!-- DENOMINATOR CALCULATOR -->
-  <div class="notice notice-tip" style="margin-bottom:20px;">
-    <i class="ph-duotone ph-info" aria-hidden="true"></i>
-    <div><strong>HBIPS</strong> stands for <strong>Hospital-Based Inpatient Psychiatric Services.</strong> HBIPS-2 measures physical restraint hours; HBIPS-3 measures seclusion hours — both expressed as rates per 1,000 psychiatric inpatient hours, stratified by patient age.</div>
-  </div>
-  <div class="section-label" style="margin-bottom:12px;">Denominator Calculator</div>
+  <!-- INPATIENT HOURS — first -->
+  <div class="section-label" style="margin-bottom:12px;">Inpatient Hours</div>
   <div class="card">
-    <div class="card-title"><i class="ph-duotone ph-calendar-dots" aria-hidden="true"></i> Psychiatric Inpatient Hours</div>
-    <p class="card-sub">The denominator for both HBIPS-2 and HBIPS-3 is total psychiatric inpatient hours: (Inpatient days − Leave days) × 24. Use date entry or manual count.</p>
+    <div class="card-title"><i class="ph-duotone ph-calendar-dots" aria-hidden="true"></i> Total Inpatient Hours</div>
+    <p class="card-sub">Enter the admit and discharge dates. Add any full-day leave passes below. The result is the total inpatient hours for this patient.</p>
 
-    <div class="mode-toggle">
-      <button class="mode-btn active" id="denomModeDate" onclick="setDenomMode('date')">Use dates</button>
-      <button class="mode-btn" id="denomModeCount" onclick="setDenomMode('count')">Enter count</button>
-    </div>
-
-    <!-- date mode -->
-    <div id="denomDateMode">
-      <div class="calc-grid" style="grid-template-columns:1fr 1fr;">
-        <div class="field">
-          <label>Admission date <span class="help-btn" onclick="toggleHelp('h-admit')" title="Help" role="button" tabindex="0">?</span></label>
-          <input type="date" id="denomAdmit" oninput="calcDenom()">
-          <div class="help-panel" id="h-admit">
-            <strong>Count the admission day.</strong>
-            The admission date counts as day 1 in the inpatient day calculation.
-          </div>
-        </div>
-        <div class="field">
-          <label>Discharge date <span class="help-btn" onclick="toggleHelp('h-disch')" title="Help" role="button" tabindex="0">?</span></label>
-          <input type="date" id="denomDisch" oninput="calcDenom()">
-          <div class="help-panel" id="h-disch">
-            <strong>Do not count the discharge day.</strong>
-            Example: admitted Monday, discharged Friday = 4 days (Mon, Tue, Wed, Thu).
-          </div>
+    <div class="calc-grid" style="grid-template-columns:1fr 1fr;margin-bottom:14px;">
+      <div class="field">
+        <label>Admit date <span class="help-btn" onclick="toggleHelp('h-admit')" title="Help" role="button" tabindex="0">?</span></label>
+        <input type="date" id="denomAdmit" oninput="calcDenom()">
+        <div class="help-panel" id="h-admit">
+          <strong>Count the admission day.</strong>
+          The day the patient was admitted counts as day 1.
         </div>
       </div>
-      <div class="leave-pairs" id="leavePairs"></div>
-      <button class="add-pair-btn" id="addPairBtn" onclick="addLeavePair()" style="display:none;">
-        <i class="ph ph-plus" aria-hidden="true"></i> Add therapeutic leave period
-      </button>
-    </div>
-
-    <!-- count mode -->
-    <div id="denomCountMode" style="display:none;">
-      <div class="calc-grid" style="grid-template-columns:1fr 1fr;">
-        <div class="field">
-          <label>Psychiatric inpatient days <span class="help-btn" onclick="toggleHelp('h-ipdays')" title="Help" role="button" tabindex="0">?</span></label>
-          <input type="number" id="manualDays" min="1" placeholder="e.g. 14" oninput="calcDenomCount()">
-          <div class="help-panel" id="h-ipdays">
-            <strong>Include admission day. Exclude discharge day.</strong>
-          </div>
-        </div>
-        <div class="field">
-          <label>Total leave days <span class="help-btn" onclick="toggleHelp('h-leave')" title="Help" role="button" tabindex="0">?</span></label>
-          <input type="number" id="manualLeave" min="0" value="0" oninput="calcDenomCount()">
-          <div class="help-panel" id="h-leave">
-            <strong>Therapeutic leave passes only.</strong>
-            Count only full-day therapeutic leave absences — not time off unit for procedures or labs.
-          </div>
+      <div class="field">
+        <label>Discharge date <span class="help-btn" onclick="toggleHelp('h-disch')" title="Help" role="button" tabindex="0">?</span></label>
+        <input type="date" id="denomDisch" oninput="calcDenom()">
+        <div class="help-panel" id="h-disch">
+          <strong>Do not count the discharge day.</strong>
+          Example: admitted Monday, discharged Friday = 4 days (Mon, Tue, Wed, Thu).
         </div>
       </div>
+    </div>
+
+    <div class="field" style="margin-bottom:10px;">
+      <label>Leave days (full-day only) <span class="help-btn" onclick="toggleHelp('h-leave')" title="Help" role="button" tabindex="0">?</span></label>
+      <input type="number" id="leaveDaysSimple" min="0" value="0" style="max-width:160px;" oninput="calcDenom()">
+      <div class="help-panel" id="h-leave">
+        <strong>Full-day therapeutic passes only.</strong>
+        Only count days the patient was fully absent on a therapeutic leave pass. Time off the unit for labs, procedures, or appointments does not count.
+      </div>
+      <span class="hint" style="margin-top:4px;">Enter 0 if no leave passes</span>
     </div>
 
     <div class="result-box" id="denomResult"></div>
 
-    <div class="notice notice-warn" style="margin-top:18px;">
-      <i class="ph-duotone ph-warning" aria-hidden="true"></i>
-      <div><strong>Leave days defined carefully.</strong> Only full-day therapeutic leave passes reduce the denominator. Time off the unit for labs, procedures, or medical appointments does not qualify.</div>
-    </div>
-  </div>
-
-  <hr class="div">
-
-  <!-- MINUTES TO HOURS -->
-  <div class="section-label" style="margin-bottom:12px;">Minutes to Hours Converter</div>
-  <div class="card">
-    <div class="card-title"><i class="ph-duotone ph-clock-countdown" aria-hidden="true"></i> Numerator — Ceiling Rounding</div>
-    <p class="card-sub">The numerator is the total restraint or seclusion hours, rounded <strong>up</strong> using ceiling logic. Any fraction of an hour counts as a whole hour.</p>
-
-    <div class="calc-grid" style="grid-template-columns:1fr 1fr 1fr; align-items:end;">
-      <div class="field">
-        <label>Total minutes</label>
-        <input type="number" id="convMins" min="0" placeholder="e.g. 73" oninput="calcConv()">
-      </div>
-      <div style="display:flex;flex-direction:column;gap:4px;">
-        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--ink-mid);">Result (ceiling hours)</div>
-        <div id="convResult" style="font-family:var(--mono);font-size:28px;font-weight:700;color:var(--teal);padding:6px 0;min-height:44px;">—</div>
-      </div>
-      <div id="convBreak" style="font-size:13px;color:var(--ink-soft);font-family:var(--mono);line-height:1.8;padding-top:18px;"></div>
-    </div>
-
-    <div class="notice notice-warn" style="margin-top:18px;">
-      <i class="ph-duotone ph-warning" aria-hidden="true"></i>
-      <div><strong>Always round UP.</strong> 60 min = 1 hr &nbsp;|&nbsp; 61 min = 2 hr &nbsp;|&nbsp; 120 min = 2 hr &nbsp;|&nbsp; 121 min = 3 hr. Standard rounding (half-up) is incorrect for this measure.</div>
-    </div>
-  </div>
-
-  <hr class="div">
-
-  <!-- RATE CALCULATOR -->
-  <div class="section-label" style="margin-bottom:12px;">Observed Rate Calculator</div>
-  <div class="card">
-    <div class="card-title"><i class="ph-duotone ph-chart-line-up" aria-hidden="true"></i> Rate per 1,000 Psychiatric Inpatient Hours</div>
-    <p class="card-sub">Observed Rate = (Numerator hours &divide; Denominator hours) &times; 1,000. Calculate separately for HBIPS-2 (restraint) and HBIPS-3 (seclusion), and for each strata.</p>
-
-    <div class="calc-grid" style="grid-template-columns:1fr 1fr;align-items:end;">
-      <div class="field">
-        <label>Numerator (hours, ceiling-rounded)</label>
-        <input type="number" id="rateNum" min="0" placeholder="e.g. 4" oninput="calcRate()">
-      </div>
-      <div class="field">
-        <label>Denominator (total inpatient hours)</label>
-        <input type="number" id="rateDenom" min="0" placeholder="e.g. 336" oninput="calcRate()">
-      </div>
-    </div>
-
-    <div class="result-box" id="rateResult"></div>
-
-    <div class="notice notice-tip" style="margin-top:18px;">
+    <div class="notice notice-tip" style="margin-top:16px;">
       <i class="ph-duotone ph-info" aria-hidden="true"></i>
-      <div>Calculate once for each strata (B, C, D, E) and once overall. A strata with an initial population of zero is not reported — leave it blank in your submission.</div>
+      <div>Only subtract full-day therapeutic leave passes. A trip off the unit for a procedure or appointment does not reduce the count.</div>
     </div>
+  </div>
+
+  <hr class="div">
+
+  <!-- DURATION CALCULATOR -->
+  <div class="section-label" style="margin-bottom:12px;">Episode Duration</div>
+  <div class="card">
+    <div class="card-title"><i class="ph-duotone ph-timer" aria-hidden="true"></i> Start &amp; End Time → Minutes</div>
+    <p class="card-sub">Enter the start and end time of a single episode in military time. Handles midnight crossings automatically. Then add the result directly to your restraint or seclusion tally below.</p>
+
+    <div class="calc-grid" style="grid-template-columns:1fr 1fr;margin-bottom:16px;">
+      <div class="field">
+        <label>Time started <span class="help-btn" onclick="toggleHelp('h-tstart')" title="Help" role="button" tabindex="0">?</span></label>
+        <input type="text" id="durStart" placeholder="e.g. 1415" maxlength="4" style="font-family:var(--mono);letter-spacing:.1em;" oninput="calcDuration()">
+        <div class="help-panel" id="h-tstart">
+          <strong>Military time — 4 digits, no colon.</strong>
+          Examples: 0830 = 8:30 AM &nbsp;·&nbsp; 1415 = 2:15 PM &nbsp;·&nbsp; 0005 = 12:05 AM
+        </div>
+        <span class="hint" style="margin-top:4px;">Military time, 4 digits — e.g. 1415</span>
+      </div>
+      <div class="field">
+        <label>Time ended <span class="help-btn" onclick="toggleHelp('h-tend')" title="Help" role="button" tabindex="0">?</span></label>
+        <input type="text" id="durEnd" placeholder="e.g. 1620" maxlength="4" style="font-family:var(--mono);letter-spacing:.1em;" oninput="calcDuration()">
+        <div class="help-panel" id="h-tend">
+          <strong>If the episode crossed midnight</strong> (e.g. started 2230, ended 0045 the next day), enter the end time as-is. The calculator will detect the crossing and add 24 hours automatically.
+        </div>
+        <span class="hint" style="margin-top:4px;">Military time, 4 digits — e.g. 1620</span>
+      </div>
+    </div>
+
+    <div class="result-box" id="durResult"></div>
+
+    <div id="durAddBtns" style="display:none;margin-top:12px;display:none;gap:10px;flex-wrap:wrap;">
+      <button class="add-ep-btn" id="durAddRestraint" onclick="addDurationToTally('restraint')" style="border-style:solid;border-color:var(--teal);color:var(--teal);">
+        <i class="ph ph-plus" aria-hidden="true"></i> Add to Restraint tally
+      </button>
+      <button class="add-ep-btn" id="durAddSeclusion" onclick="addDurationToTally('seclusion')" style="border-style:solid;border-color:var(--teal);color:var(--teal);">
+        <i class="ph ph-plus" aria-hidden="true"></i> Add to Seclusion tally
+      </button>
+    </div>
+
+    <div class="notice notice-warn" style="margin-top:16px;">
+      <i class="ph-duotone ph-warning" aria-hidden="true"></i>
+      <div><strong>Episode crosses midnight?</strong> Per spec, this counts as two separate events — one for each date. Abstract them as two separate entries, each with their own date. Use this calculator once per date segment.</div>
+    </div>
+  </div>
+
+  <hr class="div">
+
+  <!-- RESTRAINT HOURS — second -->
+  <div class="section-label" style="margin-bottom:12px;">Restraint Hours — HBIPS-2</div>
+  <div class="card">
+    <div class="card-title"><i class="ph-duotone ph-handshake" aria-hidden="true"></i> Physical Restraint Episodes</div>
+    <p class="card-sub">Enter the duration of each restraint episode in minutes. Add a row for each episode. The total converts automatically to hours.</p>
+
+    <div id="restraintEntries" style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px;">
+      <div class="episode-row">
+        <input type="number" min="0" placeholder="minutes" class="restraint-min episode-input" oninput="calcRestraint()">
+        <span style="font-size:13px;color:var(--ink-soft);font-family:var(--mono);">min</span>
+        <button class="ep-remove" onclick="removeEpisode(this,'restraint')" title="Remove" aria-label="Remove episode">
+          <i class="ph ph-x" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+    <button class="add-ep-btn" onclick="addEpisode('restraintEntries','restraint-min','calcRestraint')">
+      <i class="ph ph-plus" aria-hidden="true"></i> Add restraint episode
+    </button>
+
+    <div class="result-box" id="restraintResult" style="margin-top:16px;"></div>
+
+    <div class="notice notice-warn" style="margin-top:16px;">
+      <i class="ph-duotone ph-warning" aria-hidden="true"></i>
+      <div><strong>Always round UP.</strong> 60 min = 1 hr &nbsp;|&nbsp; 61 min = 2 hr &nbsp;|&nbsp; 120 min = 2 hr &nbsp;|&nbsp; 121 min = 3 hr. Standard rounding (half-up) is incorrect for this measure. This same rule applies to seclusion episodes below.</div>
+    </div>
+  </div>
+
+  <hr class="div">
+
+  <!-- SECLUSION HOURS — third -->
+  <div class="section-label" style="margin-bottom:12px;">Seclusion Hours — HBIPS-3</div>
+  <div class="card">
+    <div class="card-title"><i class="ph-duotone ph-door" aria-hidden="true"></i> Seclusion Episodes</div>
+    <p class="card-sub">Enter the duration of each seclusion episode in minutes. Add a row for each episode. The total converts automatically to hours.</p>
+
+    <div id="seclusionEntries" style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px;">
+      <div class="episode-row">
+        <input type="number" min="0" placeholder="minutes" class="seclusion-min episode-input" oninput="calcSeclusion()">
+        <span style="font-size:13px;color:var(--ink-soft);font-family:var(--mono);">min</span>
+        <button class="ep-remove" onclick="removeEpisode(this,'seclusion')" title="Remove" aria-label="Remove episode">
+          <i class="ph ph-x" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+    <button class="add-ep-btn" onclick="addEpisode('seclusionEntries','seclusion-min','calcSeclusion')">
+      <i class="ph ph-plus" aria-hidden="true"></i> Add seclusion episode
+    </button>
+
+    <div class="result-box" id="seclusionResult" style="margin-top:16px;"></div>
   </div>
 
 </div><!-- /tab-calc -->
@@ -826,88 +881,27 @@ footer a:hover { text-decoration: underline; }
     </div>
   </div>
 
-  <!-- LOGIC TRAIN -->
-  <div class="section-label" style="margin-bottom:12px;">Abstraction Logic</div>
+  <!-- AGE / STRATA CALCULATOR -->
+  <div class="section-label" style="margin-bottom:12px;">Age &amp; Strata Calculator</div>
   <div class="card" style="margin-bottom:20px;">
-    <div class="card-title"><i class="ph-duotone ph-flow-arrow" aria-hidden="true"></i> How to Abstract HBIPS-2 &amp; HBIPS-3</div>
-    <p class="card-sub">Work through these steps in order for each patient encounter with a restraint or seclusion event. Each step narrows the population and determines the patient's category.</p>
-    <div class="logic-train">
+    <div class="card-title"><i class="ph-duotone ph-calculator" aria-hidden="true"></i> Age at Event Date → Strata Assignment</div>
+    <p class="card-sub">Enter the patient's date of birth and the event date. Age is always calculated at the event date — not admission or discharge. Handles birthday-on-event-date and leap day edge cases correctly.</p>
 
-      <div class="logic-step">
-        <div class="l-connector"></div>
-        <div class="l-num">1</div>
-        <div class="l-content">
-          <div class="l-title">Does an event date exist?</div>
-          <div class="l-body">A patient is only in the HBIPS measure population if a restraint or seclusion event occurred and was documented with a date.</div>
-          <div class="l-rule rule-ex">No event date documented &rarr; Reject case. Set Reject Case Flag = Yes.</div>
+    <div class="calc-grid" style="grid-template-columns:1fr 1fr;margin-bottom:16px;">
+      <div class="field">
+        <label>Date of birth</label>
+        <input type="date" id="strataDoB" oninput="calcStrata()">
+      </div>
+      <div class="field">
+        <label>Event date <span class="help-btn" onclick="toggleHelp('h-eventdate')" title="Help" role="button" tabindex="0">?</span></label>
+        <input type="date" id="strataEvent" oninput="calcStrata()">
+        <div class="help-panel" id="h-eventdate">
+          <strong>Use the date the event occurred</strong> — not the admission date. A patient who has their birthday on the event date moves into the next strata that same day.
         </div>
       </div>
-
-      <div class="logic-step">
-        <div class="l-connector"></div>
-        <div class="l-num">2</div>
-        <div class="l-content">
-          <div class="l-title">Was the patient in a psychiatric care setting at time of event?</div>
-          <div class="l-body">Psychiatric Care Setting = Y means the patient was physically in a designated psychiatric care setting when the event occurred — not just that their admission type is psychiatric.</div>
-          <div class="l-rule rule-ex">Psychiatric Care Setting = N &rarr; Exclude. Patient not in measure population.</div>
-        </div>
-      </div>
-
-      <div class="logic-step">
-        <div class="l-connector"></div>
-        <div class="l-num">3</div>
-        <div class="l-content">
-          <div class="l-title">Calculate age at the event date</div>
-          <div class="l-body">Age in years = Event Date minus Birthdate. Use the precise month and day. A patient's birthday on the event date moves them into the next strata that same day.</div>
-          <div class="l-rule rule-ex">Age = 0 &rarr; Exclude. Set Reject Case Flag = Yes.</div>
-          <div class="l-rule rule-in" style="margin-top:5px;">Age &ge; 1 &rarr; Included. Assign to strata B, C, D, or E.</div>
-        </div>
-      </div>
-
-      <div class="logic-step">
-        <div class="l-connector"></div>
-        <div class="l-num">4</div>
-        <div class="l-content">
-          <div class="l-title">Determine event type</div>
-          <div class="l-body">Event Type 1 = Physical Restraint &rarr; counts toward HBIPS-2 only. Event Type 2 = Seclusion &rarr; counts toward HBIPS-3 only. A patient's record for one measure receives Category U (not in numerator) for the other.</div>
-          <div class="l-rule rule-calc">One event type per event record. Both types can occur on the same calendar date but must be recorded separately.</div>
-        </div>
-      </div>
-
-      <div class="logic-step">
-        <div class="l-connector"></div>
-        <div class="l-num">5</div>
-        <div class="l-content">
-          <div class="l-title">Is duration documented?</div>
-          <div class="l-body">
-            Duration documented with a quantifiable time &rarr; Category E (in numerator).<br>
-            Duration documented but cannot be quantified (UTD) &rarr; Category Y (in population, not numerator).<br>
-            No documentation at all &rarr; Case rejected (Category X).
-          </div>
-          <div class="l-rule rule-warn">UTD is not the same as missing. If duration was documented but unquantifiable, mark UTD. Do not leave the field blank.</div>
-        </div>
-      </div>
-
-      <div class="logic-step">
-        <div class="l-connector"></div>
-        <div class="l-num">6</div>
-        <div class="l-content">
-          <div class="l-title">Calculate the numerator</div>
-          <div class="l-body">Sum all qualifying restraint minutes (or seclusion minutes) across all patients in the numerator for a given strata. Convert total minutes to hours using <strong>ceiling rounding</strong>.</div>
-          <div class="l-rule rule-calc">73 minutes = 1.217 hours &rarr; ceiling = 2 hours (not 1)</div>
-        </div>
-      </div>
-
-      <div class="logic-step">
-        <div class="l-num">7</div>
-        <div class="l-content">
-          <div class="l-title">Calculate the denominator and rate</div>
-          <div class="l-body">Denominator = (Psychiatric Inpatient Days &minus; Total Leave Days) &times; 24. Include admission day, exclude discharge day. Leave days = therapeutic passes only.</div>
-          <div class="l-rule rule-calc">Observed Rate = (Numerator &divide; Denominator) &times; 1,000</div>
-        </div>
-      </div>
-
     </div>
+
+    <div class="result-box" id="strataResult"></div>
   </div>
 
   <!-- PITFALLS -->
@@ -1043,6 +1037,20 @@ footer a:hover { text-decoration: underline; }
 </main>
 
 <!-- DISCLAIMER -->
+<!-- SHARE STRIP -->
+<div style="background:#e6f5f4;border-top:1px solid #b2dedd;border-bottom:1px solid #b2dedd;padding:18px 24px;">
+  <div style="max-width:1040px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+    <div>
+      <div style="font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;color:#0d1f3c;margin-bottom:3px;">Share with your team</div>
+      <div style="font-size:13px;color:#3d4f62;line-height:1.5;">Free abstraction reference for core measure teams — Q&A lookup, LKW tool, and more.</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+      <code style="background:white;border:1px solid #b2dedd;border-radius:6px;padding:7px 14px;font-size:13px;color:#0b7a78;font-family:'DM Mono',monospace;white-space:nowrap;">https://abstractiondeskqa.com</code>
+      <button onclick="(()=>{navigator.clipboard.writeText('https://abstractiondeskqa.com');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy link',2000)})()" style="background:#0b7a78;color:white;border:none;border-radius:6px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif;" onmouseover="this.style.background='#0fa39f'" onmouseout="this.style.background='#0b7a78'">Copy link</button>
+    </div>
+  </div>
+</div>
+
 <div class="disclaimer" role="note" aria-label="Educational disclaimer">
   <div class="disclaimer-inner">
     <strong>Educational use only.</strong>
@@ -1090,129 +1098,298 @@ function toggleHelp(id) {
   document.getElementById(id).classList.toggle('open');
 }
 
-// ── DENOMINATOR — DATE MODE ───────────────────────────────────────────────────
-let lpCount = 0;
-
-function setDenomMode(mode) {
-  document.getElementById('denomDateMode').style.display = mode === 'date' ? 'block' : 'none';
-  document.getElementById('denomCountMode').style.display = mode === 'count' ? 'block' : 'none';
-  document.getElementById('denomModeDate').classList.toggle('active', mode === 'date');
-  document.getElementById('denomModeCount').classList.toggle('active', mode === 'count');
-  document.getElementById('denomResult').classList.remove('visible');
-}
-
-function addLeavePair() {
-  lpCount++;
-  const id = lpCount;
-  const c = document.getElementById('leavePairs');
-  const row = document.createElement('div');
-  row.className = 'leave-pair-row'; row.id = 'lp-' + id;
-  row.innerHTML = `
-    <div class="lp-field">
-      <label>Leave departure</label>
-      <input type="date" id="lpDep${id}" oninput="calcDenom()">
-    </div>
-    <div class="lp-field">
-      <label>Return date</label>
-      <input type="date" id="lpRet${id}" oninput="calcDenom()">
-    </div>
-    <button class="lp-remove" onclick="removeLeavePair(${id})" title="Remove" aria-label="Remove leave period">
-      <i class="ph ph-x" aria-hidden="true"></i>
-    </button>`;
-  c.appendChild(row);
-  calcDenom();
-}
-
-function removeLeavePair(id) {
-  const row = document.getElementById('lp-' + id);
-  if (row) { row.remove(); calcDenom(); }
-}
-
+// ── DENOMINATOR — DATE + LEAVE DAYS ──────────────────────────────────────────
 function calcDenom() {
   const a = document.getElementById('denomAdmit').value;
   const d = document.getElementById('denomDisch').value;
-  const btn = document.getElementById('addPairBtn');
+  const leaveVal = parseInt(document.getElementById('leaveDaysSimple').value) || 0;
   const res = document.getElementById('denomResult');
-  btn.style.display = a ? 'flex' : 'none';
+
   if (!a || !d) { res.classList.remove('visible'); return; }
 
   const admit = new Date(a + 'T00:00:00');
   const disch = new Date(d + 'T00:00:00');
   if (disch <= admit) {
     res.className = 'result-box visible err';
-    res.innerHTML = 'Discharge date must be after admission date.';
+    res.innerHTML = 'Discharge date must be after admit date.';
     return;
   }
 
   const rawDays = Math.round((disch - admit) / 86400000);
-  let leaveDays = 0; const errors = [];
-
-  document.querySelectorAll('.leave-pair-row').forEach(row => {
-    const inputs = row.querySelectorAll('input[type="date"]');
-    if (inputs.length < 2 || !inputs[0].value || !inputs[1].value) return;
-    const dep = new Date(inputs[0].value + 'T00:00:00');
-    const ret = new Date(inputs[1].value + 'T00:00:00');
-    if (ret <= dep) { errors.push('A leave return date must be after departure date.'); return; }
-    if (dep < admit || ret > disch) { errors.push('Leave dates must fall within the admission–discharge window.'); return; }
-    leaveDays += Math.round((ret - dep) / 86400000);
-  });
-
-  if (errors.length) {
-    res.className = 'result-box visible err';
-    res.innerHTML = errors.join('<br>'); return;
-  }
-
+  const leaveDays = Math.max(0, Math.min(leaveVal, rawDays));
   const netDays = rawDays - leaveDays;
   const hours = netDays * 24;
-  let html = `<div class="result-row"><span class="result-key">Admission to discharge</span><span class="result-val">${rawDays} day${rawDays!==1?'s':''}</span></div>`;
-  if (leaveDays > 0) html += `<div class="result-row"><span class="result-key">Therapeutic leave days</span><span class="result-val">&minus; ${leaveDays} day${leaveDays!==1?'s':''}</span></div>`;
+
+  let html = `<div class="result-row"><span class="result-key">Admit to discharge</span><span class="result-val">${rawDays} day${rawDays !== 1 ? 's' : ''}</span></div>`;
+  if (leaveDays > 0) html += `<div class="result-row"><span class="result-key">Leave days</span><span class="result-val">&minus; ${leaveDays} day${leaveDays !== 1 ? 's' : ''}</span></div>`;
   html += `<div class="result-row net"><span class="result-key">Net inpatient days</span><span class="result-val">${netDays}</span></div>`;
-  html += `<div class="result-row net"><span class="result-key">Denominator (hours)</span><span class="result-val">${hours.toLocaleString()} hrs</span></div>`;
+  html += `<div class="result-row net"><span class="result-key">Your inpatient hours</span><span class="result-val">${hours.toLocaleString()} hrs</span></div>`;
   res.className = 'result-box visible';
   res.innerHTML = html;
 }
 
-function calcDenomCount() {
-  const days = parseInt(document.getElementById('manualDays').value) || 0;
-  const leave = parseInt(document.getElementById('manualLeave').value) || 0;
-  const res = document.getElementById('denomResult');
-  if (!days) { res.classList.remove('visible'); return; }
-  const net = days - leave;
-  const hours = net * 24;
-  let html = `<div class="result-row"><span class="result-key">Inpatient days entered</span><span class="result-val">${days}</span></div>`;
-  if (leave > 0) html += `<div class="result-row"><span class="result-key">Leave days</span><span class="result-val">&minus; ${leave}</span></div>`;
-  html += `<div class="result-row net"><span class="result-key">Net inpatient days</span><span class="result-val">${net}</span></div>`;
-  html += `<div class="result-row net"><span class="result-key">Denominator (hours)</span><span class="result-val">${hours.toLocaleString()} hrs</span></div>`;
+// ── AGE / STRATA CALCULATOR ───────────────────────────────────────────────────
+function calcStrata() {
+  const dobVal   = document.getElementById('strataDoB').value;
+  const evVal    = document.getElementById('strataEvent').value;
+  const res      = document.getElementById('strataResult');
+
+  if (!dobVal || !evVal) { res.classList.remove('visible'); return; }
+
+  const dob   = new Date(dobVal + 'T00:00:00');
+  const ev    = new Date(evVal  + 'T00:00:00');
+
+  if (isNaN(dob) || isNaN(ev)) {
+    res.className = 'result-box visible err';
+    res.innerHTML = 'Enter valid dates for both fields.';
+    return;
+  }
+  if (ev < dob) {
+    res.className = 'result-box visible err';
+    res.innerHTML = 'Event date cannot be before date of birth.';
+    return;
+  }
+
+  // Precise age — handles leap-day birthdays
+  let age = ev.getFullYear() - dob.getFullYear();
+  const evMD  = ev.getMonth()  * 100 + ev.getDate();
+  const dobMD = dob.getMonth() * 100 + dob.getDate();
+
+  // Feb 29 birthday in non-leap year → treat as Feb 28
+  let effectiveDobMD = dobMD;
+  if (dob.getMonth() === 1 && dob.getDate() === 29) {
+    const evYear = ev.getFullYear();
+    const isLeap = (evYear % 4 === 0 && (evYear % 100 !== 0 || evYear % 400 === 0));
+    if (!isLeap) effectiveDobMD = 1 * 100 + 28;
+  }
+  if (evMD < effectiveDobMD) age--;
+
+  // Strata assignment
+  let strata, strataLabel, measures, strataColor, excluded = false;
+  if (age < 0) {
+    res.className = 'result-box visible err';
+    res.innerHTML = 'Event date is before date of birth.';
+    return;
+  } else if (age === 0) {
+    excluded = true;
+    strata = null; strataLabel = 'Age 0 — Excluded';
+    measures = 'Not in measure population. Set Reject Case Flag = Yes.';
+    strataColor = 'var(--red)';
+  } else if (age <= 12) {
+    strata = 'B'; strataLabel = 'Strata B · Age 1–12 · Children';
+    measures = 'HBIPS-2b &nbsp;/&nbsp; HBIPS-3b';
+    strataColor = '#1a4090';
+  } else if (age <= 17) {
+    strata = 'C'; strataLabel = 'Strata C · Age 13–17 · Adolescents';
+    measures = 'HBIPS-2c &nbsp;/&nbsp; HBIPS-3c';
+    strataColor = '#5b21b6';
+  } else if (age <= 64) {
+    strata = 'D'; strataLabel = 'Strata D · Age 18–64 · Adults';
+    measures = 'HBIPS-2d &nbsp;/&nbsp; HBIPS-3d';
+    strataColor = 'var(--green)';
+  } else {
+    strata = 'E'; strataLabel = 'Strata E · Age ≥65 · Older Adults';
+    measures = 'HBIPS-2e &nbsp;/&nbsp; HBIPS-3e';
+    strataColor = 'var(--amber)';
+  }
+
+  const isBirthday = (evMD === dobMD || (dobMD === 229 && evMD === 228));
+
+  let html = `
+    <div class="result-row"><span class="result-key">Age at event date</span><span class="result-val" style="color:${strataColor};">${age} yr${age !== 1 ? 's' : ''}</span></div>
+    <div class="result-row net"><span class="result-key">${strataLabel}</span><span class="result-val" style="color:${strataColor};">${strata ? strata : '—'}</span></div>
+    <div class="result-row"><span class="result-key">Applies to</span><span class="result-val" style="font-size:13px;">${measures}</span></div>`;
+
+  if (isBirthday && !excluded) {
+    html += `<div style="margin-top:10px;font-size:12px;padding:8px 12px;background:var(--amber-bg);border:1px solid var(--amber-border);border-radius:6px;color:var(--amber);">
+      <strong>Today is this patient's birthday.</strong> Age has been updated to ${age} as of the event date — strata assignment reflects the new age.
+    </div>`;
+  }
+  if (excluded) {
+    html += `<div style="margin-top:10px;font-size:12px;padding:8px 12px;background:var(--red-bg);border:1px solid var(--red-border);border-radius:6px;color:var(--red);">
+      <strong>Age 0 — not in measure population.</strong> Set Reject Case Flag = Yes.
+    </div>`;
+  }
+
   res.className = 'result-box visible';
   res.innerHTML = html;
 }
 
-// ── CONVERTER ────────────────────────────────────────────────────────────────
+// ── DURATION CALCULATOR ───────────────────────────────────────────────────────
+let lastDurMins = 0;
+
+function parseMilitary(str) {
+  const s = str.trim().replace(/\D/g, '');
+  if (s.length !== 4) return null;
+  const h = parseInt(s.slice(0, 2));
+  const m = parseInt(s.slice(2));
+  if (h > 23 || m > 59) return null;
+  return h * 60 + m;
+}
+
+function fmtMilitary(totalMins) {
+  const h = Math.floor(totalMins / 60) % 24;
+  const m = totalMins % 60;
+  const ampm = h < 12 ? 'AM' : 'PM';
+  const h12 = h % 12 === 0 ? 12 : h % 12;
+  return `${String(h).padStart(2,'0')}${String(m).padStart(2,'0')} (${h12}:${String(m).padStart(2,'0')} ${ampm})`;
+}
+
+function calcDuration() {
+  const startStr = document.getElementById('durStart').value;
+  const endStr   = document.getElementById('durEnd').value;
+  const res      = document.getElementById('durResult');
+  const btns     = document.getElementById('durAddBtns');
+
+  if (!startStr || !endStr || startStr.length < 4 || endStr.length < 4) {
+    res.classList.remove('visible');
+    btns.style.display = 'none';
+    return;
+  }
+
+  const startMins = parseMilitary(startStr);
+  const endMins   = parseMilitary(endStr);
+
+  if (startMins === null || endMins === null) {
+    res.className = 'result-box visible err';
+    res.innerHTML = 'Enter valid military time — 4 digits, hours 00–23, minutes 00–59.';
+    btns.style.display = 'none';
+    return;
+  }
+
+  let diff = endMins - startMins;
+  let crossedMidnight = false;
+  if (diff <= 0) {
+    // End time is next day
+    diff += 24 * 60;
+    crossedMidnight = true;
+  }
+
+  lastDurMins = diff;
+
+  let html = `<div class="result-row"><span class="result-key">Start</span><span class="result-val">${fmtMilitary(startMins)}</span></div>`;
+  html += `<div class="result-row"><span class="result-key">End</span><span class="result-val">${fmtMilitary(endMins)}${crossedMidnight ? ' <span style="font-size:11px;color:var(--amber);font-family:var(--body);font-weight:700;">+1 day</span>' : ''}</span></div>`;
+  html += `<div class="result-row net"><span class="result-key">Duration</span><span class="result-val">${diff} min</span></div>`;
+  if (crossedMidnight) {
+    html += `<div style="margin-top:8px;font-size:12px;color:var(--amber);padding:7px 10px;background:var(--amber-bg);border-radius:6px;border:1px solid var(--amber-border);">
+      <strong>Crosses midnight.</strong> Per spec, abstract as two separate events — one for each date. Use this calculator once per date segment.
+    </div>`;
+  }
+  res.className = 'result-box visible';
+  res.innerHTML = html;
+  btns.style.display = 'flex';
+}
+
+function addDurationToTally(type) {
+  if (!lastDurMins) return;
+  const containerId = type === 'restraint' ? 'restraintEntries' : 'seclusionEntries';
+  const cls         = type === 'restraint' ? 'restraint-min' : 'seclusion-min';
+  const calcFn      = type === 'restraint' ? 'calcRestraint' : 'calcSeclusion';
+
+  // Find first empty input, otherwise add new row
+  const container = document.getElementById(containerId);
+  let placed = false;
+  container.querySelectorAll('.' + cls).forEach(inp => {
+    if (!placed && (!inp.value || inp.value === '0')) {
+      inp.value = lastDurMins;
+      placed = true;
+    }
+  });
+  if (!placed) {
+    const row = document.createElement('div');
+    row.className = 'episode-row';
+    row.innerHTML = `
+      <input type="number" min="0" class="${cls} episode-input" value="${lastDurMins}" oninput="${calcFn}()">
+      <span style="font-size:13px;color:var(--ink-soft);font-family:var(--mono);">min</span>
+      <button class="ep-remove" onclick="removeEpisode(this,'${type}')" title="Remove" aria-label="Remove episode">
+        <i class="ph ph-x" aria-hidden="true"></i>
+      </button>`;
+    container.appendChild(row);
+  }
+
+  type === 'restraint' ? calcRestraint() : calcSeclusion();
+
+  // Scroll to tally
+  const label = type === 'restraint' ? 'Restraint Hours' : 'Seclusion Hours';
+  document.getElementById(type === 'restraint' ? 'restraintEntries' : 'seclusionEntries')
+    .scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+  // Brief visual confirmation
+  const btn = document.getElementById(type === 'restraint' ? 'durAddRestraint' : 'durAddSeclusion');
+  const orig = btn.innerHTML;
+  btn.innerHTML = '<i class="ph ph-check" aria-hidden="true"></i> Added!';
+  btn.style.background = 'var(--teal-pale)';
+  setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; }, 1800);
+}
+
+// ── EPISODE CALCULATORS ───────────────────────────────────────────────────────
+function addEpisode(containerId, cls, calcFn) {
+  const container = document.getElementById(containerId);
+  const row = document.createElement('div');
+  row.className = 'episode-row';
+  row.innerHTML = `
+    <input type="number" min="0" placeholder="minutes" class="${cls} episode-input" oninput="${calcFn}()">
+    <span style="font-size:13px;color:var(--ink-soft);font-family:var(--mono);">min</span>
+    <button class="ep-remove" onclick="removeEpisode(this,'${cls.includes('restraint') ? 'restraint' : 'seclusion'}')" title="Remove" aria-label="Remove episode">
+      <i class="ph ph-x" aria-hidden="true"></i>
+    </button>`;
+  container.appendChild(row);
+}
+
+function removeEpisode(btn, type) {
+  const row = btn.closest('.episode-row');
+  const container = row.parentElement;
+  if (container.children.length > 1) {
+    row.remove();
+  } else {
+    row.querySelector('input').value = '';
+  }
+  type === 'restraint' ? calcRestraint() : calcSeclusion();
+}
+
+function getEpisodeTotal(cls) {
+  let total = 0, count = 0;
+  document.querySelectorAll('.' + cls).forEach(inp => {
+    const v = parseFloat(inp.value);
+    if (!isNaN(v) && v > 0) { total += v; count++; }
+  });
+  return { total, count };
+}
+
+function renderEpisodeResult(resultId, type, mins, count) {
+  const res = document.getElementById(resultId);
+  if (mins === 0) { res.classList.remove('visible'); return; }
+  const hrs = Math.ceil(mins / 60);
+  const exact = (mins / 60).toFixed(4);
+  res.className = 'result-box visible';
+  res.innerHTML = `
+    <div class="result-row"><span class="result-key">${count} episode${count !== 1 ? 's' : ''} — total minutes</span><span class="result-val">${mins} min</span></div>
+    <div class="result-row"><span class="result-key">Exact hours</span><span class="result-val">${exact}</span></div>
+    <div class="result-row net"><span class="result-key">Hours (rounded up)</span><span class="result-val">${hrs} hr</span></div>`;
+}
+
+function calcRestraint() {
+  const { total, count } = getEpisodeTotal('restraint-min');
+  renderEpisodeResult('restraintResult', 'restraint', total, count);
+}
+
+function calcSeclusion() {
+  const { total, count } = getEpisodeTotal('seclusion-min');
+  renderEpisodeResult('seclusionResult', 'seclusion', total, count);
+}
+
+// ── CONVERTER (kept for any legacy references) ────────────────────────────────
 function calcConv() {
-  const m = parseFloat(document.getElementById('convMins').value);
+  const m = parseFloat(document.getElementById('convMins') ? document.getElementById('convMins').value : 0);
   const r = document.getElementById('convResult');
   const b = document.getElementById('convBreak');
+  if (!r) return;
   if (isNaN(m) || m < 0) { r.textContent = '—'; b.textContent = ''; return; }
   if (m === 0) { r.textContent = '0 hr'; b.textContent = '0 ÷ 60 = 0 → ceiling = 0'; return; }
   const exact = m / 60;
   const ceil = Math.ceil(exact);
   r.textContent = ceil + ' hr';
   b.innerHTML = `${m} &divide; 60 = ${exact.toFixed(4)}<br>&darr; ceiling = <strong>${ceil} hr</strong>`;
-}
-
-// ── RATE ─────────────────────────────────────────────────────────────────────
-function calcRate() {
-  const num = parseFloat(document.getElementById('rateNum').value);
-  const den = parseFloat(document.getElementById('rateDenom').value);
-  const res = document.getElementById('rateResult');
-  if (isNaN(num) || isNaN(den)) { res.classList.remove('visible'); return; }
-  if (den === 0) { res.className = 'result-box visible err'; res.innerHTML = 'Denominator cannot be zero.'; return; }
-  const rate = (num / den) * 1000;
-  res.className = 'result-box visible';
-  res.innerHTML = `
-    <div class="result-row"><span class="result-key">Numerator</span><span class="result-val">${num} hr</span></div>
-    <div class="result-row"><span class="result-key">Denominator</span><span class="result-val">${den.toLocaleString()} hrs</span></div>
-    <div class="result-row net"><span class="result-key">Observed rate (per 1,000 hrs)</span><span class="result-val">${rate.toFixed(4)}</span></div>`;
 }
 
 // ── QUIZ ─────────────────────────────────────────────────────────────────────
