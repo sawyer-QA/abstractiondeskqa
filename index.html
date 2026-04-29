@@ -282,9 +282,15 @@
   /* TOOLS SECTION */
   .tools-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
     margin-top: 4px;
+  }
+  @media(max-width:900px){
+    .tools-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media(max-width:580px){
+    .tools-grid { grid-template-columns: 1fr; }
   }
   .tool-card {
     background: var(--white);
@@ -447,6 +453,8 @@
       <a href="#tools" class="nav-link">Tools</a>
       <a href="#feedback" class="nav-link">Feedback</a>
       <a href="lkw-tool.html" class="nav-cta-ghost">LKW Tool</a>
+      <a href="cmo-tool.html" class="nav-cta-ghost">CMO Tool</a>
+      <a href="hbips-tool.html" class="nav-cta-ghost">HBIPS Tool</a>
       <a href="lookup.html" class="nav-cta">Q&amp;A Tool</a>
     </div>
   </div>
@@ -604,27 +612,12 @@
   <section class="section" id="tools" aria-labelledby="tools-heading">
     <div class="container">
       <div class="section-label" aria-hidden="true">What's Inside</div>
-      <h2 class="section-title" id="tools-heading">Three tools, one workflow</h2>
+      <h2 class="section-title" id="tools-heading">Five tools, one workflow</h2>
       <p class="section-sub">Everything on this site is free, no login required. Here's what's available and what each tool does.</p>
       <div class="tools-grid">
 
-        <!-- Q&A Lookup -->
-        <a href="lookup.html" class="tool-card fade-up" aria-label="Open the Q&A Lookup tool">
-          <span class="tool-tag">Q&amp;A Lookup</span>
-          <div class="tool-card-icon" aria-hidden="true">
-            <i class="ph-duotone ph-books"></i>
-          </div>
-          <div>
-            <h3>Q&amp;A Lookup</h3>
-            <p>Searchable bank of abstraction scenarios with spec-grounded answers. Filter by measure set (STK, ASR-IP, ED-OP), difficulty, or keyword tag. Export any filtered view as a clean PDF for training or desk reference.</p>
-          </div>
-          <span class="tool-card-link">
-            Open tool <i class="ph ph-arrow-right"></i>
-          </span>
-        </a>
-
         <!-- LKW Tool -->
-        <a href="lkw-tool.html" class="tool-card fade-up" style="transition-delay:.1s" aria-label="Open the LKW Resolution Tool">
+        <a href="lkw-tool.html" class="tool-card fade-up" style="transition-delay:.0s" aria-label="Open the LKW Resolution Tool">
           <span class="tool-tag">LKW Tool</span>
           <div class="tool-card-icon" aria-hidden="true">
             <i class="ph-duotone ph-clock-countdown"></i>
@@ -638,20 +631,77 @@
           </span>
         </a>
 
+        <!-- CMO Tool -->
+        <a href="cmo-tool.html" class="tool-card fade-up" style="transition-delay:.1s" aria-label="Open the CMO Abstraction Tool">
+          <span class="tool-tag">CMO Tool</span>
+          <div class="tool-card-icon" aria-hidden="true">
+            <i class="ph-duotone ph-heart-straight"></i>
+          </div>
+          <div>
+            <h3>CMO Abstraction Tool</h3>
+            <p>Interactive classifier for Comfort Measures Only denominator exclusions. Identify qualifying documentation, navigate POLST section evaluation, timing rules, and the most common pitfalls — with a practice quiz and case walkthroughs.</p>
+          </div>
+          <span class="tool-card-link">
+            Open tool <i class="ph ph-arrow-right"></i>
+          </span>
+        </a>
+
+        <!-- HBIPS Tool -->
+        <a href="hbips-tool.html" class="tool-card fade-up" style="transition-delay:.2s" aria-label="Open the HBIPS Abstraction Tool">
+          <span class="tool-tag">HBIPS Tool</span>
+          <div class="tool-card-icon" aria-hidden="true">
+            <i class="ph-duotone ph-brain"></i>
+          </div>
+          <div>
+            <h3>HBIPS Abstraction Tool</h3>
+            <p>Interactive calculators and reference for psychiatric inpatient hours, restraint and seclusion abstraction, age strata, and rate calculation. Includes a practice quiz and case walkthroughs for HBIPS-2 and HBIPS-3.</p>
+          </div>
+          <span class="tool-card-link">
+            Open tool <i class="ph ph-arrow-right"></i>
+          </span>
+        </a>
+
+        <!-- Q&A Lookup -->
+        <a href="lookup.html" class="tool-card fade-up" style="transition-delay:.3s" aria-label="Open the Q&A Lookup tool">
+          <span class="tool-tag">Q&amp;A Lookup</span>
+          <div class="tool-card-icon" aria-hidden="true">
+            <i class="ph-duotone ph-books"></i>
+          </div>
+          <div>
+            <h3>Q&amp;A Lookup</h3>
+            <p>Searchable bank of abstraction scenarios with spec-grounded answers. Filter by measure set (STK, ASR-IP, ED-OP), difficulty, or keyword tag. Export any filtered view as a clean PDF for training or desk reference.</p>
+          </div>
+          <span class="tool-card-link">
+            Open tool <i class="ph ph-arrow-right"></i>
+          </span>
+        </a>
+
         <!-- Tag System -->
-        <a href="lookup.html" class="tool-card fade-up" style="transition-delay:.2s" aria-label="Open the Tag System in the Q&A tool">
+        <a href="lookup.html" class="tool-card fade-up" style="transition-delay:.4s" aria-label="Open the Tag System in the Q&A tool">
           <span class="tool-tag">Tag System</span>
           <div class="tool-card-icon" aria-hidden="true">
             <i class="ph-duotone ph-tag-chevron"></i>
           </div>
           <div>
             <h3>Tag System</h3>
-            <p>Built into the Q&amp;A Tool — every entry is tagged with the chart language abstractors actually use, organized by category (Stroke Timing, Treatment, Goals of Care, ED Throughput, and more). Browse by category, filter by tag, or suggest new tags for curator review to help build a shared clinical vocabulary.</p>
+            <p>Built into the Q&amp;A Tool — every entry is tagged with the chart language abstractors actually use, organized by category (Stroke Timing, Treatment, Goals of Care, ED Throughput, and more). Browse by category, filter by tag, or suggest new tags for curator review.</p>
           </div>
           <span class="tool-card-link">
             Open Q&amp;A Tool → Tags <i class="ph ph-arrow-right"></i>
           </span>
         </a>
+
+        <!-- Coming Soon -->
+        <div class="tool-card fade-up" style="transition-delay:.5s;opacity:0.5;cursor:default;pointer-events:none;">
+          <span class="tool-tag" style="background:transparent;border:1px dashed currentColor;">Coming Soon</span>
+          <div class="tool-card-icon" aria-hidden="true">
+            <i class="ph-duotone ph-plus-circle"></i>
+          </div>
+          <div>
+            <h3 style="color:inherit;">More tools on the way</h3>
+            <p>Additional abstraction tools for new measure sets are in development. Check back as the site grows.</p>
+          </div>
+        </div>
 
       </div>
     </div>
@@ -774,6 +824,8 @@
     <div class="footer-links">
       <a href="lookup.html">Q&amp;A Lookup</a>
       <a href="lkw-tool.html">LKW Tool</a>
+      <a href="cmo-tool.html">CMO Tool</a>
+      <a href="hbips-tool.html">HBIPS Tool</a>
       <a href="#how">How It Works</a>
       <a href="#tools">Tools</a>
       <a href="#feedback">Feedback</a>
