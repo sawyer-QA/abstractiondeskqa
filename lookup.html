@@ -213,6 +213,9 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
   </div>
   <div class="bar-btns">
     <a href="index.html" class="btn btn-ghost" style="text-decoration:none">← Home</a>
+    <a href="lkw-tool.html" class="btn btn-ghost" style="text-decoration:none">LKW Tool</a>
+    <a href="cmo-tool.html" class="btn btn-ghost" style="text-decoration:none">CMO Tool</a>
+    <a href="hbips-tool.html" class="btn btn-ghost" style="text-decoration:none">HBIPS Tool</a>
     <button class="btn btn-ghost" onclick="toggleAdd()"><i class="ph ph-plus" style="vertical-align:middle;margin-right:4px;"></i>Add Q&amp;A</button>
     <button class="btn btn-ghost" onclick="openPaste()"><i class="ph-duotone ph-clipboard-text" style="vertical-align:middle;margin-right:4px;"></i>Paste Raw</button>
     <button class="btn btn-purple" onclick="openTM()"><i class="ph-duotone ph-tag" style="vertical-align:middle;margin-right:4px;"></i>Manage Tags</button>
@@ -226,11 +229,12 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
     <div class="sb-item on" data-m="all" onclick="filterM('all',this)">All <span class="sb-cnt" id="cnt-all">0</span></div>
     <div class="sb-div"></div>
     <span class="sb-lbl">Measure Set</span>
-    <div class="sb-item" data-m="STK" onclick="filterM('STK',this)">STK — Stroke <span class="sb-cnt" id="cnt-STK">0</span></div>
-    <div class="sb-item" data-m="ASR-IP" onclick="filterM('ASR-IP',this)">ASR-IP — Stroke Ready <span class="sb-cnt" id="cnt-ASR-IP">0</span></div>
+    <div class="sb-item" data-m="STROKE" onclick="filterM('STROKE',this)">Stroke <span class="sb-cnt" id="cnt-STROKE">0</span></div>
     <div class="sb-item" data-m="ED-OP" onclick="filterM('ED-OP',this)">ED-OP — Throughput <span class="sb-cnt" id="cnt-ED-OP">0</span></div>
+    <div class="sb-item" data-m="HBIPS" onclick="filterM('HBIPS',this)">HBIPS — Psych Inpatient <span class="sb-cnt" id="cnt-HBIPS">0</span></div>
     <div class="sb-div"></div>
     <span class="sb-lbl">Difficulty</span>
+    <div class="sb-item" data-m="__routine" onclick="filterM('__routine',this)">✅ Routine <span class="sb-cnt" id="cnt-routine">0</span></div>
     <div class="sb-item" data-m="__gray" onclick="filterM('__gray',this)">❓ Gray Areas <span class="sb-cnt" id="cnt-gray">0</span></div>
     <div class="sb-item" data-m="__edge" onclick="filterM('__edge',this)">⚡ Edge Cases <span class="sb-cnt" id="cnt-edge">0</span></div>
     <div class="sb-div"></div>
@@ -595,7 +599,7 @@ function normTag(raw){
 function filtered(){
   const q=(document.getElementById('srch')?.value||'').toLowerCase();
   return entries.filter(e=>{
-    const mOk=actM==='all'||(actM==='__gray'&&e.type==='gray')||(actM==='__edge'&&e.type==='edge')||e.measure===actM;
+    const mOk=matchesMeasure(e,actM);
     const tOk=actT==='all'||e.type===actT;
     const tagOk=actTags.length===0||actTags.every(t=>(e.tags||[]).includes(t));
     const tx=[e.question,e.answer,e.specific||'',e.source||'',...(e.tags||[])].join(' ').toLowerCase();
@@ -638,7 +642,14 @@ function render(){
 }
 function togCard(id){document.getElementById(id)?.classList.toggle('open');}
 function updCounts(){
-  ['STK','ASR-IP','ED-OP'].forEach(m=>{const el=document.getElementById('cnt-'+m);if(el)el.textContent=entries.filter(e=>e.measure===m).length;});
+  const strokeMeasures=['STK','ASR-IP','C-STK','ASR-OP'];
+  const strokeCount=entries.filter(e=>strokeMeasures.some(m=>e.measure===m||String(e.measure).startsWith(m))).length;
+  const strokeEl=document.getElementById('cnt-STROKE');if(strokeEl)strokeEl.textContent=strokeCount;
+  ['ED-OP','HBIPS'].forEach(m=>{const el=document.getElementById('cnt-'+m);if(el)el.textContent=entries.filter(e=>e.measure===m).length;});
+  const allEl=document.getElementById('cnt-all');if(allEl)allEl.textContent=entries.length;
+  const grayEl=document.getElementById('cnt-gray');if(grayEl)grayEl.textContent=entries.filter(e=>e.type==='gray').length;
+  const edgeEl=document.getElementById('cnt-edge');if(edgeEl)edgeEl.textContent=entries.filter(e=>e.type==='edge').length;
+  const routineEl=document.getElementById('cnt-routine');if(routineEl)routineEl.textContent=entries.filter(e=>e.type==='routine').length;
   document.getElementById('cnt-all').textContent=entries.length;
   document.getElementById('cnt-gray').textContent=entries.filter(e=>e.type==='gray').length;
   document.getElementById('cnt-edge').textContent=entries.filter(e=>e.type==='edge').length;
@@ -660,6 +671,16 @@ function buildCloud(){
 //  FILTERS
 // ══════════════════════════════════════════════════
 function filterM(v,el){actM=v;document.querySelectorAll('[data-m]').forEach(e=>e.classList.remove('on'));el.classList.add('on');render();}
+
+const STROKE_MEASURES=['STK','ASR-IP','C-STK','ASR-OP'];
+function matchesMeasure(entry,filter){
+  if(filter==='all') return true;
+  if(filter==='STROKE') return STROKE_MEASURES.some(m=>entry.measure===m||String(entry.measure).startsWith(m));
+  if(filter==='__gray') return entry.type==='gray';
+  if(filter==='__edge') return entry.type==='edge';
+  if(filter==='__routine') return entry.type==='routine';
+  return entry.measure===filter;
+}
 function filterT(v,el){actT=v;document.querySelectorAll('[data-t]').forEach(e=>e.classList.remove('on'));el.classList.add('on');render();}
 function addTagFilter(t){if(!actTags.includes(t))actTags.push(t);renderAtBar();render();}
 function removeTagFilter(t){actTags=actTags.filter(x=>x!==t);renderAtBar();render();}
@@ -904,7 +925,7 @@ async function savePaste(){
 // ══════════════════════════════════════════════════
 function exportPDF(){
   const f=filtered();
-  const lbl=actM==='all'?'Stroke & ED Throughput':actM;
+  const lbl=actM==='all'?'Stroke & ED Throughput':actM==='STROKE'?'Stroke':actM==='__routine'?'Routine':actM==='__gray'?'Gray Areas':actM==='__edge'?'Edge Cases':actM;
   const tlbl=actTags.length?` · Tags: ${actTags.join(', ')}`:' ';
   const w=window.open('','_blank');
   w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Q&A — ${lbl}</title>
