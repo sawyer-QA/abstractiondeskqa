@@ -45,7 +45,7 @@ header{position:sticky;top:0;z-index:200;background:rgba(15,25,35,0.96);backdrop
 .hbadge{background:var(--teal);color:var(--bg);font-family:var(--mono);font-size:10px;font-weight:500;padding:3px 9px;border-radius:4px;letter-spacing:0.1em;white-space:nowrap;}
 .htitle{font-size:15px;font-weight:700;}
 .hsub{font-size:11px;color:var(--muted);font-family:var(--mono);}
-.tabs{background:var(--bg2);border-bottom:1px solid var(--border);display:flex;gap:0;padding:0 16px;overflow-x:auto;position:sticky;top:114px;z-index:199;}
+.tabs{background:var(--bg2);border-bottom:1px solid var(--border);display:flex;gap:0;padding:0 16px;overflow-x:auto;}
 .tab{background:none;border:none;color:var(--muted);font-family:var(--sans);font-size:13px;font-weight:600;padding:12px 16px;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .18s;}
 .tab:hover{color:var(--text);}
 .tab.on{color:var(--teal);border-bottom-color:var(--teal);}
@@ -307,6 +307,8 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
       <a href="index.html#tools" class="site-nav-link">Tools</a>
       <a href="index.html#feedback" class="site-nav-link">Feedback</a>
       <a href="lkw-tool.html" class="site-nav-cta-ghost active-page">LKW Tool</a>
+      <a href="cmo-tool.html" class="site-nav-cta-ghost">CMO Tool</a>
+      <a href="hbips-tool.html" class="site-nav-cta-ghost">HBIPS Tool</a>
       <a href="lookup.html" class="site-nav-cta">Q&amp;A Tool</a>
     </div>
   </div>
@@ -685,9 +687,32 @@ function clearGrid(){
 
 // ── GUIDED ──
 function gAns(q,val){
+  // highlight selected button in this step
+  const card=document.getElementById('gq'+q);
+  if(card){
+    card.querySelectorAll('button').forEach(b=>{
+      b.classList.remove('btn-selected');
+      b.style.borderColor='';
+      b.style.background='';
+      b.style.color='';
+    });
+    const clicked=card.querySelector('[onclick*="\''+val+'\'"]');
+    if(clicked){
+      clicked.style.borderColor='var(--teal)';
+      clicked.style.background='var(--teal-dim)';
+      clicked.style.color='var(--teal)';
+    }
+  }
+  // hide all later steps and result
   for(let i=q+1;i<=5;i++){const e=document.getElementById('gq'+i);if(e)e.classList.add('hidden');}
-  document.getElementById('guided-result').classList.add('hidden');
-  if(q===1){val==='inhouse'?showGR('NO','UTD','UTD','In-house stroke — select No. Date and Time = UTD.'):document.getElementById('gq2').classList.remove('hidden');}
+  const res=document.getElementById('guided-result');
+  res.classList.add('hidden');
+  res.style.display='none';
+  if(q===1){
+    val==='inhouse'
+      ?showGR('NO','UTD','UTD','In-house stroke — select No. Date and Time = UTD.')
+      :document.getElementById('gq2').classList.remove('hidden');
+  }
   else if(q===2){val==='no'?showGR('NO','UTD','UTD','No documentation found. LKW = No, Date = UTD, Time = UTD.'):document.getElementById('gq3').classList.remove('hidden');}
   else if(q===3){val==='yes'?showGR('NO','UTD','UTD','MD/APN/PA documented unknown. Priority 1 — cancels all. LKW = No. Check CSF exception and same-MD correction exception.'):document.getElementById('gq4').classList.remove('hidden');}
   else if(q===4){document.getElementById('gq5').classList.remove('hidden');}
@@ -704,11 +729,20 @@ function showGR(yn,d,t,rat){
   document.getElementById('gr-time').textContent=t;
   document.getElementById('gr-rat').innerHTML=rat;
   box.classList.remove('hidden');
+  box.style.display='block';
   setTimeout(()=>box.scrollIntoView({behavior:'smooth',block:'nearest'}),80);
 }
 function resetGuided(){
-  for(let i=2;i<=5;i++){const e=document.getElementById('gq'+i);if(e)e.classList.add('hidden');}
-  document.getElementById('guided-result').classList.add('hidden');
+  for(let i=1;i<=5;i++){
+    const e=document.getElementById('gq'+i);
+    if(e){
+      if(i>1) e.classList.add('hidden');
+      e.querySelectorAll('button').forEach(b=>{b.style.borderColor='';b.style.background='';b.style.color='';});
+    }
+  }
+  const res=document.getElementById('guided-result');
+  res.classList.add('hidden');
+  res.style.display='none';
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -722,7 +756,7 @@ function doConvert(){const raw=document.getElementById('conv-in').value.trim();c
 const Qs=[
   {tags:['LKW Y/N','Clinician Hierarchy'],sc:`The ED nurse documents: "Time last known well: 0800." The attending H&P states: "Last known well unknown." No Code Stroke Form present.`,opts:['YES — nurse documented a specific time','NO — physician documented unknown','YES — nursing note is acceptable','YES — use nursing when MD is vague'],correct:1,fb:`<strong>NO.</strong> MD "unknown" (Priority 1) cancels all nursing documentation. Grid: RN Unknown = ✕ irrelevant, but that doesn't help nursing's time override MD unknown. One MD saying unknown = NO.`},
   {tags:['Time LKW','Hours-Ago Calculation'],sc:`"Patient last known well approximately 3 hours ago." Arrival time: 19:24.`,opts:['16:24','16:00','UTD — no specific time','19:24'],correct:0,fb:`<strong>16:24.</strong> Subtract hours from arrival: 19:24 − 3h = 16:24. Use the calculator on the Quick Reference tab.`},
-  {tags:['LKW Y/N','Code Stroke Form Exception'],sc:`ED physician documents "LKW unknown" as reason for not giving tPA. The Code Stroke Form also documents Time LKW = 14:30.`,opts:['NO — physician documented unknown','YES — Code Stroke Form exception applies','NO — tPA form is highest priority','Cannot determine'],correct:1,fb:`<strong>YES.</strong> CSF exception: when MD documents "unknown" as reason for no tPA AND the CSF has a specific time, disregard the "unknown." CSF time (14:30) is used.`},
+  {tags:['LKW Y/N','Code Stroke Form Exception'],sc:`ED physician documents "LKW unknown" as reason for not giving tPA. The Code Stroke Form also documents Time LKW = 14:30.`,opts:['NO — physician documented unknown','YES — Code Stroke Form exception applies','NO — tPA form is highest priority','Cannot determine'],correct:1,fb:`<strong>YES.</strong> This is the CSF exception — one of two situations where MD "unknown" is overridden. When a physician documents "unknown" specifically as the <em>reason for not giving tPA</em>, AND the Code Stroke Form has a specific time, the "unknown" is disregarded and the CSF time (14:30) is used. You can see this spelled out in the <strong>Exception Check</strong> callout that appears at the bottom of the Resolution Grid result box whenever MD Unknown is selected.`},
   {tags:['Time LKW','CSF Priority'],sc:`H&P: LKW = 09:00. Nursing note: LKW = 08:50. Code Stroke Form (stroke RN): Time LKW = 09:15.`,opts:['09:00 — physician note','08:50 — nursing note','09:15 — Code Stroke Form','09:00 — earliest time'],correct:2,fb:`<strong>09:15.</strong> CSF = Priority 2 column — beats physician and nursing notes when it has a specific time. Grid column priority: CSF (2) > LKW/Normal (3).`},
   {tags:['Date LKW','Relative Reference'],sc:`"Wife reports patient normal this evening until ~9 PM." Hospital arrival: 00:30 on 12-10-20xx.`,opts:['12-10-20xx','12-09-20xx (day before)','UTD','12-11-20xx'],correct:1,fb:`<strong>12-09-20xx.</strong> Arrival at 00:30 on 12-10 means "this evening" refers to 12-09. Relative date references are acceptable per spec.`},
   {tags:['Time LKW','Range — Use Maximum'],sc:`EMS: "Weakness 2–3 hours prior to arrival." ED arrival: 21:00.`,opts:['19:00 (subtract 2h)','18:00 (subtract 3h — max)','19:30 (average)','UTD'],correct:1,fb:`<strong>18:00.</strong> Time range → always use the MAXIMUM. Max = 3h. 21:00 − 3:00 = 18:00.`},
@@ -844,6 +878,8 @@ renderCaseCards();
     <div class="site-footer-links">
       <a href="lookup.html">Q&amp;A Lookup</a>
       <a href="lkw-tool.html">LKW Tool</a>
+      <a href="cmo-tool.html">CMO Tool</a>
+      <a href="hbips-tool.html">HBIPS Tool</a>
       <a href="index.html#how">How It Works</a>
       <a href="index.html#feedback">Feedback</a>
     </div>
