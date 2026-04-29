@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="canonical" href="https://abstractiondeskqa.com/cmo-tool.html">
 <title>CMO Abstraction Tool — AbstractionDeskQA</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -167,6 +168,9 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 .site-nav-link.active-page{color:#0a7c7a;font-weight:700;}
 .site-nav-cta{background:#0a7c7a;color:white;font-size:15px;font-weight:700;padding:9px 20px;border-radius:7px;border:none;cursor:pointer;transition:all .15s;text-decoration:none;white-space:nowrap;}
 .site-nav-cta:hover{background:#0da8a5;text-decoration:none;color:white;}
+.site-nav-cta-ghost{background:transparent;color:#0a7c7a;font-size:15px;font-weight:700;padding:9px 20px;border-radius:7px;border:2px solid #0a7c7a;cursor:pointer;transition:all .15s;text-decoration:none;white-space:nowrap;}
+.site-nav-cta-ghost:hover{background:#0a7c7a;color:white;text-decoration:none;}
+.site-nav-cta-ghost.active-page{background:#0a7c7a;color:white;}
 .page-title-bar{background:#0d2240;padding:28px 24px 24px;position:relative;overflow:hidden;}
 .page-title-bar::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 55% at 30% 0%,rgba(10,124,122,.22) 0%,transparent 65%);pointer-events:none;}
 .page-title-inner{max-width:1040px;margin:0 auto;position:relative;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
@@ -196,23 +200,24 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 
 <nav class="site-nav" role="navigation" aria-label="Main navigation">
   <div class="site-nav-inner">
-    <a href="index.html" class="site-nav-brand" aria-label="AbstractionDeskQA home">
+    <a href="/" class="site-nav-brand" aria-label="AbstractionDeskQA home">
       AbstractionDesk<span class="site-qa-badge">QA</span>
     </a>
     <div class="site-nav-links">
       <a href="index.html#how" class="site-nav-link">How It Works</a>
+      <a href="index.html#tools" class="site-nav-link">Tools</a>
       <a href="index.html#feedback" class="site-nav-link">Feedback</a>
-      <a href="lkw-tool.html" class="site-nav-link">LKW Tool</a>
-      <a href="cmo-tool.html" class="site-nav-link active-page">CMO Tool</a>
-      <a href="hbips-tool.html" class="site-nav-link">HBIPS Tool</a>
-      <a href="lookup.html" class="site-nav-cta">Open Q&amp;A Tool</a>
+      <a href="lkw-tool.html" class="site-nav-cta-ghost">LKW Tool</a>
+      <a href="cmo-tool.html" class="site-nav-cta-ghost active-page">CMO Tool</a>
+      <a href="hbips-tool.html" class="site-nav-cta-ghost">HBIPS Tool</a>
+      <a href="lookup.html" class="site-nav-cta">Q&amp;A Tool</a>
     </div>
   </div>
 </nav>
 
 <div class="page-title-bar">
   <div class="page-title-inner">
-    <a href="index.html" class="page-back-link" aria-label="Back to home">&#8592; Home</a>
+    <a href="/" class="page-back-link" aria-label="Back to home">&#8592; Home</a>
     <div class="page-title-text">
       <h1>Comfort Measures Only — Abstraction Tool</h1>
       <p>TJC v2026A &nbsp;·&nbsp; STK-6 / ASR-IP &nbsp;·&nbsp; Denominator Exclusion — Comfort Measures Only</p>
@@ -708,6 +713,19 @@ initQuiz();
 renderCaseCards();
 </script>
 
+<!-- SHARE STRIP -->
+<div style="background:#e6f5f4;border-top:1px solid #b2dedd;border-bottom:1px solid #b2dedd;padding:18px 24px;">
+  <div style="max-width:1040px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+    <div>
+      <div style="font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;color:#0d1f3c;margin-bottom:3px;">Share with your team</div>
+      <div style="font-size:13px;color:#3d4f62;line-height:1.5;">Free abstraction reference for core measure teams — Q&A lookup, LKW tool, and more.</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+      <code style="background:white;border:1px solid #b2dedd;border-radius:6px;padding:7px 14px;font-size:13px;color:#0b7a78;font-family:'DM Mono',monospace;white-space:nowrap;">https://abstractiondeskqa.com</code>
+      <button onclick="(()=>{navigator.clipboard.writeText('https://abstractiondeskqa.com');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy link',2000)})()" style="background:#0b7a78;color:white;border:none;border-radius:6px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif;" onmouseover="this.style.background='#0fa39f'" onmouseout="this.style.background='#0b7a78'">Copy link</button>
+    </div>
+  </div>
+</div>
 <div class="site-disclaimer" role="note">
   <div class="site-disclaimer-inner">
     <strong>Educational use only.</strong>
