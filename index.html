@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="AbstractionDeskQA — A free, growing clinical reference tool for core measure abstractors. Search real abstraction scenarios, get authoritative guidance.">
-<title>AbstractionDeskQA — Core Measure Reference for Abstractors</title>
+<meta name="description" content="A free abstraction toolkit for hospital quality teams and core measure abstractors. Search real scenarios, use interactive calculators, practice quizzes, and case walkthroughs — grounded in TJC and CMS spec language.">
+<title>AbstractionDeskQA — Free Abstraction Toolkit for Core Measure Teams</title>
+<link rel="canonical" href="https://abstractiondeskqa.com/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <!-- Phosphor Icons -->
@@ -445,7 +446,7 @@
 <!-- NAV -->
 <nav class="nav" role="navigation" aria-label="Main navigation">
   <div class="nav-inner">
-    <a href="index.html" class="nav-brand" aria-label="AbstractionDeskQA home">
+    <a href="/" class="nav-brand" aria-label="AbstractionDeskQA home">
       AbstractionDesk<span class="qa-badge">QA</span>
     </a>
     <div class="nav-links">
@@ -476,13 +477,13 @@
     <div class="hero-inner">
       <div class="hero-eyebrow">
         <span class="hero-dot" aria-hidden="true"></span>
-        Free Clinical Abstractor Tool
+        Free Abstraction Toolkit
       </div>
       <h1 id="hero-heading">
         Abstraction questions,<br><em>answered clearly.</em>
       </h1>
       <p class="hero-sub">
-        A searchable reference tool for core measure abstractors.
+        Search real abstraction scenarios, work through guided tools, and test your knowledge. All grounded in current TJC and CMS spec language.
       </p>
       <div class="hero-btns">
         <a href="lookup.html" class="btn-primary">Q&amp;A Tool</a>
@@ -496,11 +497,11 @@
     <div class="stats-inner">
       <div class="stat">
         <strong>Core measures</strong>
-        Stroke, ED Throughput | more coming
+        Stroke, ED Throughput, HBIPS
       </div>
       <div class="stat">
-        <strong>Tag-based search</strong>
-        Find entries using chart language
+        <strong>Abstraction Toolkit</strong>
+        Q&amp;A lookup, calculators, quizzes, and more
       </div>
       <div class="stat">
         <strong>Always free</strong>
@@ -513,6 +514,15 @@
     </div>
   </div>
 
+  <!-- ABOUT -->
+  <section class="section section-alt" aria-labelledby="about-heading">
+    <div class="container">
+      <div class="section-label" aria-hidden="true">What is Abstraction Desk QA?</div>
+      <h2 class="section-title" id="about-heading" style="max-width:100%;">A free abstraction toolkit for hospital quality teams and core measure abstractors.</h2>
+      <p style="font-size:16px;color:var(--ink-mid);max-width:720px;line-height:1.75;">Search real scenarios by the words you actually use. No login required.</p>
+    </div>
+  </section>
+
   <!-- HOW IT WORKS -->
   <section class="section" id="how" aria-labelledby="how-heading">
     <div class="container">
@@ -523,7 +533,7 @@
         <div class="how-card fade-up">
           <div class="how-step">Search</div>
           <h3>Type what you see</h3>
-          <p>Use words in the chart, abbreviations, or plain language (Code Stroke form, LKW, symptoms began).</p>
+          <p>Use words in the chart, abbreviations, or plain language — LKW, CSF, symptoms began, seclusion hours, CMO.</p>
         </div>
         <div class="how-card fade-up" style="transition-delay:.1s">
           <div class="how-step">Filter</div>
@@ -669,7 +679,7 @@
           </div>
           <div>
             <h3>Q&amp;A Lookup</h3>
-            <p>Searchable bank of abstraction scenarios with spec-grounded answers. Filter by measure set (STK, ASR-IP, ED-OP), difficulty, or keyword tag. Export any filtered view as a clean PDF for training or desk reference.</p>
+            <p>Searchable bank of abstraction scenarios with spec-grounded answers. Filter by measure set (Stroke, ED Throughput, HBIPS), difficulty, or keyword tag. Export any filtered view as a clean PDF for training or desk reference.</p>
           </div>
           <span class="tool-card-link">
             Open tool <i class="ph ph-arrow-right"></i>
@@ -684,7 +694,7 @@
           </div>
           <div>
             <h3>Tag System</h3>
-            <p>Built into the Q&amp;A Tool — every entry is tagged with the chart language abstractors actually use, organized by category (Stroke Timing, Treatment, Goals of Care, ED Throughput, and more). Browse by category, filter by tag, or suggest new tags for curator review.</p>
+            <p>Built into the Q&amp;A Tool — entries are tagged with the chart language abstractors actually use, organized by category. Browse by category, filter by tag, or suggest new tags for curator review.</p>
           </div>
           <span class="tool-card-link">
             Open Q&amp;A Tool → Tags <i class="ph ph-arrow-right"></i>
@@ -774,6 +784,20 @@
     </div>
   </section>
 
+  <!-- SHARE STRIP -->
+  <div style="background:#e6f5f4;border-top:1px solid #b2dedd;border-bottom:1px solid #b2dedd;padding:18px 24px;">
+    <div style="max-width:1040px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+      <div>
+        <div style="font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;color:#0d1f3c;margin-bottom:3px;">Share with your team</div>
+        <div style="font-size:13px;color:#3d4f62;line-height:1.5;">Free abstraction reference for core measure teams — Q&A lookup, LKW tool, and more.</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+        <code style="background:white;border:1px solid #b2dedd;border-radius:6px;padding:7px 14px;font-size:13px;color:#0b7a78;font-family:'DM Mono',monospace;white-space:nowrap;">https://abstractiondeskqa.com</code>
+        <button onclick="(()=>{navigator.clipboard.writeText('https://abstractiondeskqa.com');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy link',2000)})()" style="background:#0b7a78;color:white;border:none;border-radius:6px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif;" onmouseover="this.style.background='#0fa39f'" onmouseout="this.style.background='#0b7a78'">Copy link</button>
+      </div>
+    </div>
+  </div>
+
   <!-- DISCLAIMER -->
   <div class="disclaimer" role="note" aria-label="Educational disclaimer">
     <div class="disclaimer-inner">
@@ -818,7 +842,7 @@
   <div class="footer-inner">
     <div>
       <div class="footer-brand">AbstractionDesk<span style="color:var(--teal2)">QA</span></div>
-      <p>A free reference tool for core measure abstractors.<br>
+      <p>A free abstraction toolkit for core measure teams.<br>
       &copy; <span id="yr"></span> AbstractionDeskQA. Educational use only.</p>
     </div>
     <div class="footer-links">
