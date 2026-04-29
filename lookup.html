@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://abstractiondeskqa.com/lookup.html">
 <title>Stroke & ED Throughput · Q&A Bank</title>
 <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+3:wght@300;400;500;600;700&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
@@ -206,13 +207,13 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 
 <div class="bar">
   <div class="brand">
-    <a href="index.html" style="text-decoration:none;color:inherit;display:flex;align-items:baseline;gap:6px" aria-label="Back to AbstractionDeskQA home">
+    <a href="/" style="text-decoration:none;color:inherit;display:flex;align-items:baseline;gap:6px" aria-label="Back to AbstractionDeskQA home">
       <span class="brand-name">AbstractionDesk<em>QA</em></span>
     </a>
     <span class="brand-scope">Stroke &amp; ED Throughput · Q&amp;A Lookup</span>
   </div>
   <div class="bar-btns">
-    <a href="index.html" class="btn btn-ghost" style="text-decoration:none">← Home</a>
+    <a href="/" class="btn btn-ghost" style="text-decoration:none">← Home</a>
     <a href="lkw-tool.html" class="btn btn-ghost" style="text-decoration:none">LKW Tool</a>
     <a href="cmo-tool.html" class="btn btn-ghost" style="text-decoration:none">CMO Tool</a>
     <a href="hbips-tool.html" class="btn btn-ghost" style="text-decoration:none">HBIPS Tool</a>
@@ -952,6 +953,19 @@ function exportPDF(){
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),3500);}
 fetchFromSheets();
 </script>
+<!-- SHARE STRIP -->
+<div style="background:#e6f5f4;border-top:1px solid #b2dedd;border-bottom:1px solid #b2dedd;padding:18px 24px;">
+  <div style="max-width:1040px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+    <div>
+      <div style="font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;color:#0d1f3c;margin-bottom:3px;">Share with your team</div>
+      <div style="font-size:13px;color:#3d4f62;line-height:1.5;">Free abstraction reference for core measure teams — Q&A lookup, LKW tool, and more.</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+      <code style="background:white;border:1px solid #b2dedd;border-radius:6px;padding:7px 14px;font-size:13px;color:#0b7a78;font-family:'DM Mono',monospace;white-space:nowrap;">https://abstractiondeskqa.com</code>
+      <button onclick="(()=>{navigator.clipboard.writeText('https://abstractiondeskqa.com');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy link',2000)})()" style="background:#0b7a78;color:white;border:none;border-radius:6px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif;" onmouseover="this.style.background='#0fa39f'" onmouseout="this.style.background='#0b7a78'">Copy link</button>
+    </div>
+  </div>
+</div>
 <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="abstractiondeskqa" data-description="Support AbstractionDeskQA" data-message="Support ongoing development of this free reference tool." data-color="#0a7c7a" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
 </body>
 </html>
