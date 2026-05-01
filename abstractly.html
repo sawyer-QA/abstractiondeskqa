@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Abstractly — a word game for core measure abstractors. Guess the 5-letter clinical term in 6 tries. Built by AbstractionDeskQA.">
+<title>Abstractly — AbstractionDeskQA</title>
+<link rel="canonical" href="https://abstractiondeskqa.com/abstractly.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QJPP46JWX3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-QJPP46JWX3');
+</script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink:          #0f1923;
+    --ink-mid:      #3d4f62;
+    --ink-soft:     #6b7f94;
+    --canvas:       #f7f9fc;
+    --white:        #ffffff;
+    --navy:         #0d2240;
+    --teal:         #0a7c7a;
+    --teal2:        #0da8a5;
+    --teal-pale:    #e4f5f4;
+    --amber:        #8a5200;
+    --amber-bg:     #fff8ec;
+    --amber-border: #e8c060;
+    --border:       #dbe2ec;
+    --heading:      'DM Sans', sans-serif;
+    --body:         'Atkinson Hyperlegible', sans-serif;
+    --mono:         'DM Mono', monospace;
+    --radius:       10px;
+    --shadow:       0 4px 24px rgba(13,34,64,.09);
+    --shadow-sm:    0 2px 10px rgba(13,34,64,.06);
+    --max:          1040px;
+    --green:        #0a7c7a;
+    --green-light:  #e4f5f4;
+    --yellow:       #8a5200;
+    --yellow-light: #fff8ec;
+    --gray-tile:    #4a5568;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--body);
+    background: var(--canvas);
+    color: var(--ink);
+    line-height: 1.75;
+    font-size: 17px;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--teal); }
+  a:hover { text-decoration: underline; }
+  a:focus-visible, button:focus-visible {
+    outline: 3px solid var(--teal2);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* SKIP LINK */
+  .skip-link {
+    position: absolute; top: -60px; left: 16px; z-index: 999;
+    background: var(--navy); color: white; padding: 10px 18px;
+    border-radius: var(--radius); font-weight: 700; font-size: 15px;
+    transition: top .2s; text-decoration: none;
+  }
+  .skip-link:focus { top: 16px; }
+
+  /* NAV */
+  .nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 80;
+    box-shadow: var(--shadow-sm);
+  }
+  .nav-inner {
+    max-width: var(--max); margin: 0 auto; padding: 0 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 62px;
+  }
+  .nav-brand {
+    font-family: var(--heading);
+    font-size: 20px; font-weight: 700;
+    color: var(--navy); letter-spacing: -.3px;
+    display: flex; align-items: center; gap: 7px;
+    text-decoration: none;
+  }
+  .nav-brand:hover { text-decoration: none; }
+  .qa-badge {
+    background: var(--teal); color: white;
+    font-size: 10px; font-weight: 700; padding: 2px 7px;
+    border-radius: 4px; letter-spacing: .6px; font-family: var(--body);
+  }
+  .nav-links { display: flex; gap: 4px; align-items: center; }
+  .nav-link {
+    font-family: var(--body); font-size: 15px; font-weight: 400;
+    color: var(--ink-mid); padding: 7px 14px; border-radius: 6px;
+    transition: all .15s; border: none; background: none;
+    cursor: pointer; text-decoration: none;
+  }
+  .nav-link:hover { background: var(--teal-pale); color: var(--teal); text-decoration: none; }
+  .nav-cta-ghost {
+    background: transparent; color: var(--teal);
+    font-family: var(--body); font-size: 15px; font-weight: 700;
+    padding: 9px 20px; border-radius: 7px;
+    border: 2px solid var(--teal); cursor: pointer;
+    transition: all .15s; text-decoration: none; white-space: nowrap;
+  }
+  .nav-cta-ghost:hover { background: var(--teal); color: white; text-decoration: none; }
+  .nav-cta {
+    background: var(--teal); color: white;
+    font-family: var(--body); font-size: 15px; font-weight: 700;
+    padding: 9px 20px; border-radius: 7px; border: none;
+    cursor: pointer; transition: all .15s; text-decoration: none;
+    white-space: nowrap;
+  }
+  .nav-cta:hover { background: var(--teal2); text-decoration: none; color: white; }
+  .nav-active {
+    background: var(--teal-pale); color: var(--teal);
+    font-family: var(--body); font-size: 15px; font-weight: 700;
+    padding: 7px 14px; border-radius: 6px; text-decoration: none;
+  }
+
+  /* GAME HERO */
+  .game-hero {
+    background: var(--navy);
+    padding: 36px 24px 32px;
+    position: relative; overflow: hidden;
+  }
+  .game-hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 55% at 30% 0%, rgba(10,124,122,.25) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .game-hero-inner {
+    max-width: var(--max); margin: 0 auto; position: relative;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 24px; flex-wrap: wrap;
+  }
+  .game-hero-text {}
+  .game-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(13,168,165,.14); border: 1px solid rgba(13,168,165,.3);
+    color: var(--teal2); font-size: 12px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1.1px;
+    padding: 5px 14px; border-radius: 20px; margin-bottom: 14px;
+  }
+  .game-hero h1 {
+    font-family: var(--mono);
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 500; color: white;
+    letter-spacing: 0.2em; margin-bottom: 8px;
+  }
+  .game-hero-sub {
+    font-size: 15px; color: rgba(255,255,255,.65);
+    line-height: 1.6;
+  }
+  .game-hero-stats {
+    display: flex; gap: 28px; align-items: center;
+    flex-shrink: 0;
+  }
+  .hero-stat { text-align: center; }
+  .hero-stat-num {
+    font-family: var(--mono); font-size: 28px; font-weight: 500;
+    color: var(--teal2); display: block; line-height: 1;
+  }
+  .hero-stat-label {
+    font-size: 11px; color: rgba(255,255,255,.5);
+    text-transform: uppercase; letter-spacing: .8px; margin-top: 4px;
+  }
+
+  /* GAME AREA */
+  .game-area {
+    max-width: 520px; margin: 0 auto;
+    padding: 2rem 1rem 3rem;
+  }
+
+  /* HINT */
+  .hint-bar {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px 18px;
+    font-size: 14px;
+    color: var(--ink-mid);
+    text-align: center;
+    margin-bottom: 1rem;
+    line-height: 1.55;
+    box-shadow: var(--shadow-sm);
+  }
+  .hint-bar strong { color: var(--navy); font-weight: 700; }
+  .hint-label {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1.2px; color: var(--teal); margin-bottom: 3px;
+  }
+
+  /* MESSAGE */
+  .msg {
+    height: 24px; font-size: 13px; font-weight: 700;
+    text-align: center; color: var(--navy); margin-bottom: 8px;
+    font-family: var(--body);
+  }
+
+  /* BOARD */
+  .board-wrap { position: relative; width: fit-content; margin: 0 auto 1.25rem; }
+  .board { display: flex; flex-direction: column; gap: 5px; }
+  .row { display: flex; gap: 5px; }
+  .tile {
+    width: 56px; height: 56px;
+    border: 2px solid var(--border);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 22px; font-weight: 500;
+    color: var(--ink); text-transform: uppercase;
+    background: var(--white);
+    transition: border-color 0.1s;
+  }
+  .tile.filled { border-color: var(--ink-soft); }
+  .tile.correct { background: var(--teal); border-color: var(--teal); color: #fff; }
+  .tile.present { background: var(--amber); border-color: var(--amber); color: #fff; }
+  .tile.absent  { background: var(--gray-tile); border-color: var(--gray-tile); color: #fff; }
+  .tile.unused  { background: var(--canvas); border-color: var(--border); opacity: 0.4; }
+  .tile.shake { animation: shake 0.35s; }
+  .tile.pop { animation: pop 0.12s; }
+  .tile.flip { animation: flip 0.5s forwards; }
+  @keyframes shake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-6px)} 40%{transform:translateX(6px)} 60%{transform:translateX(-4px)} 80%{transform:translateX(4px)} }
+  @keyframes pop { 0%,100%{transform:scale(1)} 50%{transform:scale(1.13)} }
+  @keyframes flip { 0%{transform:rotateX(0)} 45%{transform:rotateX(-90deg)} 55%{transform:rotateX(-90deg)} 100%{transform:rotateX(0)} }
+
+  /* GAME OVER OVERLAY */
+  .game-over-overlay {
+    display: none; position: absolute; inset: 0;
+    background: rgba(247,249,252,0.88);
+    border-radius: 6px;
+    align-items: center; justify-content: center;
+    backdrop-filter: blur(3px);
+  }
+  .game-over-overlay.show { display: flex; }
+  .game-over-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 30px;
+    text-align: center;
+    box-shadow: var(--shadow);
+  }
+  .gob-label {
+    font-size: 10px; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--teal);
+    margin-bottom: 6px;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .gob-word {
+    font-family: var(--mono); font-size: 32px; font-weight: 500;
+    letter-spacing: 0.18em; color: var(--navy); margin-bottom: 10px;
+  }
+  .gob-hint {
+    font-size: 13px; color: var(--ink-mid);
+    max-width: 230px; line-height: 1.65;
+    margin: 0 auto;
+  }
+
+  /* STATS ROW */
+  .stats-row {
+    font-size: 13px; color: var(--ink-soft);
+    text-align: center; margin-bottom: 0.75rem;
+    display: flex; justify-content: center; gap: 20px;
+  }
+  .stat-item { display: flex; flex-direction: column; align-items: center; }
+  .stat-num {
+    font-family: var(--mono); font-size: 22px; font-weight: 500;
+    color: var(--navy); line-height: 1;
+  }
+  .stat-label {
+    font-size: 10px; text-transform: uppercase;
+    letter-spacing: .8px; color: var(--ink-soft); margin-top: 2px;
+  }
+
+  /* PLAY AGAIN */
+  .play-again {
+    display: none; margin: 0 auto 1.5rem;
+    padding: 11px 32px;
+    font-size: 15px; font-weight: 700;
+    font-family: var(--body);
+    border: 2px solid var(--teal);
+    border-radius: 8px;
+    background: transparent; color: var(--teal);
+    cursor: pointer; transition: all .15s;
+  }
+  .play-again:hover { background: var(--teal); color: white; }
+
+  /* KEYBOARD */
+  .keyboard { display: flex; flex-direction: column; gap: 6px; align-items: center; }
+  .kb-row { display: flex; gap: 5px; }
+  .key {
+    height: 54px; min-width: 38px; padding: 0 6px;
+    border: 1px solid var(--border); border-radius: 6px;
+    font-size: 14px; font-weight: 700; font-family: var(--body);
+    cursor: pointer; color: var(--ink);
+    background: var(--white);
+    display: flex; align-items: center; justify-content: center;
+    user-select: none; transition: background 0.1s;
+    text-transform: uppercase;
+  }
+  .key:hover { background: var(--teal-pale); color: var(--teal); }
+  .key.wide { min-width: 58px; font-size: 12px; }
+  .key.correct { background: var(--teal); border-color: var(--teal); color: #fff; }
+  .key.present { background: var(--amber); border-color: var(--amber); color: #fff; }
+  .key.absent  { background: var(--gray-tile); border-color: var(--gray-tile); color: #fff; }
+
+  /* LEGEND */
+  .legend {
+    display: flex; gap: 1.5rem; justify-content: center;
+    margin-top: 1.5rem; font-size: 12px;
+    color: var(--ink-mid); flex-wrap: wrap;
+  }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-dot { width: 14px; height: 14px; border-radius: 3px; }
+  .legend-dot.correct { background: var(--teal); }
+  .legend-dot.present { background: var(--amber); }
+  .legend-dot.absent  { background: var(--gray-tile); }
+
+  /* DISCLAIMER */
+  .disclaimer {
+    background: #eef2f8; border-top: 1px solid var(--border);
+    padding: 24px;
+  }
+  .disclaimer-inner {
+    max-width: var(--max); margin: 0 auto;
+    font-size: 13px; color: var(--ink-soft); line-height: 1.75;
+  }
+
+  /* FOOTER */
+  footer {
+    background: #07131f;
+    color: rgba(255,255,255,.45);
+    padding: 28px 24px;
+  }
+  .footer-inner {
+    max-width: var(--max); margin: 0 auto;
+    display: flex; align-items: center;
+    justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  }
+  .footer-brand {
+    font-family: var(--heading); font-size: 16px;
+    font-weight: 700; color: rgba(255,255,255,.7); margin-bottom: 4px;
+  }
+  footer p { font-size: 13px; line-height: 1.65; }
+  footer a { color: var(--teal2); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+  .footer-links { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; }
+
+  @media(max-width: 640px) {
+    .nav-links .nav-link { display: none; }
+    .game-hero-stats { display: none; }
+    .footer-inner { flex-direction: column; gap: 12px; }
+    .tile { width: 48px; height: 48px; font-size: 19px; }
+    .key { height: 48px; min-width: 32px; }
+    .key.wide { min-width: 48px; font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<!-- NAV -->
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="/" class="nav-brand" aria-label="AbstractionDeskQA home">
+      AbstractionDesk<span class="qa-badge">QA</span>
+    </a>
+    <div class="nav-links">
+      <a href="/" class="nav-link">Home</a>
+      <a href="lkw-tool.html" class="nav-cta-ghost">LKW Tool</a>
+      <a href="cmo-tool.html" class="nav-cta-ghost">CMO Tool</a>
+      <a href="hbips-tool.html" class="nav-cta-ghost">HBIPS Tool</a>
+      <a href="lookup.html" class="nav-cta">Q&amp;A Tool</a>
+    </div>
+  </div>
+</nav>
+
+<!-- GAME HERO -->
+<div class="game-hero">
+  <div class="game-hero-inner">
+    <div class="game-hero-text">
+      <div class="game-eyebrow">
+        <i class="ph ph-game-controller" style="font-size:13px;"></i>
+        Word Game
+      </div>
+      <h1>ABSTRACTLY</h1>
+      <p class="game-hero-sub">Guess the 5-letter clinical term · 6 tries · Spec-grounded hints</p>
+    </div>
+    <div class="game-hero-stats">
+      <div class="hero-stat">
+        <span class="hero-stat-num" id="h-streak">0</span>
+        <div class="hero-stat-label">Streak</div>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num" id="h-played">0</span>
+        <div class="hero-stat-label">Played</div>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num" id="h-won">0</span>
+        <div class="hero-stat-label">Won</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+<div class="game-area">
+
+  <div class="hint-bar" id="hint-bar">
+    <div class="hint-label">Hint</div>
+    <span id="hint-text"></span>
+  </div>
+
+  <div class="msg" id="msg"></div>
+
+  <div class="board-wrap">
+    <div class="board" id="board"></div>
+    <div class="game-over-overlay" id="game-over-overlay">
+      <div class="game-over-card">
+        <div class="gob-label" id="gob-label"></div>
+        <div class="gob-word" id="gob-word"></div>
+        <div class="gob-hint" id="gob-hint"></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-bottom:1rem;">
+    <button class="play-again" id="play-again">Play again →</button>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-item">
+      <span class="stat-num" id="streak">0</span>
+      <span class="stat-label">Streak</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num" id="played">0</span>
+      <span class="stat-label">Played</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num" id="won">0</span>
+      <span class="stat-label">Won</span>
+    </div>
+  </div>
+
+  <div class="keyboard" id="keyboard"></div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot correct"></div> Correct spot</div>
+    <div class="legend-item"><div class="legend-dot present"></div> Wrong spot</div>
+    <div class="legend-item"><div class="legend-dot absent"></div> Not in word</div>
+  </div>
+
+</div>
+</main>
+
+<!-- DISCLAIMER -->
+<div class="disclaimer" role="note">
+  <div class="disclaimer-inner">
+    <strong>Educational use only.</strong>
+    Abstractly is a vocabulary training game for core measure abstractors. It is not a substitute for the official TJC or CMS Specifications Manual.
+    Always verify abstraction decisions against current specifications. &nbsp;·&nbsp; <a href="/">Back to AbstractionDeskQA</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer role="contentinfo">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">AbstractionDesk<span style="color:var(--teal2)">QA</span></div>
+      <p>A free abstraction toolkit for core measure teams.<br>
+      &copy; <span id="yr"></span> AbstractionDeskQA. Educational use only.</p>
+    </div>
+    <div class="footer-links">
+      <a href="lookup.html">Q&amp;A Lookup</a>
+      <a href="lkw-tool.html">LKW Tool</a>
+      <a href="cmo-tool.html">CMO Tool</a>
+      <a href="hbips-tool.html">HBIPS Tool</a>
+      <a href="abstractly.html">Abstractly</a>
+      <a href="#feedback">Feedback</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const WORDS = [
+  { word:"ONSET", hint:"Time symptoms began; used to establish last known well in stroke cases" },
+  { word:"CHART", hint:"Primary record reviewed to extract data elements for abstraction" },
+  { word:"NOTES", hint:"Provider or nursing documentation used to support abstraction decisions" },
+  { word:"ORDER", hint:"Provider directive required before most interventions count toward compliance" },
+  { word:"ENTRY", hint:"Dated and timed documentation unit used for abstraction review" },
+  { word:"QUERY", hint:"Clarification requested when documentation is conflicting or incomplete" },
+  { word:"VALID", hint:"Documentation must meet this standard to count toward the numerator" },
+  { word:"ERROR", hint:"Occurs when abstraction misses required timing or documentation elements" },
+  { word:"AUDIT", hint:"Triggered when abstraction accuracy or rates fall below threshold" },
+  { word:"TRACE", hint:"Used to track a data element back to its source when documentation conflicts" },
+  { word:"PULSE", hint:"Vital sign documented in flow sheets used to assess patient stability" },
+  { word:"SCALE", hint:"Standardized tool like pain or fall risk used in nursing assessments" },
+  { word:"SCORE", hint:"Numeric assessment result such as NIHSS used in stroke abstraction" },
+  { word:"ALERT", hint:"Mental status descriptor documented in neuro and nursing exams" },
+  { word:"AWAKE", hint:"Level of consciousness documented to support assessment findings" },
+  { word:"ACUTE", hint:"Defines the active phase of illness for measure inclusion" },
+  { word:"STAGE", hint:"Severity classification used in wounds or chronic conditions" },
+  { word:"BRAIN", hint:"Imaging target organ in stroke measures before treatment decisions" },
+  { word:"CLOTS", hint:"Target of thrombolytic therapy in stroke and VTE cases" },
+  { word:"NEURO", hint:"Exam documenting deficits required for stroke measure compliance" },
+  { word:"MOTOR", hint:"Limb function assessment used in neurological evaluation scoring" },
+  { word:"SPEAK", hint:"Speech deficit documented as part of stroke presentation" },
+  { word:"NERVE", hint:"Cranial nerve assessment supporting neurological findings" },
+  { word:"FOCUS", hint:"Focal deficit used to localize neurological injury" },
+  { word:"HEART", hint:"Primary organ involved in STEMI and heart failure measures" },
+  { word:"SHOCK", hint:"Hemodynamic state triggering urgent intervention in sepsis or cardiac cases" },
+  { word:"STENT", hint:"Procedure documented to confirm coronary intervention in STEMI cases" },
+  { word:"CHEST", hint:"Presenting complaint that may trigger cardiac workup measures" },
+  { word:"BLOCK", hint:"ECG finding indicating conduction abnormality" },
+  { word:"LEADS", hint:"ECG tracing used to identify STEMI patterns" },
+  { word:"FLUID", hint:"SEP-1 requires this volume before vasopressors when hypotension persists" },
+  { word:"PRESS", hint:"Blood pressure value used to determine need for sepsis interventions" },
+  { word:"ORGAN", hint:"Dysfunction used to define severity in sepsis criteria" },
+  { word:"FAILS", hint:"Indicates organ failure required for severe sepsis classification" },
+  { word:"BLOOD", hint:"Cultures must be drawn before antibiotics to meet SEP-1 compliance" },
+  { word:"FEVER", hint:"Temperature elevation that may trigger sepsis screening protocols" },
+  { word:"LITER", hint:"Unit used to document fluid resuscitation volume in SEP-1" },
+  { word:"SWABS", hint:"Specimens collected to identify infection source before treatment" },
+  { word:"DOSES", hint:"Medication amounts documented in MAR affecting compliance" },
+  { word:"DRIPS", hint:"Continuous infusions requiring precise timing documentation" },
+  { word:"PILLS", hint:"Oral medications documented in MAR for treatment tracking" },
+  { word:"ROUTE", hint:"Administration path required for medication documentation validity" },
+  { word:"GIVEN", hint:"Status indicating medication was administered per MAR" },
+  { word:"START", hint:"Time zero for treatment used to calculate compliance windows" },
+  { word:"TAPER", hint:"Dose reduction plan documented in medication orders" },
+  { word:"FLUSH", hint:"Saline administration documented to maintain IV line patency" },
+  { word:"RENAL", hint:"Kidney function impacting medication dosing and exclusions" },
+  { word:"FORMS", hint:"Standard documents used to capture required abstraction elements" },
+  { word:"POLST", hint:"End-of-life directive form impacting treatment decisions" },
+  { word:"SIGNS", hint:"Vital measurements documented across patient encounters" },
+  { word:"TIMES", hint:"Required timestamps used to calculate measure compliance" },
+  { word:"DATES", hint:"Documentation elements required to validate timing of care" },
+  { word:"PROOF", hint:"Supporting documentation used to justify abstraction decisions" },
+  { word:"FLAGS", hint:"Warnings raised when documentation may not meet criteria" },
+  { word:"RULES", hint:"Spec-defined logic governing inclusion and exclusion" },
+  { word:"STAMP", hint:"Missing this makes documentation ineligible for abstraction" },
+  { word:"DRAFT", hint:"Unsigned note that cannot count toward compliance" },
+  { word:"FILED", hint:"Document officially included in the medical record" },
+  { word:"TALLY", hint:"Running total used for restraint or timing calculations" },
+  { word:"CODES", hint:"Diagnosis codes determining denominator inclusion" },
+  { word:"READS", hint:"Final radiology interpretation required for imaging measures" },
+  { word:"HOLDS", hint:"Restraint or seclusion events tracked for HBIPS reporting" },
+  { word:"WATCH", hint:"Observation level documented for patient safety monitoring" },
+  { word:"STAFF", hint:"Personnel documentation sometimes required in event review" },
+  { word:"HOURS", hint:"Unit used to total restraint or seclusion duration" },
+  { word:"SLEEP", hint:"Rest patterns documented in behavioral health settings" },
+  { word:"MOODS", hint:"Behavioral observations recorded in psychiatric notes" },
+  { word:"RESTS", hint:"Sleep or rest entries supporting behavioral documentation" },
+  { word:"ADMIT", hint:"Inpatient status that begins the measure period" },
+  { word:"DELAY", hint:"Gap that can push a case outside required time thresholds" },
+  { word:"FIRST", hint:"Earliest documented event used to anchor timelines" },
+  { word:"FINAL", hint:"Attending-confirmed diagnosis used for abstraction logic" },
+  { word:"PRIOR", hint:"History that may exclude a case from the denominator" },
+  { word:"AFTER", hint:"Post-intervention timing used to evaluate compliance" },
+  { word:"READY", hint:"Documented status indicating discharge criteria met" },
+  { word:"TESTS", hint:"Diagnostic orders supporting clinical decision-making in measures" },
+  { word:"SCANS", hint:"Imaging required before treatment decisions in stroke cases" },
+  { word:"VALUE", hint:"Numeric result abstracted from labs or vitals" },
+  { word:"LEVEL", hint:"Measured quantity used to assess treatment response" },
+  { word:"RANGE", hint:"Reference interval used to interpret lab results" },
+  { word:"COUNT", hint:"Cell count or lab value used in clinical criteria" },
+  { word:"PANEL", hint:"Grouped lab tests ordered together for evaluation" },
+  { word:"CHECK", hint:"Manual validation step before abstraction submission" },
+  { word:"LOGIC", hint:"Spec rule determining if a case meets inclusion criteria" },
+  { word:"DIALS", hint:"Ventilator or pump settings documented in ICU flow sheets" },
+  { word:"PAGED", hint:"Physician contact event that may support response time documentation" },
+  { word:"PRINT", hint:"Hard-copy record used when EHR documentation is unavailable" },
+  { word:"TYPED", hint:"Electronic entry format required for order validity in most EHRs" },
+  { word:"FALLS", hint:"Incident requiring documentation review in safety measure abstraction" },
+  { word:"CLAMP", hint:"Surgical action documented in operative notes for procedure review" },
+  { word:"SHUNT", hint:"Neurosurgical diversion documented in operative and neuro notes" },
+  { word:"WALKS", hint:"Ambulation status documented to support functional assessment" },
+  { word:"STROKE", hint:"Diagnosis triggering the STK measure set and LKW abstraction" },
+  { word:"BOLUS", hint:"Rapid IV dose required in sepsis fluid resuscitation documentation" },
+];
+
+const ROWS = 6, COLS = 5;
+let target, hint, currentRow, currentCol, board, gameOver, keyStates;
+let streak = 0, played = 0, won = 0;
+
+function pickWord() {
+  // filter to only 5-letter words
+  const pool = WORDS.filter(w => w.word.length === COLS);
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
+function syncStats() {
+  ['streak','played','won'].forEach(id => {
+    document.getElementById(id).textContent = eval(id);
+    const hEl = document.getElementById('h-' + id);
+    if (hEl) hEl.textContent = eval(id);
+  });
+}
+
+function init() {
+  const picked = pickWord();
+  target = picked.word.toUpperCase();
+  hint = picked.hint;
+  currentRow = 0; currentCol = 0; gameOver = false;
+  board = Array.from({length: ROWS}, () => Array(COLS).fill(''));
+  keyStates = {};
+  document.getElementById('hint-text').textContent = hint;
+  document.getElementById('msg').textContent = '';
+  document.getElementById('game-over-overlay').classList.remove('show');
+  document.getElementById('play-again').style.display = 'none';
+  renderBoard();
+  renderKeyboard();
+  syncStats();
+}
+
+function renderBoard() {
+  const el = document.getElementById('board');
+  el.innerHTML = '';
+  for (let r = 0; r < ROWS; r++) {
+    const row = document.createElement('div');
+    row.className = 'row';
+    for (let c = 0; c < COLS; c++) {
+      const tile = document.createElement('div');
+      tile.className = 'tile';
+      tile.id = `t-${r}-${c}`;
+      row.appendChild(tile);
+    }
+    el.appendChild(row);
+  }
+}
+
+function renderKeyboard() {
+  const rows = [
+    ['Q','W','E','R','T','Y','U','I','O','P'],
+    ['A','S','D','F','G','H','J','K','L'],
+    ['ENTER','Z','X','C','V','B','N','M','⌫']
+  ];
+  const kb = document.getElementById('keyboard');
+  kb.innerHTML = '';
+  rows.forEach(row => {
+    const rowEl = document.createElement('div');
+    rowEl.className = 'kb-row';
+    row.forEach(k => {
+      const btn = document.createElement('div');
+      const isWide = k.length > 1;
+      btn.className = 'key' + (isWide ? ' wide' : '');
+      btn.textContent = k;
+      btn.id = 'key-' + k;
+      btn.setAttribute('role', 'button');
+      btn.setAttribute('tabindex', '0');
+      btn.addEventListener('click', () => handleKey(k));
+      rowEl.appendChild(btn);
+    });
+    kb.appendChild(rowEl);
+  });
+}
+
+function updateTile(r, c, letter) {
+  const tile = document.getElementById(`t-${r}-${c}`);
+  tile.textContent = letter;
+  if (letter) {
+    tile.classList.add('filled', 'pop');
+    setTimeout(() => tile.classList.remove('pop'), 150);
+  } else {
+    tile.classList.remove('filled');
+  }
+}
+
+function showMsg(txt, dur) {
+  const el = document.getElementById('msg');
+  el.textContent = txt;
+  if (dur) setTimeout(() => { if (el.textContent === txt) el.textContent = ''; }, dur);
+}
+
+function shakeRow(r) {
+  for (let c = 0; c < COLS; c++) {
+    const t = document.getElementById(`t-${r}-${c}`);
+    t.classList.add('shake');
+    setTimeout(() => t.classList.remove('shake'), 400);
+  }
+}
+
+function revealRow(r, result) {
+  for (let c = 0; c < COLS; c++) {
+    const t = document.getElementById(`t-${r}-${c}`);
+    setTimeout(() => {
+      t.classList.add('flip');
+      setTimeout(() => { t.classList.remove('flip'); t.classList.add(result[c]); }, 250);
+    }, c * 110);
+  }
+}
+
+function dimUnusedRows(fromRow) {
+  for (let r = fromRow; r < ROWS; r++) {
+    for (let c = 0; c < COLS; c++) {
+      document.getElementById(`t-${r}-${c}`).classList.add('unused');
+    }
+  }
+}
+
+function showGameOver(isWin) {
+  const winMsgs = ['Spec-perfect!','Excellent abstraction!','Right on the measure!','Brilliant!'];
+  document.getElementById('gob-label').innerHTML = isWin
+    ? '<i class="ph ph-check-circle" style="font-size:14px;color:var(--teal)"></i> ' + winMsgs[Math.floor(Math.random()*winMsgs.length)]
+    : 'The answer was';
+  document.getElementById('gob-word').textContent = target;
+  document.getElementById('gob-hint').textContent = hint;
+  document.getElementById('game-over-overlay').classList.add('show');
+}
+
+function scoreGuess(guess) {
+  const result = Array(COLS).fill('absent');
+  const tArr = target.split(''), gArr = guess.split('');
+  const used = Array(COLS).fill(false);
+  for (let i = 0; i < COLS; i++) {
+    if (gArr[i] === tArr[i]) { result[i] = 'correct'; used[i] = true; }
+  }
+  for (let i = 0; i < COLS; i++) {
+    if (result[i] === 'correct') continue;
+    for (let j = 0; j < COLS; j++) {
+      if (!used[j] && gArr[i] === tArr[j]) { result[i] = 'present'; used[j] = true; break; }
+    }
+  }
+  return result;
+}
+
+function updateKeys(guess, result) {
+  const priority = { correct: 3, present: 2, absent: 1 };
+  guess.split('').forEach((k, i) => {
+    if (!keyStates[k] || priority[result[i]] > priority[keyStates[k]]) keyStates[k] = result[i];
+    const btn = document.getElementById('key-' + k);
+    if (btn) {
+      const isWide = btn.classList.contains('wide');
+      btn.className = 'key' + (isWide ? ' wide' : '') + (keyStates[k] ? ' ' + keyStates[k] : '');
+    }
+  });
+}
+
+function handleKey(k) {
+  if (gameOver) return;
+  if (k === '⌫' || k === 'Backspace') {
+    if (currentCol > 0) {
+      currentCol--;
+      board[currentRow][currentCol] = '';
+      updateTile(currentRow, currentCol, '');
+    }
+    return;
+  }
+  if (k === 'ENTER' || k === 'Enter') {
+    if (currentCol < COLS) { showMsg('Not enough letters', 1200); shakeRow(currentRow); return; }
+    const guess = board[currentRow].join('');
+    const result = scoreGuess(guess);
+    revealRow(currentRow, result);
+    updateKeys(guess, result);
+    const isWin = result.every(r => r === 'correct');
+    currentRow++; currentCol = 0;
+    setTimeout(() => {
+      played++;
+      if (isWin) {
+        won++; streak++;
+        dimUnusedRows(currentRow);
+        showGameOver(true);
+        gameOver = true;
+      } else if (currentRow === ROWS) {
+        streak = 0;
+        showGameOver(false);
+        gameOver = true;
+      }
+      if (gameOver) document.getElementById('play-again').style.display = 'inline-block';
+      syncStats();
+    }, COLS * 110 + 400);
+    return;
+  }
+  if (/^[A-Za-z]$/.test(k) && currentCol < COLS) {
+    board[currentRow][currentCol] = k.toUpperCase();
+    updateTile(currentRow, currentCol, k.toUpperCase());
+    currentCol++;
+  }
+}
+
+document.addEventListener('keydown', e => {
+  if (e.ctrlKey || e.metaKey || e.altKey) return;
+  if (e.key === 'Backspace') handleKey('Backspace');
+  else if (e.key === 'Enter') handleKey('Enter');
+  else if (/^[a-zA-Z]$/.test(e.key)) handleKey(e.key);
+});
+
+document.getElementById('play-again').addEventListener('click', init);
+document.getElementById('yr').textContent = new Date().getFullYear();
+init();
+</script>
+
+<script data-name="BMC-Widget"
+  data-cfasync="false"
+  src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
+  data-id="abstractiondeskqa"
+  data-description="Support AbstractionDeskQA"
+  data-message="If this tool helped you, consider supporting its development ☕"
+  data-color="#0a7c7a"
+  data-position="Right"
+  data-x_margin="18"
+  data-y_margin="18">
+</script>
+</body>
+</html>
