@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Interactive SEP-1 event timeline and Time Zero (SSPT) review tool for CMS sepsis measure abstraction. Auto-detects SIRS, organ dysfunction, and bundle elements.">
+<link rel="canonical" href="https://abstractiondeskqa.com/sep1-tool.html">
+<title>SEP-1 Timeline & Time Zero Review · AbstractionDeskQA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QJPP46JWX3"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-QJPP46JWX3');</script>
+<style>
+:root {
+  --bg:#f5f4f0;--surface:#fff;--border:#e0ddd6;--border2:#ccc9c0;
+  --text:#1c1b18;--text2:#5c5a52;--text3:#9c9a90;
+  --mono:'DM Mono',monospace;--sans:'DM Sans',sans-serif;--r:8px;
+  --c-sirs:#1d6fa4;--c-sirs-bg:#e8f3fb;--c-sirs-b:#a8d4ee;
+  --c-od:#b45309;--c-od-bg:#fef3e2;--c-od-b:#f9c672;
+  --c-bundle:#166534;--c-bundle-bg:#f0fdf4;--c-bundle-b:#86efac;
+  --c-shock:#991b1b;--c-shock-bg:#fef2f2;--c-shock-b:#fca5a5;
+  --c-other:#4b5563;--c-other-bg:#f3f4f6;--c-other-b:#d1d5db;
+  --c-tz:#4338ca;--c-tz-bg:#eef2ff;--c-tz-b:#a5b4fc;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);font-size:14px;line-height:1.5;min-height:100vh;padding:0 24px 80px;}
+.page{max-width:780px;margin:0 auto;}
+
+.hdr{margin-bottom:28px;}
+.hdr h1{font-family:var(--mono);font-size:17px;font-weight:500;letter-spacing:-.01em;color:var(--text);margin-bottom:4px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.hdr h1 span{font-size:10px;color:var(--text3);background:var(--border);border-radius:4px;padding:2px 7px;letter-spacing:.05em;font-weight:400;}
+.hdr p{font-size:13px;color:var(--text2);}
+
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:14px;}
+.card-label{font-family:var(--mono);font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);margin-bottom:14px;}
+
+/* rows */
+.ev-rows{display:flex;flex-direction:column;gap:6px;margin-bottom:12px;}
+.ev-row{display:grid;grid-template-columns:100px 1fr 28px;gap:6px;align-items:center;}
+.ev-row input[type=time]{height:36px;border:1px solid var(--border2);border-radius:var(--r);background:var(--bg);padding:0 8px;font-family:var(--sans);font-size:13px;color:var(--text);outline:none;width:100%;min-width:0;transition:border-color .12s;}
+.ev-row input[type=time]:focus{border-color:#93c5fd;background:var(--surface);}
+.ev-desc-wrap{position:relative;display:flex;align-items:center;min-width:0;}
+.ev-row input[type=text]{height:36px;border:1px solid var(--border2);border-radius:var(--r);background:var(--bg);padding:0 10px;padding-right:96px;font-family:var(--sans);font-size:13px;color:var(--text);outline:none;width:100%;min-width:0;transition:border-color .12s;}
+.ev-row input[type=text]:focus{border-color:#93c5fd;background:var(--surface);}
+.ev-row input[type=text]::placeholder{color:var(--text3);font-size:12px;}
+
+.type-badge{position:absolute;right:6px;font-family:var(--mono);font-size:9px;font-weight:500;padding:3px 7px;border-radius:4px;letter-spacing:.04em;cursor:pointer;user-select:none;white-space:nowrap;border:1px solid transparent;transition:opacity .12s;}
+.type-badge:hover{opacity:.75;}
+.type-badge::after{content:' ▾';font-size:8px;opacity:.6;}
+
+.type-picker{position:fixed;background:var(--surface);border:1px solid var(--border2);border-radius:var(--r);box-shadow:0 4px 16px rgba(0,0,0,.12);z-index:200;overflow:hidden;min-width:170px;display:none;}
+.tpo{display:flex;align-items:center;gap:8px;padding:8px 12px;cursor:pointer;font-size:12px;color:var(--text2);transition:background .08s;}
+.tpo:hover{background:var(--bg);}
+.tpo-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+
+.rm-btn{width:28px;height:28px;border:none;background:none;color:var(--text3);cursor:pointer;border-radius:6px;font-size:18px;line-height:1;display:flex;align-items:center;justify-content:center;transition:background .1s,color .1s;flex-shrink:0;}
+.rm-btn:hover{background:#fee2e2;color:#dc2626;}
+.add-row-btn{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 14px;border:1px dashed var(--border2);border-radius:var(--r);background:none;color:var(--text3);font-family:var(--sans);font-size:12px;cursor:pointer;transition:border-color .12s,color .12s;}
+.add-row-btn:hover{border-color:#93c5fd;color:var(--c-sirs);}
+
+/* tz */
+.tz-section{margin-top:16px;padding-top:16px;border-top:1px solid var(--border);}
+.tz-grid{display:grid;grid-template-columns:100px 1fr;gap:6px;align-items:start;}
+.tz-grid input[type=time]{height:36px;border:1px solid var(--c-tz-b);border-radius:var(--r);background:var(--c-tz-bg);padding:0 8px;font-family:var(--sans);font-size:13px;color:var(--c-tz);outline:none;width:100%;}
+.tz-grid input[type=time]:focus{border-color:var(--c-tz);}
+.tz-right{display:flex;flex-direction:column;gap:5px;}
+.tz-label-row{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:500;color:var(--c-tz);}
+.tz-hint{font-size:11px;color:var(--text3);font-weight:400;}
+.tz-right select{height:30px;border:1px solid var(--border2);border-radius:var(--r);background:var(--bg);padding:0 8px;font-family:var(--sans);font-size:12px;color:var(--text2);outline:none;width:100%;}
+
+.build-btn{width:100%;height:44px;margin-top:18px;border:none;border-radius:var(--r);background:var(--text);color:#fff;font-family:var(--mono);font-size:13px;font-weight:500;cursor:pointer;letter-spacing:.04em;transition:opacity .15s;}
+.build-btn:hover{opacity:.82;}
+
+/* output */
+.output{display:none;}
+.output.visible{display:block;}
+
+/* reasoning */
+.tz-reasoning{background:var(--c-tz-bg);border:1px solid var(--c-tz-b);border-radius:12px;padding:16px 18px;margin-bottom:14px;}
+.tz-r-title{font-family:var(--mono);font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.07em;color:var(--c-tz);margin-bottom:10px;}
+.tz-r-main{font-size:13px;font-weight:500;color:var(--c-tz);margin-bottom:10px;}
+.tz-check{display:flex;gap:7px;margin-bottom:5px;font-size:12px;align-items:flex-start;}
+.tz-check-icon{flex-shrink:0;margin-top:1px;}
+.sirs-list{margin-top:8px;padding-top:8px;border-top:1px solid var(--c-tz-b);}
+.sirs-list-title{font-size:11px;font-weight:500;color:var(--c-tz);margin-bottom:4px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em;}
+.sirs-ev{font-size:11px;color:var(--text2);display:flex;gap:6px;margin-bottom:2px;}
+
+/* recognized */
+.recog-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 22px;margin-bottom:14px;}
+.recog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin-top:12px;}
+.recog-item{display:flex;align-items:flex-start;gap:8px;font-size:12px;padding:7px 10px;border-radius:var(--r);border:1px solid var(--border);}
+.recog-item.found{border-color:var(--c-bundle-b);background:var(--c-bundle-bg);color:var(--c-bundle);}
+.recog-item.found-warn{border-color:var(--c-od-b);background:var(--c-od-bg);color:var(--c-od);}
+.recog-item.missing{border-color:var(--border);color:var(--text3);}
+.recog-icon{flex-shrink:0;margin-top:1px;}
+.recog-detail{display:flex;flex-direction:column;gap:1px;}
+.recog-label{font-weight:500;}
+.recog-sub{font-size:10px;opacity:.8;font-family:var(--mono);}
+.recog-warn{font-size:10px;color:var(--c-od);font-family:var(--mono);}
+
+/* timeline */
+.tl-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px 22px 14px;margin-bottom:14px;}
+.tl-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+.tl-top-label{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);}
+.tz-badge{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--c-tz);background:var(--c-tz-bg);border:1px solid var(--c-tz-b);border-radius:5px;padding:3px 9px;}
+.tl-ev{display:grid;grid-template-columns:64px 18px 1fr;gap:0 10px;min-height:48px;}
+.tl-ev-time{font-family:var(--mono);font-size:12px;color:var(--text2);padding-top:10px;text-align:right;line-height:1.3;}
+.tl-ev-delta{font-size:10px;color:var(--text3);}
+.tl-spine{display:flex;flex-direction:column;align-items:center;}
+.tl-dot{width:11px;height:11px;border-radius:50%;margin-top:12px;flex-shrink:0;z-index:2;}
+.tl-ev.is-tz .tl-dot{width:15px;height:15px;margin-top:10px;}
+.tl-seg{width:2px;flex:1;background:var(--border);margin-top:3px;}
+.tl-ev:last-child .tl-seg{display:none;}
+.tl-ev-body{padding:8px 0 12px;}
+.tl-chip{font-family:var(--mono);font-size:9px;font-weight:500;padding:2px 6px;border-radius:3px;letter-spacing:.04em;display:inline-block;margin-bottom:3px;}
+.tl-ev-text{font-size:13px;font-weight:500;color:var(--text);}
+.tl-ev.is-tz .tl-ev-text{color:var(--c-tz);}
+.tl-ev-note{font-size:11px;color:var(--text2);margin-top:2px;}
+.tl-ev-warn{font-size:10px;color:var(--c-od);margin-top:2px;font-family:var(--mono);}
+
+/* windows */
+.win-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 22px;margin-bottom:14px;}
+.win-row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:10px 12px;border-radius:var(--r);margin-bottom:8px;font-size:13px;}
+.win-row:last-child{margin-bottom:0;}
+.win-3h{background:#fffbeb;border:1px solid #fcd34d;}
+.win-6h{background:#eef2ff;border:1px solid #a5b4fc;}
+.w-label{font-weight:500;}
+.w-range{font-family:var(--mono);font-size:11px;color:var(--text3);}
+
+/* bundle */
+.bundle-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 22px;margin-bottom:14px;}
+.bundle-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:12px;}
+.bundle-col-title{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin-bottom:8px;}
+.bi{display:flex;align-items:flex-start;gap:7px;padding:6px 0;border-bottom:1px solid var(--border);font-size:12px;}
+.bi:last-child{border-bottom:none;}
+.bi-left{display:flex;flex-direction:column;flex:1;}
+.bi-label{color:var(--text2);}
+.bi-sub{font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:1px;}
+.bi-warn{font-family:var(--mono);font-size:10px;color:var(--c-od);margin-top:1px;}
+.bi-result{font-family:var(--mono);font-size:10px;font-weight:500;padding:2px 6px;border-radius:3px;white-space:nowrap;flex-shrink:0;}
+.res-pass{background:var(--c-bundle-bg);color:var(--c-bundle);}
+.res-fail{background:var(--c-shock-bg);color:var(--c-shock);}
+.res-na{background:var(--c-other-bg);color:var(--c-other);}
+
+/* color helpers */
+.chip-sirs{background:var(--c-sirs-bg);color:var(--c-sirs);}
+.chip-od{background:var(--c-od-bg);color:var(--c-od);}
+.chip-bundle{background:var(--c-bundle-bg);color:var(--c-bundle);}
+.chip-shock{background:var(--c-shock-bg);color:var(--c-shock);}
+.chip-other{background:var(--c-other-bg);color:var(--c-other);}
+.chip-tz{background:var(--c-tz-bg);color:var(--c-tz);}
+.dot-sirs{background:var(--c-sirs);}
+.dot-od{background:var(--c-od);}
+.dot-bundle{background:var(--c-bundle);}
+.dot-shock{background:var(--c-shock);}
+.dot-other{background:var(--c-other);}
+.dot-tz{background:var(--c-tz);}
+.badge-sirs{background:var(--c-sirs-bg);color:var(--c-sirs);}
+.badge-od{background:var(--c-od-bg);color:var(--c-od);}
+.badge-bundle{background:var(--c-bundle-bg);color:var(--c-bundle);}
+.badge-shock{background:var(--c-shock-bg);color:var(--c-shock);}
+.badge-other{background:var(--c-other-bg);color:var(--c-other);}
+
+.footnote{font-size:11px;color:var(--text3);line-height:1.6;border-top:1px solid var(--border);padding-top:12px;margin-top:4px;}
+
+/* ── HOW TO USE BOX ── */
+.how-box{background:var(--c-tz-bg);border:1px solid var(--c-tz-b);border-radius:10px;margin-bottom:16px;overflow:hidden;}
+.how-box-hdr{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;cursor:pointer;user-select:none;}
+.how-box-hdr:hover{background:rgba(67,56,202,.06);}
+.how-box-title{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--c-tz);display:flex;align-items:center;gap:7px;}
+.how-icon{font-size:14px;}
+.how-toggle{font-size:13px;color:var(--c-tz);transition:transform .2s;}
+.how-toggle.open{transform:rotate(180deg);}
+.how-box-body{padding:0 16px 14px;display:none;}
+.how-box-body.open{display:block;}
+.how-box-body p{font-size:12.5px;color:#2d2b88;line-height:1.65;margin-bottom:10px;}
+.how-tips{display:flex;flex-direction:column;gap:6px;margin:10px 0 12px;}
+.how-tip{display:flex;align-items:flex-start;gap:8px;font-size:12px;color:#2d2b88;line-height:1.5;}
+.how-tip .how-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;margin-top:3px;}
+.how-note{font-size:11px;color:var(--c-tz);font-style:italic;margin-bottom:0!important;}
+
+/* ── SITE NAV BAR ── */
+.site-bar{background:#0d1f3c;color:white;height:50px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;position:sticky;top:0;z-index:90;box-shadow:0 2px 10px rgba(0,0,0,.3);font-family:var(--sans);}
+.site-brand{display:flex;align-items:baseline;gap:8px;text-decoration:none;color:inherit;}
+.site-brand-name{font-size:17px;font-weight:700;color:white;}
+.site-brand-name em{color:#0da8a5;font-style:normal;}
+.site-brand-scope{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.4px;color:rgba(255,255,255,.35);}
+.site-bar-btns{display:flex;gap:5px;flex-wrap:wrap;}
+.sbn{font-family:var(--sans);font-size:11.5px;font-weight:600;padding:5px 12px;border-radius:5px;cursor:pointer;transition:all .13s;background:rgba(255,255,255,.09);color:rgba(255,255,255,.82);border:1px solid rgba(255,255,255,.16);text-decoration:none;white-space:nowrap;}
+.sbn:hover{background:rgba(255,255,255,.17);color:white;text-decoration:none;}
+.page{padding-top:40px;}
+</style>
+</head>
+<body>
+
+<div class="site-bar">
+  <a href="/" class="site-brand" aria-label="AbstractionDeskQA home">
+    <span class="site-brand-name">AbstractionDesk<em>QA</em></span>
+    <span class="site-brand-scope">SEP-1 Timeline Tool</span>
+  </a>
+  <div class="site-bar-btns">
+    <a href="/" class="sbn">← Home</a>
+    <a href="lkw-tool.html" class="sbn">LKW Tool</a>
+    <a href="cmo-tool.html" class="sbn">CMO Tool</a>
+    <a href="hbips-tool.html" class="sbn">HBIPS Tool</a>
+    <a href="lookup.html" class="sbn">Q&amp;A Lookup</a>
+  </div>
+</div>
+
+<div class="page">
+  <div class="hdr">
+    <h1>SEP-1 Time Zero <span>CMS SEP-1 · Educational use only</span></h1>
+    <p>Enter the charted time and a brief description for each clinical event relevant to SEP-1 review.</p>
+  </div>
+
+  <!-- HOW TO USE -->
+  <div class="how-box" id="how-box">
+    <div class="how-box-hdr" onclick="toggleHow()">
+      <span class="how-box-title"><span class="how-icon">ℹ</span> How to use this tool</span>
+      <span class="how-toggle" id="how-toggle">▾</span>
+    </div>
+    <div class="how-box-body" id="how-body">
+      <p>Enter the charted time and a brief description for each clinical event relevant to SEP-1 review. The tool automatically identifies event types (SIRS, organ dysfunction, bundle elements, vasopressors) and builds a chronological timeline. <strong>Replace the example entries below with your patient's documented events.</strong> Include all findings that may affect Time Zero determination.</p>
+      <div class="how-tips">
+        <div class="how-tip"><span class="how-dot dot-sirs"></span><strong>SIRS events:</strong> temperature, heart rate, respiratory rate, WBC, bands — e.g. <em>Temp 38.9°C, HR 114, WBC 18.2</em></div>
+        <div class="how-tip"><span class="how-dot dot-od"></span><strong>Organ dysfunction:</strong> lactate, creatinine, AKI, AMS, MAP, platelets, bilirubin — e.g. <em>Lactate 3.8, Cr 2.1 (baseline 0.9)</em></div>
+        <div class="how-tip"><span class="how-dot dot-bundle"></span><strong>Bundle elements:</strong> blood cultures, antibiotics, fluids, repeat lactate — e.g. <em>Blood cx × 2 drawn, Zosyn 3.375g IVPB started</em></div>
+        <div class="how-tip"><span class="how-dot dot-shock"></span><strong>Vasopressors / shock:</strong> norepinephrine, vasopressin, dopamine, septic shock — e.g. <em>Levophed started at 0.05 mcg/kg/min</em></div>
+      </div>
+      <p class="how-note">Click any colored badge to manually override the detected event type. Leave Time Zero blank to auto-suggest based on SIRS + organ dysfunction pairing.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-label">Clinical events — time + description <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:10px;color:var(--text3)">(replace examples with your data)</span></div>
+    <div class="ev-rows" id="ev-rows"></div>
+    <button class="add-row-btn" onclick="addRow()">+ Add row</button>
+
+    <div class="tz-section">
+      <div class="tz-grid">
+        <input type="time" id="tz-time" title="Leave blank to auto-suggest">
+        <div class="tz-right">
+          <div class="tz-label-row">Time Zero (SSPT) <span class="tz-hint">— leave blank to auto-suggest</span></div>
+          <select id="tz-source">
+            <option value="">Source (if manually entered)</option>
+            <option value="Provider attestation">Provider attestation</option>
+            <option value="Abstractor determination">Abstractor determination</option>
+            <option value="Query response">Query response</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <button class="build-btn" onclick="build()">Build timeline →</button>
+  </div>
+
+  <div class="output" id="output">
+    <div class="tz-reasoning" id="tz-reasoning"></div>
+    <div class="recog-card" id="recog-card"></div>
+    <div class="tl-card">
+      <div class="tl-top">
+        <div class="tl-top-label">Event timeline</div>
+        <div class="tz-badge" id="tz-badge"></div>
+      </div>
+      <div id="tl-events"></div>
+    </div>
+    <div class="win-card">
+      <div class="card-label">Bundle windows</div>
+      <div id="win-rows"></div>
+    </div>
+    <div class="bundle-card">
+      <div class="card-label">Bundle completion</div>
+      <div class="bundle-cols" id="bundle-cols"></div>
+    </div>
+    <div class="footnote">Educational use only. Suggested Time Zero is not a compliance determination — it is a starting point for abstractor review. Always verify against the current CMS SEP-1 Specifications Manual. Spec language controls.</div>
+  </div>
+</div>
+
+<!-- TYPE PICKER -->
+<div class="type-picker" id="type-picker">
+  <div class="tpo" onclick="overrideType('sirs')"><div class="tpo-dot dot-sirs"></div>SIRS</div>
+  <div class="tpo" onclick="overrideType('od')"><div class="tpo-dot dot-od"></div>Organ dysfunction</div>
+  <div class="tpo" onclick="overrideType('bundle')"><div class="tpo-dot dot-bundle"></div>Bundle element</div>
+  <div class="tpo" onclick="overrideType('shock')"><div class="tpo-dot dot-shock"></div>Shock / vasopressor</div>
+  <div class="tpo" onclick="overrideType('other')"><div class="tpo-dot dot-other"></div>Other</div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// DETECTION ENGINE — broad, synonym-rich, shorthand-tolerant
+// ═══════════════════════════════════════════════════════════════
+const DETECT_RULES = [
+  {
+    type: 'sirs',
+    // Temperature, HR, RR, WBC — all common shorthand included
+    re: /(?:^|[\s,;:=\-–])(?:t|temp|temperature|tmax|fever|febrile|hypotherm)[\s:=]?\d|fever|\btemp\b|tmax\b|febrile|hypotherm|chills|\b(?:hr|heart.?rate|pulse|tachycard)[\s:=]?\d|\btachycard|\b(?:rr|resp.?rate|respirat|breathe|tachypnea)[\s:=]?\d|\btachypnea|\b(?:wbc|white.?blood|leukocyt|leukopenia|bandemia|band[s]?\s*[=%]?)[\s:=]?\d|\bleukocyt|\bleukopenia|\bbandemia/i
+  },
+  {
+    type: 'od',
+    // Lactate (all aliases), AKI/creatinine, AMS, platelets, bilirubin, MAP/hypotension
+    re: /\b(?:lac(?:tate?)?|lactic.?acid|serum.?lac|initial.?lac|lac\s*=|lac\s*\d|lact\s*\d|lactic\s*\d|elevated.?lac|high.?lac)|\bcreatinine\b|\bcr\s*[=:]\s*\d|\baki\b|acute.?kidney|renal.?fail|\bplatelet|\bplt\s*[=:]\s*\d|\bthrombocytop|\bbilirubin\b|\bbili\s*[=:]\s*\d|\bhyperbiliru|\bams\b|altered.?mental|mental.?status|acute.?encephalopathy|\bencephalopathy\b|\bconfusion\b|\bdelirium\b|new.?onset.?confus|\bgcs\s*[=:]\s*\d|\bglasgow|\bmap\s*[=:]\s*\d|\bmap\s*(?:of\s*)?\d{2}|\bpersistent.?hypotens|\bhypotens(?:ion)?\b|organ.?dysfunct|dysfunct/i
+  },
+  {
+    type: 'bundle',
+    // Blood cultures (many formats), antibiotics (comprehensive), fluids, repeat lactate
+    re: /blood.?cult|blood\s*cx|bcx?\s*(?:x|×|drawn|\d)|bc\s*(?:x|×)\s*\d|cultures?\s*drawn|cultures?\s*sent|peripheral.?cult|central.?cult|micro(?:biology)?\s*cult|vancomycin|vanc\b|cefepime\b|ceftriaxone|rocephin|ceftazidime|meropenem|merrem|imipenem|ertapenem|ciprofloxacin|\bcipro\b|azithromycin|\bazithro\b|levofloxacin|\blevo\b|\bflagyl\b|metronidazole|ampicillin|amp.?sulbact|unasyn|pip.?tazo|piperacillin|zosyn\b|linezolid|daptomycin|tigecycline|broad.?spectrum|abx\s*(?:start|admin|given|ordered)|antibiotic\s*(?:start|admin|given|ordered)|antibiotics?\s*(?:start|admin|given|ivpb)|iv\s*antibiotic|\d+\s*(?:ml|cc|mg).?kg|bolus\b|normal.?saline|ns\s*bolus|\bns\s*\d|\blr\s*bolus|\blactated.?ringer|crystalloid|ivf\s*bolus|\bfluid\s*resus|repeat.?lac|recheck.?lac|re-?check.?lac|follow.?up.?lac|second.?lac|lactate\s*repeat|lactate\s*rechecked/i
+  },
+  {
+    type: 'shock',
+    re: /vasopressor|norepinephrine|levophed\b|\bnorepi\b|vasopressin|pitressin|dopamine\b|dobutamine\b|phenylephrine|neosynephrine|\bneo\s*(?:drip|started|infusion)|epinephrine\s*(?:drip|infusion|started)|epi\s*(?:drip|infusion)|pressor\s*(?:started|initiated|required|needed)|pressors?\s*(?:on|started)|septic.?shock/i
+  },
+];
+
+// Ordered vs completed distinction
+const ORDERED_FLAG = /ordered\b|order\s*placed|placed\s*order/i;
+const COMPLETED_FLAG = /drawn|sent|collected|started|administered|given|infusing|hanging|ivpb|iv\s*started|completed/i;
+
+function detectType(label) {
+  for (const r of DETECT_RULES) {
+    if (r.re.test(label)) return r.type;
+  }
+  return 'other';
+}
+
+function detectOrderVsCompleted(label, type) {
+  if (type !== 'bundle') return null;
+  if (ORDERED_FLAG.test(label) && !COMPLETED_FLAG.test(label)) {
+    return 'ordered — verify completion time for bundle calculation';
+  }
+  return null;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// TYPE META
+// ═══════════════════════════════════════════════════════════════
+const TYPE_META = {
+  sirs:   { label:'SIRS',         chip:'chip-sirs',   badge:'badge-sirs',   dot:'dot-sirs'   },
+  od:     { label:'Organ Dysfxn', chip:'chip-od',     badge:'badge-od',     dot:'dot-od'     },
+  bundle: { label:'Bundle',       chip:'chip-bundle', badge:'badge-bundle', dot:'dot-bundle' },
+  shock:  { label:'Shock',        chip:'chip-shock',  badge:'badge-shock',  dot:'dot-shock'  },
+  other:  { label:'Other',        chip:'chip-other',  badge:'badge-other',  dot:'dot-other'  },
+};
+
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+let rows = [], nextId = 0, pickerActiveId = null;
+
+function addRow(time='', label='') {
+  const id = nextId++;
+  rows.push({ id, time, label, override: null });
+  renderRows();
+  setTimeout(() => {
+    const el = document.querySelector(`[data-ev-id="${id}"] .ev-time`);
+    if (el) el.focus();
+  }, 30);
+}
+
+function removeRow(id) {
+  rows = rows.filter(r => r.id !== id);
+  hidePicker();
+  renderRows();
+}
+
+function syncField(id, field, val) {
+  const r = rows.find(r => r.id === id);
+  if (!r) return;
+  r[field] = val;
+  if (field === 'label') { r.override = null; renderRows(); }
+}
+
+function renderRows() {
+  const container = document.getElementById('ev-rows');
+  container.innerHTML = rows.map(r => {
+    const detType = r.override || (r.label ? detectType(r.label) : 'other');
+    const meta    = TYPE_META[detType];
+    const isOvr   = !!r.override;
+    return `<div class="ev-row" data-ev-id="${r.id}">
+      <input type="time" class="ev-time" value="${r.time}" oninput="syncField(${r.id},'time',this.value)">
+      <div class="ev-desc-wrap">
+        <input type="text" class="ev-label" value="${escH(r.label)}"
+          placeholder="Describe event — type auto-detected"
+          oninput="syncField(${r.id},'label',this.value)">
+        <span class="type-badge ${meta.badge}"
+          style="${isOvr?'text-decoration:underline dotted 1px;':''}"
+          onclick="togglePicker(${r.id},this)"
+          title="Click to override detected type">${meta.label.toUpperCase()}</span>
+      </div>
+      <button class="rm-btn" onclick="removeRow(${r.id})">×</button>
+    </div>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// TYPE PICKER
+// ═══════════════════════════════════════════════════════════════
+function togglePicker(id, badgeEl) {
+  const picker = document.getElementById('type-picker');
+  if (pickerActiveId === id) { hidePicker(); return; }
+  pickerActiveId = id;
+  const rect = badgeEl.getBoundingClientRect();
+  picker.style.top    = (rect.bottom + 4) + 'px';
+  picker.style.right  = (window.innerWidth - rect.right) + 'px';
+  picker.style.display = 'block';
+}
+function hidePicker() {
+  document.getElementById('type-picker').style.display = 'none';
+  pickerActiveId = null;
+}
+function overrideType(type) {
+  if (pickerActiveId === null) return;
+  const r = rows.find(r => r.id === pickerActiveId);
+  if (r) r.override = type;
+  hidePicker();
+  renderRows();
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('.type-badge') && !e.target.closest('.type-picker')) hidePicker();
+});
+
+// ═══════════════════════════════════════════════════════════════
+// BUILD
+// ═══════════════════════════════════════════════════════════════
+function build() {
+  // snapshot DOM
+  document.querySelectorAll('.ev-row').forEach(el => {
+    const id = +el.dataset.evId;
+    const r  = rows.find(r => r.id === id);
+    if (r) { r.time = el.querySelector('.ev-time').value; r.label = el.querySelector('.ev-label').value; }
+  });
+
+  const valid = rows
+    .filter(r => r.time && r.label.trim())
+    .map(r => {
+      const type = r.override || detectType(r.label);
+      return { ...r, type, mins: t2m(r.time), orderWarn: detectOrderVsCompleted(r.label, type) };
+    })
+    .sort((a,b) => a.mins - b.mins);
+
+  if (!valid.length) { alert('Add at least one event with time and description.'); return; }
+
+  // ── SUGGEST TZ ──
+  let tzMins, tzTime, tzSource, tzChecks = [], allSirsForDisplay = [];
+  const manualTz  = document.getElementById('tz-time').value;
+  const manualSrc = document.getElementById('tz-source').value;
+
+  const sirsEvs = valid.filter(e => e.type === 'sirs');
+  const odEvs   = valid.filter(e => e.type === 'od');
+
+  if (manualTz) {
+    tzMins   = t2m(manualTz);
+    tzTime   = manualTz;
+    tzSource = manualSrc || 'Manual entry';
+    tzChecks = [
+      { ok:true,  text:`Time Zero manually set to ${manualTz}` },
+      { ok:!!manualSrc, text:manualSrc ? `Source: ${manualSrc}` : 'No source selected — document your rationale' },
+    ];
+    allSirsForDisplay = sirsEvs;
+  } else {
+    allSirsForDisplay = sirsEvs;
+    let paired = null, pairedOd = null;
+    for (const s of sirsEvs) {
+      const od = odEvs.find(o => Math.abs(o.mins - s.mins) <= 360);
+      if (od) { paired = s; pairedOd = od; break; }
+    }
+
+    if (paired) {
+      tzMins   = paired.mins;
+      tzTime   = paired.time;
+      tzSource = 'Auto-suggested';
+      const gap = Math.abs(pairedOd.mins - paired.mins);
+      const gapStr = gap < 60 ? `${gap} min` : `${Math.floor(gap/60)}h ${gap%60}m`;
+      tzChecks = [
+        { ok:true,  text:`SIRS criteria — "${paired.label}" at ${paired.time}` },
+        { ok:true,  text:`Organ dysfunction — "${pairedOd.label}" at ${pairedOd.time}` },
+        { ok:true,  text:`Events ${gapStr} apart — within 6-hour pairing window` },
+        { ok:false, text:`Confirm alignment with provider documentation before submitting` },
+      ];
+    } else if (odEvs.length && sirsEvs.length) {
+      // OD before SIRS — use earliest OD, pair with first SIRS
+      const earliestOd   = odEvs[0];
+      const firstSirs    = sirsEvs[0];
+      const gap = Math.abs(firstSirs.mins - earliestOd.mins);
+      const gapStr = gap < 60 ? `${gap} min` : `${Math.floor(gap/60)}h ${gap%60}m`;
+      tzMins   = earliestOd.mins;
+      tzTime   = earliestOd.time;
+      tzSource = 'Auto-suggested (OD before SIRS)';
+      tzChecks = [
+        { ok:true,  text:`Organ dysfunction — "${earliestOd.label}" at ${earliestOd.time}` },
+        { ok:true,  text:`SIRS criteria — "${firstSirs.label}" at ${firstSirs.time}` },
+        { ok:true,  text:`Events ${gapStr} apart — within pairing window` },
+        { ok:false, text:`OD preceded SIRS in this case — verify provider documentation` },
+        { ok:false, text:`Confirm alignment with provider documentation before submitting` },
+      ];
+    } else if (odEvs.length) {
+      tzMins   = odEvs[0].mins;
+      tzTime   = odEvs[0].time;
+      tzSource = 'Fallback — organ dysfunction only (no SIRS entered)';
+      tzChecks = [
+        { ok:false, text:`No SIRS criteria found — add SIRS events or enter Time Zero manually` },
+        { ok:false, text:`Using earliest organ dysfunction: "${odEvs[0].label}" at ${odEvs[0].time}` },
+      ];
+    } else {
+      tzMins   = valid[0].mins;
+      tzTime   = valid[0].time;
+      tzSource = 'Fallback — insufficient data';
+      tzChecks = [
+        { ok:false, text:`Could not identify SIRS or organ dysfunction events` },
+        { ok:false, text:`Add SIRS and organ dysfunction events, or enter Time Zero manually` },
+      ];
+    }
+  }
+
+  const d3 = tzMins + 180;
+  const d6 = tzMins + 360;
+
+  // ── REASONING ──
+  document.getElementById('tz-reasoning').innerHTML = `
+    <div class="tz-r-title">Suggested Time Zero</div>
+    <div class="tz-r-main">${tzTime} &nbsp;·&nbsp; ${tzSource}</div>
+    ${tzChecks.map(c=>`<div class="tz-check">
+      <span class="tz-check-icon" style="color:${c.ok?'var(--c-bundle)':'var(--c-od)'}">${c.ok?'✓':'⚠'}</span>
+      <span style="color:${c.ok?'#166534':'#92400e'}">${c.text}</span>
+    </div>`).join('')}
+    ${allSirsForDisplay.length > 1 ? `
+    <div class="sirs-list">
+      <div class="sirs-list-title">All detected SIRS events</div>
+      ${allSirsForDisplay.map(s=>`<div class="sirs-ev"><span style="font-family:var(--mono);color:var(--c-tz)">${s.time}</span><span>${escH(s.label)}</span></div>`).join('')}
+    </div>` : ''}
+  `;
+
+  // ── BUNDLE DETECTION (consistent with timeline) ──
+  const bc    = valid.find(e => /blood.?cult|blood\s*cx|bcx?\s*(?:x|×|drawn|\d)|bc\s*(?:x|×)\s*\d|cultures?\s*(?:drawn|sent|collected)/i.test(e.label));
+  const abx   = valid.find(e => /vancomycin|vanc\b|cefepime|ceftriaxone|rocephin|ceftazidime|meropenem|merrem|imipenem|ertapenem|ciprofloxacin|\bcipro\b|azithromycin|\bazithro\b|levofloxacin|\blevo\b|\bflagyl\b|metronidazole|ampicillin|amp.?sulbact|unasyn|pip.?tazo|piperacillin|zosyn\b|linezolid|daptomycin|tigecycline|broad.?spectrum|abx\s*(?:start|admin|given|ordered)|antibiotic\s*(?:start|admin|given|ordered)|antibiotics?\s*(?:start|admin|given)|iv\s*antibiotic/i.test(e.label));
+  const lacs  = valid.filter(e => e.type === 'od' && /lac(?:tate?)?|lactic/i.test(e.label));
+  const lac1  = lacs[0] || null;
+  const lac2  = lacs.length > 1 ? lacs[lacs.length-1] : null;
+  const fluid = valid.find(e => /\d+\s*(?:ml|cc).?kg|bolus\b|normal.?saline|\bns\s*\d|\bns\s*bolus|\blr\s*bolus|lactated.?ringer|crystalloid|ivf\s*bolus|fluid\s*resus/i.test(e.label));
+  const vaso  = valid.find(e => e.type === 'shock');
+  const sirsAny = valid.filter(e => e.type === 'sirs');
+  const odAny   = valid.filter(e => e.type === 'od');
+
+  // ── RECOGNIZED ELEMENTS ──
+  function recogItem(label, ev, warn) {
+    const cls = !ev ? 'missing' : warn ? 'found-warn' : 'found';
+    const icon = !ev ? '○' : warn ? '⚠' : '✓';
+    return `<div class="recog-item ${cls}">
+      <span class="recog-icon">${icon}</span>
+      <div class="recog-detail">
+        <span class="recog-label">${label}</span>
+        ${ev ? `<span class="recog-sub">${ev.time} · ${escH(ev.label.length>36?ev.label.slice(0,36)+'…':ev.label)}</span>` : ''}
+        ${ev && warn ? `<span class="recog-warn">${warn}</span>` : ''}
+      </div>
+    </div>`;
+  }
+
+  document.getElementById('recog-card').innerHTML = `
+    <div class="card-label">Recognized elements</div>
+    <div class="recog-grid">
+      ${recogItem('SIRS criteria', sirsAny[0])}
+      ${recogItem('Organ dysfunction', odAny[0])}
+      ${recogItem('Blood cultures', bc, bc?.orderWarn)}
+      ${recogItem('IV antibiotics', abx, abx?.orderWarn)}
+      ${recogItem('Initial lactate', lac1)}
+      ${recogItem('30 mL/kg fluids', fluid, fluid?.orderWarn)}
+      ${recogItem('Repeat lactate', lac2)}
+      ${recogItem('Vasopressors', vaso)}
+    </div>
+    <div style="font-size:11px;color:var(--text3);margin-top:10px;line-height:1.6;">
+      ✓ Found &nbsp;·&nbsp; ⚠ Found but needs review &nbsp;·&nbsp; ○ Not entered or not recognized &nbsp;·&nbsp; Click any badge in the input to override detected type
+    </div>
+  `;
+
+  // ── TIMELINE ──
+  document.getElementById('tz-badge').textContent = `Time Zero: ${tzTime}`;
+
+  const allEvs = [...valid];
+  const exactMatch = allEvs.find(e => e.mins === tzMins);
+  if (!exactMatch) {
+    allEvs.push({ time:tzTime, mins:tzMins, type:'tz', label:'Suggested Time Zero (SSPT)', note:tzSource, isTz:true });
+    allEvs.sort((a,b) => a.mins - b.mins);
+  } else {
+    exactMatch.isTz = true;
+  }
+
+  document.getElementById('tl-events').innerHTML = allEvs.map(ev => {
+    const isTz  = ev.isTz;
+    const meta  = isTz ? { label:'TIME ZERO', chip:'chip-tz', dot:'dot-tz' } : (TYPE_META[ev.type] || TYPE_META.other);
+    const delta = ev.mins - tzMins;
+    const sign  = delta >= 0 ? '+' : '-';
+    const abs   = Math.abs(delta);
+    const dStr  = abs === 0 ? '' : abs < 60 ? `${sign}${abs}m` : `${sign}${Math.floor(abs/60)}h${abs%60?abs%60+'m':''}`;
+    const dCol  = delta < 0 ? 'var(--c-sirs)' : ev.mins <= d3 ? 'var(--c-bundle)' : ev.mins <= d6 ? 'var(--c-od)' : 'var(--text3)';
+
+    return `<div class="tl-ev${isTz?' is-tz':''}">
+      <div class="tl-ev-time">${ev.time}${dStr?`<div class="tl-ev-delta" style="color:${dCol}">${dStr}</div>`:''}</div>
+      <div class="tl-spine"><div class="tl-dot ${meta.dot}"></div><div class="tl-seg"></div></div>
+      <div class="tl-ev-body">
+        <span class="tl-chip ${meta.chip}">${meta.label.toUpperCase()}</span>
+        <div class="tl-ev-text">${escH(ev.label)}</div>
+        ${ev.note ? `<div class="tl-ev-note">${ev.note}</div>` : ''}
+        ${ev.orderWarn ? `<div class="tl-ev-warn">⚠ ${ev.orderWarn}</div>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+
+  // ── WINDOWS ──
+  document.getElementById('win-rows').innerHTML = `
+    <div class="win-row win-3h"><span class="w-label" style="color:var(--c-od)">3-hour bundle window</span><span class="w-range">${tzTime} → ${m2t(d3)}</span></div>
+    <div class="win-row win-6h"><span class="w-label" style="color:var(--c-tz)">6-hour bundle window</span><span class="w-range">${tzTime} → ${m2t(d6)}</span></div>
+  `;
+
+  // ── BUNDLE ──
+  function bi(label, ev, deadline) {
+    if (!ev) return `<div class="bi"><span style="color:var(--text3)">○</span><div class="bi-left"><span class="bi-label">${label}</span></div><span class="bi-result res-na">—</span></div>`;
+    const pass = ev.mins <= deadline;
+    const dm = ev.mins - tzMins;
+    const dh = Math.floor(dm/60), dmm = dm%60;
+    return `<div class="bi">
+      <span style="color:${pass?'var(--c-bundle)':'var(--c-shock)'}">${pass?'✓':'✗'}</span>
+      <div class="bi-left">
+        <span class="bi-label">${label}</span>
+        <span class="bi-sub">${ev.time} (+${dh?dh+'h':''}${dmm}m) · ${escH(ev.label.length>32?ev.label.slice(0,32)+'…':ev.label)}</span>
+        ${ev.orderWarn ? `<span class="bi-warn">⚠ ${ev.orderWarn}</span>` : ''}
+      </div>
+      <span class="bi-result ${pass?'res-pass':'res-fail'}">${pass?'PASS':'FAIL'}</span>
+    </div>`;
+  }
+
+  document.getElementById('bundle-cols').innerHTML = `
+    <div>
+      <div class="bundle-col-title">3-hour (by ${m2t(d3)})</div>
+      ${bi('Blood cultures',  bc,    d3)}
+      ${bi('IV antibiotics',  abx,   d3)}
+      ${bi('Initial lactate', lac1,  d3)}
+      ${bi('30 mL/kg fluids', fluid, d3)}
+    </div>
+    <div>
+      <div class="bundle-col-title">6-hour (by ${m2t(d6)})</div>
+      ${bi('Repeat lactate',          lac2, d6)}
+      ${bi('Vasopressors (if shock)', vaso, d6)}
+      <div class="bi"><span style="color:var(--text3)">○</span><div class="bi-left"><span class="bi-label">Reassessment note</span><span class="bi-sub">add as Other event</span></div><span class="bi-result res-na">—</span></div>
+    </div>
+  `;
+
+  document.getElementById('output').classList.add('visible');
+  document.getElementById('output').scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+// ═══════════════════════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════════════════════
+function t2m(t)  { const [h,m]=t.split(':').map(Number); return h*60+m; }
+function m2t(m)  { const d=Math.floor(m/1440),r=((m%1440)+1440)%1440,h=Math.floor(r/60),mn=r%60; return `${String(h).padStart(2,'0')}:${String(mn).padStart(2,'0')}${d>0?` (+${d}d)`:''}`; }
+function escH(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// ═══════════════════════════════════════════════════════════════
+// HOW TO USE TOGGLE
+// ═══════════════════════════════════════════════════════════════
+function toggleHow() {
+  const body   = document.getElementById('how-body');
+  const toggle = document.getElementById('how-toggle');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  toggle.classList.toggle('open', !isOpen);
+}
+// Open by default on first load
+document.getElementById('how-body').classList.add('open');
+document.getElementById('how-toggle').classList.add('open');
+
+// ═══════════════════════════════════════════════════════════════
+// SEED — Test Case A (standard)
+// ═══════════════════════════════════════════════════════════════
+[
+  ['07:42','Triage: Temp 39.2°C, HR 122, RR 26 — suspected infection'],
+  ['07:55','WBC 19.8, bands 18% on CBC'],
+  ['08:10','Lactate 4.2 mmol/L — initial draw'],
+  ['08:20','Blood cx × 2 drawn peripheral, notified MD'],
+  ['08:35','Piperacillin/tazobactam 3.375g IVPB started'],
+  ['08:50','1L NS bolus initiated — hypotension MAP 61'],
+  ['09:15','30 mL/kg NS bolus (total 2.1L) completed'],
+  ['11:30','Repeat lactate 2.1 mmol/L'],
+  ['13:10','MAP 54 persistent — norepinephrine drip started'],
+].forEach(([t,l])=>addRow(t,l));
+</script>
+</body>
+</html>
