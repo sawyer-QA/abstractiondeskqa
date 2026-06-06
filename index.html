@@ -10,6 +10,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <!-- Phosphor Icons -->
 <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+<!-- Cloudflare Turnstile -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -631,7 +633,7 @@
             <i class="ph-duotone ph-chart-line-up"></i>
           </div>
           <div>
-            <h3>Time Zero Tool</h3>
+            <h3>SEP-1 Time Zero</h3>
             <p>Enter clinical events and the tool auto-detects SIRS, organ dysfunction, and bundle elements — then suggests Time Zero (SSPT) with step-by-step reasoning.</p>
           </div>
           <span class="tool-card-link">
@@ -789,6 +791,10 @@
               placeholder="Describe a missing scenario, share a tip, flag an error, or tell us anything that would make this tool more useful."
               required aria-required="true"></textarea>
           </div>
+          <!-- Honeypot: hidden from real users, bots fill it, submission is silently dropped -->
+          <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <!-- Cloudflare Turnstile: replace YOUR_SITE_KEY with your key from the Cloudflare dashboard -->
+          <div class="cf-turnstile" data-sitekey="0x4AAAAAADf-2v3MWsS9bACq" data-theme="light" style="margin-bottom:12px;"></div>
           <button type="submit" class="form-submit">Send</button>
           <p class="form-note">Your email is used only to reply to your submission. It will never be shared or used for marketing.</p>
         </form>
@@ -884,10 +890,22 @@ const obs = new IntersectionObserver(entries => {
 document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
 
 document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+  // Honeypot check: if the hidden "website" field has a value, it's a bot — silently abort
+  if (document.querySelector('input[name="website"]').value) {
+    e.preventDefault();
+    return;
+  }
   const msg = document.getElementById('fb-msg').value.trim();
   if (!msg) {
     e.preventDefault();
     document.getElementById('fb-msg').focus();
+    return;
+  }
+  // Turnstile check: ensure the challenge token is present before submitting
+  const token = document.querySelector('[name="cf-turnstile-response"]');
+  if (!token || !token.value) {
+    e.preventDefault();
+    alert('Please wait a moment for the security check to complete, then try again.');
     return;
   }
   setTimeout(() => {
