@@ -751,7 +751,6 @@
           aria-label="Feedback and contribution form">
           <input type="hidden" name="access_key" value="895f6777acd04a629d7eb27e888e6ac6">
           <input type="hidden" name="subject" value="New Feedback – AbstractionDeskQA">
-          <input type="hidden" name="exclude" value="cf-turnstile-response,website">
           <div class="form-row">
             <div class="form-group">
               <label class="form-label" for="fb-name">
@@ -909,6 +908,9 @@ document.getElementById('feedbackForm').addEventListener('submit', function(e) {
     alert('Please wait a moment for the security check to complete, then try again.');
     return;
   }
+  // Remove Turnstile token and honeypot from form data so they don't appear in Formly email
+  token.disabled = true;
+  document.querySelector('input[name="website"]').disabled = true;
   setTimeout(() => {
     this.style.display = 'none';
     document.getElementById('formSuccess').style.display = 'block';
