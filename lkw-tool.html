@@ -46,10 +46,12 @@ header{position:sticky;top:0;z-index:200;background:rgba(15,25,35,0.96);backdrop
 .hbadge{background:var(--teal);color:var(--bg);font-family:var(--mono);font-size:10px;font-weight:500;padding:3px 9px;border-radius:4px;letter-spacing:0.1em;white-space:nowrap;}
 .htitle{font-size:15px;font-weight:700;}
 .hsub{font-size:11px;color:var(--muted);font-family:var(--mono);}
-.tabs{background:var(--bg2);border-bottom:1px solid var(--border);display:flex;gap:0;padding:0 16px;overflow-x:auto;}
-.tab{background:none;border:none;color:var(--muted);font-family:var(--sans);font-size:13px;font-weight:600;padding:12px 16px;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .18s;}
-.tab:hover{color:var(--text);}
-.tab.on{color:var(--teal);border-bottom-color:var(--teal);}
+.tabs{background:#ffffff;border-bottom:1px solid #dbe2ec;position:sticky;top:62px;z-index:70;box-shadow:0 2px 10px rgba(13,34,64,.06);}
+.tabs-inner{max-width:1040px;margin:0 auto;padding:0 24px;display:flex;gap:0;overflow-x:auto;}
+.tab{background:none;border:none;color:#6b7f94;font-family:'Atkinson Hyperlegible',sans-serif;font-size:14px;font-weight:600;padding:14px 18px 12px;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:color .15s,border-color .15s;display:flex;align-items:center;gap:6px;}
+.tab i{font-size:15px;}
+.tab:hover{color:#0f1923;}
+.tab.on{color:#0a7c7a;border-bottom-color:#0a7c7a;}
 main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:1;}
 .panel{display:none;}
 .panel.on{display:block;animation:fadeUp .22s ease;}
@@ -274,11 +276,13 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 <span id="maincontent" aria-hidden="true"></span>
 
 <nav class="tabs" role="tablist">
+  <div class="tabs-inner">
   <button class="tab on" onclick="showTab('grid')" data-t="grid"><i class="ph-duotone ph-table" style="font-size:14px;vertical-align:middle;margin-right:5px;color:inherit;"></i>LKW Resolution Grid</button>
   <button class="tab" onclick="showTab('guided')" data-t="guided"><i class="ph-duotone ph-git-branch" style="font-size:14px;vertical-align:middle;margin-right:5px;color:inherit;"></i>Guided Workflow</button>
   <button class="tab" onclick="showTab('ref')" data-t="ref"><i class="ph-duotone ph-clipboard-text" style="font-size:14px;vertical-align:middle;margin-right:5px;color:inherit;"></i>Quick Reference</button>
   <button class="tab" onclick="showTab('quiz')" data-t="quiz"><i class="ph-duotone ph-exam" style="font-size:14px;vertical-align:middle;margin-right:5px;color:inherit;"></i>Practice Quiz</button>
   <button class="tab" onclick="showTab('cases')" data-t="cases"><i class="ph-duotone ph-stethoscope" style="font-size:14px;vertical-align:middle;margin-right:5px;color:inherit;"></i>Case Walkthroughs</button>
+  </div>
 </nav>
 <main>
 
