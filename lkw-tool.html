@@ -306,7 +306,7 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
         <tr>
           <th class="col-who">Source</th>
           <th class="col-pri">Row<br>Priority</th>
-          <th><div><span class="pri-badge pri-1">Priority 1</span></div>Unknown<div style="font-size:9px;color:var(--muted);font-weight:400;margin-top:2px;">unknown / uncertain<br>/ unclear</div></th>
+          <th><div><span class="pri-badge pri-1">Priority 1</span></div>Unknown<div style="font-size:9px;color:var(--muted);font-weight:400;margin-top:2px;">uncertain<br>unclear</div></th>
           <th><div><span class="pri-badge pri-2">Priority 2</span></div>Code Stroke Form<div style="font-size:9px;color:var(--muted);font-weight:400;margin-top:2px;">RN-completed;<br>not MD priority</div></th>
           <th><div><span class="pri-badge pri-3">Priority 3</span></div>LKW / Normal<div style="font-size:9px;color:var(--muted);font-weight:400;margin-top:2px;">explicitly last<br>known well</div></th>
           <th><div><span class="pri-badge pri-4">Priority 4</span></div>S/Sx Only<div style="font-size:9px;color:var(--muted);font-weight:400;margin-top:2px;">symptom onset,<br>no explicit LKW</div></th>
@@ -314,7 +314,7 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
       </thead>
       <tbody>
         <tr class="row-md">
-          <td><span class="who-pill pill-md">MD</span><div style="font-size:10px;color:var(--muted);margin-top:4px;">Physician / APN / PA</div></td>
+          <td style="text-align:center;vertical-align:middle;"><span class="who-pill pill-md">MD</span></td>
           <td style="text-align:center;vertical-align:middle;"><span class="pri-badge pri-2" style="font-size:12px;padding:4px 12px;">1</span></td>
           <td class="unk-cell"><div class="unk-toggle"><button class="unk-btn" id="md-unk-yes" onclick="toggleUnk('yes')">Yes</button><button class="unk-btn" id="md-unk-no" onclick="toggleUnk('no')">No</button></div></td>
           <td style="vertical-align:middle;text-align:center;"><span style="font-size:10px;color:var(--muted);font-style:italic;">See RN row</span></td>
@@ -322,7 +322,7 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
           <td><div class="cell-input-wrap"><input class="gdate" id="md-sx-date" placeholder="MM-DD-YYYY"/><input class="gtime" id="md-sx-time" placeholder="HH:MM"/></div></td>
         </tr>
         <tr class="row-rn">
-          <td><span class="who-pill pill-rn">RN</span><div style="font-size:10px;color:var(--muted);margin-top:4px;">Nursing / EMS</div></td>
+          <td style="text-align:center;vertical-align:middle;"><span class="who-pill pill-rn">RN</span></td>
           <td style="text-align:center;vertical-align:middle;"><span class="pri-badge pri-3" style="font-size:12px;padding:4px 12px;">2</span></td>
           <td class="unk-cell"><div class="unk-x" title="RN unknown is irrelevant to abstraction">✕</div></td>
           <td><div class="cell-input-wrap"><input class="gdate" id="csf-date" placeholder="MM-DD-YYYY"/><input class="gtime" id="csf-time" placeholder="HH:MM"/></div></td>
