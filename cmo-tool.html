@@ -157,28 +157,25 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 .gstep-badge{display:inline-block;background:var(--bg4);border:1px solid var(--border);font-family:var(--mono);font-size:10px;color:var(--muted);padding:2px 8px;border-radius:4px;margin-bottom:10px;}
 
 /* ── SITE NAV ── */
-.site-nav{background:#ffffff;border-bottom:1px solid #dbe2ec;position:sticky;top:0;z-index:300;box-shadow:0 2px 10px rgba(13,34,64,.06);font-family:'Atkinson Hyperlegible',sans-serif;}
+.site-nav{background:#0d2240;border-bottom:1px solid rgba(255,255,255,.08);position:sticky;top:0;z-index:300;box-shadow:0 2px 12px rgba(0,0,0,.25);font-family:'Atkinson Hyperlegible',sans-serif;}
 .site-nav-inner{max-width:1040px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:62px;}
-.site-nav-brand{font-family:'DM Sans',sans-serif;font-size:20px;font-weight:700;color:#0d2240;letter-spacing:-.3px;display:flex;align-items:center;gap:7px;text-decoration:none;}
+.site-nav-brand{font-family:'DM Sans',sans-serif;font-size:20px;font-weight:700;color:white;letter-spacing:-.3px;display:flex;align-items:center;gap:10px;text-decoration:none;}
 .site-nav-brand:hover{text-decoration:none;}
-.site-qa-badge{background:#0a7c7a;color:white;font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;letter-spacing:.6px;}
-.site-nav-links{display:flex;gap:4px;align-items:center;}
-.site-nav-link{font-size:15px;font-weight:400;color:#3d4f62;padding:7px 14px;border-radius:6px;transition:all .15s;border:none;background:none;cursor:pointer;text-decoration:none;}
-.site-nav-link:hover{background:#e4f5f4;color:#0a7c7a;text-decoration:none;}
-.site-nav-link.active-page{color:#0a7c7a;font-weight:700;}
-.site-nav-cta{background:#0a7c7a;color:white;font-size:15px;font-weight:700;padding:9px 20px;border-radius:7px;border:none;cursor:pointer;transition:all .15s;text-decoration:none;white-space:nowrap;}
+.site-nav-brand-sub{font-family:'DM Mono',monospace;font-size:11px;font-weight:400;color:rgba(255,255,255,.4);letter-spacing:.08em;text-transform:uppercase;}
+.site-qa-badge{background:#0da8a5;color:white;font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;letter-spacing:.6px;}
+.site-nav-links{display:flex;gap:6px;align-items:center;}
+.site-nav-cta{background:#0a7c7a;color:white;font-family:'Atkinson Hyperlegible',sans-serif;font-size:14px;font-weight:700;padding:8px 18px;border-radius:7px;border:none;cursor:pointer;transition:all .15s;text-decoration:none;white-space:nowrap;}
 .site-nav-cta:hover{background:#0da8a5;text-decoration:none;color:white;}
-.site-nav-cta-ghost{background:transparent;color:#0a7c7a;font-size:15px;font-weight:700;padding:9px 20px;border-radius:7px;border:2px solid #0a7c7a;cursor:pointer;transition:all .15s;text-decoration:none;white-space:nowrap;}
-.site-nav-cta-ghost:hover{background:#0a7c7a;color:white;text-decoration:none;}
-.site-nav-cta-ghost.active-page{background:#0a7c7a;color:white;}
-.page-title-bar{background:#0d2240;padding:28px 24px 24px;position:relative;overflow:hidden;}
-.page-title-bar::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 55% at 30% 0%,rgba(10,124,122,.22) 0%,transparent 65%);pointer-events:none;}
-.page-title-inner{max-width:1040px;margin:0 auto;position:relative;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
-.page-back-link{color:rgba(255,255,255,.55);font-size:13px;text-decoration:none;display:flex;align-items:center;gap:5px;transition:color .15s;}
-.page-back-link:hover{color:#0da8a5;text-decoration:none;}
+.site-nav-cta-ghost{background:transparent;color:rgba(255,255,255,.85);font-family:'Atkinson Hyperlegible',sans-serif;font-size:14px;font-weight:600;padding:8px 18px;border-radius:7px;border:1.5px solid rgba(255,255,255,.3);cursor:pointer;transition:all .15s;text-decoration:none;white-space:nowrap;display:inline-flex;align-items:center;gap:6px;}
+.site-nav-cta-ghost:hover{border-color:rgba(255,255,255,.7);color:white;text-decoration:none;background:rgba(255,255,255,.08);}
+.site-nav-cta-ghost.active-page{background:#0a7c7a;border-color:#0a7c7a;color:white;}
+.page-title-bar{background:#0d2240;padding:36px 24px 30px;position:relative;overflow:hidden;}
+.page-title-bar::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 20% 0%,rgba(10,124,122,.22) 0%,transparent 65%);pointer-events:none;}
+.page-title-inner{max-width:1040px;margin:0 auto;position:relative;}
+.page-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(13,168,165,.14);border:1px solid rgba(13,168,165,.3);color:#0da8a5;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.1px;padding:4px 12px;border-radius:20px;margin-bottom:14px;}
 .page-title-text{color:white;}
-.page-title-text h1{font-family:'DM Sans',sans-serif;font-size:22px;font-weight:700;line-height:1.2;margin-bottom:2px;}
-.page-title-text p{font-size:12px;color:rgba(255,255,255,.5);font-family:'DM Mono',monospace;}
+.page-title-text h1{font-family:'DM Sans',sans-serif;font-size:clamp(24px,4vw,36px);font-weight:700;line-height:1.15;letter-spacing:-.3px;margin-bottom:10px;}
+.page-title-text p{font-size:15px;color:rgba(255,255,255,.62);max-width:620px;line-height:1.7;}
 .site-footer{background:#07131f;color:rgba(255,255,255,.45);padding:28px 24px;font-family:'Atkinson Hyperlegible',sans-serif;}
 .site-footer-inner{max-width:1040px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
 .site-footer-brand{font-family:'DM Sans',sans-serif;font-size:16px;font-weight:700;color:rgba(255,255,255,.7);margin-bottom:4px;}
@@ -188,7 +185,7 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 .site-footer-links{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;}
 .site-disclaimer{background:#eef2f8;border-top:1px solid #dbe2ec;padding:20px 24px;}
 .site-disclaimer-inner{max-width:1040px;margin:0 auto;font-size:13px;color:#6b7f94;line-height:1.75;font-family:'Atkinson Hyperlegible',sans-serif;}
-@media(max-width:640px){.site-nav-links .site-nav-link{display:none;}.site-footer-inner{flex-direction:column;gap:12px;}}
+@media(max-width:640px){.site-nav-links .site-nav-cta-ghost:not(:first-child){display:none;}.site-footer-inner{flex-direction:column;gap:12px;}}
 </style>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QJPP46JWX3"></script>
@@ -202,25 +199,27 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
   <div class="site-nav-inner">
     <a href="/" class="site-nav-brand" aria-label="AbstractionDeskQA home">
       AbstractionDesk<span class="site-qa-badge">QA</span>
+      <span class="site-nav-brand-sub">CMO Tool</span>
     </a>
     <div class="site-nav-links">
-      <a href="index.html#how" class="site-nav-link">How It Works</a>
-      <a href="index.html#tools" class="site-nav-link">Tools</a>
-      <a href="index.html#feedback" class="site-nav-link">Feedback</a>
+      <a href="index.html" class="site-nav-cta-ghost">
+        <i class="ph ph-arrow-left" aria-hidden="true"></i> Home
+      </a>
       <a href="lkw-tool.html" class="site-nav-cta-ghost">LKW Tool</a>
       <a href="cmo-tool.html" class="site-nav-cta-ghost active-page">CMO Tool</a>
       <a href="hbips-tool.html" class="site-nav-cta-ghost">HBIPS Tool</a>
-      <a href="lookup.html" class="site-nav-cta">Q&amp;A Tool</a>
+      <a href="sep1-tool.html" class="site-nav-cta-ghost">SEP-1 Tool</a>
+      <a href="lookup.html" class="site-nav-cta">Q&amp;A Lookup</a>
     </div>
   </div>
 </nav>
 
 <div class="page-title-bar">
   <div class="page-title-inner">
-    <a href="/" class="page-back-link" aria-label="Back to home">&#8592; Home</a>
+    <div class="page-eyebrow" aria-hidden="true">TJC Stroke Measures · STK-6 / ASR-IP</div>
     <div class="page-title-text">
       <h1>Comfort Measures Only — Abstraction Tool</h1>
-      <p>TJC v2026A &nbsp;·&nbsp; STK-6 / ASR-IP &nbsp;·&nbsp; Denominator Exclusion — Comfort Measures Only</p>
+      <p>Denominator exclusion classifier, guided workflow, quick reference, practice quiz, and case walkthroughs.</p>
     </div>
   </div>
 </div>
@@ -594,12 +593,15 @@ function showGR(yn,rat){
   el.className = 'res-val '+(yn==='YES'?'yes':yn==='NO'?'no':'utd');
   document.getElementById('gr-rat').innerHTML = rat;
   box.classList.remove('hidden');
+  box.classList.add('show');
   setTimeout(()=>box.scrollIntoView({behavior:'smooth',block:'nearest'}),80);
 }
 
 function resetGuided(){
   for(let i=2;i<=4;i++){const e=document.getElementById('gq'+i);if(e)e.classList.add('hidden');}
-  document.getElementById('guided-result').classList.add('hidden');
+  const gr=document.getElementById('guided-result');
+  gr.classList.add('hidden');
+  gr.classList.remove('show');
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -745,7 +747,7 @@ renderCaseCards();
       <a href="lkw-tool.html">LKW Tool</a>
       <a href="cmo-tool.html">CMO Tool</a>
       <a href="hbips-tool.html">HBIPS Tool</a>
-      <a href="index.html#how">How It Works</a>
+      <a href="sep1-tool.html">SEP-1 Tool</a>
       <a href="index.html#feedback">Feedback</a>
     </div>
   </div>
