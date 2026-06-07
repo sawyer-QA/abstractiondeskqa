@@ -73,10 +73,10 @@
 
   /* NAV */
   .nav {
-    background: var(--white);
-    border-bottom: 1px solid var(--border);
+    background: var(--navy);
+    border-bottom: 1px solid rgba(255,255,255,.08);
     position: sticky; top: 0; z-index: 80;
-    box-shadow: var(--shadow-sm);
+    box-shadow: 0 2px 12px rgba(0,0,0,.25);
   }
   .nav-inner {
     max-width: var(--max); margin: 0 auto; padding: 0 24px;
@@ -86,45 +86,39 @@
   .nav-brand {
     font-family: var(--heading);
     font-size: 20px; font-weight: 700;
-    color: var(--navy); letter-spacing: -.3px;
-    display: flex; align-items: center; gap: 7px;
+    color: white; letter-spacing: -.3px;
+    display: flex; align-items: center; gap: 10px;
     text-decoration: none;
   }
   .nav-brand:hover { text-decoration: none; }
+  .nav-brand-sub {
+    font-family: var(--mono); font-size: 11px; font-weight: 400;
+    color: rgba(255,255,255,.4); letter-spacing: .08em; text-transform: uppercase;
+  }
   .qa-badge {
-    background: var(--teal); color: white;
+    background: var(--teal2); color: white;
     font-size: 10px; font-weight: 700; padding: 2px 7px;
     border-radius: 4px; letter-spacing: .6px; font-family: var(--body);
   }
-  .nav-links { display: flex; gap: 4px; align-items: center; }
-  .nav-link {
-    font-family: var(--body); font-size: 15px; font-weight: 400;
-    color: var(--ink-mid); padding: 7px 14px; border-radius: 6px;
-    transition: all .15s; border: none; background: none;
-    cursor: pointer; text-decoration: none;
-  }
-  .nav-link:hover { background: var(--teal-pale); color: var(--teal); text-decoration: none; }
+  .nav-links { display: flex; gap: 6px; align-items: center; }
   .nav-cta-ghost {
-    background: transparent; color: var(--teal);
-    font-family: var(--body); font-size: 15px; font-weight: 700;
-    padding: 9px 20px; border-radius: 7px;
-    border: 2px solid var(--teal); cursor: pointer;
+    background: transparent; color: rgba(255,255,255,.85);
+    font-family: var(--body); font-size: 14px; font-weight: 600;
+    padding: 8px 18px; border-radius: 7px;
+    border: 1.5px solid rgba(255,255,255,.3); cursor: pointer;
     transition: all .15s; text-decoration: none; white-space: nowrap;
+    display: inline-flex; align-items: center; gap: 6px;
   }
-  .nav-cta-ghost:hover { background: var(--teal); color: white; text-decoration: none; }
+  .nav-cta-ghost:hover { border-color: rgba(255,255,255,.7); color: white; text-decoration: none; background: rgba(255,255,255,.08); }
+  .nav-cta-ghost.active-page { background: var(--teal); border-color: var(--teal); color: white; }
   .nav-cta {
     background: var(--teal); color: white;
-    font-family: var(--body); font-size: 15px; font-weight: 700;
-    padding: 9px 20px; border-radius: 7px; border: none;
+    font-family: var(--body); font-size: 14px; font-weight: 700;
+    padding: 8px 18px; border-radius: 7px; border: none;
     cursor: pointer; transition: all .15s; text-decoration: none;
     white-space: nowrap;
   }
   .nav-cta:hover { background: var(--teal2); text-decoration: none; color: white; }
-  .nav-active {
-    background: var(--teal-pale); color: var(--teal);
-    font-family: var(--body); font-size: 15px; font-weight: 700;
-    padding: 7px 14px; border-radius: 6px; text-decoration: none;
-  }
 
   /* GAME HERO */
   .game-hero {
@@ -357,7 +351,7 @@
   .footer-links { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; }
 
   @media(max-width: 640px) {
-    .nav-links .nav-link { display: none; }
+    .nav-links .nav-cta-ghost:not(:first-child) { display: none; }
     .game-hero-stats { display: none; }
     .footer-inner { flex-direction: column; gap: 12px; }
     .tile { width: 48px; height: 48px; font-size: 19px; }
@@ -375,13 +369,17 @@
   <div class="nav-inner">
     <a href="/" class="nav-brand" aria-label="AbstractionDeskQA home">
       AbstractionDesk<span class="qa-badge">QA</span>
+      <span class="nav-brand-sub">Abstractly</span>
     </a>
     <div class="nav-links">
-      <a href="/" class="nav-link">Home</a>
+      <a href="index.html" class="nav-cta-ghost">
+        <i class="ph ph-arrow-left" aria-hidden="true"></i> Home
+      </a>
       <a href="lkw-tool.html" class="nav-cta-ghost">LKW Tool</a>
       <a href="cmo-tool.html" class="nav-cta-ghost">CMO Tool</a>
       <a href="hbips-tool.html" class="nav-cta-ghost">HBIPS Tool</a>
-      <a href="lookup.html" class="nav-cta">Q&amp;A Tool</a>
+      <a href="sep1-tool.html" class="nav-cta-ghost">SEP-1 Tool</a>
+      <a href="lookup.html" class="nav-cta">Q&amp;A Lookup</a>
     </div>
   </div>
 </nav>
@@ -487,8 +485,8 @@
       <a href="lkw-tool.html">LKW Tool</a>
       <a href="cmo-tool.html">CMO Tool</a>
       <a href="hbips-tool.html">HBIPS Tool</a>
+      <a href="sep1-tool.html">SEP-1 Tool</a>
       <a href="abstractly.html">Abstractly</a>
-      <a href="#feedback">Feedback</a>
     </div>
   </div>
 </footer>
