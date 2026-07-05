@@ -15,7 +15,7 @@ Static multi-page toolkit for hospital core measure abstractors. GitHub Pages ho
 │   │       ├─ POST submissions ──► (same, curator review queue)     │
 │   │       └─ cache: localStorage (5-min TTL) → SEED fallback       │
 │   └─ feedback POST ──► formly.email (+ Cloudflare Turnstile)       │
-│ all pages ──► GA4 · Google Fonts · phosphor icons (unpkg) · BMC    │
+│ all pages ──► GA4 · Google Fonts · phosphor icons (self-hosted) · BMC│
 └─────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -31,6 +31,7 @@ Static multi-page toolkit for hospital core measure abstractors. GitHub Pages ho
 | HBIPS Tool | hbips-tool.html | HBIPS-2/3 hours, strata, rates | ⚠ no GA4 | in-memory |
 | Abstractly | abstractly.html | Clinical-term word game | GA4 | in-memory |
 | 404 | 404.html | Custom not-found (Sawyer mascot) | ⚠ no GA4 | none |
+| Icons | `assets/phosphor/{regular,duotone}.css` + woff2/woff | Self-hosted Phosphor webfont (regular + duotone weights, the only two in use) | none (was unpkg) | static asset |
 
 ## 3. Data Flow — lookup.html
 
@@ -44,7 +45,6 @@ Static multi-page toolkit for hospital core measure abstractors. GitHub Pages ho
 | Dependency | Used by | Risk notes |
 |---|---|---|
 | Google Apps Script + Sheets | lookup | Quotas, cold-start latency, no SLA. Planned: nightly export to static `data/qa.json` (see ADR-0002 status) |
-| unpkg phosphor `src/index.js` | all pages | Render-blocking, unminified, SPOF. Planned: self-host webfont CSS |
 | Google Fonts | all pages | lookup loads a disjoint second type system with duplicate requests |
 | formly.email + Turnstile | index | Healthy |
 | GA4 `G-QJPP46JWX3` | 6/8 pages | Pageviews only; no event telemetry |
@@ -88,5 +88,6 @@ Current coverage: **0%**. CI: none. Target gates (T-06): html-validate, linkinat
 
 (append-only; newest first)
 
+- **2026-07-05** — T-02: Replaced the synchronous `<script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js">` on all 8 pages with two self-hosted `<link rel="stylesheet">` tags (`assets/phosphor/regular.css`, `assets/phosphor/duotone.css`), per F-02/TD (render-blocking unminified third-party script, unpkg SPOF). Grepped all icon `class="ph..."` usage across the repo first to confirm only the `ph` (regular) and `ph-duotone` weights are ever referenced — no `ph-bold`/`ph-fill`/`ph-light`/`ph-thin` usage — so only those two weight CSS files + their woff2/woff fonts were vendored (ttf/svg fallbacks dropped; woff2/woff cover all supported browsers). Verified by inspection: zero remaining `unpkg` references in any `.html` file, all 8 `<link>` pairs point at the new local paths, and the downloaded font files were checked as valid WOFF/WOFF2 binaries (not error-page HTML) before wiring them in.
 - **2026-07-05** — T-01: `esc()` in lookup.html now escapes `"` and `'` in addition to `& < >` (was: HTML-context only, per F-01/TD-2). Verified by inspection of all ~20 call sites (tag chips, cards, tag-browser table, print view) — all pass through the same function, no path was bypassing it. Caveat worth recording: the majority of exploitable sites embed `esc()` output inside an `onclick="fn('...')"` handler, i.e. a JS string nested in an HTML attribute. Browsers HTML-decode an attribute's value *before* compiling it as the event handler's JS source, so an entity-escaped `&#39;` decodes back to a literal `'` right before the JS parser runs — meaning quote-escaping alone does not fully close the JS-string breakout for those specific sites, only the HTML-attribute-boundary risk and all non-JS/plain-text uses. Logging TD-2 as *partially* resolved rather than closed: full closure requires removing inline `onclick` handlers in favor of delegated `addEventListener` + `data-*` attributes, which is already the target-state convention above and overlaps with the T-04 shared-assets migration. Sequencing this correctly next time we touch lookup.html's event wiring will fully retire TD-2.
 - **2026-07-05** — Baseline document created from full source audit. Rationale: establish the documented starting point so subsequent automated/agentic changes maintain architecture artifacts instead of accreting undocumented drift.
