@@ -8,6 +8,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+3:wght@300;400;500;600;700&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/phosphor/regular.css">
 <link rel="stylesheet" href="assets/phosphor/duotone.css">
+<!-- Cloudflare Turnstile -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <style>
 :root{
   --ink:#1a1e2c; --navy:#0d1f3c; --navy2:#163560;
@@ -301,6 +303,7 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
           <div class="sug-panel" id="sugPanel"><div class="sug-lbl" id="sugLbl">Suggestions</div><div class="sug-row" id="sugRow"></div></div>
         </div>
       </div>
+      <div class="cf-turnstile" id="turnstileAdd" data-sitekey="0x4AAAAAADf-2v3MWsS9bACq" data-theme="light" style="margin-bottom:10px;"></div>
       <div class="factions">
         <button class="btn btn-ghost" style="font-size:11px;padding:5px 11px" onclick="toggleAdd()">Cancel</button>
         <button class="btn btn-teal" style="font-size:11px;padding:5px 11px" id="submitBtn" onclick="submitEntry()">Submit for Review</button>
@@ -405,6 +408,7 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
         </div>
         <button class="btn btn-teal" style="font-size:11px;padding:8px 16px;white-space:nowrap;" id="addTagBtn" onclick="addTagDef()">Submit Tag for Review</button>
       </div>
+      <div class="cf-turnstile" id="turnstileTag" data-sitekey="0x4AAAAAADf-2v3MWsS9bACq" data-theme="light" style="margin-top:10px;"></div>
     </div>
 
     <div class="tm-section">Active Tags</div>
@@ -445,6 +449,7 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
       <div class="rrow" id="rrow"></div>
       <div style="font-size:10.5px;color:var(--mid);font-style:italic">Purple = accepted · Gray = rejected · Click to toggle</div>
     </div>
+    <div class="cf-turnstile" id="turnstilePaste" data-sitekey="0x4AAAAAADf-2v3MWsS9bACq" data-theme="light" style="margin-bottom:10px;"></div>
     <div class="mactions">
       <button class="btn btn-ghost" style="font-size:11px;padding:5px 11px" onclick="closePaste()">Cancel</button>
       <button class="btn btn-purple" style="font-size:11px;padding:5px 11px" onclick="previewTags()"><i class="ph-duotone ph-tag" style="vertical-align:middle;margin-right:4px;"></i>Preview Tags</button>
@@ -589,6 +594,8 @@ async function refreshInBackground(){
 }
 async function fetchJSON(url){const res=await fetch(url);if(!res.ok)throw new Error('HTTP '+res.status);return res.json();}
 async function postJSON(payload){const res=await fetch(SCRIPT_URL,{method:'POST',body:JSON.stringify(payload)});if(!res.ok)throw new Error('HTTP '+res.status);return res.json();}
+function getTurnstileToken(containerId){const el=document.querySelector('#'+containerId+' [name="cf-turnstile-response"]');return el?el.value:'';}
+function resetTurnstile(containerId){if(window.turnstile)turnstile.reset('#'+containerId);}
 function getCached(){
   try{const raw=localStorage.getItem(CACHE_KEY);if(!raw)return null;const{ts,data}=JSON.parse(raw);if(Date.now()-ts>CACHE_TTL)return null;return data;}
   catch(e){return null;}
@@ -824,9 +831,11 @@ async function submitEntry(){
   const q=document.getElementById('fq').value.trim();
   const a=document.getElementById('fa').value.trim();
   if(!q||!a){toast('Please enter both question and answer.');return;}
+  const tsToken=getTurnstileToken('turnstileAdd');
+  if(!tsToken){toast('Please complete the verification challenge.');return;}
   const auto=autoDetect(q+' '+a);
   const merged=[...new Set([...formTags,...auto])];
-  const payload={measure:document.getElementById('fm').value,specific:document.getElementById('fspec').value.trim(),type:document.getElementById('ftype').value,question:q,answer:a,source:document.getElementById('fsrc').value.trim(),tags:merged};
+  const payload={measure:document.getElementById('fm').value,specific:document.getElementById('fspec').value.trim(),type:document.getElementById('ftype').value,question:q,answer:a,source:document.getElementById('fsrc').value.trim(),tags:merged,turnstileToken:tsToken};
   const btn=document.getElementById('submitBtn');btn.textContent='Submitting…';btn.disabled=true;
   try{
     await postJSON(payload);
@@ -834,7 +843,7 @@ async function submitEntry(){
     toggleAdd();['fq','fa','fspec','fsrc'].forEach(id=>document.getElementById(id).value='');
     formTags=[];renderFormTags();
   }catch(err){toast('❌ Submission failed — check your connection and try again.');}
-  finally{btn.textContent='Submit for Review';btn.disabled=false;}
+  finally{btn.textContent='Submit for Review';btn.disabled=false;resetTurnstile('turnstileAdd');}
 }
 
 // ══════════════════════════════════════════════════
@@ -870,6 +879,8 @@ async function addTagDef(){
   const name=document.getElementById('nt-n').value.trim();
   if(!name){toast('Tag name required.');return;}
   if(tagDefs.find(t=>t.name.toLowerCase()===name.toLowerCase())){toast('A tag with that name already exists.');return;}
+  const tsToken=getTurnstileToken('turnstileTag');
+  if(!tsToken){toast('Please complete the verification challenge.');return;}
   const aliases=document.getElementById('nt-a').value.split(',').map(s=>s.trim().toLowerCase()).filter(Boolean);
   const related=document.getElementById('nt-r').value.split(',').map(s=>s.trim()).filter(Boolean);
   const category=document.getElementById('nt-cat').value;
@@ -881,11 +892,11 @@ async function addTagDef(){
 
   const btn=document.getElementById('addTagBtn');btn.textContent='Submitting…';btn.disabled=true;
   try{
-    await postJSON({_type:'tag',...newTag});
+    await postJSON({_type:'tag',...newTag,turnstileToken:tsToken});
     toast(`✅ "${name}" saved locally and submitted for curator review!`);
   }catch(err){
     toast(`⚠️ "${name}" saved locally but could not reach Sheets.`);
-  }finally{btn.textContent='Submit Tag for Review';btn.disabled=false;}
+  }finally{btn.textContent='Submit Tag for Review';btn.disabled=false;resetTurnstile('turnstileTag');}
   ['nt-id','nt-n','nt-a','nt-r'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('nt-cat').value='Stroke Timing';
   renderTM();
@@ -929,6 +940,8 @@ function togReview(i){reviewStates[i].on=!reviewStates[i].on;renderReview();}
 async function savePaste(){
   const raw=document.getElementById('pasteRaw').value.trim();
   if(!raw){toast('Nothing to save.');return;}
+  const tsToken=getTurnstileToken('turnstilePaste');
+  if(!tsToken){toast('Please complete the verification challenge.');return;}
   let q='',a=raw;
   const m=raw.match(/^Q[:\.\)]\s*([\s\S]+?)\n\n?A[:\.\)]\s*([\s\S]+)$/i);
   if(m){q=m[1].trim();a=m[2].trim();}
@@ -937,14 +950,14 @@ async function savePaste(){
   const lo=(q+a).toLowerCase();
   const isGray=['unclear','gray','ambiguous','conflict','varies','depends','debate','inconsistent'].some(k=>lo.includes(k));
   const isEdge=['transfer','ems','same system','woke up','discrepancy','exception','contraindic','eloped'].some(k=>lo.includes(k));
-  const payload={measure:document.getElementById('pm').value,specific:document.getElementById('pspec').value.trim(),type:isGray?'gray':isEdge?'edge':'routine',question:q,answer:a,source:document.getElementById('psrc').value.trim()||'Pasted source',tags};
+  const payload={measure:document.getElementById('pm').value,specific:document.getElementById('pspec').value.trim(),type:isGray?'gray':isEdge?'edge':'routine',question:q,answer:a,source:document.getElementById('psrc').value.trim()||'Pasted source',tags,turnstileToken:tsToken};
   const btn=document.getElementById('pasteSubmitBtn');btn.textContent='Submitting…';btn.disabled=true;
   try{
     await postJSON(payload);
     toast('✅ Submitted for curator review!');
     closePaste();document.getElementById('pasteRaw').value='';document.getElementById('pspec').value='';document.getElementById('psrc').value='';
   }catch(err){toast('❌ Submission failed — check your connection.');}
-  finally{btn.textContent='Submit for Review';btn.disabled=false;}
+  finally{btn.textContent='Submit for Review';btn.disabled=false;resetTurnstile('turnstilePaste');}
 }
 
 // ══════════════════════════════════════════════════
