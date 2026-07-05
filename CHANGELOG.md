@@ -4,6 +4,10 @@ All notable changes to this project are documented here. Format follows [Keep a 
 
 ## [Unreleased]
 
+### Added
+
+- Real README (what/why, tool inventory, architecture summary, local dev, contribution/license notes) replacing the 19-byte placeholder; MIT `LICENSE`; ADR-0001/0002/0003 promoted from ARCHITECTURE.md §7 into full `docs/adr/000N-*.md` files; GitHub Actions CI (`.github/workflows/ci.yml`) running html-validate, linkinator, and Lighthouse CI on every push/PR to `main` (audit finding F-19 / ticket T-06). The Lighthouse a11y gate and the `heading-level` html-validate rule are set to warn-only for now — both flip to hard failures once T-05's lookup.html accessibility overhaul lands.
+
 ### Changed
 
 - Self-hosted the Phosphor icon webfont (regular + duotone weights) under `assets/phosphor/` on all 8 pages, replacing the synchronous `<script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js">` with two local `<link rel="stylesheet">` tags. Removes a render-blocking, unminified third-party script and its unpkg SPOF risk (audit finding F-02 / ticket T-02).
