@@ -94,7 +94,7 @@ main{max-width:var(--max);margin:0 auto;padding:32px 24px 72px;}
 .tab-panel.active{display:block;}
 
 /* ── SECTION LABEL ── */
-.section-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.6px;color:var(--teal);margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.section-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.6px;color:var(--teal);margin-top:0;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
 .section-label::before{content:'';display:block;width:18px;height:2px;background:var(--teal);border-radius:1px;}
 
 /* ── CARDS ── */
@@ -418,7 +418,7 @@ main{max-width:var(--max);margin:0 auto;padding:32px 24px 72px;}
 
 <!-- ══ TAB 1: TIMELINE TOOL ══ -->
 <div id="tab-calc" class="tab-panel active">
-  <div class="section-label" style="margin-bottom:14px;">Event Timeline &amp; Bundle Checker</div>
+  <h2 class="section-label" style="margin-bottom:14px;">Event Timeline &amp; Bundle Checker</h2>
 
   <!-- HOW TO USE -->
   <div class="how-box" id="how-box">
@@ -487,7 +487,7 @@ main{max-width:var(--max);margin:0 auto;padding:32px 24px 72px;}
 
 <!-- ══ TAB 2: REFERENCE & GUIDANCE ══ -->
 <div id="tab-ref" class="tab-panel">
-  <div class="section-label" style="margin-bottom:16px;">Quick Reference</div>
+  <h2 class="section-label" style="margin-bottom:16px;">Quick Reference</h2>
 
   <div class="notice notice-info" style="margin-bottom:20px;">
     <i class="ph-duotone ph-info" aria-hidden="true"></i>
@@ -542,7 +542,7 @@ main{max-width:var(--max);margin:0 auto;padding:32px 24px 72px;}
   </div>
 
   <hr class="div">
-  <div class="section-label" style="margin-bottom:14px;">Time Zero — Key Rules</div>
+  <h2 class="section-label" style="margin-bottom:14px;">Time Zero — Key Rules</h2>
   <div class="card">
     <div class="card-title"><i class="ph-duotone ph-flag" aria-hidden="true"></i> Determining Time Zero (SSPT)</div>
     <p class="card-sub">Time Zero is the Severe Sepsis Presentation Time — the earliest time at which the final criterion establishing severe sepsis was met. It drives both the 3-hour and 6-hour bundle windows.</p>
@@ -557,7 +557,7 @@ main{max-width:var(--max);margin:0 auto;padding:32px 24px 72px;}
   </div>
 
   <hr class="div">
-  <div class="section-label" style="margin-bottom:14px;">Common Abstraction Pitfalls</div>
+  <h2 class="section-label" style="margin-bottom:14px;">Common Abstraction Pitfalls</h2>
   <div class="pitfall-list">
     <div class="pitfall"><i class="ph-duotone ph-warning-octagon" aria-hidden="true"></i><div class="pitfall-text"><strong>Antibiotics before cultures</strong><span>Blood cultures must be drawn BEFORE antibiotics are given. If antibiotics were started first, the blood culture element fails — regardless of how soon cultures were subsequently drawn.</span></div></div>
     <div class="pitfall"><i class="ph-duotone ph-warning-octagon" aria-hidden="true"></i><div class="pitfall-text"><strong>Using order time instead of administration time</strong><span>Bundle elements are timed by when they were completed (drawn, administered, initiated) — not when they were ordered. An order at 0900 with IV start at 0945 counts at 0945.</span></div></div>
@@ -571,7 +571,7 @@ main{max-width:var(--max);margin:0 auto;padding:32px 24px 72px;}
 
 <!-- ══ TAB 3: PRACTICE QUIZ ══ -->
 <div id="tab-quiz" class="tab-panel">
-  <div class="section-label" style="margin-bottom:16px;">Practice Quiz</div>
+  <h2 class="section-label" style="margin-bottom:16px;">Practice Quiz</h2>
   <div class="quiz-wrap" id="quizWrap">
     <div id="quizBody"></div>
     <div class="quiz-done" id="quizDone" style="display:none;">
@@ -587,7 +587,7 @@ main{max-width:var(--max);margin:0 auto;padding:32px 24px 72px;}
 
 <!-- ══ TAB 4: CASE WALKTHROUGHS ══ -->
 <div id="tab-cases" class="tab-panel">
-  <div class="section-label" style="margin-bottom:16px;">Case Walkthroughs</div>
+  <h2 class="section-label" style="margin-bottom:16px;">Case Walkthroughs</h2>
   <div id="caseList">
     <p style="font-size:14px;color:var(--ink-soft);margin-bottom:18px;line-height:1.7;">Step-by-step cases that walk through SEP-1 abstraction logic at each decision point. Select a case to begin.</p>
     <div class="case-grid" id="caseListItems"></div>

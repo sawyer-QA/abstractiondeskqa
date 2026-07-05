@@ -1,6 +1,11 @@
 {
   "extends": ["html-validate:recommended"],
-  "rules": {
-    "heading-level": "warn"
-  }
+  "overrides": [
+    {
+      "include": ["lookup.html"],
+      "rules": {
+        "heading-level": "warn"
+      }
+    }
+  ]
 }

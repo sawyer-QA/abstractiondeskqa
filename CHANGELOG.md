@@ -23,6 +23,7 @@ All notable changes to this project are documented here. Format follows [Keep a 
 ### Fixed
 
 - `lkw-tool.html` and `cmo-tool.html` tab navs now implement the full ARIA tabs pattern instead of a bare `role="tablist"` with no follow-through: each tab button gets `role="tab"`, `aria-selected`, `aria-controls`, and roving `tabindex`, each panel gets `role="tabpanel"`/`aria-labelledby`, and `ArrowLeft`/`ArrowRight`/`Home`/`End` now move focus between tabs (audit finding F-11 / ticket T-10).
+- `sep1-tool.html`, `lkw-tool.html`, and `cmo-tool.html` no longer skip `<h1>` straight to `<h3>`: each page's per-tab section label (previously a plain `<div>`) is now an `<h2>`, giving a proper `h1 → h2 → h3` structure with no visual change (ticket T-12). `.html-validate.json`'s `heading-level` rule now runs at `error` by default site-wide; `lookup.html` is carved out to `warn` via a scoped override since its own instance of this skip is unchanged here and remains tracked under T-05.
 
 ### Security
 
