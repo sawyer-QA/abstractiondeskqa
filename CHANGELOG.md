@@ -12,6 +12,10 @@ All notable changes to this project are documented here. Format follows [Keep a 
 
 - Self-hosted the Phosphor icon webfont (regular + duotone weights) under `assets/phosphor/` on all 8 pages, replacing the synchronous `<script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js">` with two local `<link rel="stylesheet">` tags. Removes a render-blocking, unminified third-party script and its unpkg SPOF risk (audit finding F-02 / ticket T-02).
 
+### Fixed
+
+- `lkw-tool.html` and `cmo-tool.html` tab navs now implement the full ARIA tabs pattern instead of a bare `role="tablist"` with no follow-through: each tab button gets `role="tab"`, `aria-selected`, `aria-controls`, and roving `tabindex`, each panel gets `role="tabpanel"`/`aria-labelledby`, and `ArrowLeft`/`ArrowRight`/`Home`/`End` now move focus between tabs (audit finding F-11 / ticket T-10).
+
 ### Security
 
 - Added the Cloudflare Turnstile widget to all 3 submission paths in `lookup.html` (add-entry panel, tag-manager add-tag, paste modal); each submission now requires a completed challenge token attached to the payload (audit finding F-03 / ticket T-03a — client-side half). **Not yet a real mitigation**: the Apps Script backend does not verify the token server-side, so this does not close F-03 on its own. Server-side verification is tracked as ticket T-11, blocked on Apps Script source living outside this repo.
