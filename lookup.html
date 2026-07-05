@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="canonical" href="https://abstractiondeskqa.com/lookup.html">
 <title>Stroke & ED Throughput · Q&A Bank</title>
+<meta name="description" content="Searchable Q&amp;A bank for stroke, ED throughput, sepsis (SEP-1), and HBIPS core measure abstraction — real chart scenarios mapped to TJC and CMS spec language, with a shared tag taxonomy. Part of AbstractionDeskQA.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://abstractiondeskqa.com/lookup.html">
+<meta property="og:site_name" content="AbstractionDeskQA">
+<meta property="og:title" content="Stroke & ED Throughput · Q&A Bank">
+<meta property="og:description" content="Searchable Q&amp;A bank for stroke, ED throughput, sepsis (SEP-1), and HBIPS core measure abstraction — real chart scenarios mapped to TJC and CMS spec language, with a shared tag taxonomy. Part of AbstractionDeskQA.">
 <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+3:wght@300;400;500;600;700&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/phosphor/regular.css">
 <link rel="stylesheet" href="assets/phosphor/duotone.css">
@@ -650,7 +656,8 @@ function render(){
   const f=filtered();
   document.getElementById('rcnt').innerHTML=`Showing <strong>${f.length}</strong> of <strong>${entries.length}</strong> entries`;
   updCounts();buildCloud();
-  if(!f.length){document.getElementById('cards').innerHTML=`<div class="empty"><h3>No results</h3><p>Try a different search or tag filter.</p></div>`;return;}
+  if(!f.length){document.getElementById('cards').innerHTML=`<div class="empty"><h3>No results</h3><p>Try a different search or tag filter.</p></div>`;logZeroResults();return;}
+  lastZeroKey=null;
   document.getElementById('cards').innerHTML=f.map(e=>`
     <div class="qa" id="c-${e.id}">
       <div class="qa-hdr" onclick="togCard('c-${e.id}')">
@@ -675,6 +682,25 @@ function render(){
     </div>`).join('');
 }
 function togCard(id){document.getElementById(id)?.classList.toggle('open');}
+let lastZeroKey=null;
+function logZeroResults(){
+  const q=(document.getElementById('srch')?.value||'').trim();
+  const key=JSON.stringify({q,m:actM,t:actT,tags:[...actTags].sort()});
+  if(key===lastZeroKey)return;
+  lastZeroKey=key;
+  gtag('event','qa_search_zero_results',{search_term:q,measure:actM,type:actT,tags:actTags.join(',')});
+}
+let deepLinkApplied=false;
+function applyDeepLink(){
+  if(deepLinkApplied)return;
+  const id=location.hash.slice(1);
+  if(!id.startsWith('c-'))return;
+  const el=document.getElementById(id);
+  if(!el)return;
+  deepLinkApplied=true;
+  el.classList.add('open');
+  el.scrollIntoView({behavior:'smooth',block:'center'});
+}
 function updCounts(){
   const strokeMeasures=['STK','ASR-IP','C-STK','ASR-OP'];
   const strokeCount=entries.filter(e=>strokeMeasures.some(m=>e.measure===m||String(e.measure).startsWith(m))).length;
@@ -1006,7 +1032,7 @@ document.addEventListener('click',function(e){
   if(dd&&!dd.contains(e.target))dd.classList.remove('open');
 });
 
-fetchFromSheets();
+fetchFromSheets().then(applyDeepLink);
 </script>
 <!-- SHARE STRIP -->
 <div style="background:#e6f5f4;border-top:1px solid #b2dedd;border-bottom:1px solid #b2dedd;padding:18px 24px;">

@@ -6,6 +6,9 @@ All notable changes to this project are documented here. Format follows [Keep a 
 
 ### Added
 
+- Open Graph meta tags (`og:type`, `og:url`, `og:site_name`, `og:title`, `og:description`) on all 8 pages, so links shared in Slack/Teams unfurl with a title and description instead of nothing (audit finding F-09 / ticket T-09). Scoped to Open Graph only — no `twitter:card` tags, and no `og:image` yet (no branded 1200×630 asset exists in the repo; tracked as a follow-up). Also added a `name="description"` tag to `lookup.html`, `cmo-tool.html`, and `lkw-tool.html`, which previously had none, so `og:description` had real copy to reuse.
+- Hash-based deep links to individual Q&A cards in `lookup.html`: visiting `lookup.html#c-{id}` now expands and scrolls to that card on load (ticket T-09). Cards already carried `id="c-${e.id}"`; nothing previously read `location.hash`.
+- Zero-result search-query logging in `lookup.html`: a GA4 event (`qa_search_zero_results`) now fires when a search/filter combination returns no cards, carrying the search term and active filters, deduped so identical repeated empty states (e.g. the 5-minute background cache refresh) don't refire (ticket T-09). Answers the audit's "which queries return zero results = your content roadmap" gap using the GA4 snippet already on the page — no new dependency.
 - Real README (what/why, tool inventory, architecture summary, local dev, contribution/license notes) replacing the 19-byte placeholder; MIT `LICENSE`; ADR-0001/0002/0003 promoted from ARCHITECTURE.md §7 into full `docs/adr/000N-*.md` files; GitHub Actions CI (`.github/workflows/ci.yml`) running html-validate, linkinator, and Lighthouse CI on every push/PR to `main` (audit finding F-19 / ticket T-06). The Lighthouse a11y gate and the `heading-level` html-validate rule are set to warn-only for now — both flip to hard failures once T-05's lookup.html accessibility overhaul lands.
 
 ### Changed
