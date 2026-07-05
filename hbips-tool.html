@@ -15,12 +15,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/phosphor/regular.css">
 <link rel="stylesheet" href="assets/phosphor/duotone.css">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QJPP46JWX3"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-QJPP46JWX3');</script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
   --ink:        #0f1923;
   --ink-mid:    #3d4f62;
-  --ink-soft:   #6b7f94;
+  --ink-soft:   #5a6d81;
   --canvas:     #f7f9fc;
   --white:      #ffffff;
   --navy:       #0d2240;
@@ -639,6 +642,14 @@ footer a:hover { text-decoration: underline; }
   .result-vals { grid-template-columns: 1fr 1fr; }
   .leave-pair-row { grid-template-columns: 1fr 1fr; }
   .leave-pair-row .lp-remove { grid-column: 1 / -1; width: fit-content; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 </style>
 </head>

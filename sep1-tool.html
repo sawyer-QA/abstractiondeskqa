@@ -23,7 +23,7 @@
 /* ── RESET & ROOT ── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  --ink:#0f1923; --ink-mid:#3d4f62; --ink-soft:#6b7f94;
+  --ink:#0f1923; --ink-mid:#3d4f62; --ink-soft:#5a6d81;
   --canvas:#f7f9fc; --white:#ffffff;
   --navy:#0d2240; --teal:#0a7c7a; --teal2:#0da8a5;
   --teal-pale:#e4f5f4; --teal-mid:#c2ece9;
@@ -350,6 +350,14 @@ main{max-width:var(--max);margin:0 auto;padding:32px 24px 72px;}
   .site-footer-inner{flex-direction:column;gap:12px;}
   .bundle-cols{grid-template-columns:1fr;}
   .ref-grid{grid-template-columns:1fr;}
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 </style>
 </head>

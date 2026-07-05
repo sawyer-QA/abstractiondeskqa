@@ -23,7 +23,7 @@
   :root {
     --ink:       #0f1923;
     --ink-mid:   #3d4f62;
-    --ink-soft:  #6b7f94;
+    --ink-soft:  #5a6d81;
     --canvas:    #f7f9fc;
     --white:     #ffffff;
     --navy:      #0d2240;
@@ -438,6 +438,14 @@
     transition: opacity .45s ease, transform .45s ease;
   }
   .fade-up.visible { opacity: 1; transform: translateY(0); }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QJPP46JWX3"></script>
 <script>
