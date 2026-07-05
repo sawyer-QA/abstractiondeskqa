@@ -1,0 +1,92 @@
+# ARCHITECTURE.md — AbstractionDeskQA
+> Living architecture document. Update with every change that alters structure, data flow, dependencies, or decisions. Each PR that changes architecture must touch this file, the changelog, and (if a decision was made) an ADR.
+
+**Status date:** 2026-07-05 · **Baseline:** commit `4486061`
+
+## 1. System Overview
+
+Static multi-page toolkit for hospital core measure abstractors. GitHub Pages hosting, custom domain (CNAME), no build step, no server-side code owned by this repo. One page (lookup.html) consumes an external Google Apps Script API backed by Google Sheets.
+
+```
+┌────────────────────────────── abstractiondeskqa.com (GitHub Pages) ─┐
+│ index  lookup  sep1  lkw  cmo  hbips  abstractly  404               │
+│   │       │                                                        │
+│   │       ├─ GET entries/tags ──► Google Apps Script ──► Sheets    │
+│   │       ├─ POST submissions ──► (same, curator review queue)     │
+│   │       └─ cache: localStorage (5-min TTL) → SEED fallback       │
+│   └─ feedback POST ──► formly.email (+ Cloudflare Turnstile)       │
+│ all pages ──► GA4 · Google Fonts · phosphor icons (unpkg) · BMC    │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+## 2. Component Inventory
+
+| Component | File | Purpose | External deps | State |
+|---|---|---|---|---|
+| Landing | index.html | Marketing, feedback form | formly.email, Turnstile, GA4 | none |
+| Q&A Lookup | lookup.html | Search/filter Q&A bank, tag taxonomy, community submissions, print-PDF export | Apps Script/Sheets, GA4 | localStorage caches (`qc-sheets-cache-v1`, `qc-local-tags-v2`), module-level lets |
+| SEP-1 Tool | sep1-tool.html | Time Zero (SSPT) reasoning: SIRS/OD detection, bundle windows | GA4 | in-memory |
+| LKW Tool | lkw-tool.html | LKW priority resolution + quiz + walkthroughs (dark theme) | GA4 | in-memory |
+| CMO Tool | cmo-tool.html | CMO exclusion classification + quiz (dark theme) | GA4 | in-memory |
+| HBIPS Tool | hbips-tool.html | HBIPS-2/3 hours, strata, rates | ⚠ no GA4 | in-memory |
+| Abstractly | abstractly.html | Clinical-term word game | GA4 | in-memory |
+| 404 | 404.html | Custom not-found (Sawyer mascot) | ⚠ no GA4 | none |
+
+## 3. Data Flow — lookup.html
+
+1. Load → check `qc-sheets-cache-v1` (TTL 5 min). Hit → render, refresh in background. Miss → parallel GET entries + tags from `SCRIPT_URL`.
+2. Fetch failure → `entries = [...SEED]` (embedded fallback), tag defaults merged. **Known gap:** no user-visible stale/offline indicator, no failure telemetry.
+3. User submissions (add panel, paste modal) → client-side auto-tag detection → review chips → POST JSON to `SCRIPT_URL` → sheet row awaiting curator approval. **Known gap:** no bot protection or rate limit on this path (index form has Turnstile; this doesn't).
+4. Render: full innerHTML template re-render; interactivity via inline onclick handlers calling globals.
+
+## 4. Dependency Map (external)
+
+| Dependency | Used by | Risk notes |
+|---|---|---|
+| Google Apps Script + Sheets | lookup | Quotas, cold-start latency, no SLA. Planned: nightly export to static `data/qa.json` (see ADR-0002 status) |
+| unpkg phosphor `src/index.js` | all pages | Render-blocking, unminified, SPOF. Planned: self-host webfont CSS |
+| Google Fonts | all pages | lookup loads a disjoint second type system with duplicate requests |
+| formly.email + Turnstile | index | Healthy |
+| GA4 `G-QJPP46JWX3` | 6/8 pages | Pageviews only; no event telemetry |
+| BuyMeACoffee widget | 7 pages | Cosmetic |
+
+## 5. Cross-Cutting Conventions (target state)
+
+- **Output encoding:** single shared `esc()` escaping `& < > " '`. (T-01: lookup.html's `esc()` now escapes quotes too. Still two divergent escapers — not yet unified into shared `site.js` — see T-04.)
+- **Design tokens:** one `assets/tokens.css`; per-tool theme via `data-theme`. (Baseline: 7 divergent `:root` blocks, 3 visual systems.)
+- **Breakpoints:** 640px (mobile), 900px (tablet). (Baseline: 6 ad-hoc values.)
+- **Events:** delegated `addEventListener`, no new inline `onclick`.
+- **Spec logic:** pure functions in `assets/spec-logic/`, unit-tested against manual-cited cases; page files only wire UI.
+
+## 6. Technical Debt Log
+
+| ID | Debt | Interest | Status |
+|---|---|---|---|
+| TD-1 | 7× duplicated nav/footer/tokens with drift | Every global change = 7 edits | Open → T-04 |
+| TD-2 | esc() misses quotes → attribute XSS | Security exposure via curated content | Partially resolved (T-01) — see note 2026-07-05 |
+| TD-3 | No tests on spec logic | v5.19 spec changes (eff. 1/1/2027) land with zero regression net | Open → T-08 |
+| TD-4 | Live Sheets coupling | Latency/quota/availability | Open → T-07 |
+| TD-5 | Duplicate count-update block (lookup:673–681) | Dead code | Open |
+| TD-6 | role="tablist" without tab semantics (lkw/cmo) | Broken AT contract | Open → T-10 |
+
+## 7. ADR Index
+
+- **ADR-0001 — Single-file-per-tool, no build step.** *Accepted (retroactive).* Context: solo builder, GitHub Pages, tools must be trivially copyable/shareable. Consequence: duplication managed via shared `<link>`/`<script>` assets rather than a bundler; revisit if pages exceed ~10 or a framework need emerges.
+- **ADR-0002 — Google Sheets as content CMS.** *Accepted, amendment proposed.* Context: curator (non-dev) edits content; zero backend cost. Amendment under consideration: nightly export to versioned static JSON, Sheets remains authoring surface (fixes latency/quota, adds provenance/diffability).
+- **ADR-0003 — PHI-free by design.** *Accepted.* No user chart data is transmitted or stored; tools operate on user-entered abstractions client-side only. Any future feature that would transmit clinical text requires a new ADR.
+- ADR template: `docs/adr/NNNN-title.md` → Context / Decision / Status / Consequences / Alternatives considered.
+
+## 8. Changelog Discipline
+
+`CHANGELOG.md`, Keep-a-Changelog format. Every user-visible change gets an entry; every spec-version-driven content change cites the manual version (e.g., "Updated per TJC v2026B / HIQR v5.19"). Commit style: `type(scope): summary` (e.g., `fix(lookup): escape quotes in esc()`).
+
+## 9. Test & QA Baseline
+
+Current coverage: **0%**. CI: none. Target gates (T-06): html-validate, linkinator, Lighthouse CI (perf ≥90, a11y ≥95), vitest for `assets/spec-logic/` once extracted (T-08). Manual QA checklist per release: keyboard-only pass of lookup, print-export, submission round-trip, all pages at 375px/768px/1280px.
+
+## 10. Why-This-Change Notes
+
+(append-only; newest first)
+
+- **2026-07-05** — T-01: `esc()` in lookup.html now escapes `"` and `'` in addition to `& < >` (was: HTML-context only, per F-01/TD-2). Verified by inspection of all ~20 call sites (tag chips, cards, tag-browser table, print view) — all pass through the same function, no path was bypassing it. Caveat worth recording: the majority of exploitable sites embed `esc()` output inside an `onclick="fn('...')"` handler, i.e. a JS string nested in an HTML attribute. Browsers HTML-decode an attribute's value *before* compiling it as the event handler's JS source, so an entity-escaped `&#39;` decodes back to a literal `'` right before the JS parser runs — meaning quote-escaping alone does not fully close the JS-string breakout for those specific sites, only the HTML-attribute-boundary risk and all non-JS/plain-text uses. Logging TD-2 as *partially* resolved rather than closed: full closure requires removing inline `onclick` handlers in favor of delegated `addEventListener` + `data-*` attributes, which is already the target-state convention above and overlaps with the T-04 shared-assets migration. Sequencing this correctly next time we touch lookup.html's event wiring will fully retire TD-2.
+- **2026-07-05** — Baseline document created from full source audit. Rationale: establish the documented starting point so subsequent automated/agentic changes maintain architecture artifacts instead of accreting undocumented drift.

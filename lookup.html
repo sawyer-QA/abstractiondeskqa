@@ -632,7 +632,7 @@ function filtered(){
     return mOk&&tOk&&tagOk&&(!q||tx.includes(q));
   });
 }
-const esc=s=>(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const esc=s=>(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 function typeBadge(t){
   if(t==='edge')return'<span class="badge be">⚡ Edge</span>';
   if(t==='gray')return'<span class="badge bg">❓ Gray</span>';
