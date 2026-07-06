@@ -294,7 +294,7 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
   <div class="main">
     <div class="loading-bar" id="loadingBar">
       <div class="spin"></div>
-      <span id="loadingMsg">Loading entries from Google Sheets…</span>
+      <span id="loadingMsg">Loading Q&amp;A data…</span>
     </div>
 
     <div class="add-panel" id="addPanel">
@@ -479,9 +479,10 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 //  CONFIG
 // ══════════════════════════════════════════════════
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzTuYLUTw9dCPPjCzts68c_xGO1NCkaG3Sy2XpNRr8wQtcLLkeZeHWh5zE21M0Q1hurIg/exec';
+const DATA_URL   = './data/qa.json';
 const CACHE_KEY  = 'qc-sheets-cache-v1';
 const TAGS_KEY   = 'qc-local-tags-v2';
-const CACHE_TTL  = 5 * 60 * 1000;
+const CACHE_TTL  = 12 * 60 * 60 * 1000;
 
 const CATEGORIES = ['Stroke Timing','Treatment','Goals of Care','ED Throughput','Imaging','Disposition','Uncategorized'];
 
@@ -573,10 +574,10 @@ function mergeTagDefs(sheetTags){
 }
 
 // ══════════════════════════════════════════════════
-//  GOOGLE SHEETS FETCH
+//  QA DATA LOAD (static data/qa.json, regenerated nightly — T-07)
 // ══════════════════════════════════════════════════
-async function fetchFromSheets(){
-  showLoading('loading','Loading entries from Google Sheets…');
+async function loadQaData(){
+  showLoading('loading','Loading Q&A data…');
   loadLocalTags();
   const cached=getCached();
   if(cached){
@@ -586,22 +587,22 @@ async function fetchFromSheets(){
     refreshInBackground();return;
   }
   try{
-    const [qaData,tagData]=await Promise.all([fetchJSON(SCRIPT_URL),fetchJSON(SCRIPT_URL+'?type=tags')]);
+    const qaData=await fetchJSON(DATA_URL);
     entries=(qaData.entries&&qaData.entries.length)?qaData.entries:[...SEED];
-    const sheetTags=tagData.tags||[];
+    const sheetTags=qaData.tags||[];
     mergeTagDefs(sheetTags);
     setCache({entries,sheetTags});
     render();showLoading('hidden');
   }catch(err){
-    console.warn('Sheets fetch failed:',err);
+    console.warn('data/qa.json fetch failed:',err);
     entries=[...SEED];mergeTagDefs([]);
-    render();showLoading('warn','⚠️ Could not reach Google Sheets — showing seed data.');
+    render();showLoading('warn','⚠️ Could not load Q&A data — showing seed data.');
   }
 }
 async function refreshInBackground(){
   try{
-    const [qaData,tagData]=await Promise.all([fetchJSON(SCRIPT_URL),fetchJSON(SCRIPT_URL+'?type=tags')]);
-    const sheetTags=tagData.tags||[];
+    const qaData=await fetchJSON(DATA_URL);
+    const sheetTags=qaData.tags||[];
     entries=(qaData.entries&&qaData.entries.length)?qaData.entries:[...SEED];
     mergeTagDefs(sheetTags);setCache({entries,sheetTags});render();
   }catch(e){}
@@ -1040,7 +1041,7 @@ document.addEventListener('click',function(e){
   if(dd&&!dd.contains(e.target))dd.classList.remove('open');
 });
 
-fetchFromSheets().then(applyDeepLink);
+loadQaData().then(applyDeepLink);
 </script>
 <!-- SHARE STRIP -->
 <div style="background:#e6f5f4;border-top:1px solid #b2dedd;border-bottom:1px solid #b2dedd;padding:18px 24px;">

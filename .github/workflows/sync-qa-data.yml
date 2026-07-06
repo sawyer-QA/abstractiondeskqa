@@ -1,0 +1,41 @@
+name: Sync QA Data
+
+on:
+  schedule:
+    - cron: '0 9 * * *'
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: node scripts/sync-qa-data.mjs
+
+      - name: Verify only data/qa.json changed
+        run: |
+          changed=$(git diff --name-only)
+          if [ -n "$changed" ] && [ "$changed" != "data/qa.json" ]; then
+            echo "Refusing to commit: unexpected files changed:"
+            echo "$changed"
+            exit 1
+          fi
+
+      - name: Commit and push if changed
+        run: |
+          if git diff --quiet -- data/qa.json; then
+            echo "No changes to data/qa.json, nothing to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/qa.json
+          git commit -m "chore: nightly qa.json sync (T-07)"
+          git push
