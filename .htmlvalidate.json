@@ -1,14 +1,3 @@
 {
-  "extends": ["html-validate:recommended"],
-  "rules": {
-    "void-style": ["error", { "style": "selfclosing" }]
-  },
-  "overrides": [
-    {
-      "include": ["lookup.html"],
-      "rules": {
-        "heading-level": "warn"
-      }
-    }
-  ]
+  "extends": ["html-validate:recommended"]
 }
