@@ -15,6 +15,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/phosphor/regular.css">
 <link rel="stylesheet" href="assets/phosphor/duotone.css">
+<!-- Shared design tokens / structural CSS (T-04) -->
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/site.css">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QJPP46JWX3"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -25,26 +28,7 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --ink:          #0f1923;
-    --ink-mid:      #3d4f62;
-    --ink-soft:     #5a6d81;
-    --canvas:       #f7f9fc;
-    --white:        #ffffff;
-    --navy:         #0d2240;
-    --teal:         #0a7c7a;
-    --teal2:        #0da8a5;
-    --teal-pale:    #e4f5f4;
-    --amber:        #8a5200;
-    --amber-bg:     #fff8ec;
-    --amber-border: #e8c060;
-    --border:       #dbe2ec;
-    --heading:      'DM Sans', sans-serif;
-    --body:         'Atkinson Hyperlegible', sans-serif;
-    --mono:         'DM Mono', monospace;
-    --radius:       10px;
-    --shadow:       0 4px 24px rgba(13,34,64,.09);
-    --shadow-sm:    0 2px 10px rgba(13,34,64,.06);
-    --max:          1040px;
+    /* Word-game tile/key colors — page-specific, not part of shared tokens.css */
     --green:        #0a7c7a;
     --green-light:  #e4f5f4;
     --yellow:       #8a5200;
@@ -62,69 +46,6 @@
   }
   a { color: var(--teal); }
   a:hover { text-decoration: underline; }
-  a:focus-visible, button:focus-visible {
-    outline: 3px solid var(--teal2);
-    outline-offset: 3px;
-    border-radius: 4px;
-  }
-
-  /* SKIP LINK */
-  .skip-link {
-    position: absolute; top: -60px; left: 16px; z-index: 999;
-    background: var(--navy); color: white; padding: 10px 18px;
-    border-radius: var(--radius); font-weight: 700; font-size: 15px;
-    transition: top .2s; text-decoration: none;
-  }
-  .skip-link:focus { top: 16px; }
-
-  /* NAV */
-  .nav {
-    background: var(--navy);
-    border-bottom: 1px solid rgba(255,255,255,.08);
-    position: sticky; top: 0; z-index: 80;
-    box-shadow: 0 2px 12px rgba(0,0,0,.25);
-  }
-  .nav-inner {
-    max-width: var(--max); margin: 0 auto; padding: 0 24px;
-    display: flex; align-items: center; justify-content: space-between;
-    height: 62px;
-  }
-  .nav-brand {
-    font-family: var(--heading);
-    font-size: 20px; font-weight: 700;
-    color: white; letter-spacing: -.3px;
-    display: flex; align-items: center; gap: 10px;
-    text-decoration: none;
-  }
-  .nav-brand:hover { text-decoration: none; }
-  .nav-brand-sub {
-    font-family: var(--mono); font-size: 11px; font-weight: 400;
-    color: rgba(255,255,255,.4); letter-spacing: .08em; text-transform: uppercase;
-  }
-  .qa-badge {
-    background: var(--teal2); color: white;
-    font-size: 10px; font-weight: 700; padding: 2px 7px;
-    border-radius: 4px; letter-spacing: .6px; font-family: var(--body);
-  }
-  .nav-links { display: flex; gap: 6px; align-items: center; }
-  .nav-cta-ghost {
-    background: transparent; color: rgba(255,255,255,.85);
-    font-family: var(--body); font-size: 14px; font-weight: 600;
-    padding: 8px 18px; border-radius: 7px;
-    border: 1.5px solid rgba(255,255,255,.3); cursor: pointer;
-    transition: all .15s; text-decoration: none; white-space: nowrap;
-    display: inline-flex; align-items: center; gap: 6px;
-  }
-  .nav-cta-ghost:hover { border-color: rgba(255,255,255,.7); color: white; text-decoration: none; background: rgba(255,255,255,.08); }
-  .nav-cta-ghost.active-page { background: var(--teal); border-color: var(--teal); color: white; }
-  .nav-cta {
-    background: var(--teal); color: white;
-    font-family: var(--body); font-size: 14px; font-weight: 700;
-    padding: 8px 18px; border-radius: 7px; border: none;
-    cursor: pointer; transition: all .15s; text-decoration: none;
-    white-space: nowrap;
-  }
-  .nav-cta:hover { background: var(--teal2); text-decoration: none; color: white; }
 
   /* GAME HERO */
   .game-hero {
@@ -326,40 +247,8 @@
   .legend-dot.present { background: var(--amber); }
   .legend-dot.absent  { background: var(--gray-tile); }
 
-  /* DISCLAIMER */
-  .disclaimer {
-    background: #eef2f8; border-top: 1px solid var(--border);
-    padding: 24px;
-  }
-  .disclaimer-inner {
-    max-width: var(--max); margin: 0 auto;
-    font-size: 13px; color: var(--ink-soft); line-height: 1.75;
-  }
-
-  /* FOOTER */
-  footer {
-    background: #07131f;
-    color: rgba(255,255,255,.45);
-    padding: 28px 24px;
-  }
-  .footer-inner {
-    max-width: var(--max); margin: 0 auto;
-    display: flex; align-items: center;
-    justify-content: space-between; gap: 16px; flex-wrap: wrap;
-  }
-  .footer-brand {
-    font-family: var(--heading); font-size: 16px;
-    font-weight: 700; color: rgba(255,255,255,.7); margin-bottom: 4px;
-  }
-  footer p { font-size: 13px; line-height: 1.65; }
-  footer a { color: var(--teal2); text-decoration: none; }
-  footer a:hover { text-decoration: underline; }
-  .footer-links { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; }
-
   @media(max-width: 640px) {
-    .nav-links .nav-cta-ghost:not(:first-child) { display: none; }
     .game-hero-stats { display: none; }
-    .footer-inner { flex-direction: column; gap: 12px; }
     .tile { width: 48px; height: 48px; font-size: 19px; }
     .key { height: 48px; min-width: 32px; }
     .key.wide { min-width: 48px; font-size: 11px; }
@@ -379,21 +268,21 @@
 <a href="#main" class="skip-link">Skip to main content</a>
 
 <!-- NAV -->
-<nav class="nav" role="navigation" aria-label="Main navigation">
-  <div class="nav-inner">
-    <a href="/" class="nav-brand" aria-label="AbstractionDeskQA home">
-      AbstractionDesk<span class="qa-badge">QA</span>
-      <span class="nav-brand-sub">Abstractly</span>
+<nav class="site-nav" aria-label="Site navigation">
+  <div class="site-nav-inner">
+    <a href="/" class="site-nav-brand" aria-label="AbstractionDeskQA home">
+      AbstractionDesk<span class="site-qa-badge">QA</span>
+      <span class="site-nav-brand-sub">Abstractly</span>
     </a>
-    <div class="nav-links">
-      <a href="index.html" class="nav-cta-ghost">
+    <div class="site-nav-links">
+      <a href="index.html" class="site-nav-cta-ghost">
         <i class="ph ph-arrow-left" aria-hidden="true"></i> Home
       </a>
-      <a href="lkw-tool.html" class="nav-cta-ghost">LKW Tool</a>
-      <a href="cmo-tool.html" class="nav-cta-ghost">CMO Tool</a>
-      <a href="hbips-tool.html" class="nav-cta-ghost">HBIPS Tool</a>
-      <a href="sep1-tool.html" class="nav-cta-ghost">SEP-1 Tool</a>
-      <a href="lookup.html" class="nav-cta">Q&amp;A Lookup</a>
+      <a href="lkw-tool.html" class="site-nav-cta-ghost">LKW Tool</a>
+      <a href="cmo-tool.html" class="site-nav-cta-ghost">CMO Tool</a>
+      <a href="hbips-tool.html" class="site-nav-cta-ghost">HBIPS Tool</a>
+      <a href="sep1-tool.html" class="site-nav-cta-ghost">SEP-1 Tool</a>
+      <a href="lookup.html" class="site-nav-cta">Q&amp;A Lookup</a>
     </div>
   </div>
 </nav>
@@ -478,8 +367,8 @@
 </main>
 
 <!-- DISCLAIMER -->
-<div class="disclaimer" role="note">
-  <div class="disclaimer-inner">
+<div class="site-disclaimer" role="note" aria-label="Educational disclaimer">
+  <div class="site-disclaimer-inner">
     <strong>Educational use only.</strong>
     Abstractly is a vocabulary training game for core measure abstractors. It is not a substitute for the official TJC or CMS Specifications Manual.
     Always verify abstraction decisions against current specifications. &nbsp;·&nbsp; <a href="/">Back to AbstractionDeskQA</a>
@@ -487,14 +376,14 @@
 </div>
 
 <!-- FOOTER -->
-<footer role="contentinfo">
-  <div class="footer-inner">
+<footer class="site-footer">
+  <div class="site-footer-inner">
     <div>
-      <div class="footer-brand">AbstractionDesk<span style="color:var(--teal2)">QA</span></div>
+      <div class="site-footer-brand">AbstractionDesk<span style="color:var(--teal2)">QA</span></div>
       <p>A free abstraction toolkit for core measure teams.<br>
       &copy; <span id="yr"></span> AbstractionDeskQA. Educational use only.</p>
     </div>
-    <div class="footer-links">
+    <div class="site-footer-links">
       <a href="lookup.html">Q&amp;A Lookup</a>
       <a href="lkw-tool.html">LKW Tool</a>
       <a href="cmo-tool.html">CMO Tool</a>
@@ -505,6 +394,7 @@
   </div>
 </footer>
 
+<script src="assets/site.js"></script>
 <script>
 const WORDS = [
   { word:"ONSET", hint:"Time symptoms began; used to establish last known well in stroke cases" },
@@ -810,7 +700,6 @@ document.addEventListener('keydown', e => {
 });
 
 document.getElementById('play-again').addEventListener('click', init);
-document.getElementById('yr').textContent = new Date().getFullYear();
 init();
 </script>
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -12,45 +12,17 @@
 <meta property="og:title" content="CMO Abstraction Tool — AbstractionDeskQA">
 <meta property="og:description" content="CMO Abstraction Tool — AbstractionDeskQA. Interactive CMO (Comfort Measures Only) exclusion classification tool with reference guide, practice quiz, and case walkthroughs.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/phosphor/regular.css">
 <link rel="stylesheet" href="assets/phosphor/duotone.css">
+<!-- Shared design tokens / structural CSS (T-04) -->
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/site.css">
 <style>
-:root {
-  --bg: #0f1923;
-  --bg2: #172030;
-  --bg3: #1e2d40;
-  --bg4: #243448;
-  --teal: #2dd4bf;
-  --teal2: #14b8a6;
-  --teal-dim: rgba(45,212,191,0.12);
-  --teal-border: rgba(45,212,191,0.25);
-  --amber: #fbbf24;
-  --amber-dim: rgba(251,191,36,0.12);
-  --amber-border: rgba(251,191,36,0.3);
-  --red: #f87171;
-  --red-dim: rgba(248,113,113,0.12);
-  --red-border: rgba(248,113,113,0.3);
-  --green: #4ade80;
-  --green-dim: rgba(74,222,128,0.1);
-  --green-border: rgba(74,222,128,0.3);
-  --blue: #60a5fa;
-  --blue-dim: rgba(96,165,250,0.1);
-  --purple: #a78bfa;
-  --purple-dim: rgba(167,139,250,0.12);
-  --purple-border: rgba(167,139,250,0.3);
-  --text: #e2eaf4;
-  --muted: #7a96b0;
-  --border: rgba(255,255,255,0.07);
-  --mono: 'DM Mono', monospace;
-  --sans: 'DM Sans', sans-serif;
-  --radius: 8px;
-}
 *{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.6;min-height:100vh;}
-body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 10% 0%,rgba(45,212,191,0.06) 0%,transparent 70%),radial-gradient(ellipse 40% 60% at 90% 100%,rgba(167,139,250,0.05) 0%,transparent 70%);pointer-events:none;z-index:0;}
+body{background:var(--bg);color:var(--text);font-family:var(--body);font-size:14px;line-height:1.6;min-height:100vh;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 10% 0%,rgba(45,212,191,0.06) 0%,transparent 70%),radial-gradient(ellipse 40% 60% at 90% 100%,rgba(123,92,229,0.05) 0%,transparent 70%);pointer-events:none;z-index:0;}
 header{position:sticky;top:0;z-index:200;background:rgba(15,25,35,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:12px 20px;display:flex;align-items:center;gap:14px;}
 .hbadge{background:var(--teal);color:var(--bg);font-family:var(--mono);font-size:10px;font-weight:500;padding:3px 9px;border-radius:4px;letter-spacing:0.1em;white-space:nowrap;}
 .htitle{font-size:15px;font-weight:700;}
@@ -164,19 +136,6 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 /* ── GUIDED ── */
 .gstep-badge{display:inline-block;background:var(--bg4);border:1px solid var(--border);font-family:var(--mono);font-size:10px;color:var(--muted);padding:2px 8px;border-radius:4px;margin-bottom:10px;}
 
-/* ── SITE NAV ── */
-.site-nav{background:#0d2240;border-bottom:1px solid rgba(255,255,255,.08);position:sticky;top:0;z-index:300;box-shadow:0 2px 12px rgba(0,0,0,.25);font-family:'Atkinson Hyperlegible',sans-serif;}
-.site-nav-inner{max-width:1040px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:62px;}
-.site-nav-brand{font-family:'DM Sans',sans-serif;font-size:20px;font-weight:700;color:white;letter-spacing:-.3px;display:flex;align-items:center;gap:10px;text-decoration:none;}
-.site-nav-brand:hover{text-decoration:none;}
-.site-nav-brand-sub{font-family:'DM Mono',monospace;font-size:11px;font-weight:400;color:rgba(255,255,255,.4);letter-spacing:.08em;text-transform:uppercase;}
-.site-qa-badge{background:#0da8a5;color:white;font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;letter-spacing:.6px;}
-.site-nav-links{display:flex;gap:6px;align-items:center;}
-.site-nav-cta{background:#0a7c7a;color:white;font-family:'Atkinson Hyperlegible',sans-serif;font-size:14px;font-weight:700;padding:8px 18px;border-radius:7px;border:none;cursor:pointer;transition:all .15s;text-decoration:none;white-space:nowrap;}
-.site-nav-cta:hover{background:#0da8a5;text-decoration:none;color:white;}
-.site-nav-cta-ghost{background:transparent;color:rgba(255,255,255,.85);font-family:'Atkinson Hyperlegible',sans-serif;font-size:14px;font-weight:600;padding:8px 18px;border-radius:7px;border:1.5px solid rgba(255,255,255,.3);cursor:pointer;transition:all .15s;text-decoration:none;white-space:nowrap;display:inline-flex;align-items:center;gap:6px;}
-.site-nav-cta-ghost:hover{border-color:rgba(255,255,255,.7);color:white;text-decoration:none;background:rgba(255,255,255,.08);}
-.site-nav-cta-ghost.active-page{background:#0a7c7a;border-color:#0a7c7a;color:white;}
 .page-title-bar{background:#0d2240;padding:36px 24px 30px;position:relative;overflow:hidden;}
 .page-title-bar::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 20% 0%,rgba(10,124,122,.22) 0%,transparent 65%);pointer-events:none;}
 .page-title-inner{max-width:1040px;margin:0 auto;position:relative;}
@@ -184,16 +143,6 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 .page-title-text{color:white;}
 .page-title-text h1{font-family:'DM Sans',sans-serif;font-size:clamp(24px,4vw,36px);font-weight:700;line-height:1.15;letter-spacing:-.3px;margin-bottom:10px;}
 .page-title-text p{font-size:15px;color:rgba(255,255,255,.62);max-width:620px;line-height:1.7;}
-.site-footer{background:#07131f;color:rgba(255,255,255,.45);padding:28px 24px;font-family:'Atkinson Hyperlegible',sans-serif;}
-.site-footer-inner{max-width:1040px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
-.site-footer-brand{font-family:'DM Sans',sans-serif;font-size:16px;font-weight:700;color:rgba(255,255,255,.7);margin-bottom:4px;}
-.site-footer p{font-size:13px;line-height:1.65;}
-.site-footer a{color:#0da8a5;text-decoration:none;}
-.site-footer a:hover{text-decoration:underline;}
-.site-footer-links{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;}
-.site-disclaimer{background:#eef2f8;border-top:1px solid #dbe2ec;padding:20px 24px;}
-.site-disclaimer-inner{max-width:1040px;margin:0 auto;font-size:13px;color:#5a6d81;line-height:1.75;font-family:'Atkinson Hyperlegible',sans-serif;}
-@media(max-width:640px){.site-nav-links .site-nav-cta-ghost:not(:first-child){display:none;}.site-footer-inner{flex-direction:column;gap:12px;}}
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -209,9 +158,9 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 </head>
 <body>
 
-<a href="#maincontent" style="position:absolute;top:-60px;left:16px;z-index:999;background:#0d2240;color:white;padding:10px 18px;border-radius:10px;font-weight:700;font-size:15px;transition:top .2s;text-decoration:none;" onfocus="this.style.top='16px'" onblur="this.style.top='-60px'">Skip to main content</a>
+<a href="#maincontent" class="skip-link">Skip to main content</a>
 
-<nav class="site-nav" role="navigation" aria-label="Main navigation">
+<nav class="site-nav" role="navigation" aria-label="Site navigation">
   <div class="site-nav-inner">
     <a href="/" class="site-nav-brand" aria-label="AbstractionDeskQA home">
       AbstractionDesk<span class="site-qa-badge">QA</span>
@@ -244,11 +193,11 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 
 <nav class="tabs" role="tablist">
   <div class="tabs-inner">
-  <button class="tab on" id="tabbtn-classifier" role="tab" aria-selected="true" aria-controls="tab-classifier" tabindex="0" onclick="showTab('classifier')" data-t="classifier"><i class="ph-duotone ph-funnel"></i> Case Classifier</button>
-  <button class="tab" id="tabbtn-guided" role="tab" aria-selected="false" aria-controls="tab-guided" tabindex="-1" onclick="showTab('guided')" data-t="guided"><i class="ph-duotone ph-git-branch"></i> Guided Workflow</button>
-  <button class="tab" id="tabbtn-ref" role="tab" aria-selected="false" aria-controls="tab-ref" tabindex="-1" onclick="showTab('ref')" data-t="ref"><i class="ph-duotone ph-clipboard-text"></i> Quick Reference</button>
-  <button class="tab" id="tabbtn-quiz" role="tab" aria-selected="false" aria-controls="tab-quiz" tabindex="-1" onclick="showTab('quiz')" data-t="quiz"><i class="ph-duotone ph-target"></i> Practice Quiz</button>
-  <button class="tab" id="tabbtn-cases" role="tab" aria-selected="false" aria-controls="tab-cases" tabindex="-1" onclick="showTab('cases')" data-t="cases"><i class="ph-duotone ph-stethoscope"></i> Case Walkthroughs</button>
+  <button class="tab on" id="tabbtn-classifier" role="tab" aria-selected="true" aria-controls="tab-classifier" tabindex="0" data-t="classifier"><i class="ph-duotone ph-funnel"></i> Case Classifier</button>
+  <button class="tab" id="tabbtn-guided" role="tab" aria-selected="false" aria-controls="tab-guided" tabindex="-1" data-t="guided"><i class="ph-duotone ph-git-branch"></i> Guided Workflow</button>
+  <button class="tab" id="tabbtn-ref" role="tab" aria-selected="false" aria-controls="tab-ref" tabindex="-1" data-t="ref"><i class="ph-duotone ph-clipboard-text"></i> Quick Reference</button>
+  <button class="tab" id="tabbtn-quiz" role="tab" aria-selected="false" aria-controls="tab-quiz" tabindex="-1" data-t="quiz"><i class="ph-duotone ph-target"></i> Practice Quiz</button>
+  <button class="tab" id="tabbtn-cases" role="tab" aria-selected="false" aria-controls="tab-cases" tabindex="-1" data-t="cases"><i class="ph-duotone ph-stethoscope"></i> Case Walkthroughs</button>
   </div>
 </nav>
 
@@ -474,31 +423,8 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 
 </main>
 
+<script src="assets/site.js"></script>
 <script>
-// ── TABS ──
-function showTab(id){
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
-  document.querySelectorAll('.tab').forEach(t=>{t.classList.remove('on');t.setAttribute('aria-selected','false');t.tabIndex=-1;});
-  document.getElementById('tab-'+id).classList.add('on');
-  const btn=document.querySelector('[data-t="'+id+'"]');
-  btn.classList.add('on');
-  btn.setAttribute('aria-selected','true');
-  btn.tabIndex=0;
-}
-document.querySelector('.tabs-inner').addEventListener('keydown',function(e){
-  if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key)) return;
-  const tabs=Array.from(this.querySelectorAll('[role="tab"]'));
-  const i=tabs.indexOf(document.activeElement);
-  if(i===-1) return;
-  e.preventDefault();
-  let next;
-  if(e.key==='ArrowRight') next=tabs[(i+1)%tabs.length];
-  else if(e.key==='ArrowLeft') next=tabs[(i-1+tabs.length)%tabs.length];
-  else if(e.key==='Home') next=tabs[0];
-  else next=tabs[tabs.length-1];
-  next.focus();
-  next.click();
-});
 
 // ── CLASSIFIER ──
 const selectedDocs = new Set();
@@ -751,19 +677,19 @@ renderCaseCards();
 </script>
 
 <!-- SHARE STRIP -->
-<div style="background:#e6f5f4;border-top:1px solid #b2dedd;border-bottom:1px solid #b2dedd;padding:18px 24px;">
-  <div style="max-width:1040px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+<div class="share-strip">
+  <div class="share-strip-inner">
     <div>
-      <div style="font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;color:#0d1f3c;margin-bottom:3px;">Share with your team</div>
-      <div style="font-size:13px;color:#3d4f62;line-height:1.5;">Free abstraction reference for core measure teams — Q&amp;A lookup, LKW tool, and more.</div>
+      <div class="share-strip-title">Share with your team</div>
+      <div class="share-strip-sub">Free abstraction reference for core measure teams — Q&amp;A lookup, LKW tool, and more.</div>
     </div>
-    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-      <code style="background:white;border:1px solid #b2dedd;border-radius:6px;padding:7px 14px;font-size:13px;color:#0b7a78;font-family:'DM Mono',monospace;white-space:nowrap;">https://abstractiondeskqa.com</code>
-      <button onclick="(()=>{navigator.clipboard.writeText('https://abstractiondeskqa.com');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy link',2000)})()" style="background:#0b7a78;color:white;border:none;border-radius:6px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif;" onmouseover="this.style.background='#0fa39f'" onmouseout="this.style.background='#0b7a78'">Copy link</button>
+    <div class="share-strip-actions">
+      <code class="share-url-pill">https://abstractiondeskqa.com</code>
+      <button class="share-copy-btn">Copy link</button>
     </div>
   </div>
 </div>
-<div class="site-disclaimer" role="note">
+<div class="site-disclaimer" role="note" aria-label="Educational disclaimer">
   <div class="site-disclaimer-inner">
     <strong>Educational use only.</strong>
     AbstractionDeskQA is a reference aid to support abstractor training and workflow. It does not constitute compliance advice and is not a substitute for the official TJC or CMS Specifications Manual. Always verify abstraction decisions against the current specifications.
@@ -775,7 +701,7 @@ renderCaseCards();
     <div>
       <div class="site-footer-brand">AbstractionDesk<span style="color:#0da8a5">QA</span></div>
       <p>A free reference tool for core measure abstractors.<br>
-      &copy; <span id="siteYr"></span> AbstractionDeskQA. Educational use only.</p>
+      &copy; <span id="yr"></span> AbstractionDeskQA. Educational use only.</p>
     </div>
     <div class="site-footer-links">
       <a href="lookup.html">Q&amp;A Lookup</a>
@@ -787,7 +713,6 @@ renderCaseCards();
     </div>
   </div>
 </footer>
-<script>document.getElementById('siteYr').textContent=new Date().getFullYear();</script>
 <script data-name="BMC-Widget"
         data-cfasync="false"
         src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"

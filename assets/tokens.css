@@ -1,0 +1,75 @@
+/* Shared design tokens — AbstractionDeskQA (T-04)
+   Light theme is the default :root, used by index/sep1-tool/hbips-tool/abstractly.
+   Dark theme is opt-in via <html data-theme="dark">, used by lkw-tool/cmo-tool.
+   lookup.html intentionally does NOT adopt the light-theme color/font tokens below —
+   it keeps its own bespoke palette and Bitter/Source Sans 3/Source Code Pro fonts in a
+   page-scoped :root override, and only consumes --border/--radius/--shadow/--shadow-sm/
+   --max (structural) and --purple/--purple-bg/--purple-border (canonical accent) from
+   this file. See ARCHITECTURE.md §5 / TD-1. */
+
+:root {
+  --ink:          #0f1923;
+  --ink-mid:      #3d4f62;
+  --ink-soft:     #5a6d81;
+  --canvas:       #f7f9fc;
+  --white:        #ffffff;
+  --navy:         #0d2240;
+  --teal:         #0a7c7a;
+  --teal2:        #0da8a5;
+  --teal-pale:    #e4f5f4;
+  --teal-mid:     #c2ece9;
+  --amber:        #8a5200;
+  --amber-bg:     #fff8ec;
+  --amber-border: #e8c060;
+  --red:          #9b1c1c;
+  --red-bg:       #fef2f2;
+  --red-border:   #fca5a5;
+  --green:        #166534;
+  --green-bg:     #f0fdf4;
+  --green-border: #86efac;
+  --purple:       #7B5CE5;
+  --purple-bg:    #f0ebff;
+  --purple-border:#c9b8f5;
+  --border:       #dbe2ec;
+  --border-mid:   #c4cdd9;
+  --heading:      'DM Sans', sans-serif;
+  --body:         'Atkinson Hyperlegible', sans-serif;
+  --mono:         'DM Mono', monospace;
+  --radius:       10px;
+  --shadow:       0 4px 24px rgba(13,34,64,.09);
+  --shadow-sm:    0 2px 10px rgba(13,34,64,.06);
+  --max:          1040px;
+}
+
+:root[data-theme="dark"] {
+  --bg:           #0f1923;
+  --bg2:          #172030;
+  --bg3:          #1e2d40;
+  --bg4:          #243448;
+  --teal:         #2dd4bf;
+  --teal2:        #14b8a6;
+  --teal-dim:     rgba(45,212,191,0.12);
+  --teal-border:  rgba(45,212,191,0.25);
+  --amber:        #fbbf24;
+  --amber-dim:    rgba(251,191,36,0.12);
+  --amber-border: rgba(251,191,36,0.3);
+  --red:          #f87171;
+  --red-dim:      rgba(248,113,113,0.12);
+  --red-border:   rgba(248,113,113,0.3);
+  --green:        #4ade80;
+  --green-dim:    rgba(74,222,128,0.1);
+  --green-border: rgba(74,222,128,0.3);
+  --blue:         #60a5fa;
+  --blue-dim:     rgba(96,165,250,0.1);
+  --purple:       #7B5CE5;
+  --purple-dim:   rgba(123,92,229,0.12);
+  --purple-border:rgba(123,92,229,0.3);
+  --text:         #e2eaf4;
+  --muted:        #7a96b0;
+  --border:       rgba(255,255,255,0.07);
+  --mono:         'DM Mono', monospace;
+  --sans:         'DM Sans', sans-serif;
+  --heading:      'DM Sans', sans-serif;
+  --body:         'Atkinson Hyperlegible', sans-serif;
+  --radius:       8px;
+}

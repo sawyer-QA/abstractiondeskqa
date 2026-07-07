@@ -12,10 +12,12 @@
 <meta property="og:title" content="SEP-1 Tool — AbstractionDeskQA">
 <meta property="og:description" content="SEP-1 Tool — AbstractionDeskQA. Interactive Time Zero calculator, bundle window checker, reference guide, practice quiz, and case walkthroughs for CMS SEP-1 abstraction.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/phosphor/regular.css">
 <link rel="stylesheet" href="assets/phosphor/duotone.css">
+<!-- Shared design tokens / structural CSS (T-04) -->
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/site.css">
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QJPP46JWX3"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-QJPP46JWX3');</script>
@@ -23,22 +25,7 @@
 /* ── RESET & ROOT ── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  --ink:#0f1923; --ink-mid:#3d4f62; --ink-soft:#5a6d81;
-  --canvas:#f7f9fc; --white:#ffffff;
-  --navy:#0d2240; --teal:#0a7c7a; --teal2:#0da8a5;
-  --teal-pale:#e4f5f4; --teal-mid:#c2ece9;
-  --amber:#8a5200; --amber-bg:#fff8ec; --amber-border:#e8c060;
-  --red:#9b1c1c; --red-bg:#fef2f2; --red-border:#fca5a5;
-  --green:#166534; --green-bg:#f0fdf4; --green-border:#86efac;
-  --border:#dbe2ec; --border-mid:#c4cdd9;
-  --heading:'DM Sans',sans-serif;
-  --body:'Atkinson Hyperlegible',sans-serif;
-  --mono:'DM Mono',monospace;
-  --radius:10px;
-  --shadow:0 4px 24px rgba(13,34,64,.09);
-  --shadow-sm:0 2px 10px rgba(13,34,64,.06);
-  --max:1040px;
-  /* Calculator category tokens */
+  /* SEP-1 calculator category tokens — page-specific, not part of shared tokens.css */
   --c-sirs:#1d6fa4; --c-sirs-bg:#e8f3fb; --c-sirs-b:#a8d4ee;
   --c-od:#b45309;   --c-od-bg:#fef3e2;   --c-od-b:#f9c672;
   --c-bundle:#166534; --c-bundle-bg:#f0fdf4; --c-bundle-b:#86efac;
@@ -50,25 +37,6 @@ html{scroll-behavior:smooth;}
 body{font-family:var(--body);background:var(--canvas);color:var(--ink);line-height:1.75;font-size:15px;-webkit-font-smoothing:antialiased;}
 a{color:var(--teal);}
 a:hover{text-decoration:underline;}
-a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--teal2);outline-offset:3px;border-radius:4px;}
-
-/* ── SKIP LINK ── */
-.skip-link{position:absolute;top:-60px;left:16px;z-index:999;background:var(--navy);color:white;padding:10px 18px;border-radius:var(--radius);font-weight:700;font-size:15px;transition:top .2s;text-decoration:none;}
-.skip-link:focus{top:16px;}
-
-/* ── SITE NAV ── */
-.site-nav{background:var(--navy);border-bottom:1px solid rgba(255,255,255,.08);position:sticky;top:0;z-index:300;box-shadow:0 2px 12px rgba(0,0,0,.25);}
-.site-nav-inner{max-width:var(--max);margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:62px;}
-.site-nav-brand{font-family:var(--heading);font-size:20px;font-weight:700;color:white;letter-spacing:-.3px;display:flex;align-items:center;gap:10px;text-decoration:none;}
-.site-nav-brand:hover{text-decoration:none;}
-.site-nav-brand-sub{font-family:var(--mono);font-size:11px;font-weight:400;color:rgba(255,255,255,.4);letter-spacing:.08em;text-transform:uppercase;}
-.site-qa-badge{background:var(--teal2);color:white;font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;letter-spacing:.6px;}
-.site-nav-links{display:flex;gap:6px;align-items:center;}
-.site-nav-cta{background:var(--teal);color:white;font-family:var(--body);font-size:14px;font-weight:700;padding:8px 18px;border-radius:7px;border:none;cursor:pointer;transition:all .15s;text-decoration:none;white-space:nowrap;}
-.site-nav-cta:hover{background:var(--teal2);text-decoration:none;color:white;}
-.site-nav-cta-ghost{background:transparent;color:rgba(255,255,255,.85);font-family:var(--body);font-size:14px;font-weight:600;padding:8px 18px;border-radius:7px;border:1.5px solid rgba(255,255,255,.3);cursor:pointer;transition:all .15s;text-decoration:none;white-space:nowrap;display:inline-flex;align-items:center;gap:6px;}
-.site-nav-cta-ghost:hover{border-color:rgba(255,255,255,.7);color:white;text-decoration:none;background:rgba(255,255,255,.08);}
-.site-nav-cta-ghost.active-page{background:var(--teal);border-color:var(--teal);color:white;}
 
 /* ── PAGE HERO ── */
 .page-hero{background:var(--navy);padding:36px 24px 30px;position:relative;overflow:hidden;}
@@ -326,28 +294,7 @@ main{max-width:var(--max);margin:0 auto;padding:32px 24px 72px;}
 /* ── DIVIDER ── */
 .div{border:none;border-top:1px solid var(--border);margin:22px 0;}
 
-/* ── SHARE / DISCLAIMER / FOOTER ── */
-.share-strip{background:#e6f5f4;border-top:1px solid #b2dedd;border-bottom:1px solid #b2dedd;padding:18px 24px;}
-.share-strip-inner{max-width:var(--max);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
-.share-strip-title{font-family:var(--heading);font-size:14px;font-weight:700;color:var(--navy);margin-bottom:3px;}
-.share-strip-sub{font-size:13px;color:var(--ink-mid);line-height:1.5;}
-.share-strip-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
-.share-url-pill{background:white;border:1px solid #b2dedd;border-radius:6px;padding:7px 14px;font-size:13px;color:var(--teal);font-family:var(--mono);white-space:nowrap;}
-.share-copy-btn{background:var(--teal);color:white;border:none;border-radius:6px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--body);transition:background .15s;}
-.share-copy-btn:hover{background:var(--teal2);}
-.site-disclaimer{background:#eef2f8;border-top:1px solid var(--border);padding:20px 24px;}
-.site-disclaimer-inner{max-width:var(--max);margin:0 auto;font-size:13px;color:var(--ink-soft);line-height:1.75;font-family:var(--body);}
-.site-footer{background:#07131f;color:rgba(255,255,255,.45);padding:28px 24px;font-family:var(--body);}
-.site-footer-inner{max-width:var(--max);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
-.site-footer-brand{font-family:var(--heading);font-size:16px;font-weight:700;color:rgba(255,255,255,.7);margin-bottom:4px;}
-.site-footer p{font-size:13px;line-height:1.65;}
-.site-footer a{color:var(--teal2);text-decoration:none;}
-.site-footer a:hover{text-decoration:underline;}
-.site-footer-links{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;}
-
 @media(max-width:640px){
-  .site-nav-links .site-nav-cta-ghost:not(:first-child){display:none;}
-  .site-footer-inner{flex-direction:column;gap:12px;}
   .bundle-cols{grid-template-columns:1fr;}
   .ref-grid{grid-template-columns:1fr;}
 }
@@ -399,16 +346,16 @@ main{max-width:var(--max);margin:0 auto;padding:32px 24px 72px;}
 <!-- TABS -->
 <div class="tool-tabs" role="navigation" aria-label="Tool sections">
   <div class="tool-tabs-inner">
-    <button class="tab-btn active" onclick="switchTab('calc',this)" aria-selected="true">
+    <button class="tab-btn active" data-tab="calc" aria-selected="true">
       <i class="ph-duotone ph-timer" aria-hidden="true"></i> Timeline Tool
     </button>
-    <button class="tab-btn" onclick="switchTab('ref',this)" aria-selected="false">
+    <button class="tab-btn" data-tab="ref" aria-selected="false">
       <i class="ph-duotone ph-book-open" aria-hidden="true"></i> Reference &amp; Guidance
     </button>
-    <button class="tab-btn" onclick="switchTab('quiz',this)" aria-selected="false">
+    <button class="tab-btn" data-tab="quiz" aria-selected="false">
       <i class="ph-duotone ph-exam" aria-hidden="true"></i> Practice Quiz
     </button>
-    <button class="tab-btn" onclick="switchTab('cases',this)" aria-selected="false">
+    <button class="tab-btn" data-tab="cases" aria-selected="false">
       <i class="ph-duotone ph-files" aria-hidden="true"></i> Case Walkthroughs
     </button>
   </div>
@@ -620,12 +567,12 @@ main{max-width:var(--max);margin:0 auto;padding:32px 24px 72px;}
     </div>
     <div class="share-strip-actions">
       <code class="share-url-pill">https://abstractiondeskqa.com</code>
-      <button class="share-copy-btn" onclick="(()=>{navigator.clipboard.writeText('https://abstractiondeskqa.com');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy link',2000)})()">Copy link</button>
+      <button class="share-copy-btn">Copy link</button>
     </div>
   </div>
 </div>
 
-<div class="site-disclaimer" role="note">
+<div class="site-disclaimer" role="note" aria-label="Educational disclaimer">
   <div class="site-disclaimer-inner">
     <strong>Educational use only.</strong>
     AbstractionDeskQA is a reference aid to support abstractor training and workflow. It does not constitute compliance advice and is not a substitute for the official TJC or CMS Specifications Manual. Always verify abstraction decisions against the current specification version for your abstraction period.
@@ -637,7 +584,7 @@ main{max-width:var(--max);margin:0 auto;padding:32px 24px 72px;}
     <div>
       <div class="site-footer-brand">AbstractionDesk<span style="color:var(--teal2)">QA</span></div>
       <p>A free reference tool for core measure abstractors.<br>
-      &copy; <span id="siteYr"></span> AbstractionDeskQA. Educational use only.</p>
+      &copy; <span id="yr"></span> AbstractionDeskQA. Educational use only.</p>
     </div>
     <div class="site-footer-links">
       <a href="lookup.html">Q&amp;A Lookup</a>
@@ -656,17 +603,8 @@ main{max-width:var(--max);margin:0 auto;padding:32px 24px 72px;}
   data-message="Support ongoing development of this free reference tool."
   data-color="#0a7c7a" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
 
+<script src="assets/site.js"></script>
 <script>
-document.getElementById('siteYr').textContent = new Date().getFullYear();
-
-// ── TAB SWITCHING ──────────────────────────────────────────────
-function switchTab(id, btn) {
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
-  document.getElementById('tab-' + id).classList.add('active');
-  btn.classList.add('active'); btn.setAttribute('aria-selected','true');
-}
-
 // ── DETECTION ENGINE ──────────────────────────────────────────
 const DETECT_RULES = [
   { type:'sirs', re:/(?:^|[\s,;:=\-–])(?:t|temp|temperature|tmax|fever|febrile|hypotherm)[\s:=]?\d|fever|\btemp\b|tmax\b|febrile|hypotherm|chills|\b(?:hr|heart.?rate|pulse|tachycard)[\s:=]?\d|\btachycard|\b(?:rr|resp.?rate|respirat|breathe|tachypnea)[\s:=]?\d|\btachypnea|\b(?:wbc|white.?blood|leukocyt|leukopenia|bandemia|band[s]?\s*[=%]?)[\s:=]?\d|\bleukocyt|\bleukopenia|\bbandemia/i },
@@ -716,7 +654,7 @@ function renderRows() {
     return `<div class="ev-row" data-ev-id="${r.id}">
       <input type="time" class="ev-time" value="${r.time}" oninput="syncField(${r.id},'time',this.value)">
       <div class="ev-desc-wrap">
-        <input type="text" class="ev-label" value="${escH(r.label)}"
+        <input type="text" class="ev-label" value="${esc(r.label)}"
           placeholder="Describe event — type auto-detected"
           oninput="syncField(${r.id},'label',this.value)">
         <span class="type-badge ${meta.badge}" style="${isOvr?'text-decoration:underline dotted 1px;':''}"
@@ -790,7 +728,7 @@ function build() {
     <div class="tz-r-title">Suggested Time Zero</div>
     <div class="tz-r-main">${tzTime} &nbsp;·&nbsp; ${tzSource}</div>
     ${tzChecks.map(c=>`<div class="tz-check"><span class="tz-check-icon" style="color:${c.ok?'var(--c-bundle)':'var(--c-od)'}">${c.ok?'✓':'⚠'}</span><span style="color:${c.ok?'#166534':'#92400e'}">${c.text}</span></div>`).join('')}
-    ${allSirsForDisplay.length>1?`<div class="sirs-list"><div class="sirs-list-title">All detected SIRS events</div>${allSirsForDisplay.map(s=>`<div class="sirs-ev"><span style="font-family:var(--mono);color:var(--c-tz)">${s.time}</span><span>${escH(s.label)}</span></div>`).join('')}</div>`:''}`;
+    ${allSirsForDisplay.length>1?`<div class="sirs-list"><div class="sirs-list-title">All detected SIRS events</div>${allSirsForDisplay.map(s=>`<div class="sirs-ev"><span style="font-family:var(--mono);color:var(--c-tz)">${s.time}</span><span>${esc(s.label)}</span></div>`).join('')}</div>`:''}`;
 
   const bc   =valid.find(e=>/blood.?cult|blood\s*cx|bcx?\s*(?:x|×|drawn|\d)|bc\s*(?:x|×)\s*\d|cultures?\s*(?:drawn|sent|collected)/i.test(e.label));
   const abx  =valid.find(e=>/vancomycin|vanc\b|cefepime|ceftriaxone|rocephin|ceftazidime|meropenem|merrem|imipenem|ertapenem|ciprofloxacin|\bcipro\b|azithromycin|\bazithro\b|levofloxacin|\blevo\b|\bflagyl\b|metronidazole|ampicillin|amp.?sulbact|unasyn|pip.?tazo|piperacillin|zosyn\b|linezolid|daptomycin|tigecycline|broad.?spectrum|abx\s*(?:start|admin|given|ordered)|antibiotic\s*(?:start|admin|given|ordered)|antibiotics?\s*(?:start|admin|given)|iv\s*antibiotic/i.test(e.label));
@@ -802,7 +740,7 @@ function build() {
 
   function recogItem(label,ev,warn){
     const cls=!ev?'missing':warn?'found-warn':'found', icon=!ev?'○':warn?'⚠':'✓';
-    return `<div class="recog-item ${cls}"><span class="recog-icon">${icon}</span><div class="recog-detail"><span class="recog-label">${label}</span>${ev?`<span class="recog-sub">${ev.time} · ${escH(ev.label.length>36?ev.label.slice(0,36)+'…':ev.label)}</span>`:''}${ev&&warn?`<span class="recog-warn">${warn}</span>`:''}</div></div>`;
+    return `<div class="recog-item ${cls}"><span class="recog-icon">${icon}</span><div class="recog-detail"><span class="recog-label">${label}</span>${ev?`<span class="recog-sub">${ev.time} · ${esc(ev.label.length>36?ev.label.slice(0,36)+'…':ev.label)}</span>`:''}${ev&&warn?`<span class="recog-warn">${warn}</span>`:''}</div></div>`;
   }
   document.getElementById('recog-card').innerHTML=`<div class="recog-card-label">Recognized elements</div><div class="recog-grid">${recogItem('SIRS criteria',sirsAny[0])}${recogItem('Organ dysfunction',odAny[0])}${recogItem('Blood cultures',bc,bc?.orderWarn)}${recogItem('IV antibiotics',abx,abx?.orderWarn)}${recogItem('Initial lactate',lac1)}${recogItem('30 mL/kg fluids',fluid,fluid?.orderWarn)}${recogItem('Repeat lactate',lac2)}${recogItem('Vasopressors',vaso)}</div><div style="font-size:11px;color:var(--ink-soft);margin-top:10px;line-height:1.6;">✓ Found &nbsp;·&nbsp; ⚠ Found but needs review &nbsp;·&nbsp; ○ Not entered or not recognized &nbsp;·&nbsp; Click any badge to override type</div>`;
 
@@ -815,7 +753,7 @@ function build() {
     const delta=ev.mins-tzMins, sign=delta>=0?'+':'-', abs=Math.abs(delta);
     const dStr=abs===0?'':abs<60?`${sign}${abs}m`:`${sign}${Math.floor(abs/60)}h${abs%60?abs%60+'m':''}`;
     const dCol=delta<0?'var(--c-sirs)':ev.mins<=d3?'var(--c-bundle)':ev.mins<=d6?'var(--c-od)':'var(--ink-soft)';
-    return `<div class="tl-ev${isTz?' is-tz':''}"><div class="tl-ev-time">${ev.time}${dStr?`<div class="tl-ev-delta" style="color:${dCol}">${dStr}</div>`:''}</div><div class="tl-spine"><div class="tl-dot ${meta.dot}"></div><div class="tl-seg"></div></div><div class="tl-ev-body"><span class="tl-chip ${meta.chip}">${meta.label.toUpperCase()}</span><div class="tl-ev-text">${escH(ev.label)}</div>${ev.note?`<div class="tl-ev-note">${ev.note}</div>`:''}${ev.orderWarn?`<div class="tl-ev-warn">⚠ ${ev.orderWarn}</div>`:''}</div></div>`;
+    return `<div class="tl-ev${isTz?' is-tz':''}"><div class="tl-ev-time">${ev.time}${dStr?`<div class="tl-ev-delta" style="color:${dCol}">${dStr}</div>`:''}</div><div class="tl-spine"><div class="tl-dot ${meta.dot}"></div><div class="tl-seg"></div></div><div class="tl-ev-body"><span class="tl-chip ${meta.chip}">${meta.label.toUpperCase()}</span><div class="tl-ev-text">${esc(ev.label)}</div>${ev.note?`<div class="tl-ev-note">${ev.note}</div>`:''}${ev.orderWarn?`<div class="tl-ev-warn">⚠ ${ev.orderWarn}</div>`:''}</div></div>`;
   }).join('');
 
   document.getElementById('win-rows').innerHTML=`<div class="win-row win-3h"><span class="w-label" style="color:var(--c-od)">3-hour bundle window</span><span class="w-range">${tzTime} → ${m2t(d3)}</span></div><div class="win-row win-6h"><span class="w-label" style="color:var(--c-tz)">6-hour bundle window</span><span class="w-range">${tzTime} → ${m2t(d6)}</span></div>`;
@@ -823,7 +761,7 @@ function build() {
   function bi(label,ev,deadline){
     if (!ev) return `<div class="bi"><span style="color:var(--ink-soft)">○</span><div class="bi-left"><span class="bi-label">${label}</span></div><span class="bi-result res-na">—</span></div>`;
     const pass=ev.mins<=deadline, dm=ev.mins-tzMins, dh=Math.floor(dm/60), dmm=dm%60;
-    return `<div class="bi"><span style="color:${pass?'var(--c-bundle)':'var(--c-shock)'}">${pass?'✓':'✗'}</span><div class="bi-left"><span class="bi-label">${label}</span><span class="bi-sub">${ev.time} (+${dh?dh+'h':''}${dmm}m) · ${escH(ev.label.length>32?ev.label.slice(0,32)+'…':ev.label)}</span>${ev.orderWarn?`<span class="bi-warn">⚠ ${ev.orderWarn}</span>`:''}</div><span class="bi-result ${pass?'res-pass':'res-fail'}">${pass?'PASS':'FAIL'}</span></div>`;
+    return `<div class="bi"><span style="color:${pass?'var(--c-bundle)':'var(--c-shock)'}">${pass?'✓':'✗'}</span><div class="bi-left"><span class="bi-label">${label}</span><span class="bi-sub">${ev.time} (+${dh?dh+'h':''}${dmm}m) · ${esc(ev.label.length>32?ev.label.slice(0,32)+'…':ev.label)}</span>${ev.orderWarn?`<span class="bi-warn">⚠ ${ev.orderWarn}</span>`:''}</div><span class="bi-result ${pass?'res-pass':'res-fail'}">${pass?'PASS':'FAIL'}</span></div>`;
   }
   document.getElementById('bundle-cols').innerHTML=`<div><div class="bundle-col-title">3-hour (by ${m2t(d3)})</div>${bi('Blood cultures',bc,d3)}${bi('IV antibiotics',abx,d3)}${bi('Initial lactate',lac1,d3)}${bi('30 mL/kg fluids',fluid,d3)}</div><div><div class="bundle-col-title">6-hour (by ${m2t(d6)})</div>${bi('Repeat lactate',lac2,d6)}${bi('Vasopressors (if shock)',vaso,d6)}<div class="bi"><span style="color:var(--ink-soft)">○</span><div class="bi-left"><span class="bi-label">Reassessment note</span><span class="bi-sub">add as Other event</span></div><span class="bi-result res-na">—</span></div></div>`;
 
@@ -833,7 +771,6 @@ function build() {
 
 function t2m(t){const [h,m]=t.split(':').map(Number);return h*60+m;}
 function m2t(m){const d=Math.floor(m/1440),r=((m%1440)+1440)%1440,h=Math.floor(r/60),mn=r%60;return `${String(h).padStart(2,'0')}:${String(mn).padStart(2,'0')}${d>0?` (+${d}d)`:''}`;}
-function escH(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
 // ── HOW TO USE TOGGLE ─────────────────────────────────────────
 function toggleHow() {

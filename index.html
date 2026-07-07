@@ -16,31 +16,13 @@
 <!-- Phosphor Icons -->
 <link rel="stylesheet" href="assets/phosphor/regular.css">
 <link rel="stylesheet" href="assets/phosphor/duotone.css">
+<!-- Shared design tokens / structural CSS (T-04) -->
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/site.css">
 <!-- Cloudflare Turnstile -->
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --ink:       #0f1923;
-    --ink-mid:   #3d4f62;
-    --ink-soft:  #5a6d81;
-    --canvas:    #f7f9fc;
-    --white:     #ffffff;
-    --navy:      #0d2240;
-    --teal:      #0a7c7a;
-    --teal2:     #0da8a5;
-    --teal-pale: #e4f5f4;
-    --amber:     #8a5200;
-    --amber-bg:  #fff8ec;
-    --amber-border: #e8c060;
-    --border:    #dbe2ec;
-    --heading:   'DM Sans', sans-serif;
-    --body:      'Atkinson Hyperlegible', sans-serif;
-    --radius:    10px;
-    --shadow:    0 4px 24px rgba(13,34,64,.09);
-    --shadow-sm: 0 2px 10px rgba(13,34,64,.06);
-    --max:       1040px;
-  }
   html { scroll-behavior: smooth; }
   body {
     font-family: var(--body);
@@ -52,21 +34,6 @@
   }
   a { color: var(--teal); }
   a:hover { text-decoration: underline; }
-  a:focus-visible, button:focus-visible, input:focus-visible,
-  textarea:focus-visible, select:focus-visible {
-    outline: 3px solid var(--teal2);
-    outline-offset: 3px;
-    border-radius: 4px;
-  }
-
-  /* SKIP LINK */
-  .skip-link {
-    position: absolute; top: -60px; left: 16px; z-index: 999;
-    background: var(--navy); color: white; padding: 10px 18px;
-    border-radius: var(--radius); font-weight: 700; font-size: 15px;
-    transition: top .2s; text-decoration: none;
-  }
-  .skip-link:focus { top: 16px; }
 
   /* NAV */
   .nav {
@@ -390,36 +357,6 @@
     font-size: 16px; color: var(--teal); font-weight: 700; line-height: 1.6;
   }
 
-  /* DISCLAIMER */
-  .disclaimer {
-    background: #eef2f8; border-top: 1px solid var(--border);
-    padding: 24px 24px;
-  }
-  .disclaimer-inner {
-    max-width: var(--max); margin: 0 auto;
-    font-size: 13px; color: var(--ink-soft); line-height: 1.75;
-  }
-
-  /* FOOTER */
-  footer {
-    background: #07131f;
-    color: rgba(255,255,255,.45);
-    padding: 28px 24px;
-  }
-  .footer-inner {
-    max-width: var(--max); margin: 0 auto;
-    display: flex; align-items: center;
-    justify-content: space-between; gap: 16px; flex-wrap: wrap;
-  }
-  .footer-brand {
-    font-family: var(--heading); font-size: 16px;
-    font-weight: 700; color: rgba(255,255,255,.7); margin-bottom: 4px;
-  }
-  footer p { font-size: 13px; line-height: 1.65; }
-  footer a { color: var(--teal2); text-decoration: none; }
-  footer a:hover { text-decoration: underline; }
-  .footer-links { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; }
-
   /* RESPONSIVE */
   @media(max-width:640px){
     .nav-links .nav-link { display: none; }
@@ -428,7 +365,6 @@
     .stat:nth-child(even) { padding-left: 0; }
     .stat:nth-last-child(-n+2) { border-bottom: 1px solid var(--border); }
     .stat:last-child { border-bottom: none; }
-    .footer-inner { flex-direction: column; gap: 12px; }
     .form-wrap { padding: 24px 18px; }
   }
 
@@ -821,22 +757,22 @@
   </section>
 
   <!-- SHARE STRIP -->
-  <div style="background:#e6f5f4;border-top:1px solid #b2dedd;border-bottom:1px solid #b2dedd;padding:18px 24px;">
-    <div style="max-width:1040px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+  <div class="share-strip">
+    <div class="share-strip-inner">
       <div>
-        <div style="font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;color:#0d1f3c;margin-bottom:3px;">Share with your team</div>
-        <div style="font-size:13px;color:#3d4f62;line-height:1.5;">Free abstraction reference for core measure teams — Q&amp;A lookup, LKW tool, and more.</div>
+        <div class="share-strip-title">Share with your team</div>
+        <div class="share-strip-sub">Free abstraction reference for core measure teams — Q&amp;A lookup, LKW tool, and more.</div>
       </div>
-      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-        <code style="background:white;border:1px solid #b2dedd;border-radius:6px;padding:7px 14px;font-size:13px;color:#0b7a78;font-family:'DM Mono',monospace;white-space:nowrap;">https://abstractiondeskqa.com</code>
-        <button onclick="(()=>{navigator.clipboard.writeText('https://abstractiondeskqa.com');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy link',2000)})()" style="background:#0b7a78;color:white;border:none;border-radius:6px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif;" onmouseover="this.style.background='#0fa39f'" onmouseout="this.style.background='#0b7a78'">Copy link</button>
+      <div class="share-strip-actions">
+        <code class="share-url-pill">https://abstractiondeskqa.com</code>
+        <button class="share-copy-btn">Copy link</button>
       </div>
     </div>
   </div>
 
   <!-- DISCLAIMER -->
-  <div class="disclaimer" role="note" aria-label="Educational disclaimer">
-    <div class="disclaimer-inner">
+  <div class="site-disclaimer" role="note" aria-label="Educational disclaimer">
+    <div class="site-disclaimer-inner">
       <strong>Educational use only.</strong>
       AbstractionDeskQA is a reference aid to support abstractor training and workflow. It does not constitute compliance advice and is not a substitute for the official TJC or CMS Specifications Manual. Always verify abstraction decisions against the current specifications. Measure specs change — confirm you are using the correct version of the manual for your abstraction period.
     </div>
@@ -874,14 +810,14 @@
 </main>
 
 <!-- FOOTER -->
-<footer role="contentinfo">
-  <div class="footer-inner">
+<footer class="site-footer" role="contentinfo">
+  <div class="site-footer-inner">
     <div>
-      <div class="footer-brand">AbstractionDesk<span style="color:var(--teal2)">QA</span></div>
+      <div class="site-footer-brand">AbstractionDesk<span style="color:var(--teal2)">QA</span></div>
       <p>A free abstraction toolkit for core measure teams.<br>
       &copy; <span id="yr"></span> AbstractionDeskQA. Educational use only.</p>
     </div>
-    <div class="footer-links">
+    <div class="site-footer-links">
       <a href="lookup.html">Q&amp;A Lookup</a>
       <a href="sep1-tool.html">SEP-1 Tool</a>
       <a href="lkw-tool.html">LKW Tool</a>
@@ -895,9 +831,8 @@
   </div>
 </footer>
 
+<script src="assets/site.js"></script>
 <script>
-document.getElementById('yr').textContent = new Date().getFullYear();
-
 const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1 });

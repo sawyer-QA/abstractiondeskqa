@@ -12,44 +12,17 @@
 <meta property="og:title" content="HBIPS Tool — AbstractionDeskQA">
 <meta property="og:description" content="HBIPS Tool — AbstractionDeskQA. Hospital-Based Inpatient Psychiatric Services (HBIPS) restraint and seclusion measure calculators, abstraction reference, practice quiz, and case walkthroughs.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/phosphor/regular.css">
 <link rel="stylesheet" href="assets/phosphor/duotone.css">
+<!-- Shared design tokens / structural CSS (T-04) -->
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/site.css">
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QJPP46JWX3"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-QJPP46JWX3');</script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
-  --ink:        #0f1923;
-  --ink-mid:    #3d4f62;
-  --ink-soft:   #5a6d81;
-  --canvas:     #f7f9fc;
-  --white:      #ffffff;
-  --navy:       #0d2240;
-  --teal:       #0a7c7a;
-  --teal2:      #0da8a5;
-  --teal-pale:  #e4f5f4;
-  --teal-mid:   #c2ece9;
-  --amber:      #8a5200;
-  --amber-bg:   #fff8ec;
-  --amber-border: #e8c060;
-  --red:        #9b1c1c;
-  --red-bg:     #fef2f2;
-  --red-border: #fca5a5;
-  --green:      #166534;
-  --green-bg:   #f0fdf4;
-  --green-border:#86efac;
-  --border:     #dbe2ec;
-  --border-mid: #c4cdd9;
-  --heading:    'DM Sans', sans-serif;
-  --body:       'Atkinson Hyperlegible', sans-serif;
-  --mono:       'Courier New', Courier, monospace;
-  --radius:     10px;
-  --shadow:     0 4px 24px rgba(13,34,64,.09);
-  --shadow-sm:  0 2px 10px rgba(13,34,64,.06);
-  --max:        1040px;
-}
 html { scroll-behavior: smooth; }
 body {
   font-family: var(--body);
@@ -61,69 +34,6 @@ body {
 }
 a { color: var(--teal); }
 a:hover { text-decoration: underline; }
-a:focus-visible, button:focus-visible, input:focus-visible,
-select:focus-visible {
-  outline: 3px solid var(--teal2);
-  outline-offset: 3px;
-  border-radius: 4px;
-}
-
-/* ── SKIP ── */
-.skip-link {
-  position: absolute; top: -60px; left: 16px; z-index: 999;
-  background: var(--navy); color: white; padding: 10px 18px;
-  border-radius: var(--radius); font-weight: 700; font-size: 15px;
-  transition: top .2s; text-decoration: none;
-}
-.skip-link:focus { top: 16px; }
-
-/* ── NAV ── */
-.nav {
-  background: var(--navy);
-  border-bottom: 1px solid rgba(255,255,255,.08);
-  position: sticky; top: 0; z-index: 80;
-  box-shadow: 0 2px 12px rgba(0,0,0,.25);
-}
-.nav-inner {
-  max-width: var(--max); margin: 0 auto; padding: 0 24px;
-  display: flex; align-items: center; justify-content: space-between;
-  height: 62px;
-}
-.nav-brand {
-  font-family: var(--heading); font-size: 20px; font-weight: 700;
-  color: white; letter-spacing: -.3px;
-  display: flex; align-items: center; gap: 10px;
-  text-decoration: none;
-}
-.nav-brand:hover { text-decoration: none; }
-.nav-brand-sub {
-  font-family: var(--mono); font-size: 11px; font-weight: 400;
-  color: rgba(255,255,255,.4); letter-spacing: .08em; text-transform: uppercase;
-}
-.qa-badge {
-  background: var(--teal2); color: white;
-  font-size: 10px; font-weight: 700; padding: 2px 7px;
-  border-radius: 4px; letter-spacing: .6px; font-family: var(--body);
-}
-.nav-links { display: flex; gap: 6px; align-items: center; }
-.nav-cta {
-  background: var(--teal); color: white;
-  font-family: var(--body); font-size: 14px; font-weight: 700;
-  padding: 8px 18px; border-radius: 7px; border: none;
-  cursor: pointer; transition: all .15s; text-decoration: none;
-  white-space: nowrap;
-}
-.nav-cta:hover { background: var(--teal2); text-decoration: none; color: white; }
-.nav-cta-ghost {
-  background: transparent; color: rgba(255,255,255,.85);
-  font-family: var(--body); font-size: 14px; font-weight: 600;
-  padding: 8px 18px; border-radius: 7px;
-  border: 1.5px solid rgba(255,255,255,.3); cursor: pointer;
-  transition: all .15s; text-decoration: none; white-space: nowrap;
-  display: inline-flex; align-items: center; gap: 6px;
-}
-.nav-cta-ghost:hover { border-color: rgba(255,255,255,.7); color: white; text-decoration: none; background: rgba(255,255,255,.08); }
-.nav-cta-ghost.active-page { background: var(--teal); border-color: var(--teal); color: white; }
 
 /* ── PAGE HERO ── */
 .page-hero {
@@ -613,32 +523,7 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
 .rv-val { font-family: var(--heading); font-size: 20px; font-weight: 700; color: white; }
 .rv-val.highlight { color: var(--teal2); }
 
-/* ── DISCLAIMER ── */
-.disclaimer {
-  background: #eef2f8; border-top: 1px solid var(--border);
-  padding: 24px; margin-top: 60px;
-}
-.disclaimer-inner {
-  max-width: var(--max); margin: 0 auto;
-  font-size: 13px; color: var(--ink-soft); line-height: 1.75;
-}
-
-/* ── FOOTER ── */
-footer { background: #07131f; color: rgba(255,255,255,.45); padding: 28px 24px; }
-.footer-inner {
-  max-width: var(--max); margin: 0 auto;
-  display: flex; align-items: center;
-  justify-content: space-between; gap: 16px; flex-wrap: wrap;
-}
-.footer-brand { font-family: var(--heading); font-size: 16px; font-weight: 700; color: rgba(255,255,255,.7); margin-bottom: 4px; }
-footer p { font-size: 13px; line-height: 1.65; }
-footer a { color: var(--teal2); text-decoration: none; }
-footer a:hover { text-decoration: underline; }
-.footer-links { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; }
-
 @media(max-width:640px) {
-  .nav-links .nav-cta-ghost:not(:first-child) { display: none; }
-  .footer-inner { flex-direction: column; gap: 12px; }
   .result-vals { grid-template-columns: 1fr 1fr; }
   .leave-pair-row { grid-template-columns: 1fr 1fr; }
   .leave-pair-row .lp-remove { grid-column: 1 / -1; width: fit-content; }
@@ -658,21 +543,21 @@ footer a:hover { text-decoration: underline; }
 <a href="#maincontent" class="skip-link">Skip to main content</a>
 
 <!-- NAV -->
-<nav class="nav" role="navigation" aria-label="Site navigation">
-  <div class="nav-inner">
-    <a href="/" class="nav-brand" aria-label="AbstractionDeskQA home">
-      AbstractionDesk<span class="qa-badge">QA</span>
-      <span class="nav-brand-sub">HBIPS Tool</span>
+<nav class="site-nav" role="navigation" aria-label="Site navigation">
+  <div class="site-nav-inner">
+    <a href="/" class="site-nav-brand" aria-label="AbstractionDeskQA home">
+      AbstractionDesk<span class="site-qa-badge">QA</span>
+      <span class="site-nav-brand-sub">HBIPS Tool</span>
     </a>
-    <div class="nav-links">
-      <a href="index.html" class="nav-cta-ghost">
+    <div class="site-nav-links">
+      <a href="index.html" class="site-nav-cta-ghost">
         <i class="ph ph-arrow-left" aria-hidden="true"></i> Home
       </a>
-      <a href="lkw-tool.html" class="nav-cta-ghost">LKW Tool</a>
-      <a href="cmo-tool.html" class="nav-cta-ghost">CMO Tool</a>
-      <a href="hbips-tool.html" class="nav-cta-ghost active-page">HBIPS Tool</a>
-      <a href="sep1-tool.html" class="nav-cta-ghost">SEP-1 Tool</a>
-      <a href="lookup.html" class="nav-cta">Q&amp;A Lookup</a>
+      <a href="lkw-tool.html" class="site-nav-cta-ghost">LKW Tool</a>
+      <a href="cmo-tool.html" class="site-nav-cta-ghost">CMO Tool</a>
+      <a href="hbips-tool.html" class="site-nav-cta-ghost active-page">HBIPS Tool</a>
+      <a href="sep1-tool.html" class="site-nav-cta-ghost">SEP-1 Tool</a>
+      <a href="lookup.html" class="site-nav-cta">Q&amp;A Lookup</a>
     </div>
   </div>
 </nav>
@@ -691,16 +576,16 @@ footer a:hover { text-decoration: underline; }
 <!-- TABS -->
 <div class="tool-tabs" role="navigation" aria-label="Tool sections">
   <div class="tool-tabs-inner">
-    <button class="tab-btn active" onclick="switchTab('calc', this)" aria-selected="true">
+    <button class="tab-btn active" data-tab="calc" aria-selected="true">
       <i class="ph-duotone ph-calculator" aria-hidden="true"></i> Calculators
     </button>
-    <button class="tab-btn" onclick="switchTab('ref', this)" aria-selected="false">
+    <button class="tab-btn" data-tab="ref" aria-selected="false">
       <i class="ph-duotone ph-book-open" aria-hidden="true"></i> Reference &amp; Guidance
     </button>
-    <button class="tab-btn" onclick="switchTab('quiz', this)" aria-selected="false">
+    <button class="tab-btn" data-tab="quiz" aria-selected="false">
       <i class="ph-duotone ph-exam" aria-hidden="true"></i> Practice Quiz
     </button>
-    <button class="tab-btn" onclick="switchTab('cases', this)" aria-selected="false">
+    <button class="tab-btn" data-tab="cases" aria-selected="false">
       <i class="ph-duotone ph-files" aria-hidden="true"></i> Case Walkthroughs
     </button>
   </div>
@@ -1050,37 +935,37 @@ footer a:hover { text-decoration: underline; }
 
 </main>
 
-<!-- DISCLAIMER -->
 <!-- SHARE STRIP -->
-<div style="background:#e6f5f4;border-top:1px solid #b2dedd;border-bottom:1px solid #b2dedd;padding:18px 24px;">
-  <div style="max-width:1040px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+<div class="share-strip">
+  <div class="share-strip-inner">
     <div>
-      <div style="font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;color:#0d1f3c;margin-bottom:3px;">Share with your team</div>
-      <div style="font-size:13px;color:#3d4f62;line-height:1.5;">Free abstraction reference for core measure teams — Q&amp;A lookup, LKW tool, and more.</div>
+      <div class="share-strip-title">Share with your team</div>
+      <div class="share-strip-sub">Free abstraction reference for core measure teams — Q&amp;A lookup, LKW tool, and more.</div>
     </div>
-    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-      <code style="background:white;border:1px solid #b2dedd;border-radius:6px;padding:7px 14px;font-size:13px;color:#0b7a78;font-family:'DM Mono',monospace;white-space:nowrap;">https://abstractiondeskqa.com</code>
-      <button onclick="(()=>{navigator.clipboard.writeText('https://abstractiondeskqa.com');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy link',2000)})()" style="background:#0b7a78;color:white;border:none;border-radius:6px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif;" onmouseover="this.style.background='#0fa39f'" onmouseout="this.style.background='#0b7a78'">Copy link</button>
+    <div class="share-strip-actions">
+      <code class="share-url-pill">https://abstractiondeskqa.com</code>
+      <button class="share-copy-btn">Copy link</button>
     </div>
   </div>
 </div>
 
-<div class="disclaimer" role="note" aria-label="Educational disclaimer">
-  <div class="disclaimer-inner">
+<!-- DISCLAIMER -->
+<div class="site-disclaimer" role="note" aria-label="Educational disclaimer">
+  <div class="site-disclaimer-inner">
     <strong>Educational use only.</strong>
     AbstractionDeskQA is a reference aid to support abstractor training and workflow. It does not constitute compliance advice and is not a substitute for the official TJC or CMS Specifications Manual. Always verify abstraction decisions against the current specification version for your abstraction period.
   </div>
 </div>
 
 <!-- FOOTER -->
-<footer role="contentinfo">
-  <div class="footer-inner">
+<footer class="site-footer" role="contentinfo">
+  <div class="site-footer-inner">
     <div>
-      <div class="footer-brand">AbstractionDesk<span style="color:var(--teal2)">QA</span></div>
+      <div class="site-footer-brand">AbstractionDesk<span style="color:var(--teal2)">QA</span></div>
       <p>A free reference tool for core measure abstractors.<br>
       &copy; <span id="yr"></span> AbstractionDeskQA. Educational use only.</p>
     </div>
-    <div class="footer-links">
+    <div class="site-footer-links">
       <a href="lookup.html">Q&amp;A Lookup</a>
       <a href="lkw-tool.html">LKW Tool</a>
       <a href="cmo-tool.html">CMO Tool</a>
@@ -1099,15 +984,8 @@ footer a:hover { text-decoration: underline; }
   data-color="#0a7c7a" data-position="Right"
   data-x_margin="18" data-y_margin="18"></script>
 
+<script src="assets/site.js"></script>
 <script>
-// ── TABS ────────────────────────────────────────────────────────────────────
-function switchTab(id, btn) {
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
-  document.getElementById('tab-' + id).classList.add('active');
-  btn.classList.add('active'); btn.setAttribute('aria-selected','true');
-}
-
 // ── HELP PANELS ──────────────────────────────────────────────────────────────
 function toggleHelp(id) {
   document.getElementById(id).classList.toggle('open');
@@ -1687,7 +1565,6 @@ function showCaseList() {
 }
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
-document.getElementById('yr').textContent = new Date().getFullYear();
 startQuiz();
 renderCaseList();
 </script>

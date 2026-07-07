@@ -14,6 +14,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+3:wght@300;400;500;600;700&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/phosphor/regular.css">
 <link rel="stylesheet" href="assets/phosphor/duotone.css">
+<!-- Shared design tokens / structural CSS (T-04) -->
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/site.css">
 <!-- Cloudflare Turnstile -->
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <style>
@@ -23,7 +26,7 @@
   --red:#b53030; --red-bg:#fceaea;
   --amber:#a36600; --amber-bg:#fdf3dc;
   --green:#1a6e30; --green-bg:#e5f4ea;
-  --purple:#5430a8; --purple2:#7552d8; --purple-bg:#f0ebff;
+  --purple2:#9c85eb; --purple-bg:#f0ebff;
   --slate:#f1f4f8; --border:#d8dde8; --mid:#7a8499;
   --serif:'Bitter',Georgia,serif;
   --sans:'Source Sans 3',system-ui,sans-serif;
@@ -45,19 +48,6 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 .btn-teal:hover{background:var(--teal2);}
 .btn-purple{background:var(--purple);color:white;}
 .btn-purple:hover{background:var(--purple2);}
-
-/* ── TOOLS DROPDOWN ── */
-.nav-sep{width:1px;height:26px;background:rgba(255,255,255,.18);margin:0 4px;flex-shrink:0;}
-.tools-dropdown{position:relative;}
-.tools-dd-btn{display:flex;align-items:center;gap:5px;font-family:var(--sans);font-size:11.5px;font-weight:600;padding:5px 12px;border-radius:5px;cursor:pointer;background:rgba(255,255,255,.09);color:rgba(255,255,255,.82);border:1px solid rgba(255,255,255,.16);transition:all .13s;white-space:nowrap;}
-.tools-dd-btn:hover,.tools-dropdown.open .tools-dd-btn{background:rgba(255,255,255,.17);color:white;}
-.tools-dd-arrow{font-size:10px;transition:transform .18s;}
-.tools-dropdown.open .tools-dd-arrow{transform:rotate(180deg);}
-.tools-dd-menu{display:none;position:absolute;top:calc(100% + 6px);left:0;min-width:180px;background:var(--navy2);border:1px solid rgba(255,255,255,.15);border-radius:7px;box-shadow:0 8px 24px rgba(0,0,0,.35);overflow:hidden;z-index:200;}
-.tools-dropdown.open .tools-dd-menu{display:block;}
-.tools-dd-item{display:block;padding:9px 14px;font-family:var(--sans);font-size:12px;font-weight:600;color:rgba(255,255,255,.8);text-decoration:none;transition:background .12s;white-space:nowrap;}
-.tools-dd-item:hover{background:rgba(255,255,255,.1);color:white;text-decoration:none;}
-.tools-dd-item em{font-style:normal;font-size:9px;font-weight:400;color:rgba(255,255,255,.4);margin-left:4px;}
 
 .layout{display:grid;grid-template-columns:228px 1fr;min-height:calc(100vh - 50px);}
 
@@ -90,7 +80,7 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 .search:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(11,122,120,.09);}
 .search::placeholder{color:#a0aab8;}
 
-.atbar{display:none;align-items:center;gap:6px;flex-wrap:wrap;background:var(--purple-bg);border:1px solid rgba(84,48,168,.18);border-radius:6px;padding:6px 11px;margin-bottom:11px;}
+.atbar{display:none;align-items:center;gap:6px;flex-wrap:wrap;background:var(--purple-bg);border:1px solid rgba(123,92,229,.18);border-radius:6px;padding:6px 11px;margin-bottom:11px;}
 .atbar.on{display:flex;}
 .atbar-lbl{font-size:10px;font-weight:800;color:var(--purple);text-transform:uppercase;letter-spacing:.6px;}
 .atpill{font-family:var(--mono);font-size:10.5px;font-weight:600;background:var(--purple);color:white;border-radius:10px;padding:2px 8px 2px 10px;display:flex;align-items:center;gap:4px;}
@@ -124,7 +114,7 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 .bg{background:var(--red-bg);color:var(--red);}
 .br{background:var(--green-bg);color:var(--green);}
 .bs{background:var(--teal-bg);color:var(--teal);max-width:170px;overflow:hidden;text-overflow:ellipsis;}
-.ktag{font-family:var(--mono);font-size:9.5px;font-weight:500;background:var(--purple-bg);color:var(--purple);border:1px solid rgba(84,48,168,.22);padding:1px 6px;border-radius:8px;cursor:pointer;transition:all .1s;white-space:nowrap;}
+.ktag{font-family:var(--mono);font-size:9.5px;font-weight:500;background:var(--purple-bg);color:var(--purple);border:1px solid rgba(123,92,229,.22);padding:1px 6px;border-radius:8px;cursor:pointer;transition:all .1s;white-space:nowrap;}
 .ktag:hover{background:var(--purple);color:white;}
 .q-text{font-size:13px;font-weight:600;color:var(--navy);line-height:1.44;}
 .qa-body{display:none;border-top:1px solid #edf0f5;padding:12px 14px 12px 42px;}
@@ -149,7 +139,7 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 
 .tw{border:1.5px solid var(--border);border-radius:5px;padding:5px 7px;background:var(--slate);min-height:36px;cursor:text;display:flex;flex-wrap:wrap;gap:4px;align-items:center;transition:border-color .13s;}
 .tw:focus-within{border-color:var(--teal);background:white;}
-.tchip{font-family:var(--mono);font-size:10.5px;font-weight:600;background:var(--purple-bg);color:var(--purple);border:1px solid rgba(84,48,168,.25);border-radius:9px;padding:2px 6px 2px 8px;display:flex;align-items:center;gap:3px;}
+.tchip{font-family:var(--mono);font-size:10.5px;font-weight:600;background:var(--purple-bg);color:var(--purple);border:1px solid rgba(123,92,229,.25);border-radius:9px;padding:2px 6px 2px 8px;display:flex;align-items:center;gap:3px;}
 .tchip button{background:none;border:none;cursor:pointer;color:var(--purple);font-size:13px;line-height:1;padding:0;opacity:.55;}
 .tchip button:hover{opacity:1;}
 .ttxt{border:none;outline:none;font-family:var(--mono);font-size:11.5px;background:transparent;color:var(--ink);flex:1;min-width:90px;}
@@ -158,9 +148,9 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 .sug-panel.on{display:block;}
 .sug-row{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px;}
 .sug-lbl{font-size:9.5px;font-weight:800;color:var(--mid);text-transform:uppercase;letter-spacing:.5px;}
-.sug-chip{font-family:var(--mono);font-size:10px;font-weight:600;padding:3px 9px;border-radius:9px;cursor:pointer;border:1.5px dashed rgba(84,48,168,.35);color:var(--purple);background:white;transition:all .12s;}
+.sug-chip{font-family:var(--mono);font-size:10px;font-weight:600;padding:3px 9px;border-radius:9px;cursor:pointer;border:1.5px dashed rgba(123,92,229,.35);color:var(--purple);background:white;transition:all .12s;}
 .sug-chip:hover{background:var(--purple);color:white;border-style:solid;}
-.sug-chip.match{border-style:solid;border-color:rgba(84,48,168,.5);}
+.sug-chip.match{border-style:solid;border-color:rgba(123,92,229,.5);}
 .sug-hint{font-size:9px;color:var(--mid);margin-left:4px;font-style:italic;}
 
 .moverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.48);z-index:200;align-items:center;justify-content:center;}
@@ -199,7 +189,7 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 .tag-src-sheet{background:var(--teal-bg);color:var(--teal);}
 .cat-badge{font-size:9px;font-weight:700;padding:2px 6px;border-radius:3px;background:var(--purple-bg);color:var(--purple);white-space:nowrap;}
 
-.tag-review{background:var(--purple-bg);border:1px solid rgba(84,48,168,.18);border-radius:6px;padding:10px 13px;margin-bottom:12px;}
+.tag-review{background:var(--purple-bg);border:1px solid rgba(123,92,229,.18);border-radius:6px;padding:10px 13px;margin-bottom:12px;}
 .tag-review h4{font-size:10px;font-weight:800;color:var(--purple);text-transform:uppercase;letter-spacing:.6px;margin-bottom:7px;}
 .rrow{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px;}
 .rchip{font-family:var(--mono);font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:10px;cursor:pointer;transition:all .12s;border:1.5px solid;display:flex;align-items:center;gap:4px;}
@@ -216,7 +206,7 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 /* TAG BROWSER MODAL */
 .tb-search{width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:6px;font-family:var(--sans);font-size:13px;color:var(--ink);background:var(--slate);outline:none;transition:border-color .13s;margin-bottom:12px;}
 .tb-search:focus{border-color:var(--teal);background:white;}
-.tb-tag-name{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--purple);background:var(--purple-bg);border:1px solid rgba(84,48,168,.22);padding:3px 10px;border-radius:8px;cursor:pointer;display:inline-block;transition:all .12s;}
+.tb-tag-name{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--purple);background:var(--purple-bg);border:1px solid rgba(123,92,229,.22);padding:3px 10px;border-radius:8px;cursor:pointer;display:inline-block;transition:all .12s;}
 .tb-tag-name:hover{background:var(--purple);color:white;}
 .tb-empty{text-align:center;padding:32px 16px;color:var(--mid);font-size:13px;}
 
@@ -235,6 +225,26 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 </head>
 <body>
 
+<!-- NAV -->
+<nav class="site-nav" role="navigation" aria-label="Site navigation">
+  <div class="site-nav-inner">
+    <a href="/" class="site-nav-brand" aria-label="AbstractionDeskQA home">
+      AbstractionDesk<span class="site-qa-badge">QA</span>
+      <span class="site-nav-brand-sub">Q&amp;A Lookup</span>
+    </a>
+    <div class="site-nav-links">
+      <a href="index.html" class="site-nav-cta-ghost">
+        <i class="ph ph-arrow-left" aria-hidden="true"></i> Home
+      </a>
+      <a href="lkw-tool.html" class="site-nav-cta-ghost">LKW Tool</a>
+      <a href="cmo-tool.html" class="site-nav-cta-ghost">CMO Tool</a>
+      <a href="hbips-tool.html" class="site-nav-cta-ghost">HBIPS Tool</a>
+      <a href="sep1-tool.html" class="site-nav-cta-ghost">SEP-1 Tool</a>
+      <a href="lookup.html" class="site-nav-cta-ghost active-page" aria-current="page">Q&amp;A Lookup</a>
+    </div>
+  </div>
+</nav>
+
 <div class="bar">
   <div class="brand">
     <a href="/" style="text-decoration:none;color:inherit;display:flex;align-items:baseline;gap:6px" aria-label="Back to AbstractionDeskQA home">
@@ -243,20 +253,6 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
     <span class="brand-scope">Q&amp;A Lookup</span>
   </div>
   <div class="bar-btns">
-    <!-- Tools dropdown -->
-    <div class="tools-dropdown" id="toolsDropdown">
-      <button class="tools-dd-btn" onclick="toggleToolsDD()" aria-haspopup="true" aria-expanded="false" id="toolsDDBtn">
-        ← Tools <span class="tools-dd-arrow">▾</span>
-      </button>
-      <div class="tools-dd-menu" role="menu">
-        <a href="/" class="tools-dd-item">Home</a>
-        <a href="sep1-tool.html" class="tools-dd-item">SEP-1 Tool <em>Time Zero</em></a>
-        <a href="lkw-tool.html" class="tools-dd-item">LKW Tool <em>Last Known Well</em></a>
-        <a href="cmo-tool.html" class="tools-dd-item">CMO Tool <em>Comfort Measures</em></a>
-        <a href="hbips-tool.html" class="tools-dd-item">HBIPS Tool <em>Psych Inpatient</em></a>
-      </div>
-    </div>
-    <div class="nav-sep"></div>
     <!-- Q&A actions -->
     <button class="btn btn-ghost" onclick="toggleAdd()"><i class="ph ph-plus" style="vertical-align:middle;margin-right:3px;"></i>Add Q&amp;A</button>
     <button class="btn btn-ghost" onclick="openPaste()"><i class="ph-duotone ph-clipboard-text" style="vertical-align:middle;margin-right:3px;"></i>Paste Raw</button>
@@ -475,6 +471,7 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 
 <div class="toast" id="toast"></div>
 
+<script src="assets/site.js"></script>
 <script>
 // ══════════════════════════════════════════════════
 //  CONFIG
@@ -656,7 +653,6 @@ function filtered(){
     return mOk&&tOk&&tagOk&&(!q||tx.includes(q));
   });
 }
-const esc=s=>(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 function typeBadge(t){
   if(t==='edge')return'<span class="badge be">⚡ Edge</span>';
   if(t==='gray')return'<span class="badge bg">❓ Gray</span>';
@@ -1006,7 +1002,7 @@ function exportPDF(){
   const w=window.open('','_blank');
   w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Q&A — ${lbl}</title>
   <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;700&family=Source+Sans+3:wght@400;500;600&family=Source+Code+Pro:wght@400&display=swap" rel="stylesheet">
-  <style>body{font-family:'Source Sans 3',sans-serif;font-size:11.5px;color:#1a1e2c;padding:28px 36px;max-width:720px;margin:0 auto}.hdr{border-bottom:3px solid #0d1f3c;padding-bottom:12px;margin-bottom:20px}.hdr h1{font-family:'Bitter',serif;font-size:20px;color:#0d1f3c;margin-bottom:3px}.meta{font-size:10px;color:#7a8499}.qa{margin-bottom:15px;padding-bottom:14px;border-bottom:1px solid #edf0f5;page-break-inside:avoid}.tags{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:5px}.tag{font-size:8.5px;font-weight:700;padding:1px 6px;border-radius:3px;text-transform:uppercase}.tm{background:#eef0f5;color:#163560}.te{background:#fdf3dc;color:#7a4e00}.tg{background:#fceaea;color:#b53030}.tr{background:#e5f4ea;color:#1a6e30}.kw{font-family:'Source Code Pro',monospace;font-size:9px;background:#f0ebff;color:#5430a8;border:1px solid rgba(84,48,168,.2);padding:1px 5px;border-radius:6px}.q{font-weight:700;font-size:12px;margin-bottom:6px;color:#0d1f3c;line-height:1.4}.a{line-height:1.65;color:#2b3347}.src{font-size:9.5px;color:#7a8499;margin-top:6px;font-style:italic}.foot{margin-top:28px;font-size:9.5px;color:#7a8499;border-top:1px solid #edf0f5;padding-top:8px}</style></head><body>
+  <style>body{font-family:'Source Sans 3',sans-serif;font-size:11.5px;color:#1a1e2c;padding:28px 36px;max-width:720px;margin:0 auto}.hdr{border-bottom:3px solid #0d1f3c;padding-bottom:12px;margin-bottom:20px}.hdr h1{font-family:'Bitter',serif;font-size:20px;color:#0d1f3c;margin-bottom:3px}.meta{font-size:10px;color:#7a8499}.qa{margin-bottom:15px;padding-bottom:14px;border-bottom:1px solid #edf0f5;page-break-inside:avoid}.tags{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:5px}.tag{font-size:8.5px;font-weight:700;padding:1px 6px;border-radius:3px;text-transform:uppercase}.tm{background:#eef0f5;color:#163560}.te{background:#fdf3dc;color:#7a4e00}.tg{background:#fceaea;color:#b53030}.tr{background:#e5f4ea;color:#1a6e30}.kw{font-family:'Source Code Pro',monospace;font-size:9px;background:#f0ebff;color:#7B5CE5;border:1px solid rgba(123,92,229,.2);padding:1px 5px;border-radius:6px}.q{font-weight:700;font-size:12px;margin-bottom:6px;color:#0d1f3c;line-height:1.4}.a{line-height:1.65;color:#2b3347}.src{font-size:9.5px;color:#7a8499;margin-top:6px;font-style:italic}.foot{margin-top:28px;font-size:9.5px;color:#7a8499;border-top:1px solid #edf0f5;padding-top:8px}</style></head><body>
   <div class="hdr"><h1>${esc(lbl)} Q&A Reference${esc(tlbl)}</h1>
   <div class="meta">AbstractionDeskQA · ${new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})} · ${f.length} entries · TJC v2026B</div></div>
   ${f.map((e,i)=>`<div class="qa">
@@ -1027,36 +1023,49 @@ function exportPDF(){
 // ══════════════════════════════════════════════════
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),3500);}
 
-// ══════════════════════════════════════════════════
-//  TOOLS DROPDOWN
-// ══════════════════════════════════════════════════
-function toggleToolsDD(){
-  const dd=document.getElementById('toolsDropdown');
-  const btn=document.getElementById('toolsDDBtn');
-  const isOpen=dd.classList.contains('open');
-  dd.classList.toggle('open',!isOpen);
-  btn.setAttribute('aria-expanded',String(!isOpen));
-}
-document.addEventListener('click',function(e){
-  const dd=document.getElementById('toolsDropdown');
-  if(dd&&!dd.contains(e.target))dd.classList.remove('open');
-});
-
 loadQaData().then(applyDeepLink);
 </script>
 <!-- SHARE STRIP -->
-<div style="background:#e6f5f4;border-top:1px solid #b2dedd;border-bottom:1px solid #b2dedd;padding:18px 24px;">
-  <div style="max-width:1040px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+<div class="share-strip">
+  <div class="share-strip-inner">
     <div>
-      <div style="font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;color:#0d1f3c;margin-bottom:3px;">Share with your team</div>
-      <div style="font-size:13px;color:#3d4f62;line-height:1.5;">Free abstraction reference for core measure teams — Q&amp;A lookup, LKW tool, and more.</div>
+      <div class="share-strip-title">Share with your team</div>
+      <div class="share-strip-sub">Free abstraction reference for core measure teams — Q&amp;A lookup, LKW tool, and more.</div>
     </div>
-    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-      <code style="background:white;border:1px solid #b2dedd;border-radius:6px;padding:7px 14px;font-size:13px;color:#0b7a78;font-family:'DM Mono',monospace;white-space:nowrap;">https://abstractiondeskqa.com</code>
-      <button onclick="(()=>{navigator.clipboard.writeText('https://abstractiondeskqa.com');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy link',2000)})()" style="background:#0b7a78;color:white;border:none;border-radius:6px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif;" onmouseover="this.style.background='#0fa39f'" onmouseout="this.style.background='#0b7a78'">Copy link</button>
+    <div class="share-strip-actions">
+      <code class="share-url-pill">https://abstractiondeskqa.com</code>
+      <button class="share-copy-btn">Copy link</button>
     </div>
   </div>
 </div>
+
+<!-- DISCLAIMER -->
+<div class="site-disclaimer" role="note" aria-label="Educational disclaimer">
+  <div class="site-disclaimer-inner">
+    <strong>Educational use only.</strong>
+    AbstractionDeskQA is a reference aid to support abstractor training and workflow. It does not constitute compliance advice and is not a substitute for the official TJC or CMS Specifications Manual. Always verify abstraction decisions against the current specification version for your abstraction period.
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer" role="contentinfo">
+  <div class="site-footer-inner">
+    <div>
+      <div class="site-footer-brand">AbstractionDesk<span style="color:#0da8a5">QA</span></div>
+      <p>A free abstraction toolkit for core measure teams.<br>
+      &copy; <span id="yr"></span> AbstractionDeskQA. Educational use only.</p>
+    </div>
+    <div class="site-footer-links">
+      <a href="sep1-tool.html">SEP-1 Tool</a>
+      <a href="lkw-tool.html">LKW Tool</a>
+      <a href="cmo-tool.html">CMO Tool</a>
+      <a href="hbips-tool.html">HBIPS Tool</a>
+      <a href="abstractly.html">Abstractly</a>
+      <a href="index.html#feedback">Feedback</a>
+    </div>
+  </div>
+</footer>
+
 <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="abstractiondeskqa" data-description="Support AbstractionDeskQA" data-message="Support ongoing development of this free reference tool." data-color="#0a7c7a" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
 </body>
 </html>
