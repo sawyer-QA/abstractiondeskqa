@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="canonical" href="https://abstractiondeskqa.com/cmo-tool.html">
 <title>CMO Abstraction Tool — AbstractionDeskQA</title>
 <meta name="description" content="CMO Abstraction Tool — AbstractionDeskQA. Interactive CMO (Comfort Measures Only) exclusion classification tool with reference guide, practice quiz, and case walkthroughs.">
@@ -193,11 +193,11 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 
 <nav class="tabs" role="tablist">
   <div class="tabs-inner">
-  <button class="tab on" id="tabbtn-classifier" role="tab" aria-selected="true" aria-controls="tab-classifier" tabindex="0" data-t="classifier"><i class="ph-duotone ph-funnel"></i> Case Classifier</button>
-  <button class="tab" id="tabbtn-guided" role="tab" aria-selected="false" aria-controls="tab-guided" tabindex="-1" data-t="guided"><i class="ph-duotone ph-git-branch"></i> Guided Workflow</button>
-  <button class="tab" id="tabbtn-ref" role="tab" aria-selected="false" aria-controls="tab-ref" tabindex="-1" data-t="ref"><i class="ph-duotone ph-clipboard-text"></i> Quick Reference</button>
-  <button class="tab" id="tabbtn-quiz" role="tab" aria-selected="false" aria-controls="tab-quiz" tabindex="-1" data-t="quiz"><i class="ph-duotone ph-target"></i> Practice Quiz</button>
-  <button class="tab" id="tabbtn-cases" role="tab" aria-selected="false" aria-controls="tab-cases" tabindex="-1" data-t="cases"><i class="ph-duotone ph-stethoscope"></i> Case Walkthroughs</button>
+  <button type="button" class="tab on" id="tabbtn-classifier" role="tab" aria-selected="true" aria-controls="tab-classifier" tabindex="0" data-t="classifier"><i class="ph-duotone ph-funnel"></i> Case Classifier</button>
+  <button type="button" class="tab" id="tabbtn-guided" role="tab" aria-selected="false" aria-controls="tab-guided" tabindex="-1" data-t="guided"><i class="ph-duotone ph-git-branch"></i> Guided Workflow</button>
+  <button type="button" class="tab" id="tabbtn-ref" role="tab" aria-selected="false" aria-controls="tab-ref" tabindex="-1" data-t="ref"><i class="ph-duotone ph-clipboard-text"></i> Quick Reference</button>
+  <button type="button" class="tab" id="tabbtn-quiz" role="tab" aria-selected="false" aria-controls="tab-quiz" tabindex="-1" data-t="quiz"><i class="ph-duotone ph-target"></i> Practice Quiz</button>
+  <button type="button" class="tab" id="tabbtn-cases" role="tab" aria-selected="false" aria-controls="tab-cases" tabindex="-1" data-t="cases"><i class="ph-duotone ph-stethoscope"></i> Case Walkthroughs</button>
   </div>
 </nav>
 
@@ -266,7 +266,7 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
     </div>
   </div>
 
-  <button class="resolve-btn" onclick="resolveClassifier()">Evaluate → Determine CMO Exclusion Status</button>
+  <button type="button" class="resolve-btn" onclick="resolveClassifier()">Evaluate → Determine CMO Exclusion Status</button>
 
   <div class="result-box" id="classifier-result">
     <div class="card-label" style="margin-bottom:14px;">Exclusion Result</div>
@@ -275,7 +275,7 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
       <div><div class="res-field-label">Basis</div><div class="res-val plain" id="r-basis" style="font-size:13px;max-width:280px;">—</div></div>
     </div>
     <div class="res-rule" id="r-rationale"></div>
-    <div class="btn-row"><button class="btn" onclick="window.print()"><i class="ph ph-printer"></i> Print</button><button class="btn ghost" onclick="clearClassifier()">↩ Clear</button></div>
+    <div class="btn-row"><button type="button" class="btn" onclick="window.print()"><i class="ph ph-printer"></i> Print</button><button type="button" class="btn ghost" onclick="clearClassifier()">↩ Clear</button></div>
   </div>
 </div>
 
@@ -288,28 +288,28 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
     <div class="gstep-badge">Step 1 — Document Type</div>
     <div style="font-weight:600;margin-bottom:12px;">Is there a physician, APN, or PA order or documented discussion designating the patient as Comfort Measures Only?</div>
     <div class="cx warn"><span class="cx-icon"><i class="ph-duotone ph-warning"></i></span><div><strong>This is the threshold question</strong>The source must come from a licensed independent practitioner — MD, DO, APN, or PA. Nursing notes, social work notes, or family conference documentation alone do not qualify without an LIP co-signature or a corresponding physician order.</div></div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;"><button class="btn" onclick="gAns(1,'yes')">Yes — LIP order or note present</button><button class="btn ghost" onclick="gAns(1,'no')">No LIP documentation</button></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;"><button type="button" class="btn" onclick="gAns(1,'yes')">Yes — LIP order or note present</button><button type="button" class="btn ghost" onclick="gAns(1,'no')">No LIP documentation</button></div>
   </div>
 
   <div class="card hidden" id="gq2">
     <div class="gstep-badge">Step 2 — POLST Evaluation</div>
     <div class="cx purple"><span class="cx-icon"><i class="ph-duotone ph-file-text"></i></span><div><strong>POLST is a physician order — but check what's selected</strong>A POLST in the chart is a signed medical order. However, you must verify the POLST section that addresses medical interventions. A POLST with "Full Treatment" or "Limited Interventions" checked does NOT satisfy CMO. Only a POLST with "Comfort-Focused Treatment" (or equivalent) checked qualifies.</div></div>
     <div style="font-weight:600;margin:12px 0 10px;">Does this include a POLST/MOST/MOLST?</div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;"><button class="btn" onclick="gAns(2,'polst_cmo')">Yes — Comfort-Focused Treatment is checked</button><button class="btn ghost" onclick="gAns(2,'polst_other')">Yes — but Full Treatment or Limited is checked</button><button class="btn ghost" onclick="gAns(2,'no_polst')">No POLST present</button></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;"><button type="button" class="btn" onclick="gAns(2,'polst_cmo')">Yes — Comfort-Focused Treatment is checked</button><button type="button" class="btn ghost" onclick="gAns(2,'polst_other')">Yes — but Full Treatment or Limited is checked</button><button type="button" class="btn ghost" onclick="gAns(2,'no_polst')">No POLST present</button></div>
   </div>
 
   <div class="card hidden" id="gq3">
     <div class="gstep-badge">Step 3 — Timing</div>
     <div class="cx danger"><span class="cx-icon"><i class="ph-duotone ph-warning-octagon"></i></span><div><strong>Timing is critical</strong>The CMO designation must be established as the care plan for this admission — not documented after brain death, and not a pre-admission-only status that was not reaffirmed or continued during this encounter.</div></div>
     <div style="font-weight:600;margin:12px 0 10px;">Was the CMO documentation established during this admission (prior to death, discharge, or brain death declaration)?</div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;"><button class="btn" onclick="gAns(3,'yes')">Yes — documented during this admission</button><button class="btn ghost" onclick="gAns(3,'postbrain')">Only after brain death declaration</button><button class="btn ghost" onclick="gAns(3,'prehosp_only')">Pre-hospital only, not reaffirmed</button></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;"><button type="button" class="btn" onclick="gAns(3,'yes')">Yes — documented during this admission</button><button type="button" class="btn ghost" onclick="gAns(3,'postbrain')">Only after brain death declaration</button><button type="button" class="btn ghost" onclick="gAns(3,'prehosp_only')">Pre-hospital only, not reaffirmed</button></div>
   </div>
 
   <div class="card hidden" id="gq4">
     <div class="gstep-badge">Step 4 — Conflicting Documentation</div>
     <div class="cx warn"><span class="cx-icon"><i class="ph-duotone ph-warning"></i></span><div><strong>Conflicting documentation is a red flag</strong>If CMO is ordered but the medical record simultaneously shows aggressive interventions being pursued (full-code resuscitation, ongoing aggressive chemotherapy, ICU-level interventions), you should flag this for review. A CMO exclusion applies when CMO is the established plan — not when it's documented alongside conflicting treatment goals.</div></div>
     <div style="font-weight:600;margin:12px 0 10px;">Is the CMO plan consistent with the overall treatment record?</div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;"><button class="btn" onclick="gAns(4,'consistent')">Yes — care aligns with CMO</button><button class="btn ghost" onclick="gAns(4,'conflict')">Conflicting documentation present</button></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;"><button type="button" class="btn" onclick="gAns(4,'consistent')">Yes — care aligns with CMO</button><button type="button" class="btn ghost" onclick="gAns(4,'conflict')">Conflicting documentation present</button></div>
   </div>
 
   <div class="result-box hidden" id="guided-result">
@@ -318,7 +318,7 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
       <div><div class="res-field-label">CMO Exclusion</div><div class="res-val" id="gr-yn">—</div></div>
     </div>
     <div class="res-rule" id="gr-rat"></div>
-    <div class="btn-row"><button class="btn" onclick="window.print()"><i class="ph ph-printer"></i> Print</button><button class="btn ghost" onclick="resetGuided()">↩ Start Over</button></div>
+    <div class="btn-row"><button type="button" class="btn" onclick="window.print()"><i class="ph ph-printer"></i> Print</button><button type="button" class="btn ghost" onclick="resetGuided()">↩ Start Over</button></div>
   </div>
 </div>
 
@@ -415,7 +415,7 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
     <div class="case-grid" id="case-card-grid"></div>
   </div>
   <div id="case-runner" class="hidden">
-    <button class="btn ghost" onclick="backToCases()" style="margin-bottom:14px;">← Back to Cases</button>
+    <button type="button" class="btn ghost" onclick="backToCases()" style="margin-bottom:14px;">← Back to Cases</button>
     <div class="wt-dots" id="case-dots"></div>
     <div id="case-step-body"></div>
   </div>
@@ -591,9 +591,9 @@ function renderQ(){
   document.getElementById('quiz-card-body').innerHTML=`
     <div class="q-tags">${q.tags.map(t=>`<span class="qtag">${t}</span>`).join('')}</div>
     <div class="scenario-box"><span class="slabel"><i class="ph-duotone ph-file-text"></i> Clinical Scenario</span>${q.sc}</div>
-    <div class="q-opts">${q.opts.map((o,i)=>`<button class="q-opt" onclick="ansQ(${i},this)">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}</div>
+    <div class="q-opts">${q.opts.map((o,i)=>`<button type="button" class="q-opt" onclick="ansQ(${i},this)">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}</div>
     <div class="q-feedback" id="qfb"></div>
-    <div style="margin-top:10px;"><button class="btn" id="qnext" onclick="nextQ()" style="display:none;">Next →</button></div>`;
+    <div style="margin-top:10px;"><button type="button" class="btn" id="qnext" onclick="nextQ()" style="display:none;">Next →</button></div>`;
 }
 function ansQ(i,btn){
   const q=Qs[curQ];answered++;
@@ -608,7 +608,7 @@ function ansQ(i,btn){
 function nextQ(){curQ++;renderQ();}
 function showQComplete(){
   const pct=Math.round(score/Qs.length*100);
-  document.getElementById('quiz-card-body').innerHTML=`<div style="text-align:center;padding:20px 0"><div style="font-size:52px;font-weight:700;font-family:var(--mono);color:${pct>=80?'var(--green)':pct>=60?'var(--amber)':'var(--red)'}">${pct}%</div><div style="font-size:16px;font-weight:700;margin:8px 0;">${score} / ${Qs.length} correct</div><div style="font-size:13px;color:var(--muted);margin-bottom:20px;">${pct>=80?'Strong command of CMO documentation rules.':pct>=60?'Good. Review the pitfalls that tripped you up.':'Recommend reviewing the Quick Reference tab before live abstraction.'}</div><button class="btn" onclick="initQuiz()">Try Again</button></div>`;
+  document.getElementById('quiz-card-body').innerHTML=`<div style="text-align:center;padding:20px 0"><div style="font-size:52px;font-weight:700;font-family:var(--mono);color:${pct>=80?'var(--green)':pct>=60?'var(--amber)':'var(--red)'}">${pct}%</div><div style="font-size:16px;font-weight:700;margin:8px 0;">${score} / ${Qs.length} correct</div><div style="font-size:13px;color:var(--muted);margin-bottom:20px;">${pct>=80?'Strong command of CMO documentation rules.':pct>=60?'Good. Review the pitfalls that tripped you up.':'Recommend reviewing the Quick Reference tab before live abstraction.'}</div><button type="button" class="btn" onclick="initQuiz()">Try Again</button></div>`;
 }
 
 // ── CASES ──
@@ -646,7 +646,7 @@ function renderCaseCards(){
     <div class="case-card" onclick="startCase(${i})">
       <h3>${c.title}</h3><p>${c.summary}</p>
       <span class="diff-pill diff-${c.diff}">${c.diff==='int'?'Intermediate':'Advanced'}</span>
-      <div style="margin-top:12px;"><button class="btn">Start →</button></div>
+      <div style="margin-top:12px;"><button type="button" class="btn">Start →</button></div>
     </div>`).join('');
 }
 
@@ -660,12 +660,12 @@ function renderCaseStep(){
   const icons={tip:'<i class="ph-duotone ph-lightbulb"></i>',warn:'<i class="ph-duotone ph-warning"></i>',danger:'<i class="ph-duotone ph-warning-octagon"></i>',ok:'<i class="ph-duotone ph-check-circle"></i>'};
   let html='';
   if(s.type==='chart'){
-    html=`<div class="card"><div class="card-label">Step ${caseStep+1} of ${steps.length} — Chart Documentation</div><div class="chart-box"><span class="clabel"><i class="ph-duotone ph-file-text"></i> Chart Excerpt</span>${s.content}</div><div class="btn-row"><button class="btn" onclick="caseNext()">Continue →</button></div></div>`;
+    html=`<div class="card"><div class="card-label">Step ${caseStep+1} of ${steps.length} — Chart Documentation</div><div class="chart-box"><span class="clabel"><i class="ph-duotone ph-file-text"></i> Chart Excerpt</span>${s.content}</div><div class="btn-row"><button type="button" class="btn" onclick="caseNext()">Continue →</button></div></div>`;
   }else if(s.type==='step'){
-    html=`<div class="card"><div class="card-label">Step ${caseStep+1} of ${steps.length} — ${s.label}</div><div style="font-size:13.5px;color:#c4d8ec;line-height:1.7;margin-bottom:10px;">${s.content}</div><div class="cx ${s.cx}"><span class="cx-icon">${icons[s.cx]}</span><div>${s.cxt}</div></div><div class="btn-row"><button class="btn ghost" onclick="casePrev()">← Back</button><button class="btn" onclick="caseNext()">Continue →</button></div></div>`;
+    html=`<div class="card"><div class="card-label">Step ${caseStep+1} of ${steps.length} — ${s.label}</div><div style="font-size:13.5px;color:#c4d8ec;line-height:1.7;margin-bottom:10px;">${s.content}</div><div class="cx ${s.cx}"><span class="cx-icon">${icons[s.cx]}</span><div>${s.cxt}</div></div><div class="btn-row"><button type="button" class="btn ghost" onclick="casePrev()">← Back</button><button type="button" class="btn" onclick="caseNext()">Continue →</button></div></div>`;
   }else if(s.type==='result'){
     const yn=s.yn==='YES';
-    html=`<div class="card"><div class="card-label">Step ${caseStep+1} of ${steps.length} — Final Abstraction</div><div class="res-fields" style="margin-bottom:14px;"><div><div class="res-field-label">CMO Exclusion</div><div class="res-val ${yn?'yes':'no'}">${s.yn}</div></div></div><div class="cx ok"><span class="cx-icon"><i class="ph-duotone ph-check-circle"></i></span><div><strong>Rationale</strong>${s.rat}</div></div><div class="btn-row"><button class="btn ghost" onclick="casePrev()">← Back</button><button class="btn" onclick="backToCases()">← All Cases</button></div></div>`;
+    html=`<div class="card"><div class="card-label">Step ${caseStep+1} of ${steps.length} — Final Abstraction</div><div class="res-fields" style="margin-bottom:14px;"><div><div class="res-field-label">CMO Exclusion</div><div class="res-val ${yn?'yes':'no'}">${s.yn}</div></div></div><div class="cx ok"><span class="cx-icon"><i class="ph-duotone ph-check-circle"></i></span><div><strong>Rationale</strong>${s.rat}</div></div><div class="btn-row"><button type="button" class="btn ghost" onclick="casePrev()">← Back</button><button type="button" class="btn" onclick="backToCases()">← All Cases</button></div></div>`;
   }
   document.getElementById('case-step-body').innerHTML=html;
 }
@@ -685,7 +685,7 @@ renderCaseCards();
     </div>
     <div class="share-strip-actions">
       <code class="share-url-pill">https://abstractiondeskqa.com</code>
-      <button class="share-copy-btn">Copy link</button>
+      <button type="button" class="share-copy-btn">Copy link</button>
     </div>
   </div>
 </div>

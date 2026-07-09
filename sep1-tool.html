@@ -346,16 +346,16 @@ main{max-width:var(--max);margin:0 auto;padding:32px 24px 72px;}
 <!-- TABS -->
 <div class="tool-tabs" role="navigation" aria-label="Tool sections">
   <div class="tool-tabs-inner">
-    <button class="tab-btn active" data-tab="calc" aria-selected="true">
+    <button type="button" class="tab-btn active" data-tab="calc" aria-selected="true">
       <i class="ph-duotone ph-timer" aria-hidden="true"></i> Timeline Tool
     </button>
-    <button class="tab-btn" data-tab="ref" aria-selected="false">
+    <button type="button" class="tab-btn" data-tab="ref" aria-selected="false">
       <i class="ph-duotone ph-book-open" aria-hidden="true"></i> Reference &amp; Guidance
     </button>
-    <button class="tab-btn" data-tab="quiz" aria-selected="false">
+    <button type="button" class="tab-btn" data-tab="quiz" aria-selected="false">
       <i class="ph-duotone ph-exam" aria-hidden="true"></i> Practice Quiz
     </button>
-    <button class="tab-btn" data-tab="cases" aria-selected="false">
+    <button type="button" class="tab-btn" data-tab="cases" aria-selected="false">
       <i class="ph-duotone ph-files" aria-hidden="true"></i> Case Walkthroughs
     </button>
   </div>
@@ -389,7 +389,7 @@ main{max-width:var(--max);margin:0 auto;padding:32px 24px 72px;}
     <div class="card-title"><i class="ph-duotone ph-clock-countdown" aria-hidden="true"></i> Clinical Events</div>
     <p class="card-sub">Enter time and description for each event. Type is auto-detected — click the badge to override.</p>
     <div class="ev-rows" id="ev-rows"></div>
-    <button class="add-row-btn" onclick="addRow()"><i class="ph ph-plus" aria-hidden="true"></i> Add row</button>
+    <button type="button" class="add-row-btn" onclick="addRow()"><i class="ph ph-plus" aria-hidden="true"></i> Add row</button>
     <div class="tz-section">
       <div class="tz-grid">
         <input type="time" id="tz-time" title="Leave blank to auto-suggest">
@@ -405,7 +405,7 @@ main{max-width:var(--max);margin:0 auto;padding:32px 24px 72px;}
         </div>
       </div>
     </div>
-    <button class="build-btn" onclick="build()">
+    <button type="button" class="build-btn" onclick="build()">
       <i class="ph ph-chart-line-up" aria-hidden="true"></i> Build Timeline
     </button>
   </div>
@@ -524,7 +524,7 @@ main{max-width:var(--max);margin:0 auto;padding:32px 24px 72px;}
     <div class="quiz-done" id="quizDone" style="display:none;">
       <div class="score-big" id="quizScore"></div>
       <p class="score-msg" id="quizMsg"></p>
-      <button class="quiz-next-btn" onclick="startQuiz()" style="margin:0 auto;">
+      <button type="button" class="quiz-next-btn" onclick="startQuiz()" style="margin:0 auto;">
         <i class="ph ph-arrow-counter-clockwise" aria-hidden="true"></i> Try Again
       </button>
     </div>
@@ -540,7 +540,7 @@ main{max-width:var(--max);margin:0 auto;padding:32px 24px 72px;}
     <div class="case-grid" id="caseListItems"></div>
   </div>
   <div id="caseDetail" style="display:none;">
-    <button class="case-back-btn" onclick="showCaseList()">
+    <button type="button" class="case-back-btn" onclick="showCaseList()">
       <i class="ph ph-arrow-left" aria-hidden="true"></i> Back to Cases
     </button>
     <div id="caseContent"></div>
@@ -567,7 +567,7 @@ main{max-width:var(--max);margin:0 auto;padding:32px 24px 72px;}
     </div>
     <div class="share-strip-actions">
       <code class="share-url-pill">https://abstractiondeskqa.com</code>
-      <button class="share-copy-btn">Copy link</button>
+      <button type="button" class="share-copy-btn">Copy link</button>
     </div>
   </div>
 </div>
@@ -660,7 +660,7 @@ function renderRows() {
         <span class="type-badge ${meta.badge}" style="${isOvr?'text-decoration:underline dotted 1px;':''}"
           onclick="togglePicker(${r.id},this)" title="Click to override detected type">${meta.label.toUpperCase()}</span>
       </div>
-      <button class="rm-btn" onclick="removeRow(${r.id})" aria-label="Remove row">×</button>
+      <button type="button" class="rm-btn" onclick="removeRow(${r.id})" aria-label="Remove row">×</button>
     </div>`;
   }).join('');
 }
@@ -824,11 +824,11 @@ function renderQ(){
     <div class="quiz-prog-track"><div class="quiz-prog-fill" style="width:${pct}%"></div></div>
     <div class="quiz-tags">${q.tags.map(t=>`<span class="qtag">${t}</span>`).join('')}</div>
     <div class="quiz-q">${q.q}</div>
-    <div class="quiz-opts" id="qopts">${q.opts.map((o,i)=>`<button class="quiz-opt" onclick="answerQ(${i})">${o}</button>`).join('')}</div>
+    <div class="quiz-opts" id="qopts">${q.opts.map((o,i)=>`<button type="button" class="quiz-opt" onclick="answerQ(${i})">${o}</button>`).join('')}</div>
     <div class="quiz-feedback" id="qfb"></div>
     <div class="quiz-nav">
-      <button class="quiz-next-btn" id="qnext" onclick="nextQ()" disabled>${qIdx<QUIZ_QS.length-1?'Next <i class="ph ph-arrow-right"></i>':'See Results <i class="ph ph-trophy"></i>'}</button>
-      <button class="quiz-restart-btn" onclick="startQuiz()">Restart</button>
+      <button type="button" class="quiz-next-btn" id="qnext" onclick="nextQ()" disabled>${qIdx<QUIZ_QS.length-1?'Next <i class="ph ph-arrow-right"></i>':'See Results <i class="ph ph-trophy"></i>'}</button>
+      <button type="button" class="quiz-restart-btn" onclick="startQuiz()">Restart</button>
     </div>`;
   qAnswered=false;
 }
@@ -896,7 +896,7 @@ function renderCaseCards(){
     <div class="case-card" onclick="startCase(${i})" role="button" tabindex="0" onkeypress="if(event.key==='Enter')startCase(${i})">
       <h3>${c.title}</h3><p>${c.summary}</p>
       <span class="diff-pill diff-${c.diff}">${c.diff==='int'?'Intermediate':'Advanced'}</span>
-      <div style="margin-top:12px;"><button class="case-btn" style="padding:7px 14px;font-size:12px;">Start →</button></div>
+      <div style="margin-top:12px;"><button type="button" class="case-btn" style="padding:7px 14px;font-size:12px;">Start →</button></div>
     </div>`).join('');
 }
 
@@ -911,11 +911,11 @@ function renderCaseStep(){
   const nIcon={tip:'ph-lightbulb',warn:'ph-warning',ok:'ph-check-circle',danger:'ph-warning-octagon'}[s.cx]||'ph-info';
   let html='';
   if (s.type==='chart') {
-    html=`<div class="card"><div class="card-title" style="margin-bottom:12px;"><i class="ph-duotone ph-file-text"></i> Step ${caseStepIdx+1} of ${steps.length} — Chart Documentation</div><div class="wt-dots">${dots}</div><div class="chart-box"><span class="clabel"><i class="ph-duotone ph-clipboard-text"></i> Chart Excerpt</span>${s.content}</div><div class="case-btn-row"><button class="case-btn" onclick="caseNext()">Continue <i class="ph ph-arrow-right"></i></button></div></div>`;
+    html=`<div class="card"><div class="card-title" style="margin-bottom:12px;"><i class="ph-duotone ph-file-text"></i> Step ${caseStepIdx+1} of ${steps.length} — Chart Documentation</div><div class="wt-dots">${dots}</div><div class="chart-box"><span class="clabel"><i class="ph-duotone ph-clipboard-text"></i> Chart Excerpt</span>${s.content}</div><div class="case-btn-row"><button type="button" class="case-btn" onclick="caseNext()">Continue <i class="ph ph-arrow-right"></i></button></div></div>`;
   } else if (s.type==='step') {
-    html=`<div class="card"><div class="card-title" style="margin-bottom:12px;"><i class="ph-duotone ph-arrow-right-circle"></i> Step ${caseStepIdx+1} of ${steps.length} — ${s.label}</div><div class="wt-dots">${dots}</div><div class="case-step-content">${s.content}</div><div class="notice ${nClass}"><i class="ph-duotone ${nIcon}"></i><div>${s.cxt}</div></div><div class="case-btn-row"><button class="case-btn ghost" onclick="casePrev()"><i class="ph ph-arrow-left"></i> Back</button><button class="case-btn" onclick="caseNext()">Continue <i class="ph ph-arrow-right"></i></button></div></div>`;
+    html=`<div class="card"><div class="card-title" style="margin-bottom:12px;"><i class="ph-duotone ph-arrow-right-circle"></i> Step ${caseStepIdx+1} of ${steps.length} — ${s.label}</div><div class="wt-dots">${dots}</div><div class="case-step-content">${s.content}</div><div class="notice ${nClass}"><i class="ph-duotone ${nIcon}"></i><div>${s.cxt}</div></div><div class="case-btn-row"><button type="button" class="case-btn ghost" onclick="casePrev()"><i class="ph ph-arrow-left"></i> Back</button><button type="button" class="case-btn" onclick="caseNext()">Continue <i class="ph ph-arrow-right"></i></button></div></div>`;
   } else if (s.type==='result') {
-    html=`<div class="card"><div class="card-title" style="margin-bottom:12px;"><i class="ph-duotone ph-seal-check"></i> Step ${caseStepIdx+1} of ${steps.length} — Final Abstraction</div><div class="wt-dots">${dots}</div><div class="case-result-fields"><div><div class="crfield-label">SEP-1 Outcome</div><div class="crfield-val ${s.pass?'pass':'fail'}">${s.pass?'PASS':'FAIL'}</div></div><div><div class="crfield-label">Summary</div><div class="crfield-val plain">${s.title}</div></div></div><div class="notice notice-tip"><i class="ph-duotone ph-info"></i><div><strong>Abstraction Rationale</strong><br>${s.rat}</div></div><div class="case-btn-row"><button class="case-btn ghost" onclick="casePrev()"><i class="ph ph-arrow-left"></i> Back</button><button class="case-btn" onclick="showCaseList()"><i class="ph ph-list"></i> All Cases</button></div></div>`;
+    html=`<div class="card"><div class="card-title" style="margin-bottom:12px;"><i class="ph-duotone ph-seal-check"></i> Step ${caseStepIdx+1} of ${steps.length} — Final Abstraction</div><div class="wt-dots">${dots}</div><div class="case-result-fields"><div><div class="crfield-label">SEP-1 Outcome</div><div class="crfield-val ${s.pass?'pass':'fail'}">${s.pass?'PASS':'FAIL'}</div></div><div><div class="crfield-label">Summary</div><div class="crfield-val plain">${s.title}</div></div></div><div class="notice notice-tip"><i class="ph-duotone ph-info"></i><div><strong>Abstraction Rationale</strong><br>${s.rat}</div></div><div class="case-btn-row"><button type="button" class="case-btn ghost" onclick="casePrev()"><i class="ph ph-arrow-left"></i> Back</button><button type="button" class="case-btn" onclick="showCaseList()"><i class="ph ph-list"></i> All Cases</button></div></div>`;
   }
   document.getElementById('caseContent').innerHTML=html;
   document.getElementById('caseDetail').scrollIntoView({behavior:'smooth',block:'start'});

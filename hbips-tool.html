@@ -576,16 +576,16 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
 <!-- TABS -->
 <div class="tool-tabs" role="navigation" aria-label="Tool sections">
   <div class="tool-tabs-inner">
-    <button class="tab-btn active" data-tab="calc" aria-selected="true">
+    <button type="button" class="tab-btn active" data-tab="calc" aria-selected="true">
       <i class="ph-duotone ph-calculator" aria-hidden="true"></i> Calculators
     </button>
-    <button class="tab-btn" data-tab="ref" aria-selected="false">
+    <button type="button" class="tab-btn" data-tab="ref" aria-selected="false">
       <i class="ph-duotone ph-book-open" aria-hidden="true"></i> Reference &amp; Guidance
     </button>
-    <button class="tab-btn" data-tab="quiz" aria-selected="false">
+    <button type="button" class="tab-btn" data-tab="quiz" aria-selected="false">
       <i class="ph-duotone ph-exam" aria-hidden="true"></i> Practice Quiz
     </button>
-    <button class="tab-btn" data-tab="cases" aria-selected="false">
+    <button type="button" class="tab-btn" data-tab="cases" aria-selected="false">
       <i class="ph-duotone ph-files" aria-hidden="true"></i> Case Walkthroughs
     </button>
   </div>
@@ -670,10 +670,10 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
     <div class="result-box" id="durResult"></div>
 
     <div id="durAddBtns" style="display:none;margin-top:12px;display:none;gap:10px;flex-wrap:wrap;">
-      <button class="add-ep-btn" id="durAddRestraint" onclick="addDurationToTally('restraint')" style="border-style:solid;border-color:var(--teal);color:var(--teal);">
+      <button type="button" class="add-ep-btn" id="durAddRestraint" onclick="addDurationToTally('restraint')" style="border-style:solid;border-color:var(--teal);color:var(--teal);">
         <i class="ph ph-plus" aria-hidden="true"></i> Add to Restraint tally
       </button>
-      <button class="add-ep-btn" id="durAddSeclusion" onclick="addDurationToTally('seclusion')" style="border-style:solid;border-color:var(--teal);color:var(--teal);">
+      <button type="button" class="add-ep-btn" id="durAddSeclusion" onclick="addDurationToTally('seclusion')" style="border-style:solid;border-color:var(--teal);color:var(--teal);">
         <i class="ph ph-plus" aria-hidden="true"></i> Add to Seclusion tally
       </button>
     </div>
@@ -696,12 +696,12 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
       <div class="episode-row">
         <input type="number" min="0" placeholder="minutes" class="restraint-min episode-input" oninput="calcRestraint()">
         <span style="font-size:13px;color:var(--ink-soft);font-family:var(--mono);">min</span>
-        <button class="ep-remove" onclick="removeEpisode(this,'restraint')" title="Remove" aria-label="Remove episode">
+        <button type="button" class="ep-remove" onclick="removeEpisode(this,'restraint')" title="Remove" aria-label="Remove episode">
           <i class="ph ph-x" aria-hidden="true"></i>
         </button>
       </div>
     </div>
-    <button class="add-ep-btn" onclick="addEpisode('restraintEntries','restraint-min','calcRestraint')">
+    <button type="button" class="add-ep-btn" onclick="addEpisode('restraintEntries','restraint-min','calcRestraint')">
       <i class="ph ph-plus" aria-hidden="true"></i> Add restraint episode
     </button>
 
@@ -725,12 +725,12 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
       <div class="episode-row">
         <input type="number" min="0" placeholder="minutes" class="seclusion-min episode-input" oninput="calcSeclusion()">
         <span style="font-size:13px;color:var(--ink-soft);font-family:var(--mono);">min</span>
-        <button class="ep-remove" onclick="removeEpisode(this,'seclusion')" title="Remove" aria-label="Remove episode">
+        <button type="button" class="ep-remove" onclick="removeEpisode(this,'seclusion')" title="Remove" aria-label="Remove episode">
           <i class="ph ph-x" aria-hidden="true"></i>
         </button>
       </div>
     </div>
-    <button class="add-ep-btn" onclick="addEpisode('seclusionEntries','seclusion-min','calcSeclusion')">
+    <button type="button" class="add-ep-btn" onclick="addEpisode('seclusionEntries','seclusion-min','calcSeclusion')">
       <i class="ph ph-plus" aria-hidden="true"></i> Add seclusion episode
     </button>
 
@@ -896,17 +896,17 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
       <div class="quiz-opts" id="quizOpts" role="list"></div>
       <div class="quiz-feedback" id="quizFeedback"></div>
       <div class="quiz-nav">
-        <button class="quiz-btn" id="quizNext" onclick="nextQ()" disabled>
+        <button type="button" class="quiz-btn" id="quizNext" onclick="nextQ()" disabled>
           Next <i class="ph ph-arrow-right" aria-hidden="true"></i>
         </button>
-        <button class="quiz-restart" onclick="startQuiz()">Restart</button>
+        <button type="button" class="quiz-restart" onclick="startQuiz()">Restart</button>
       </div>
     </div>
 
     <div class="quiz-done" id="quizDone">
       <div class="score-big" id="finalScore"></div>
       <p id="finalMsg"></p>
-      <button class="quiz-btn" onclick="startQuiz()" style="margin-top:20px;">
+      <button type="button" class="quiz-btn" onclick="startQuiz()" style="margin-top:20px;">
         <i class="ph ph-arrow-counter-clockwise" aria-hidden="true"></i> Try Again
       </button>
     </div>
@@ -926,7 +926,7 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
   </div>
 
   <div class="case-detail" id="caseDetail">
-    <button class="case-back" onclick="showCaseList()">
+    <button type="button" class="case-back" onclick="showCaseList()">
       <i class="ph ph-arrow-left" aria-hidden="true"></i> Back to Cases
     </button>
     <div id="caseContent"></div>
@@ -944,7 +944,7 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
     </div>
     <div class="share-strip-actions">
       <code class="share-url-pill">https://abstractiondeskqa.com</code>
-      <button class="share-copy-btn">Copy link</button>
+      <button type="button" class="share-copy-btn">Copy link</button>
     </div>
   </div>
 </div>
@@ -1194,7 +1194,7 @@ function addDurationToTally(type) {
     row.innerHTML = `
       <input type="number" min="0" class="${cls} episode-input" value="${lastDurMins}" oninput="${calcFn}()">
       <span style="font-size:13px;color:var(--ink-soft);font-family:var(--mono);">min</span>
-      <button class="ep-remove" onclick="removeEpisode(this,'${type}')" title="Remove" aria-label="Remove episode">
+      <button type="button" class="ep-remove" onclick="removeEpisode(this,'${type}')" title="Remove" aria-label="Remove episode">
         <i class="ph ph-x" aria-hidden="true"></i>
       </button>`;
     container.appendChild(row);
@@ -1223,7 +1223,7 @@ function addEpisode(containerId, cls, calcFn) {
   row.innerHTML = `
     <input type="number" min="0" placeholder="minutes" class="${cls} episode-input" oninput="${calcFn}()">
     <span style="font-size:13px;color:var(--ink-soft);font-family:var(--mono);">min</span>
-    <button class="ep-remove" onclick="removeEpisode(this,'${cls.includes('restraint') ? 'restraint' : 'seclusion'}')" title="Remove" aria-label="Remove episode">
+    <button type="button" class="ep-remove" onclick="removeEpisode(this,'${cls.includes('restraint') ? 'restraint' : 'seclusion'}')" title="Remove" aria-label="Remove episode">
       <i class="ph ph-x" aria-hidden="true"></i>
     </button>`;
   container.appendChild(row);

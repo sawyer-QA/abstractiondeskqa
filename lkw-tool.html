@@ -221,11 +221,11 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 
 <nav class="tabs" role="tablist">
   <div class="tabs-inner">
-  <button class="tab on" id="tabbtn-grid" role="tab" aria-selected="true" aria-controls="tab-grid" tabindex="0" data-t="grid"><i class="ph-duotone ph-table" style="font-size:14px;vertical-align:middle;margin-right:5px;color:inherit;"></i>LKW Resolution Grid</button>
-  <button class="tab" id="tabbtn-guided" role="tab" aria-selected="false" aria-controls="tab-guided" tabindex="-1" data-t="guided"><i class="ph-duotone ph-git-branch" style="font-size:14px;vertical-align:middle;margin-right:5px;color:inherit;"></i>Guided Workflow</button>
-  <button class="tab" id="tabbtn-ref" role="tab" aria-selected="false" aria-controls="tab-ref" tabindex="-1" data-t="ref"><i class="ph-duotone ph-clipboard-text" style="font-size:14px;vertical-align:middle;margin-right:5px;color:inherit;"></i>Quick Reference</button>
-  <button class="tab" id="tabbtn-quiz" role="tab" aria-selected="false" aria-controls="tab-quiz" tabindex="-1" data-t="quiz"><i class="ph-duotone ph-exam" style="font-size:14px;vertical-align:middle;margin-right:5px;color:inherit;"></i>Practice Quiz</button>
-  <button class="tab" id="tabbtn-cases" role="tab" aria-selected="false" aria-controls="tab-cases" tabindex="-1" data-t="cases"><i class="ph-duotone ph-stethoscope" style="font-size:14px;vertical-align:middle;margin-right:5px;color:inherit;"></i>Case Walkthroughs</button>
+  <button type="button" class="tab on" id="tabbtn-grid" role="tab" aria-selected="true" aria-controls="tab-grid" tabindex="0" data-t="grid"><i class="ph-duotone ph-table" style="font-size:14px;vertical-align:middle;margin-right:5px;color:inherit;"></i>LKW Resolution Grid</button>
+  <button type="button" class="tab" id="tabbtn-guided" role="tab" aria-selected="false" aria-controls="tab-guided" tabindex="-1" data-t="guided"><i class="ph-duotone ph-git-branch" style="font-size:14px;vertical-align:middle;margin-right:5px;color:inherit;"></i>Guided Workflow</button>
+  <button type="button" class="tab" id="tabbtn-ref" role="tab" aria-selected="false" aria-controls="tab-ref" tabindex="-1" data-t="ref"><i class="ph-duotone ph-clipboard-text" style="font-size:14px;vertical-align:middle;margin-right:5px;color:inherit;"></i>Quick Reference</button>
+  <button type="button" class="tab" id="tabbtn-quiz" role="tab" aria-selected="false" aria-controls="tab-quiz" tabindex="-1" data-t="quiz"><i class="ph-duotone ph-exam" style="font-size:14px;vertical-align:middle;margin-right:5px;color:inherit;"></i>Practice Quiz</button>
+  <button type="button" class="tab" id="tabbtn-cases" role="tab" aria-selected="false" aria-controls="tab-cases" tabindex="-1" data-t="cases"><i class="ph-duotone ph-stethoscope" style="font-size:14px;vertical-align:middle;margin-right:5px;color:inherit;"></i>Case Walkthroughs</button>
   </div>
 </nav>
 <main>
@@ -260,7 +260,7 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
         <tr class="row-md">
           <td style="text-align:center;vertical-align:middle;"><span class="who-pill pill-md">MD</span></td>
           <td style="text-align:center;vertical-align:middle;"><span class="pri-badge pri-2" style="font-size:12px;padding:4px 12px;">1</span></td>
-          <td class="unk-cell"><div class="unk-toggle"><button class="unk-btn" id="md-unk-yes" onclick="toggleUnk('yes')">Yes</button><button class="unk-btn" id="md-unk-no" onclick="toggleUnk('no')">No</button></div></td>
+          <td class="unk-cell"><div class="unk-toggle"><button type="button" class="unk-btn" id="md-unk-yes" onclick="toggleUnk('yes')">Yes</button><button type="button" class="unk-btn" id="md-unk-no" onclick="toggleUnk('no')">No</button></div></td>
           <td style="vertical-align:middle;text-align:center;"><span style="font-size:10px;color:var(--muted);font-style:italic;">See RN row</span></td>
           <td><div class="cell-input-wrap"><input class="gdate" id="md-lkw-date" placeholder="MM-DD-YYYY"/><input class="gtime" id="md-lkw-time" placeholder="HH:MM"/></div></td>
           <td><div class="cell-input-wrap"><input class="gdate" id="md-sx-date" placeholder="MM-DD-YYYY"/><input class="gtime" id="md-sx-time" placeholder="HH:MM"/></div></td>
@@ -287,7 +287,7 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
     <div class="cx warn hidden" id="epi-note" style="margin-top:12px;"><span class="cx-icon"><i class="ph-duotone ph-warning" style="font-size:18px;color:#fbbf24;"></i></span><div><strong>Use Most Recent Episode</strong>When symptoms occurred, resolved, then recurred — use the time of the <strong>most recent episode</strong> before arrival. Not the first. Only applies when resolution is explicitly documented between episodes.</div></div>
   </div>
 
-  <button class="resolve-btn" onclick="resolveGrid()">Resolve → Determine LKW Abstraction Values</button>
+  <button type="button" class="resolve-btn" onclick="resolveGrid()">Resolve → Determine LKW Abstraction Values</button>
 
   <div class="result-box" id="grid-result">
     <div class="card-label" style="margin-bottom:14px;">Abstraction Result</div>
@@ -298,7 +298,7 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
       <div><div class="res-field-label">Rule Applied</div><div class="res-val plain" id="r-rule" style="font-size:12px;line-height:1.5;max-width:200px;"></div></div>
     </div>
     <div class="res-rule" id="r-rationale"></div>
-    <div class="btn-row"><button class="btn" onclick="window.print()"><i class="ph ph-printer" style="vertical-align:middle;margin-right:4px;"></i>Print</button><button class="btn ghost" onclick="clearGrid()">↩ Clear</button></div>
+    <div class="btn-row"><button type="button" class="btn" onclick="window.print()"><i class="ph ph-printer" style="vertical-align:middle;margin-right:4px;"></i>Print</button><button type="button" class="btn ghost" onclick="clearGrid()">↩ Clear</button></div>
   </div>
 </div>
 
@@ -309,35 +309,35 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
   <div class="card" id="gq1">
     <div class="card-label">Step 1 — Stroke Timing</div>
     <div style="font-weight:600;margin-bottom:12px;">Did LKW / stroke signs first occur <em>after</em> hospital arrival?</div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;"><button class="btn" onclick="gAns(1,'inhouse')">Yes — in-house stroke</button><button class="btn ghost" onclick="gAns(1,'pre')">No — occurred before arrival</button></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;"><button type="button" class="btn" onclick="gAns(1,'inhouse')">Yes — in-house stroke</button><button type="button" class="btn ghost" onclick="gAns(1,'pre')">No — occurred before arrival</button></div>
   </div>
   <div class="card hidden" id="gq2">
     <div class="card-label">Step 2 — Documentation Exists?</div>
     <div class="cx warn"><span class="cx-icon"><i class="ph-duotone ph-warning" style="font-size:18px;color:#fbbf24;"></i></span><div><strong>S/Sx ≠ LKW</strong>Symptom onset and Last Known Well are different. Prefer explicit LKW documentation. Only fall back to symptom onset if no LKW time is documented anywhere.</div></div>
     <div style="font-weight:600;margin:12px 0 10px;">Is there any documentation of date/time LKW or at baseline prior to arrival?</div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;"><button class="btn" onclick="gAns(2,'yes')">Yes</button><button class="btn ghost" onclick="gAns(2,'no')">No documentation at all</button></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;"><button type="button" class="btn" onclick="gAns(2,'yes')">Yes</button><button type="button" class="btn ghost" onclick="gAns(2,'no')">No documentation at all</button></div>
   </div>
   <div class="card hidden" id="gq3">
     <div class="card-label">Step 3 — MD Documents Unknown?</div>
     <div class="cx danger"><span class="cx-icon"><i class="ph-duotone ph-warning-octagon" style="font-size:18px;color:#f87171;"></i></span><div><strong>Priority 1 — MD Unknown cancels everything</strong>Any MD/APN/PA explicitly documenting "unknown/uncertain/unclear" cancels all nursing, EMS, and S/Sx times → NO.<br><br>Exceptions: (a) same MD corrects it later with a specific time, OR (b) stated as reason for no tPA on CSF and another part of record has a specific time.</div></div>
     <div style="font-weight:600;margin:12px 0 10px;">Does any MD/APN/PA explicitly document LKW as unknown, uncertain, or unclear?</div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;"><button class="btn" onclick="gAns(3,'yes')">Yes — MD says unknown</button><button class="btn ghost" onclick="gAns(3,'no')">No</button></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;"><button type="button" class="btn" onclick="gAns(3,'yes')">Yes — MD says unknown</button><button type="button" class="btn ghost" onclick="gAns(3,'no')">No</button></div>
   </div>
   <div class="card hidden" id="gq4">
     <div class="card-label">Step 4 — Best Source</div>
     <div class="cx tip"><span class="cx-icon"><i class="ph-duotone ph-clipboard-text" style="font-size:18px;color:#2dd4bf;"></i></span><div><strong>Column priority</strong>Code Stroke Form (Priority 2) → MD LKW/Normal (Priority 3) → RN LKW/Normal (Priority 3, Row 2) → MD S/Sx (Priority 4) → RN S/Sx (Priority 4, Row 2)</div></div>
     <div style="font-weight:600;margin:12px 0 10px;">What is the highest-priority source with a documented date/time?</div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;"><button class="btn" onclick="gAns(4,'csf')">Code Stroke Form</button><button class="btn ghost" onclick="gAns(4,'md')">MD/APN/PA note</button><button class="btn ghost" onclick="gAns(4,'rn')">Nursing / EMS only</button></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;"><button type="button" class="btn" onclick="gAns(4,'csf')">Code Stroke Form</button><button type="button" class="btn ghost" onclick="gAns(4,'md')">MD/APN/PA note</button><button type="button" class="btn ghost" onclick="gAns(4,'rn')">Nursing / EMS only</button></div>
   </div>
   <div class="card hidden" id="gq5">
     <div class="card-label">Step 5 — Multiple Times?</div>
     <div class="cx warn"><span class="cx-icon"><i class="ph-duotone ph-warning" style="font-size:18px;color:#fbbf24;"></i></span><div><strong>Resolution rules</strong><ul style="margin-top:6px;padding-left:16px;line-height:1.9;"><li>CSF specific time → wins</li><li>Multiple MD times (no CSF) → use <strong>earliest</strong></li><li>Multiple episodes with resolution → use <strong>most recent</strong> episode</li><li>Date LKW multiple dates → use <strong>earliest</strong></li></ul></div></div>
     <div style="font-weight:600;margin:12px 0 10px;">Are multiple conflicting times documented?</div>
     <div style="display:flex;gap:8px;flex-wrap:wrap;">
-      <button class="btn ghost" onclick="gAns(5,'single')">No — single time</button>
-      <button class="btn ghost" onclick="gAns(5,'csf')">Yes — CSF has specific time</button>
-      <button class="btn ghost" onclick="gAns(5,'mdmulti')">Yes — multiple MD times</button>
-      <button class="btn ghost" onclick="gAns(5,'episodes')">Yes — multiple episodes with resolution</button>
+      <button type="button" class="btn ghost" onclick="gAns(5,'single')">No — single time</button>
+      <button type="button" class="btn ghost" onclick="gAns(5,'csf')">Yes — CSF has specific time</button>
+      <button type="button" class="btn ghost" onclick="gAns(5,'mdmulti')">Yes — multiple MD times</button>
+      <button type="button" class="btn ghost" onclick="gAns(5,'episodes')">Yes — multiple episodes with resolution</button>
     </div>
   </div>
   <div class="result-box hidden" id="guided-result">
@@ -348,7 +348,7 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
       <div><div class="res-field-label">Time LKW</div><div class="res-val plain" id="gr-time">—</div></div>
     </div>
     <div class="res-rule" id="gr-rat"></div>
-    <div class="btn-row"><button class="btn" onclick="window.print()"><i class="ph ph-printer" style="vertical-align:middle;margin-right:4px;"></i>Print</button><button class="btn ghost" onclick="resetGuided()">↩ Start Over</button></div>
+    <div class="btn-row"><button type="button" class="btn" onclick="window.print()"><i class="ph ph-printer" style="vertical-align:middle;margin-right:4px;"></i>Print</button><button type="button" class="btn ghost" onclick="resetGuided()">↩ Start Over</button></div>
   </div>
 </div>
 
@@ -439,7 +439,7 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
   <h2 class="sh">Practice Quiz</h2>
   <p class="ss">10 scenario-based questions covering every major LKW rule.</p>
   <div class="quiz-mode-row">
-    <button class="qmode-btn on" id="qm-mc" onclick="setQMode('mc')">Multiple Choice</button>
+    <button type="button" class="qmode-btn on" id="qm-mc" onclick="setQMode('mc')">Multiple Choice</button>
   </div>
   <div id="quiz-mc">
     <div class="q-prog-wrap">
@@ -459,7 +459,7 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
     <div class="case-grid" id="case-card-grid"></div>
   </div>
   <div id="case-runner" class="hidden">
-    <button class="btn ghost" onclick="backToCases()" style="margin-bottom:14px;">← Back to Cases</button>
+    <button type="button" class="btn ghost" onclick="backToCases()" style="margin-bottom:14px;">← Back to Cases</button>
     <div class="wt-dots" id="case-dots"></div>
     <div id="case-step-body"></div>
   </div>
@@ -660,9 +660,9 @@ function renderQ(){
   document.getElementById('quiz-card-body').innerHTML=`
     <div class="q-tags">${q.tags.map(t=>`<span class="qtag">${t}</span>`).join('')}</div>
     <div class="scenario-box"><span class="slabel"><i class="ph-duotone ph-file-text" style="vertical-align:middle;margin-right:4px;color:#fbbf24;"></i>Clinical Scenario</span>${q.sc}</div>
-    <div class="q-opts">${q.opts.map((o,i)=>`<button class="q-opt" onclick="ansQ(${i},this)">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}</div>
+    <div class="q-opts">${q.opts.map((o,i)=>`<button type="button" class="q-opt" onclick="ansQ(${i},this)">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}</div>
     <div class="q-feedback" id="qfb"></div>
-    <div style="margin-top:10px;"><button class="btn" id="qnext" onclick="nextQ()" style="display:none;">Next →</button></div>`;
+    <div style="margin-top:10px;"><button type="button" class="btn" id="qnext" onclick="nextQ()" style="display:none;">Next →</button></div>`;
 }
 function ansQ(i,btn){
   const q=Qs[curQ];answered++;
@@ -677,7 +677,7 @@ function ansQ(i,btn){
 function nextQ(){curQ++;renderQ();}
 function showQComplete(){
   const pct=Math.round(score/Qs.length*100);
-  document.getElementById('quiz-card-body').innerHTML=`<div style="text-align:center;padding:20px 0"><div style="font-size:52px;font-weight:700;font-family:var(--mono);color:${pct>=80?'var(--green)':pct>=60?'var(--amber)':'var(--red)'};">${pct}%</div><div style="font-size:16px;font-weight:700;margin:8px 0;">${score} / ${Qs.length} correct</div><div style="font-size:13px;color:var(--muted);margin-bottom:20px;">${pct>=80?'Strong command of LKW rules.':pct>=60?'Good. Review the rules that tripped you up.':'Recommend reviewing the Resolution Grid and Quick Reference before live abstraction.'}</div><button class="btn" onclick="initQuiz()">Try Again</button></div>`;
+  document.getElementById('quiz-card-body').innerHTML=`<div style="text-align:center;padding:20px 0"><div style="font-size:52px;font-weight:700;font-family:var(--mono);color:${pct>=80?'var(--green)':pct>=60?'var(--amber)':'var(--red)'};">${pct}%</div><div style="font-size:16px;font-weight:700;margin:8px 0;">${score} / ${Qs.length} correct</div><div style="font-size:13px;color:var(--muted);margin-bottom:20px;">${pct>=80?'Strong command of LKW rules.':pct>=60?'Good. Review the rules that tripped you up.':'Recommend reviewing the Resolution Grid and Quick Reference before live abstraction.'}</div><button type="button" class="btn" onclick="initQuiz()">Try Again</button></div>`;
 }
 function setQMode(m){
   document.getElementById('qm-mc').className='qmode-btn'+(m==='mc'?' on':'');
@@ -712,7 +712,7 @@ function renderCaseCards(){
     <div class="case-card" onclick="startCase(${i})">
       <h3>${c.title}</h3><p>${c.summary}</p>
       <span class="diff-pill diff-${c.diff}">${c.diff==='int'?'Intermediate':'Advanced'}</span>
-      <div style="margin-top:12px;"><button class="btn">Start →</button></div>
+      <div style="margin-top:12px;"><button type="button" class="btn">Start →</button></div>
     </div>`).join('');
 }
 let activeCase=null,caseStep=0;
@@ -729,12 +729,12 @@ function renderCaseStep(){
   };
   let html='';
   if(s.type==='chart'){
-    html=`<div class="card"><div class="card-label">Step ${caseStep+1} of ${steps.length} — Chart Documentation</div><div class="chart-box"><span class="clabel"><i class="ph-duotone ph-file-text" style="vertical-align:middle;margin-right:4px;color:#fbbf24;"></i>Chart Excerpt</span>${s.content}</div><div class="btn-row"><button class="btn" onclick="caseNext()">Continue →</button></div></div>`;
+    html=`<div class="card"><div class="card-label">Step ${caseStep+1} of ${steps.length} — Chart Documentation</div><div class="chart-box"><span class="clabel"><i class="ph-duotone ph-file-text" style="vertical-align:middle;margin-right:4px;color:#fbbf24;"></i>Chart Excerpt</span>${s.content}</div><div class="btn-row"><button type="button" class="btn" onclick="caseNext()">Continue →</button></div></div>`;
   }else if(s.type==='step'){
-    html=`<div class="card"><div class="card-label">Step ${caseStep+1} of ${steps.length} — ${s.label}</div><div style="font-size:13.5px;color:#c4d8ec;line-height:1.7;margin-bottom:10px;">${s.content}</div><div class="cx ${s.cx}"><span class="cx-icon">${icons[s.cx]}</span><div>${s.cxt}</div></div><div class="btn-row"><button class="btn ghost" onclick="casePrev()">← Back</button><button class="btn" onclick="caseNext()">Continue →</button></div></div>`;
+    html=`<div class="card"><div class="card-label">Step ${caseStep+1} of ${steps.length} — ${s.label}</div><div style="font-size:13.5px;color:#c4d8ec;line-height:1.7;margin-bottom:10px;">${s.content}</div><div class="cx ${s.cx}"><span class="cx-icon">${icons[s.cx]}</span><div>${s.cxt}</div></div><div class="btn-row"><button type="button" class="btn ghost" onclick="casePrev()">← Back</button><button type="button" class="btn" onclick="caseNext()">Continue →</button></div></div>`;
   }else if(s.type==='result'){
     const yn=s.yn==='YES';
-    html=`<div class="card"><div class="card-label">Step ${caseStep+1} of ${steps.length} — Final Abstraction</div><div class="res-fields" style="margin-bottom:14px;"><div><div class="res-field-label">LKW Y/N</div><div class="res-val ${yn?'yes':'no'}">${s.yn}</div></div><div><div class="res-field-label">Date LKW</div><div class="res-val plain">${s.date}</div></div><div><div class="res-field-label">Time LKW</div><div class="res-val plain">${s.time}</div></div></div><div class="cx ok"><span class="cx-icon"><i class="ph-duotone ph-check-circle" style="font-size:18px;color:#4ade80;"></i></span><div><strong>Rationale</strong>${s.rat}</div></div><div class="btn-row"><button class="btn ghost" onclick="casePrev()">← Back</button><button class="btn" onclick="backToCases()">← All Cases</button></div></div>`;
+    html=`<div class="card"><div class="card-label">Step ${caseStep+1} of ${steps.length} — Final Abstraction</div><div class="res-fields" style="margin-bottom:14px;"><div><div class="res-field-label">LKW Y/N</div><div class="res-val ${yn?'yes':'no'}">${s.yn}</div></div><div><div class="res-field-label">Date LKW</div><div class="res-val plain">${s.date}</div></div><div><div class="res-field-label">Time LKW</div><div class="res-val plain">${s.time}</div></div></div><div class="cx ok"><span class="cx-icon"><i class="ph-duotone ph-check-circle" style="font-size:18px;color:#4ade80;"></i></span><div><strong>Rationale</strong>${s.rat}</div></div><div class="btn-row"><button type="button" class="btn ghost" onclick="casePrev()">← Back</button><button type="button" class="btn" onclick="backToCases()">← All Cases</button></div></div>`;
   }
   document.getElementById('case-step-body').innerHTML=html;
 }
@@ -754,7 +754,7 @@ renderCaseCards();
     </div>
     <div class="share-strip-actions">
       <code class="share-url-pill">https://abstractiondeskqa.com</code>
-      <button class="share-copy-btn">Copy link</button>
+      <button type="button" class="share-copy-btn">Copy link</button>
     </div>
   </div>
 </div>
