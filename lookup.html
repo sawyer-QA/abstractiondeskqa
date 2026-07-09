@@ -53,7 +53,7 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 
 .sidebar{background:white;border-right:1px solid var(--border);position:sticky;top:50px;height:calc(100vh - 50px);overflow-y:auto;display:flex;flex-direction:column;}
 .sb-lbl{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:var(--mid);padding:13px 15px 4px;display:block;}
-.sb-item{display:flex;align-items:center;justify-content:space-between;padding:7px 15px;cursor:pointer;font-size:12.5px;color:#4a5268;font-weight:500;transition:all .12s;border-left:3px solid transparent;}
+.sb-item{display:flex;align-items:center;justify-content:space-between;padding:7px 15px;cursor:pointer;font-size:12.5px;color:#4a5268;font-weight:500;transition:all .12s;border:none;border-left:3px solid transparent;background:none;width:100%;text-align:left;font-family:inherit;}
 .sb-item:hover{background:var(--slate);color:var(--navy);}
 .sb-item.on{background:var(--teal-bg);color:var(--teal);border-left-color:var(--teal);font-weight:700;}
 .sb-cnt{background:#eef0f5;color:var(--mid);font-size:9.5px;font-weight:700;padding:1px 6px;border-radius:8px;}
@@ -86,10 +86,10 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 .atpill{font-family:var(--mono);font-size:10.5px;font-weight:600;background:var(--purple);color:white;border-radius:10px;padding:2px 8px 2px 10px;display:flex;align-items:center;gap:4px;}
 .atpill button{background:none;border:none;color:white;cursor:pointer;font-size:14px;line-height:1;opacity:.65;padding:0;}
 .atpill button:hover{opacity:1;}
-.clear-at{font-size:10.5px;color:var(--purple);cursor:pointer;font-weight:700;margin-left:auto;text-decoration:underline;}
+.clear-at{font-size:10.5px;color:var(--purple);cursor:pointer;font-weight:700;margin-left:auto;text-decoration:underline;border:none;background:none;font-family:inherit;}
 
 .frow{display:flex;gap:5px;margin-bottom:12px;flex-wrap:wrap;align-items:center;}
-.fchip{font-size:11px;font-weight:600;padding:4px 11px;border-radius:14px;cursor:pointer;border:1.5px solid var(--border);background:white;color:#4a5268;transition:all .12s;}
+.fchip{font-size:11px;font-weight:600;padding:4px 11px;border-radius:14px;cursor:pointer;border:1.5px solid var(--border);background:white;color:#4a5268;transition:all .12s;font-family:inherit;}
 .fchip:hover{border-color:var(--teal);color:var(--teal);}
 .fchip.on{background:var(--teal);border-color:var(--teal);color:white;}
 .fchip.fe{border-color:#d9a020;color:var(--amber);}
@@ -103,7 +103,7 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 
 .qa{background:white;border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden;transition:box-shadow .13s;}
 .qa:hover{box-shadow:0 3px 12px rgba(0,0,0,.07);}
-.qa-hdr{padding:12px 14px 10px;cursor:pointer;display:flex;gap:10px;align-items:flex-start;}
+.qa-hdr{padding:12px 14px 10px;cursor:pointer;display:flex;gap:10px;align-items:flex-start;border:none;background:none;width:100%;text-align:left;font-family:inherit;}
 .tog{width:18px;height:18px;border-radius:50%;background:#eef0f5;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--mid);flex-shrink:0;margin-top:2px;transition:all .13s;}
 .qa.open .tog{background:var(--teal);color:white;transform:rotate(45deg);}
 .qa-hdr-c{flex:1;min-width:0;}
@@ -116,6 +116,8 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 .bs{background:var(--teal-bg);color:var(--teal);max-width:170px;overflow:hidden;text-overflow:ellipsis;}
 .ktag{font-family:var(--mono);font-size:9.5px;font-weight:500;background:var(--purple-bg);color:var(--purple);border:1px solid rgba(123,92,229,.22);padding:1px 6px;border-radius:8px;cursor:pointer;transition:all .1s;white-space:nowrap;}
 .ktag:hover{background:var(--purple);color:white;}
+.ktag-static{cursor:default;}
+.ktag-static:hover{background:var(--purple-bg);color:var(--purple);}
 .q-text{font-size:13px;font-weight:600;color:var(--navy);line-height:1.44;}
 .qa-body{display:none;border-top:1px solid #edf0f5;padding:12px 14px 12px 42px;}
 .qa.open .qa-body{display:block;}
@@ -167,7 +169,7 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 
 /* category filter bar inside TM */
 .cat-filter-bar{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px;}
-.cat-chip{font-size:10.5px;font-weight:600;padding:3px 10px;border-radius:12px;cursor:pointer;border:1.5px solid var(--border);background:white;color:#4a5268;transition:all .12s;white-space:nowrap;}
+.cat-chip{font-size:10.5px;font-weight:600;padding:3px 10px;border-radius:12px;cursor:pointer;border:1.5px solid var(--border);background:white;color:#4a5268;transition:all .12s;white-space:nowrap;font-family:inherit;}
 .cat-chip:hover{border-color:var(--teal);color:var(--teal);}
 .cat-chip.on{background:var(--teal);border-color:var(--teal);color:white;}
 
@@ -225,6 +227,9 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 </head>
 <body>
 
+<a class="skip-link" href="#main">Skip to content</a>
+<h1 class="sr-only">Q&amp;A Lookup — AbstractionDeskQA</h1>
+
 <!-- NAV -->
 <nav class="site-nav" role="navigation" aria-label="Site navigation">
   <div class="site-nav-inner">
@@ -254,28 +259,28 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
   </div>
   <div class="bar-btns">
     <!-- Q&A actions -->
-    <button class="btn btn-ghost" onclick="toggleAdd()"><i class="ph ph-plus" style="vertical-align:middle;margin-right:3px;"></i>Add Q&amp;A</button>
-    <button class="btn btn-ghost" onclick="openPaste()"><i class="ph-duotone ph-clipboard-text" style="vertical-align:middle;margin-right:3px;"></i>Paste Raw</button>
-    <button class="btn btn-purple" onclick="openTM()"><i class="ph-duotone ph-tag" style="vertical-align:middle;margin-right:3px;"></i>Tags</button>
-    <button class="btn btn-teal" onclick="exportPDF()"><i class="ph ph-download-simple" style="vertical-align:middle;margin-right:3px;"></i>Export</button>
+    <button type="button" class="btn btn-ghost" onclick="toggleAdd()"><i class="ph ph-plus" style="vertical-align:middle;margin-right:3px;"></i>Add Q&amp;A</button>
+    <button type="button" class="btn btn-ghost" onclick="openPaste()"><i class="ph-duotone ph-clipboard-text" style="vertical-align:middle;margin-right:3px;"></i>Paste Raw</button>
+    <button type="button" class="btn btn-purple" onclick="openTM()"><i class="ph-duotone ph-tag" style="vertical-align:middle;margin-right:3px;"></i>Tags</button>
+    <button type="button" class="btn btn-teal" onclick="exportPDF()"><i class="ph ph-download-simple" style="vertical-align:middle;margin-right:3px;"></i>Export</button>
   </div>
 </div>
 
 <div class="layout">
   <div class="sidebar">
     <span class="sb-lbl">All Questions</span>
-    <div class="sb-item on" data-m="all" onclick="filterM('all',this)">All <span class="sb-cnt" id="cnt-all">0</span></div>
+    <button type="button" class="sb-item on" data-m="all" onclick="filterM('all',this)">All <span class="sb-cnt" id="cnt-all">0</span></button>
     <div class="sb-div"></div>
     <span class="sb-lbl">Measure Set</span>
-    <div class="sb-item" data-m="STROKE" onclick="filterM('STROKE',this)">Stroke <span class="sb-cnt" id="cnt-STROKE">0</span></div>
-    <div class="sb-item" data-m="ED-OP" onclick="filterM('ED-OP',this)">ED-OP — Throughput <span class="sb-cnt" id="cnt-ED-OP">0</span></div>
-    <div class="sb-item" data-m="HBIPS" onclick="filterM('HBIPS',this)">HBIPS — Psych Inpatient <span class="sb-cnt" id="cnt-HBIPS">0</span></div>
-    <div class="sb-item" data-m="SEP-1" onclick="filterM('SEP-1',this)">SEP-1 — Sepsis <span class="sb-cnt" id="cnt-SEP-1">0</span></div>
+    <button type="button" class="sb-item" data-m="STROKE" onclick="filterM('STROKE',this)">Stroke <span class="sb-cnt" id="cnt-STROKE">0</span></button>
+    <button type="button" class="sb-item" data-m="ED-OP" onclick="filterM('ED-OP',this)">ED-OP — Throughput <span class="sb-cnt" id="cnt-ED-OP">0</span></button>
+    <button type="button" class="sb-item" data-m="HBIPS" onclick="filterM('HBIPS',this)">HBIPS — Psych Inpatient <span class="sb-cnt" id="cnt-HBIPS">0</span></button>
+    <button type="button" class="sb-item" data-m="SEP-1" onclick="filterM('SEP-1',this)">SEP-1 — Sepsis <span class="sb-cnt" id="cnt-SEP-1">0</span></button>
     <div class="sb-div"></div>
     <span class="sb-lbl">Difficulty</span>
-    <div class="sb-item" data-m="__routine" onclick="filterM('__routine',this)">✅ Routine <span class="sb-cnt" id="cnt-routine">0</span></div>
-    <div class="sb-item" data-m="__gray" onclick="filterM('__gray',this)">❓ Gray Areas <span class="sb-cnt" id="cnt-gray">0</span></div>
-    <div class="sb-item" data-m="__edge" onclick="filterM('__edge',this)">⚡ Edge Cases <span class="sb-cnt" id="cnt-edge">0</span></div>
+    <button type="button" class="sb-item" data-m="__routine" onclick="filterM('__routine',this)">✅ Routine <span class="sb-cnt" id="cnt-routine">0</span></button>
+    <button type="button" class="sb-item" data-m="__gray" onclick="filterM('__gray',this)">❓ Gray Areas <span class="sb-cnt" id="cnt-gray">0</span></button>
+    <button type="button" class="sb-item" data-m="__edge" onclick="filterM('__edge',this)">⚡ Edge Cases <span class="sb-cnt" id="cnt-edge">0</span></button>
     <div class="sb-div"></div>
     <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 15px 4px;">
       <span class="sb-lbl" style="padding:0;margin:0;">Browse Tags</span>
@@ -283,31 +288,31 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
     </div>
     <div class="cloud-outer">
       <div class="cloud" id="tagCloud"></div>
-      <button onclick="openTagBrowser()" style="margin-top:8px;width:100%;background:none;border:1px dashed var(--border);border-radius:6px;color:var(--teal);font-family:var(--sans);font-size:11px;font-weight:600;padding:6px;cursor:pointer;transition:all .12s;" onmouseover="this.style.background='var(--teal-bg)'" onmouseout="this.style.background='none'">Browse all tags →</button>
+      <button type="button" onclick="openTagBrowser()" style="margin-top:8px;width:100%;background:none;border:1px dashed var(--border);border-radius:6px;color:var(--teal);font-family:var(--sans);font-size:11px;font-weight:600;padding:6px;cursor:pointer;transition:all .12s;" onmouseover="this.style.background='var(--teal-bg)'" onmouseout="this.style.background='none'">Browse all tags →</button>
     </div>
   </div>
 
-  <div class="main">
+  <main id="main" class="main">
+    <h2 class="sr-only">Search &amp; Browse Q&amp;A Entries</h2>
     <div class="loading-bar" id="loadingBar">
       <div class="spin"></div>
       <span id="loadingMsg">Loading Q&amp;A data…</span>
     </div>
 
     <div class="add-panel" id="addPanel">
-      <!-- html-validate-disable-next heading-level -- first heading in the document is h3 (no h1/h2 precede it); tracked under T-05, remove once that lands -->
       <h3>Add New Q&amp;A Entry</h3>
       <div class="add-notice"><i class="ph-duotone ph-clock" style="vertical-align:middle;margin-right:5px;"></i><strong>Submissions go to Google Sheets for curator review.</strong> Your entry will appear on the site once approved.</div>
       <div class="fg2">
-        <div class="full"><label class="flbl">Question / Scenario</label><textarea class="fta" id="fq" placeholder="Describe the abstraction scenario…"></textarea></div>
-        <div class="full"><label class="flbl">Answer / Guidance</label><textarea class="fta" id="fa" placeholder="The authoritative answer or interpretation…"></textarea></div>
-        <div><label class="flbl">Measure Set</label>
+        <div class="full"><label class="flbl" for="fq">Question / Scenario</label><textarea class="fta" id="fq" placeholder="Describe the abstraction scenario…"></textarea></div>
+        <div class="full"><label class="flbl" for="fa">Answer / Guidance</label><textarea class="fta" id="fa" placeholder="The authoritative answer or interpretation…"></textarea></div>
+        <div><label class="flbl" for="fm">Measure Set</label>
           <select class="fsel" id="fm"><option value="STK">STK — Stroke</option><option value="ASR-IP">ASR-IP</option><option value="ED-OP">ED-OP</option></select></div>
-        <div><label class="flbl">Specific Measure</label><input class="fi" id="fspec" placeholder="e.g. ASR-IP-1, ED-OP-18b"/></div>
-        <div><label class="flbl">Difficulty</label>
+        <div><label class="flbl" for="fspec">Specific Measure</label><input class="fi" id="fspec" placeholder="e.g. ASR-IP-1, ED-OP-18b"/></div>
+        <div><label class="flbl" for="ftype">Difficulty</label>
           <select class="fsel" id="ftype"><option value="routine">✅ Routine</option><option value="edge">⚡ Edge Case</option><option value="gray">❓ Gray Area</option></select></div>
-        <div><label class="flbl">Source</label><input class="fi" id="fsrc" placeholder="TJC PMN, spec manual, training…"/></div>
+        <div><label class="flbl" for="fsrc">Source</label><input class="fi" id="fsrc" placeholder="TJC PMN, spec manual, training…"/></div>
         <div class="full">
-          <label class="flbl">Keyword Tags — type &amp; press Enter, or click suggestions</label>
+          <label class="flbl" for="ttxt">Keyword Tags — type &amp; press Enter, or click suggestions</label>
           <div class="tw" id="tw" onclick="document.getElementById('ttxt').focus()">
             <input class="ttxt" id="ttxt" placeholder="LKW, TNK, comfort measures…" onkeydown="handleTagKey(event)" oninput="onTagType(this.value)"/>
           </div>
@@ -316,33 +321,34 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
       </div>
       <div class="cf-turnstile" id="turnstileAdd" data-sitekey="0x4AAAAAADf-2v3MWsS9bACq" data-theme="light" style="margin-bottom:10px;"></div>
       <div class="factions">
-        <button class="btn btn-ghost" style="font-size:11px;padding:5px 11px" onclick="toggleAdd()">Cancel</button>
-        <button class="btn btn-teal" style="font-size:11px;padding:5px 11px" id="submitBtn" onclick="submitEntry()">Submit for Review</button>
+        <button type="button" class="btn btn-ghost" style="font-size:11px;padding:5px 11px" onclick="toggleAdd()">Cancel</button>
+        <button type="button" class="btn btn-teal" style="font-size:11px;padding:5px 11px" id="submitBtn" onclick="submitEntry()">Submit for Review</button>
       </div>
     </div>
 
     <div class="atbar" id="atbar">
       <span class="atbar-lbl"><i class="ph-duotone ph-tag" style="vertical-align:middle;margin-right:4px;"></i>Tag filter:</span>
       <div id="atpills" style="display:flex;gap:5px;flex-wrap:wrap;"></div>
-      <span class="clear-at" onclick="clearTagFilters()">Clear all</span>
+      <button type="button" class="clear-at" onclick="clearTagFilters()">Clear all</button>
     </div>
 
     <div class="search-wrap">
       <span class="si"><i class="ph ph-magnifying-glass"></i></span>
+      <label class="sr-only" for="srch">Search Q&amp;A entries</label>
       <input class="search" id="srch" placeholder="Search by scenario, keyword, tag, data element…" oninput="render()"/>
     </div>
 
     <div class="frow">
       <span style="font-size:10px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.7px">Difficulty:</span>
-      <span class="fchip on" data-t="all" onclick="filterT('all',this)">All</span>
-      <span class="fchip" data-t="routine" onclick="filterT('routine',this)">✅ Routine</span>
-      <span class="fchip fe" data-t="edge" onclick="filterT('edge',this)">⚡ Edge</span>
-      <span class="fchip fg" data-t="gray" onclick="filterT('gray',this)">❓ Gray Area</span>
+      <button type="button" class="fchip on" data-t="all" onclick="filterT('all',this)">All</button>
+      <button type="button" class="fchip" data-t="routine" onclick="filterT('routine',this)">✅ Routine</button>
+      <button type="button" class="fchip fe" data-t="edge" onclick="filterT('edge',this)">⚡ Edge</button>
+      <button type="button" class="fchip fg" data-t="gray" onclick="filterT('gray',this)">❓ Gray Area</button>
     </div>
 
     <div class="rhdr"><div class="rcnt" id="rcnt"></div></div>
     <div id="cards"></div>
-  </div>
+  </main>
 </div>
 
 <!-- TAG BROWSER MODAL -->
@@ -350,21 +356,22 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
   <div class="modal" style="max-width:780px">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">
       <h3><i class="ph-duotone ph-tag-chevron" style="vertical-align:middle;margin-right:6px;color:var(--teal);"></i>Tag Browser</h3>
-      <button onclick="closeTagBrowser()" style="background:none;border:none;color:var(--mid);font-size:22px;cursor:pointer;line-height:1;padding:0 4px;">×</button>
+      <button type="button" onclick="closeTagBrowser()" style="background:none;border:none;color:var(--mid);font-size:22px;cursor:pointer;line-height:1;padding:0 4px;">×</button>
     </div>
     <p class="modal-sub">Click any tag name to apply it as a filter on the Q&amp;A list. Browse by category or search by name or alias.</p>
 
+    <label class="sr-only" for="tbSearch">Search tags by name or alias</label>
     <input class="tb-search" id="tbSearch" placeholder="Search tags by name or alias…" oninput="renderTagBrowser()"/>
 
     <div class="cat-filter-bar" id="tbCatBar">
-      <span class="cat-chip on" data-tbc="all" onclick="filterTBCat('all',this)">All</span>
-      <span class="cat-chip" data-tbc="Stroke Timing" onclick="filterTBCat('Stroke Timing',this)">Stroke Timing</span>
-      <span class="cat-chip" data-tbc="Treatment" onclick="filterTBCat('Treatment',this)">Treatment</span>
-      <span class="cat-chip" data-tbc="Goals of Care" onclick="filterTBCat('Goals of Care',this)">Goals of Care</span>
-      <span class="cat-chip" data-tbc="ED Throughput" onclick="filterTBCat('ED Throughput',this)">ED Throughput</span>
-      <span class="cat-chip" data-tbc="Imaging" onclick="filterTBCat('Imaging',this)">Imaging</span>
-      <span class="cat-chip" data-tbc="Disposition" onclick="filterTBCat('Disposition',this)">Disposition</span>
-      <span class="cat-chip" data-tbc="Uncategorized" onclick="filterTBCat('Uncategorized',this)">Uncategorized</span>
+      <button type="button" class="cat-chip on" data-tbc="all" onclick="filterTBCat('all',this)">All</button>
+      <button type="button" class="cat-chip" data-tbc="Stroke Timing" onclick="filterTBCat('Stroke Timing',this)">Stroke Timing</button>
+      <button type="button" class="cat-chip" data-tbc="Treatment" onclick="filterTBCat('Treatment',this)">Treatment</button>
+      <button type="button" class="cat-chip" data-tbc="Goals of Care" onclick="filterTBCat('Goals of Care',this)">Goals of Care</button>
+      <button type="button" class="cat-chip" data-tbc="ED Throughput" onclick="filterTBCat('ED Throughput',this)">ED Throughput</button>
+      <button type="button" class="cat-chip" data-tbc="Imaging" onclick="filterTBCat('Imaging',this)">Imaging</button>
+      <button type="button" class="cat-chip" data-tbc="Disposition" onclick="filterTBCat('Disposition',this)">Disposition</button>
+      <button type="button" class="cat-chip" data-tbc="Uncategorized" onclick="filterTBCat('Uncategorized',this)">Uncategorized</button>
     </div>
 
     <table class="tm-table" id="tbTable">
@@ -379,7 +386,7 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
       <tbody id="tbBody"></tbody>
     </table>
     <div class="mactions">
-      <button class="btn btn-teal" onclick="closeTagBrowser()">Close</button>
+      <button type="button" class="btn btn-teal" onclick="closeTagBrowser()">Close</button>
     </div>
   </div>
 </div>
@@ -400,13 +407,13 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
     <div class="tm-section">Suggest a New Tag</div>
     <div class="tm-add">
       <div class="tm-add-grid">
-        <div><label class="flbl">Tag ID</label><input class="fi" id="nt-id" placeholder="e.g. stroke_lkw" style="font-family:var(--mono);"/></div>
-        <div><label class="flbl">Tag Name</label><input class="fi" id="nt-n" placeholder="e.g. LKW" style="font-family:var(--mono);font-weight:600"/></div>
-        <div><label class="flbl">Aliases</label><input class="fi" id="nt-a" placeholder="last known well, lkn, last seen normal"/></div>
-        <div><label class="flbl">Related Tags</label><input class="fi" id="nt-r" placeholder="TLKW, DLKW, onset"/></div>
+        <div><label class="flbl" for="nt-id">Tag ID</label><input class="fi" id="nt-id" placeholder="e.g. stroke_lkw" style="font-family:var(--mono);"/></div>
+        <div><label class="flbl" for="nt-n">Tag Name</label><input class="fi" id="nt-n" placeholder="e.g. LKW" style="font-family:var(--mono);font-weight:600"/></div>
+        <div><label class="flbl" for="nt-a">Aliases</label><input class="fi" id="nt-a" placeholder="last known well, lkn, last seen normal"/></div>
+        <div><label class="flbl" for="nt-r">Related Tags</label><input class="fi" id="nt-r" placeholder="TLKW, DLKW, onset"/></div>
       </div>
       <div style="display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end;">
-        <div><label class="flbl">Category</label>
+        <div><label class="flbl" for="nt-cat">Category</label>
           <select class="fsel" id="nt-cat">
             <option value="Stroke Timing">Stroke Timing</option>
             <option value="Treatment">Treatment</option>
@@ -417,7 +424,7 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
             <option value="Uncategorized">Uncategorized</option>
           </select>
         </div>
-        <button class="btn btn-teal" style="font-size:11px;padding:8px 16px;white-space:nowrap;" id="addTagBtn" onclick="addTagDef()">Submit Tag for Review</button>
+        <button type="button" class="btn btn-teal" style="font-size:11px;padding:8px 16px;white-space:nowrap;" id="addTagBtn" onclick="addTagDef()">Submit Tag for Review</button>
       </div>
       <div class="cf-turnstile" id="turnstileTag" data-sitekey="0x4AAAAAADf-2v3MWsS9bACq" data-theme="light" style="margin-top:10px;"></div>
     </div>
@@ -426,21 +433,21 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 
     <!-- Category filter bar -->
     <div class="cat-filter-bar" id="catFilterBar">
-      <span class="cat-chip on" data-cat="all" onclick="filterCat('all',this)">All</span>
-      <span class="cat-chip" data-cat="Stroke Timing" onclick="filterCat('Stroke Timing',this)">Stroke Timing</span>
-      <span class="cat-chip" data-cat="Treatment" onclick="filterCat('Treatment',this)">Treatment</span>
-      <span class="cat-chip" data-cat="Goals of Care" onclick="filterCat('Goals of Care',this)">Goals of Care</span>
-      <span class="cat-chip" data-cat="ED Throughput" onclick="filterCat('ED Throughput',this)">ED Throughput</span>
-      <span class="cat-chip" data-cat="Imaging" onclick="filterCat('Imaging',this)">Imaging</span>
-      <span class="cat-chip" data-cat="Disposition" onclick="filterCat('Disposition',this)">Disposition</span>
-      <span class="cat-chip" data-cat="Uncategorized" onclick="filterCat('Uncategorized',this)">Uncategorized</span>
+      <button type="button" class="cat-chip on" data-cat="all" onclick="filterCat('all',this)">All</button>
+      <button type="button" class="cat-chip" data-cat="Stroke Timing" onclick="filterCat('Stroke Timing',this)">Stroke Timing</button>
+      <button type="button" class="cat-chip" data-cat="Treatment" onclick="filterCat('Treatment',this)">Treatment</button>
+      <button type="button" class="cat-chip" data-cat="Goals of Care" onclick="filterCat('Goals of Care',this)">Goals of Care</button>
+      <button type="button" class="cat-chip" data-cat="ED Throughput" onclick="filterCat('ED Throughput',this)">ED Throughput</button>
+      <button type="button" class="cat-chip" data-cat="Imaging" onclick="filterCat('Imaging',this)">Imaging</button>
+      <button type="button" class="cat-chip" data-cat="Disposition" onclick="filterCat('Disposition',this)">Disposition</button>
+      <button type="button" class="cat-chip" data-cat="Uncategorized" onclick="filterCat('Uncategorized',this)">Uncategorized</button>
     </div>
 
     <table class="tm-table">
       <thead><tr><th style="width:100px">Tag</th><th style="width:90px">Category</th><th>Aliases</th><th>Related Tags</th><th style="width:60px">Source</th><th style="width:75px">Actions</th></tr></thead>
       <tbody id="tmBody"></tbody>
     </table>
-    <div class="mactions"><button class="btn btn-teal" onclick="closeTM()">Done</button></div>
+    <div class="mactions"><button type="button" class="btn btn-teal" onclick="closeTM()">Done</button></div>
   </div>
 </div>
 
@@ -451,9 +458,9 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
     <p class="modal-sub">Paste text from TJC PMN, CMS clarifications, or training notes. Preview tags before submitting for curator review.</p>
     <textarea id="pasteRaw" style="width:100%;font-family:var(--mono);font-size:11px;padding:9px;border:1.5px solid var(--border);border-radius:5px;min-height:120px;resize:vertical;margin-bottom:10px;outline:none;color:var(--ink);" placeholder="Q: If a patient woke up with stroke symptoms…&#10;&#10;A: Per TJC guidance…"></textarea>
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px">
-      <div><label class="flbl">Measure</label><select class="fsel" id="pm"><option value="STK">STK</option><option value="ASR-IP">ASR-IP</option><option value="ED-OP">ED-OP</option></select></div>
-      <div><label class="flbl">Specific Measure</label><input class="fi" id="pspec" placeholder="e.g. ASR-IP-1"/></div>
-      <div><label class="flbl">Source</label><input class="fi" id="psrc" placeholder="TJC PMN, training…"/></div>
+      <div><label class="flbl" for="pm">Measure</label><select class="fsel" id="pm"><option value="STK">STK</option><option value="ASR-IP">ASR-IP</option><option value="ED-OP">ED-OP</option></select></div>
+      <div><label class="flbl" for="pspec">Specific Measure</label><input class="fi" id="pspec" placeholder="e.g. ASR-IP-1"/></div>
+      <div><label class="flbl" for="psrc">Source</label><input class="fi" id="psrc" placeholder="TJC PMN, training…"/></div>
     </div>
     <div class="tag-review" id="tagReview" style="display:none">
       <h4><i class="ph-duotone ph-tag" style="vertical-align:middle;margin-right:4px;"></i>Auto-detected tags — click to accept or reject:</h4>
@@ -462,9 +469,9 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
     </div>
     <div class="cf-turnstile" id="turnstilePaste" data-sitekey="0x4AAAAAADf-2v3MWsS9bACq" data-theme="light" style="margin-bottom:10px;"></div>
     <div class="mactions">
-      <button class="btn btn-ghost" style="font-size:11px;padding:5px 11px" onclick="closePaste()">Cancel</button>
-      <button class="btn btn-purple" style="font-size:11px;padding:5px 11px" onclick="previewTags()"><i class="ph-duotone ph-tag" style="vertical-align:middle;margin-right:4px;"></i>Preview Tags</button>
-      <button class="btn btn-teal" style="font-size:11px;padding:5px 11px" id="pasteSubmitBtn" onclick="savePaste()">Submit for Review</button>
+      <button type="button" class="btn btn-ghost" style="font-size:11px;padding:5px 11px" onclick="closePaste()">Cancel</button>
+      <button type="button" class="btn btn-purple" style="font-size:11px;padding:5px 11px" onclick="previewTags()"><i class="ph-duotone ph-tag" style="vertical-align:middle;margin-right:4px;"></i>Preview Tags</button>
+      <button type="button" class="btn btn-teal" style="font-size:11px;padding:5px 11px" id="pasteSubmitBtn" onclick="savePaste()">Submit for Review</button>
     </div>
   </div>
 </div>
@@ -666,28 +673,34 @@ function render(){
   lastZeroKey=null;
   document.getElementById('cards').innerHTML=f.map(e=>`
     <div class="qa" id="c-${e.id}">
-      <div class="qa-hdr" onclick="togCard('c-${e.id}')">
-        <div class="tog">+</div>
+      <button type="button" class="qa-hdr" aria-expanded="false" aria-controls="c-${e.id}-body" onclick="togCard('c-${e.id}')">
+        <div class="tog" aria-hidden="true">+</div>
         <div class="qa-hdr-c">
           <div class="meta">
             <span class="badge bm">${esc(e.measure)}${e.specific?' · '+esc(e.specific):''}</span>
             ${typeBadge(e.type)}
             ${e.source?`<span class="badge bs">📎 ${esc(e.source.split(';')[0].split(',')[0].trim())}</span>`:''}
-            ${(e.tags||[]).map(t=>`<span class="ktag" onclick="event.stopPropagation();addTagFilter('${esc(t)}')">${esc(t)}</span>`).join('')}
+            ${(e.tags||[]).map(t=>`<span class="ktag ktag-static">${esc(t)}</span>`).join('')}
           </div>
           <div class="q-text">${esc(e.question)}</div>
         </div>
-      </div>
-      <div class="qa-body">
+      </button>
+      <div class="qa-body" id="c-${e.id}-body">
         <div class="ans">${esc(e.answer)}</div>
         <div class="qa-foot">
           <div class="qa-src"><span class="sdot"></span>${esc(e.source||'')}${e.date?' · '+e.date:''}</div>
-          <div class="qa-tags">${(e.tags||[]).map(t=>`<span class="ktag" onclick="addTagFilter('${esc(t)}')">${esc(t)}</span>`).join('')}</div>
+          <div class="qa-tags">${(e.tags||[]).map(t=>`<button type="button" class="ktag" onclick="addTagFilter('${esc(t)}')">${esc(t)}</button>`).join('')}</div>
         </div>
       </div>
     </div>`).join('');
 }
-function togCard(id){document.getElementById(id)?.classList.toggle('open');}
+function togCard(id){
+  const card=document.getElementById(id);
+  if(!card)return;
+  card.classList.toggle('open');
+  const btn=card.querySelector('.qa-hdr');
+  if(btn)btn.setAttribute('aria-expanded',card.classList.contains('open')?'true':'false');
+}
 let lastZeroKey=null;
 function logZeroResults(){
   const q=(document.getElementById('srch')?.value||'').trim();
@@ -705,6 +718,8 @@ function applyDeepLink(){
   if(!el)return;
   deepLinkApplied=true;
   el.classList.add('open');
+  const btn=el.querySelector('.qa-hdr');
+  if(btn)btn.setAttribute('aria-expanded','true');
   el.scrollIntoView({behavior:'smooth',block:'center'});
 }
 function updCounts(){
@@ -726,7 +741,7 @@ function buildCloud(){
   const sorted=Object.entries(cnt).sort((a,b)=>b[1]-a[1]);
   const top12=sorted.slice(0,12);
   document.getElementById('tagCloud').innerHTML=top12.map(([t,c])=>
-    `<span class="ctag${actTags.includes(t)?' on':''}" onclick="addTagFilter('${esc(t)}')">${esc(t)}<span class="ctag-n">${c}</span></span>`
+    `<button type="button" class="ctag${actTags.includes(t)?' on':''}" onclick="addTagFilter('${esc(t)}')">${esc(t)}<span class="ctag-n">${c}</span></button>`
   ).join('');
   // update total tag count in sidebar label
   const totalEl=document.getElementById('sb-tag-total');
@@ -755,7 +770,7 @@ function renderAtBar(){
   const bar=document.getElementById('atbar');
   if(!actTags.length){bar.classList.remove('on');return;}
   bar.classList.add('on');
-  document.getElementById('atpills').innerHTML=actTags.map(t=>`<span class="atpill">${esc(t)}<button onclick="removeTagFilter('${esc(t)}')">×</button></span>`).join('');
+  document.getElementById('atpills').innerHTML=actTags.map(t=>`<span class="atpill">${esc(t)}<button type="button" onclick="removeTagFilter('${esc(t)}')">×</button></span>`).join('');
 }
 function filterCat(cat,el){
   activeCat=cat;
@@ -803,7 +818,7 @@ function renderTagBrowser(){
   document.getElementById('tbBody').innerHTML=visible.map(td=>`
     <tr>
       <td>
-        <span class="tb-tag-name" onclick="applyTagFromBrowser('${esc(td.name)}')" title="Click to filter Q&As by this tag">${esc(td.name)}</span>
+        <button type="button" class="tb-tag-name" onclick="applyTagFromBrowser('${esc(td.name)}')" title="Click to filter Q&As by this tag">${esc(td.name)}</button>
         ${cnt[td.name]?`<div style="font-size:9px;color:var(--mid);margin-top:3px;font-family:var(--mono);">${cnt[td.name]} Q&amp;A${cnt[td.name]!==1?'s':''}</div>`:''}
       </td>
       <td><span class="cat-badge">${esc(td.category||'Uncategorized')}</span></td>
@@ -829,7 +844,7 @@ function onTagType(val){
   const matches=tagDefs.filter(td=>td.name.toLowerCase().includes(lo)||(td.aliases&&td.aliases.some(a=>a.includes(lo)))).map(td=>td.name).filter(n=>!formTags.includes(n)).slice(0,8);
   if(matches.length){
     document.getElementById('sugLbl').textContent='Matching tags — click to add:';
-    document.getElementById('sugRow').innerHTML=matches.map(t=>`<span class="sug-chip match" onclick="addFormTag('${esc(t)}');document.getElementById('ttxt').value='';hideSug()">${esc(t)}</span>`).join('');
+    document.getElementById('sugRow').innerHTML=matches.map(t=>`<button type="button" class="sug-chip match" onclick="addFormTag('${esc(t)}');document.getElementById('ttxt').value='';hideSug()">${esc(t)}</button>`).join('');
     document.getElementById('sugPanel').classList.add('on');
   }else{hideSug();}
 }
@@ -849,7 +864,7 @@ function showSuggestions(){
   document.getElementById('sugRow').innerHTML=related.map(t=>{
     const d=tagDefs.find(x=>x.name===t);
     const hint=d?`<span class="sug-hint">${(d.aliases||[]).slice(0,2).join(', ')}</span>`:'';
-    return`<span class="sug-chip" onclick="addFormTag('${esc(t)}')">${esc(t)} ${hint}</span>`;
+    return`<button type="button" class="sug-chip" onclick="addFormTag('${esc(t)}')">${esc(t)} ${hint}</button>`;
   }).join('');
   document.getElementById('sugPanel').classList.add('on');
 }
@@ -898,8 +913,8 @@ function renderTM(){
       <td>${srcLabel}</td>
       <td style="white-space:nowrap">
         ${canEdit
-          ?`<button class="tb-btn tb-edit" onclick="editLocalTag('${esc(td.name)}')">Edit</button>
-            <button class="tb-btn tb-del" onclick="delLocalTag('${esc(td.name)}')">Del</button>`
+          ?`<button type="button" class="tb-btn tb-edit" onclick="editLocalTag('${esc(td.name)}')">Edit</button>
+            <button type="button" class="tb-btn tb-del" onclick="delLocalTag('${esc(td.name)}')">Del</button>`
           :'<span style="font-size:10px;color:var(--mid);">Curator</span>'}
       </td>
     </tr>`;
@@ -966,7 +981,7 @@ function previewTags(){
 }
 function renderReview(){
   document.getElementById('rrow').innerHTML=reviewStates.map((r,i)=>
-    `<span class="rchip ${r.on?'acc':'rej'}" onclick="togReview(${i})">${r.on?'✓':'✕'} ${esc(r.tag)}</span>`).join('');
+    `<button type="button" class="rchip ${r.on?'acc':'rej'}" onclick="togReview(${i})">${r.on?'✓':'✕'} ${esc(r.tag)}</button>`).join('');
 }
 function togReview(i){reviewStates[i].on=!reviewStates[i].on;renderReview();}
 async function savePaste(){
@@ -1034,7 +1049,7 @@ loadQaData().then(applyDeepLink);
     </div>
     <div class="share-strip-actions">
       <code class="share-url-pill">https://abstractiondeskqa.com</code>
-      <button class="share-copy-btn">Copy link</button>
+      <button type="button" class="share-copy-btn">Copy link</button>
     </div>
   </div>
 </div>
