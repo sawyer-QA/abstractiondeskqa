@@ -62,8 +62,9 @@ main{max-width:var(--max);margin:0 auto;padding:32px 24px 72px;}
 .tab-panel.active{display:block;}
 
 /* ── SECTION LABEL ── */
-.section-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.6px;color:var(--teal);margin-top:0;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.section-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.6px;color:var(--teal);margin-top:0;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
 .section-label::before{content:'';display:block;width:18px;height:2px;background:var(--teal);border-radius:1px;}
+.section-label--lg{margin-bottom:16px;}
 
 /* ── CARDS ── */
 .card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:24px 26px;box-shadow:var(--shadow-sm);margin-bottom:18px;}
@@ -74,6 +75,8 @@ main{max-width:var(--max);margin:0 auto;padding:32px 24px 72px;}
 /* ── NOTICE BOXES ── */
 .notice{display:flex;gap:10px;padding:11px 14px;border-radius:7px;font-size:13px;line-height:1.6;margin:10px 0;}
 .notice i{font-size:16px;flex-shrink:0;margin-top:1px;}
+.notice--tall{margin-bottom:20px;}
+.notice--compact{margin-top:12px;font-size:12px;}
 .notice-tip{background:var(--teal-pale);border-left:3px solid var(--teal);color:var(--teal);}
 .notice-warn{background:var(--amber-bg);border-left:3px solid #e8a020;color:var(--amber);}
 .notice-info{background:#eff6ff;border-left:3px solid #60a5fa;color:#1e40af;}
@@ -239,7 +242,9 @@ main{max-width:var(--max);margin:0 auto;padding:32px 24px 72px;}
 .quiz-next-btn:disabled{opacity:.45;cursor:not-allowed;}
 .quiz-restart-btn{background:none;color:var(--ink-soft);border:1.5px solid var(--border);font-family:var(--body);font-size:13px;padding:9px 16px;border-radius:7px;cursor:pointer;transition:all .15s;}
 .quiz-restart-btn:hover{border-color:var(--teal);color:var(--teal);}
-.quiz-done{text-align:center;padding:40px 20px;}
+.quiz-done{display:none;text-align:center;padding:40px 20px;}
+.quiz-next-btn--center{margin:0 auto;}
+.case-detail{display:none;}
 .score-big{font-family:var(--heading);font-size:56px;font-weight:700;color:var(--teal);line-height:1;margin-bottom:10px;}
 .score-msg{font-size:15px;color:var(--ink-mid);margin-bottom:24px;}
 
@@ -365,7 +370,7 @@ main{max-width:var(--max);margin:0 auto;padding:32px 24px 72px;}
 
 <!-- ══ TAB 1: TIMELINE TOOL ══ -->
 <div id="tab-calc" class="tab-panel active">
-  <h2 class="section-label" style="margin-bottom:14px;">Event Timeline &amp; Bundle Checker</h2>
+  <h2 class="section-label">Event Timeline &amp; Bundle Checker</h2>
 
   <!-- HOW TO USE -->
   <div class="how-box" id="how-box">
@@ -434,9 +439,9 @@ main{max-width:var(--max);margin:0 auto;padding:32px 24px 72px;}
 
 <!-- ══ TAB 2: REFERENCE & GUIDANCE ══ -->
 <div id="tab-ref" class="tab-panel">
-  <h2 class="section-label" style="margin-bottom:16px;">Quick Reference</h2>
+  <h2 class="section-label section-label--lg">Quick Reference</h2>
 
-  <div class="notice notice-info" style="margin-bottom:20px;">
+  <div class="notice notice-info notice--tall">
     <i class="ph-duotone ph-info" aria-hidden="true"></i>
     <div>Based on the CMS Specifications Manual for National Hospital Inpatient Quality Measures (v5.17a, discharges 1Q25–4Q25). Always verify against the current version for your abstraction period.</div>
   </div>
@@ -444,11 +449,11 @@ main{max-width:var(--max);margin:0 auto;padding:32px 24px 72px;}
   <div class="ref-grid">
     <div class="ref-card">
       <div class="ref-card-title"><i class="ph-duotone ph-thermometer" aria-hidden="true"></i> SIRS Criteria (≥2 required)</div>
-      <div class="ref-row"><div class="ref-dot" style="background:var(--c-sirs)"></div><div><div class="ref-key">Temperature</div><div class="ref-val">&gt;38.3°C (100.9°F) or &lt;36°C (96.8°F)</div></div></div>
-      <div class="ref-row"><div class="ref-dot" style="background:var(--c-sirs)"></div><div><div class="ref-key">Heart Rate</div><div class="ref-val">&gt;90 bpm</div></div></div>
-      <div class="ref-row"><div class="ref-dot" style="background:var(--c-sirs)"></div><div><div class="ref-key">Respiratory Rate</div><div class="ref-val">&gt;20 breaths/min or PaCO₂ &lt;32 mmHg</div></div></div>
-      <div class="ref-row"><div class="ref-dot" style="background:var(--c-sirs)"></div><div><div class="ref-key">WBC</div><div class="ref-val">&gt;12,000/mm³ or &lt;4,000/mm³ or &gt;10% bands</div></div></div>
-      <div class="notice notice-tip" style="margin-top:12px;font-size:12px;">
+      <div class="ref-row"><div class="ref-dot dot-sirs"></div><div><div class="ref-key">Temperature</div><div class="ref-val">&gt;38.3°C (100.9°F) or &lt;36°C (96.8°F)</div></div></div>
+      <div class="ref-row"><div class="ref-dot dot-sirs"></div><div><div class="ref-key">Heart Rate</div><div class="ref-val">&gt;90 bpm</div></div></div>
+      <div class="ref-row"><div class="ref-dot dot-sirs"></div><div><div class="ref-key">Respiratory Rate</div><div class="ref-val">&gt;20 breaths/min or PaCO₂ &lt;32 mmHg</div></div></div>
+      <div class="ref-row"><div class="ref-dot dot-sirs"></div><div><div class="ref-key">WBC</div><div class="ref-val">&gt;12,000/mm³ or &lt;4,000/mm³ or &gt;10% bands</div></div></div>
+      <div class="notice notice-tip notice--compact">
         <i class="ph-duotone ph-lightbulb" aria-hidden="true"></i>
         <div>All three criteria (infection + ≥2 SIRS + organ dysfunction) must occur within a 6-hour window to establish severe sepsis by clinical criteria.</div>
       </div>
@@ -456,21 +461,21 @@ main{max-width:var(--max);margin:0 auto;padding:32px 24px 72px;}
 
     <div class="ref-card">
       <div class="ref-card-title"><i class="ph-duotone ph-heartbeat" aria-hidden="true"></i> Organ Dysfunction Indicators</div>
-      <div class="ref-row"><div class="ref-dot" style="background:var(--c-od)"></div><div><div class="ref-key">Lactate</div><div class="ref-val">&gt;2 mmol/L</div></div></div>
-      <div class="ref-row"><div class="ref-dot" style="background:var(--c-od)"></div><div><div class="ref-key">Creatinine</div><div class="ref-val">&gt;2.0 mg/dL or ≥0.5 above baseline</div></div></div>
-      <div class="ref-row"><div class="ref-dot" style="background:var(--c-od)"></div><div><div class="ref-key">Bilirubin</div><div class="ref-val">&gt;2 mg/dL</div></div></div>
-      <div class="ref-row"><div class="ref-dot" style="background:var(--c-od)"></div><div><div class="ref-key">Platelets</div><div class="ref-val">&lt;100,000/mm³</div></div></div>
-      <div class="ref-row"><div class="ref-dot" style="background:var(--c-od)"></div><div><div class="ref-key">MAP</div><div class="ref-val">&lt;65 mmHg (hypotension)</div></div></div>
-      <div class="ref-row"><div class="ref-dot" style="background:var(--c-od)"></div><div><div class="ref-key">AMS / Encephalopathy</div><div class="ref-val">New onset, documented by provider</div></div></div>
+      <div class="ref-row"><div class="ref-dot dot-od"></div><div><div class="ref-key">Lactate</div><div class="ref-val">&gt;2 mmol/L</div></div></div>
+      <div class="ref-row"><div class="ref-dot dot-od"></div><div><div class="ref-key">Creatinine</div><div class="ref-val">&gt;2.0 mg/dL or ≥0.5 above baseline</div></div></div>
+      <div class="ref-row"><div class="ref-dot dot-od"></div><div><div class="ref-key">Bilirubin</div><div class="ref-val">&gt;2 mg/dL</div></div></div>
+      <div class="ref-row"><div class="ref-dot dot-od"></div><div><div class="ref-key">Platelets</div><div class="ref-val">&lt;100,000/mm³</div></div></div>
+      <div class="ref-row"><div class="ref-dot dot-od"></div><div><div class="ref-key">MAP</div><div class="ref-val">&lt;65 mmHg (hypotension)</div></div></div>
+      <div class="ref-row"><div class="ref-dot dot-od"></div><div><div class="ref-key">AMS / Encephalopathy</div><div class="ref-val">New onset, documented by provider</div></div></div>
     </div>
 
     <div class="ref-card">
       <div class="ref-card-title"><i class="ph-duotone ph-clock" aria-hidden="true"></i> 3-Hour Bundle Elements</div>
-      <div class="ref-row"><div class="ref-dot" style="background:var(--c-bundle)"></div><div><div class="ref-key">Blood Cultures</div><div class="ref-val">Drawn <em>before</em> antibiotics; within 3 hrs of Time Zero</div></div></div>
-      <div class="ref-row"><div class="ref-dot" style="background:var(--c-bundle)"></div><div><div class="ref-key">IV Antibiotics</div><div class="ref-val">Broad spectrum; within 3 hrs of Time Zero</div></div></div>
-      <div class="ref-row"><div class="ref-dot" style="background:var(--c-bundle)"></div><div><div class="ref-key">Initial Lactate</div><div class="ref-val">Measured within 3 hrs of Time Zero</div></div></div>
-      <div class="ref-row"><div class="ref-dot" style="background:var(--c-bundle)"></div><div><div class="ref-key">30 mL/kg Crystalloid</div><div class="ref-val">If hypotension or lactate ≥4; within 3 hrs</div></div></div>
-      <div class="notice notice-warn" style="margin-top:12px;font-size:12px;">
+      <div class="ref-row"><div class="ref-dot dot-bundle"></div><div><div class="ref-key">Blood Cultures</div><div class="ref-val">Drawn <em>before</em> antibiotics; within 3 hrs of Time Zero</div></div></div>
+      <div class="ref-row"><div class="ref-dot dot-bundle"></div><div><div class="ref-key">IV Antibiotics</div><div class="ref-val">Broad spectrum; within 3 hrs of Time Zero</div></div></div>
+      <div class="ref-row"><div class="ref-dot dot-bundle"></div><div><div class="ref-key">Initial Lactate</div><div class="ref-val">Measured within 3 hrs of Time Zero</div></div></div>
+      <div class="ref-row"><div class="ref-dot dot-bundle"></div><div><div class="ref-key">30 mL/kg Crystalloid</div><div class="ref-val">If hypotension or lactate ≥4; within 3 hrs</div></div></div>
+      <div class="notice notice-warn notice--compact">
         <i class="ph-duotone ph-warning" aria-hidden="true"></i>
         <div>Blood cultures must be <strong>drawn</strong> (not just ordered) before antibiotic administration. Sequence matters — an order alone does not satisfy this element.</div>
       </div>
@@ -478,10 +483,10 @@ main{max-width:var(--max);margin:0 auto;padding:32px 24px 72px;}
 
     <div class="ref-card">
       <div class="ref-card-title"><i class="ph-duotone ph-hourglass" aria-hidden="true"></i> 6-Hour Bundle Elements</div>
-      <div class="ref-row"><div class="ref-dot" style="background:var(--c-tz)"></div><div><div class="ref-key">Repeat Lactate</div><div class="ref-val">Required if initial lactate ≥2 mmol/L; within 6 hrs</div></div></div>
-      <div class="ref-row"><div class="ref-dot" style="background:var(--c-shock)"></div><div><div class="ref-key">Vasopressors</div><div class="ref-val">If MAP &lt;65 after 30 mL/kg; within 6 hrs</div></div></div>
-      <div class="ref-row"><div class="ref-dot" style="background:var(--c-shock)"></div><div><div class="ref-key">Volume/Perfusion Reassessment</div><div class="ref-val">Physician/APN/PA note after 30 mL/kg — focused exam or two of: CVP, ScvO₂, echo, passive leg raise, fluid challenge</div></div></div>
-      <div class="notice notice-tip" style="margin-top:12px;font-size:12px;">
+      <div class="ref-row"><div class="ref-dot dot-tz"></div><div><div class="ref-key">Repeat Lactate</div><div class="ref-val">Required if initial lactate ≥2 mmol/L; within 6 hrs</div></div></div>
+      <div class="ref-row"><div class="ref-dot dot-shock"></div><div><div class="ref-key">Vasopressors</div><div class="ref-val">If MAP &lt;65 after 30 mL/kg; within 6 hrs</div></div></div>
+      <div class="ref-row"><div class="ref-dot dot-shock"></div><div><div class="ref-key">Volume/Perfusion Reassessment</div><div class="ref-val">Physician/APN/PA note after 30 mL/kg — focused exam or two of: CVP, ScvO₂, echo, passive leg raise, fluid challenge</div></div></div>
+      <div class="notice notice-tip notice--compact">
         <i class="ph-duotone ph-lightbulb" aria-hidden="true"></i>
         <div>Reassessment must be documented by a physician, APN, or PA. Nursing documentation alone does not qualify.</div>
       </div>
@@ -489,7 +494,7 @@ main{max-width:var(--max);margin:0 auto;padding:32px 24px 72px;}
   </div>
 
   <hr class="div">
-  <h2 class="section-label" style="margin-bottom:14px;">Time Zero — Key Rules</h2>
+  <h2 class="section-label">Time Zero — Key Rules</h2>
   <div class="card">
     <div class="card-title"><i class="ph-duotone ph-flag" aria-hidden="true"></i> Determining Time Zero (SSPT)</div>
     <p class="card-sub">Time Zero is the Severe Sepsis Presentation Time — the earliest time at which the final criterion establishing severe sepsis was met. It drives both the 3-hour and 6-hour bundle windows.</p>
@@ -504,7 +509,7 @@ main{max-width:var(--max);margin:0 auto;padding:32px 24px 72px;}
   </div>
 
   <hr class="div">
-  <h2 class="section-label" style="margin-bottom:14px;">Common Abstraction Pitfalls</h2>
+  <h2 class="section-label">Common Abstraction Pitfalls</h2>
   <div class="pitfall-list">
     <div class="pitfall"><i class="ph-duotone ph-warning-octagon" aria-hidden="true"></i><div class="pitfall-text"><strong>Antibiotics before cultures</strong><span>Blood cultures must be drawn BEFORE antibiotics are given. If antibiotics were started first, the blood culture element fails — regardless of how soon cultures were subsequently drawn.</span></div></div>
     <div class="pitfall"><i class="ph-duotone ph-warning-octagon" aria-hidden="true"></i><div class="pitfall-text"><strong>Using order time instead of administration time</strong><span>Bundle elements are timed by when they were completed (drawn, administered, initiated) — not when they were ordered. An order at 0900 with IV start at 0945 counts at 0945.</span></div></div>
@@ -518,13 +523,13 @@ main{max-width:var(--max);margin:0 auto;padding:32px 24px 72px;}
 
 <!-- ══ TAB 3: PRACTICE QUIZ ══ -->
 <div id="tab-quiz" class="tab-panel">
-  <h2 class="section-label" style="margin-bottom:16px;">Practice Quiz</h2>
+  <h2 class="section-label section-label--lg">Practice Quiz</h2>
   <div class="quiz-wrap" id="quizWrap">
     <div id="quizBody"></div>
-    <div class="quiz-done" id="quizDone" style="display:none;">
+    <div class="quiz-done" id="quizDone">
       <div class="score-big" id="quizScore"></div>
       <p class="score-msg" id="quizMsg"></p>
-      <button type="button" class="quiz-next-btn" onclick="startQuiz()" style="margin:0 auto;">
+      <button type="button" class="quiz-next-btn quiz-next-btn--center" onclick="startQuiz()">
         <i class="ph ph-arrow-counter-clockwise" aria-hidden="true"></i> Try Again
       </button>
     </div>
@@ -534,12 +539,12 @@ main{max-width:var(--max);margin:0 auto;padding:32px 24px 72px;}
 
 <!-- ══ TAB 4: CASE WALKTHROUGHS ══ -->
 <div id="tab-cases" class="tab-panel">
-  <h2 class="section-label" style="margin-bottom:16px;">Case Walkthroughs</h2>
+  <h2 class="section-label section-label--lg">Case Walkthroughs</h2>
   <div id="caseList">
-    <p style="font-size:14px;color:var(--ink-soft);margin-bottom:18px;line-height:1.7;">Step-by-step cases that walk through SEP-1 abstraction logic at each decision point. Select a case to begin.</p>
+    <p class="section-intro">Step-by-step cases that walk through SEP-1 abstraction logic at each decision point. Select a case to begin.</p>
     <div class="case-grid" id="caseListItems"></div>
   </div>
-  <div id="caseDetail" style="display:none;">
+  <div id="caseDetail" class="case-detail">
     <button type="button" class="case-back-btn" onclick="showCaseList()">
       <i class="ph ph-arrow-left" aria-hidden="true"></i> Back to Cases
     </button>
@@ -582,7 +587,7 @@ main{max-width:var(--max);margin:0 auto;padding:32px 24px 72px;}
 <footer class="site-footer" role="contentinfo">
   <div class="site-footer-inner">
     <div>
-      <div class="site-footer-brand">AbstractionDesk<span style="color:var(--teal2)">QA</span></div>
+      <div class="site-footer-brand">AbstractionDesk<span>QA</span></div>
       <p>A free reference tool for core measure abstractors.<br>
       &copy; <span id="yr"></span> AbstractionDeskQA. Educational use only.</p>
     </div>

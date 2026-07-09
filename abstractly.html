@@ -72,6 +72,7 @@
     text-transform: uppercase; letter-spacing: 1.1px;
     padding: 5px 14px; border-radius: 20px; margin-bottom: 14px;
   }
+  .game-eyebrow i { font-size: 13px; }
   .game-hero h1 {
     font-family: var(--mono);
     font-size: clamp(32px, 5vw, 48px);
@@ -215,6 +216,7 @@
     cursor: pointer; transition: all .15s;
   }
   .play-again:hover { background: var(--teal); color: white; }
+  .play-again-wrap { text-align: center; margin-bottom: 1rem; }
 
   /* KEYBOARD */
   .keyboard { display: flex; flex-direction: column; gap: 6px; align-items: center; }
@@ -292,7 +294,7 @@
   <div class="game-hero-inner">
     <div class="game-hero-text">
       <div class="game-eyebrow">
-        <i class="ph ph-game-controller" style="font-size:13px;"></i>
+        <i class="ph ph-game-controller"></i>
         Word Game
       </div>
       <h1>ABSTRACTLY</h1>
@@ -336,7 +338,7 @@
     </div>
   </div>
 
-  <div style="text-align:center;margin-bottom:1rem;">
+  <div class="play-again-wrap">
     <button type="button" class="play-again" id="play-again">Play again →</button>
   </div>
 
@@ -379,7 +381,7 @@
 <footer class="site-footer">
   <div class="site-footer-inner">
     <div>
-      <div class="site-footer-brand">AbstractionDesk<span style="color:var(--teal2)">QA</span></div>
+      <div class="site-footer-brand">AbstractionDesk<span>QA</span></div>
       <p>A free abstraction toolkit for core measure teams.<br>
       &copy; <span id="yr"></span> AbstractionDeskQA. Educational use only.</p>
     </div>

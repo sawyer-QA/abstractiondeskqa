@@ -107,7 +107,7 @@ main { max-width: var(--max); margin: 0 auto; padding: 32px 24px 72px; }
 /* ── SECTION LABEL ── */
 .section-label {
   font-size: 11px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 1.6px; color: var(--teal); margin-bottom: 10px;
+  letter-spacing: 1.6px; color: var(--teal); margin-bottom: 12px;
   display: flex; align-items: center; gap: 8px;
 }
 .section-label::before {
@@ -124,6 +124,7 @@ main { max-width: var(--max); margin: 0 auto; padding: 32px 24px 72px; }
   box-shadow: var(--shadow-sm);
 }
 .card + .card { margin-top: 18px; }
+.card--spaced { margin-bottom: 20px; }
 .card-title {
   font-family: var(--heading); font-size: 16px; font-weight: 700;
   color: var(--navy); margin-bottom: 4px;
@@ -131,13 +132,18 @@ main { max-width: var(--max); margin: 0 auto; padding: 32px 24px 72px; }
 }
 .card-title i { color: var(--teal); font-size: 20px; }
 .card-sub { font-size: 13px; color: var(--ink-soft); margin-bottom: 18px; line-height: 1.6; }
+.card-sub--tight { margin-bottom: 16px; }
 
 /* ── CALC GRID ── */
-.calc-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; }
+.calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 16px; }
+.calc-grid--mb14 { margin-bottom: 14px; }
 @media(max-width:700px) { .calc-grid { grid-template-columns: 1fr; } }
 
 /* ── FIELD ── */
 .field { display: flex; flex-direction: column; gap: 5px; }
+.field--tight { margin-bottom: 10px; }
+.input-narrow { max-width: 160px; }
+.input-mono { font-family: var(--mono); letter-spacing: .1em; }
 .field label {
   font-size: 11px; font-weight: 700; text-transform: uppercase;
   letter-spacing: .7px; color: var(--ink-mid);
@@ -153,7 +159,7 @@ main { max-width: var(--max); margin: 0 auto; padding: 32px 24px 72px; }
 .field input:focus, .field select:focus {
   outline: none; border-color: var(--teal); background: white;
 }
-.field .hint { font-size: 12px; color: var(--ink-soft); line-height: 1.5; }
+.field .hint { font-size: 12px; color: var(--ink-soft); line-height: 1.5; margin-top: 4px; }
 
 /* ── HELP TRIGGER ── */
 .help-btn {
@@ -183,6 +189,9 @@ main { max-width: var(--max); margin: 0 auto; padding: 32px 24px 72px; }
 .result-box {
   display: none;
   margin-top: 14px;
+}
+.result-box--spaced {
+  margin-top: 16px;
   padding: 14px 16px;
   border-radius: 8px;
   background: var(--green-bg);
@@ -246,6 +255,10 @@ main { max-width: var(--max); margin: 0 auto; padding: 32px 24px 72px; }
   color: var(--ink-soft); cursor: pointer; transition: all .15s;
 }
 .add-ep-btn:hover { border-color: var(--teal); color: var(--teal); background: var(--teal-pale); }
+.add-ep-btn--active { border-style: solid; border-color: var(--teal); color: var(--teal); }
+.add-ep-row { display: none; margin-top: 12px; gap: 10px; flex-wrap: wrap; }
+.entry-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px; }
+.unit-label { font-size: 13px; color: var(--ink-soft); font-family: var(--mono); }
 .clear-btn {
   margin-top: 16px; margin-left: 8px;
   background: none; color: var(--ink-soft);
@@ -304,6 +317,7 @@ main { max-width: var(--max); margin: 0 auto; padding: 32px 24px 72px; }
   font-size: 14px; line-height: 1.65; margin-top: 14px;
 }
 .notice i { font-size: 17px; flex-shrink: 0; margin-top: 2px; }
+.notice--spaced { margin-top: 16px; }
 .notice-tip { background: var(--teal-pale); border: 1px solid var(--teal-mid); color: var(--teal); }
 .notice-warn { background: var(--amber-bg); border: 1px solid var(--amber-border); color: var(--amber); }
 .notice-danger { background: var(--red-bg); border: 1px solid var(--red-border); color: var(--red); }
@@ -395,6 +409,7 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
   color: var(--navy); line-height: 1.45; margin-bottom: 6px;
 }
 .quiz-scenario {
+  display: none;
   background: var(--canvas); border: 1px solid var(--border);
   border-radius: 8px; padding: 14px 16px;
   font-size: 14px; color: var(--ink-mid); line-height: 1.7;
@@ -436,6 +451,7 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
   cursor: pointer; transition: all .15s; display: inline-flex; align-items: center; gap: 7px;
 }
 .quiz-btn:hover { background: var(--teal2); }
+.quiz-btn--start { margin-top: 20px; }
 .quiz-btn:disabled { background: var(--border-mid); cursor: not-allowed; }
 .quiz-btn i { font-size: 14px; }
 .quiz-restart {
@@ -597,12 +613,12 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
 <div id="tab-calc" class="tab-panel active">
 
   <!-- INPATIENT HOURS — first -->
-  <div class="section-label" style="margin-bottom:12px;">Inpatient Hours</div>
+  <div class="section-label">Inpatient Hours</div>
   <div class="card">
     <div class="card-title"><i class="ph-duotone ph-calendar-dots" aria-hidden="true"></i> Total Inpatient Hours</div>
     <p class="card-sub">Enter the admit and discharge dates. Add any full-day leave passes below. The result is the total inpatient hours for this patient.</p>
 
-    <div class="calc-grid" style="grid-template-columns:1fr 1fr;margin-bottom:14px;">
+    <div class="calc-grid calc-grid--mb14">
       <div class="field">
         <label>Admit date <span class="help-btn" onclick="toggleHelp('h-admit')" title="Help" role="button" tabindex="0">?</span></label>
         <input type="date" id="denomAdmit" oninput="calcDenom()">
@@ -621,19 +637,19 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
       </div>
     </div>
 
-    <div class="field" style="margin-bottom:10px;">
+    <div class="field field--tight">
       <label>Leave days (full-day only) <span class="help-btn" onclick="toggleHelp('h-leave')" title="Help" role="button" tabindex="0">?</span></label>
-      <input type="number" id="leaveDaysSimple" min="0" value="0" style="max-width:160px;" oninput="calcDenom()">
+      <input type="number" id="leaveDaysSimple" min="0" value="0" class="input-narrow" oninput="calcDenom()">
       <div class="help-panel" id="h-leave">
         <strong>Full-day therapeutic passes only.</strong>
         Only count days the patient was fully absent on a therapeutic leave pass. Time off the unit for labs, procedures, or appointments does not count.
       </div>
-      <span class="hint" style="margin-top:4px;">Enter 0 if no leave passes</span>
+      <span class="hint">Enter 0 if no leave passes</span>
     </div>
 
     <div class="result-box" id="denomResult"></div>
 
-    <div class="notice notice-tip" style="margin-top:16px;">
+    <div class="notice notice-tip notice--spaced">
       <i class="ph-duotone ph-info" aria-hidden="true"></i>
       <div>Only subtract full-day therapeutic leave passes. A trip off the unit for a procedure or appointment does not reduce the count.</div>
     </div>
@@ -642,43 +658,43 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
   <hr class="div">
 
   <!-- DURATION CALCULATOR -->
-  <div class="section-label" style="margin-bottom:12px;">Episode Duration</div>
+  <div class="section-label">Episode Duration</div>
   <div class="card">
     <div class="card-title"><i class="ph-duotone ph-timer" aria-hidden="true"></i> Start &amp; End Time → Minutes</div>
     <p class="card-sub">Enter the start and end time of a single episode in military time. Handles midnight crossings automatically. Then add the result directly to your restraint or seclusion tally below.</p>
 
-    <div class="calc-grid" style="grid-template-columns:1fr 1fr;margin-bottom:16px;">
+    <div class="calc-grid">
       <div class="field">
         <label>Time started <span class="help-btn" onclick="toggleHelp('h-tstart')" title="Help" role="button" tabindex="0">?</span></label>
-        <input type="text" id="durStart" placeholder="e.g. 1415" maxlength="4" style="font-family:var(--mono);letter-spacing:.1em;" oninput="calcDuration()">
+        <input type="text" id="durStart" placeholder="e.g. 1415" maxlength="4" class="input-mono" oninput="calcDuration()">
         <div class="help-panel" id="h-tstart">
           <strong>Military time — 4 digits, no colon.</strong>
           Examples: 0830 = 8:30 AM &nbsp;·&nbsp; 1415 = 2:15 PM &nbsp;·&nbsp; 0005 = 12:05 AM
         </div>
-        <span class="hint" style="margin-top:4px;">Military time, 4 digits — e.g. 1415</span>
+        <span class="hint">Military time, 4 digits — e.g. 1415</span>
       </div>
       <div class="field">
         <label>Time ended <span class="help-btn" onclick="toggleHelp('h-tend')" title="Help" role="button" tabindex="0">?</span></label>
-        <input type="text" id="durEnd" placeholder="e.g. 1620" maxlength="4" style="font-family:var(--mono);letter-spacing:.1em;" oninput="calcDuration()">
+        <input type="text" id="durEnd" placeholder="e.g. 1620" maxlength="4" class="input-mono" oninput="calcDuration()">
         <div class="help-panel" id="h-tend">
           <strong>If the episode crossed midnight</strong> (e.g. started 2230, ended 0045 the next day), enter the end time as-is. The calculator will detect the crossing and add 24 hours automatically.
         </div>
-        <span class="hint" style="margin-top:4px;">Military time, 4 digits — e.g. 1620</span>
+        <span class="hint">Military time, 4 digits — e.g. 1620</span>
       </div>
     </div>
 
     <div class="result-box" id="durResult"></div>
 
-    <div id="durAddBtns" style="display:none;margin-top:12px;display:none;gap:10px;flex-wrap:wrap;">
-      <button type="button" class="add-ep-btn" id="durAddRestraint" onclick="addDurationToTally('restraint')" style="border-style:solid;border-color:var(--teal);color:var(--teal);">
+    <div id="durAddBtns" class="add-ep-row">
+      <button type="button" class="add-ep-btn add-ep-btn--active" id="durAddRestraint" onclick="addDurationToTally('restraint')">
         <i class="ph ph-plus" aria-hidden="true"></i> Add to Restraint tally
       </button>
-      <button type="button" class="add-ep-btn" id="durAddSeclusion" onclick="addDurationToTally('seclusion')" style="border-style:solid;border-color:var(--teal);color:var(--teal);">
+      <button type="button" class="add-ep-btn add-ep-btn--active" id="durAddSeclusion" onclick="addDurationToTally('seclusion')">
         <i class="ph ph-plus" aria-hidden="true"></i> Add to Seclusion tally
       </button>
     </div>
 
-    <div class="notice notice-warn" style="margin-top:16px;">
+    <div class="notice notice-warn notice--spaced">
       <i class="ph-duotone ph-warning" aria-hidden="true"></i>
       <div><strong>Episode crosses midnight?</strong> Per spec, this counts as two separate events — one for each date. Abstract them as two separate entries, each with their own date. Use this calculator once per date segment.</div>
     </div>
@@ -687,15 +703,15 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
   <hr class="div">
 
   <!-- RESTRAINT HOURS — second -->
-  <div class="section-label" style="margin-bottom:12px;">Restraint Hours — HBIPS-2</div>
+  <div class="section-label">Restraint Hours — HBIPS-2</div>
   <div class="card">
     <div class="card-title"><i class="ph-duotone ph-handshake" aria-hidden="true"></i> Physical Restraint Episodes</div>
     <p class="card-sub">Enter the duration of each restraint episode in minutes. Add a row for each episode. The total converts automatically to hours.</p>
 
-    <div id="restraintEntries" style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px;">
+    <div id="restraintEntries" class="entry-list">
       <div class="episode-row">
         <input type="number" min="0" placeholder="minutes" class="restraint-min episode-input" oninput="calcRestraint()">
-        <span style="font-size:13px;color:var(--ink-soft);font-family:var(--mono);">min</span>
+        <span class="unit-label">min</span>
         <button type="button" class="ep-remove" onclick="removeEpisode(this,'restraint')" title="Remove" aria-label="Remove episode">
           <i class="ph ph-x" aria-hidden="true"></i>
         </button>
@@ -705,9 +721,9 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
       <i class="ph ph-plus" aria-hidden="true"></i> Add restraint episode
     </button>
 
-    <div class="result-box" id="restraintResult" style="margin-top:16px;"></div>
+    <div class="result-box result-box--spaced" id="restraintResult"></div>
 
-    <div class="notice notice-warn" style="margin-top:16px;">
+    <div class="notice notice-warn notice--spaced">
       <i class="ph-duotone ph-warning" aria-hidden="true"></i>
       <div><strong>Always round UP.</strong> 60 min = 1 hr &nbsp;|&nbsp; 61 min = 2 hr &nbsp;|&nbsp; 120 min = 2 hr &nbsp;|&nbsp; 121 min = 3 hr. Standard rounding (half-up) is incorrect for this measure. This same rule applies to seclusion episodes below.</div>
     </div>
@@ -716,15 +732,15 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
   <hr class="div">
 
   <!-- SECLUSION HOURS — third -->
-  <div class="section-label" style="margin-bottom:12px;">Seclusion Hours — HBIPS-3</div>
+  <div class="section-label">Seclusion Hours — HBIPS-3</div>
   <div class="card">
     <div class="card-title"><i class="ph-duotone ph-door" aria-hidden="true"></i> Seclusion Episodes</div>
     <p class="card-sub">Enter the duration of each seclusion episode in minutes. Add a row for each episode. The total converts automatically to hours.</p>
 
-    <div id="seclusionEntries" style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px;">
+    <div id="seclusionEntries" class="entry-list">
       <div class="episode-row">
         <input type="number" min="0" placeholder="minutes" class="seclusion-min episode-input" oninput="calcSeclusion()">
-        <span style="font-size:13px;color:var(--ink-soft);font-family:var(--mono);">min</span>
+        <span class="unit-label">min</span>
         <button type="button" class="ep-remove" onclick="removeEpisode(this,'seclusion')" title="Remove" aria-label="Remove episode">
           <i class="ph ph-x" aria-hidden="true"></i>
         </button>
@@ -734,7 +750,7 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
       <i class="ph ph-plus" aria-hidden="true"></i> Add seclusion episode
     </button>
 
-    <div class="result-box" id="seclusionResult" style="margin-top:16px;"></div>
+    <div class="result-box result-box--spaced" id="seclusionResult"></div>
   </div>
 
 </div><!-- /tab-calc -->
@@ -744,10 +760,10 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
 <div id="tab-ref" class="tab-panel">
 
   <!-- STRATA -->
-  <div class="section-label" style="margin-bottom:12px;">Age Strata</div>
-  <div class="card" style="margin-bottom:20px;">
+  <div class="section-label">Age Strata</div>
+  <div class="card card--spaced">
     <div class="card-title"><i class="ph-duotone ph-users-three" aria-hidden="true"></i> Age Strata — Restraint &amp; Seclusion Measures</div>
-    <p class="card-sub" style="margin-bottom:16px;">Age is calculated at the <strong>event date</strong> — not admission or discharge. A patient who turns 13 on the event date moves from Strata B to Strata C on that day. Age = 0 is excluded.</p>
+    <p class="card-sub card-sub--tight">Age is calculated at the <strong>event date</strong> — not admission or discharge. A patient who turns 13 on the event date moves from Strata B to Strata C on that day. Age = 0 is excluded.</p>
     <div class="strata-grid">
       <div class="strata-band b">
         <div class="sb-code">Strata B</div>
@@ -774,19 +790,19 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
         <div class="sb-code-line">HBIPS-2e / 3e</div>
       </div>
     </div>
-    <div class="notice notice-tip" style="margin-top:14px;">
+    <div class="notice notice-tip">
       <i class="ph-duotone ph-info" aria-hidden="true"></i>
       <div>Strata boundaries are inclusive on the lower end: age 13 = Strata C (not B). Age 18 = Strata D. Age 65 = Strata E. Calculate age precisely using month and day, not birth year alone.</div>
     </div>
   </div>
 
   <!-- AGE / STRATA CALCULATOR -->
-  <div class="section-label" style="margin-bottom:12px;">Age &amp; Strata Calculator</div>
-  <div class="card" style="margin-bottom:20px;">
+  <div class="section-label">Age &amp; Strata Calculator</div>
+  <div class="card card--spaced">
     <div class="card-title"><i class="ph-duotone ph-calculator" aria-hidden="true"></i> Age at Event Date → Strata Assignment</div>
     <p class="card-sub">Enter the patient's date of birth and the event date. Age is always calculated at the event date — not admission or discharge. Handles birthday-on-event-date and leap day edge cases correctly.</p>
 
-    <div class="calc-grid" style="grid-template-columns:1fr 1fr;margin-bottom:16px;">
+    <div class="calc-grid">
       <div class="field">
         <label>Date of birth</label>
         <input type="date" id="strataDoB" oninput="calcStrata()">
@@ -804,7 +820,7 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
   </div>
 
   <!-- PITFALLS -->
-  <div class="section-label" style="margin-bottom:12px;">Common Abstraction Pitfalls</div>
+  <div class="section-label">Common Abstraction Pitfalls</div>
   <div class="card">
     <div class="card-title"><i class="ph-duotone ph-seal-warning" aria-hidden="true"></i> Where New Abstractors Go Wrong</div>
     <p class="card-sub">These are the most frequent errors seen during training and QA review.</p>
@@ -881,8 +897,8 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
 
 <!-- ═══════════════════════════ QUIZ TAB -->
 <div id="tab-quiz" class="tab-panel">
-  <div class="section-label" style="margin-bottom:12px;">Practice Quiz</div>
-  <div class="card quiz-wrap" style="max-width:680px;">
+  <div class="section-label">Practice Quiz</div>
+  <div class="card quiz-wrap">
     <div class="card-title"><i class="ph-duotone ph-exam" aria-hidden="true"></i> Restraint &amp; Seclusion — 10 Questions</div>
     <p class="card-sub">Scenario-based questions covering age strata, denominator calculation, ceiling rounding, event type, and UTD logic.</p>
 
@@ -892,7 +908,7 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
         <span class="quiz-score" id="quizScore">Score: 0 / 0</span>
       </div>
       <div class="quiz-q" id="quizQ"></div>
-      <div class="quiz-scenario" id="quizScenario" style="display:none;"></div>
+      <div class="quiz-scenario" id="quizScenario"></div>
       <div class="quiz-opts" id="quizOpts" role="list"></div>
       <div class="quiz-feedback" id="quizFeedback"></div>
       <div class="quiz-nav">
@@ -906,7 +922,7 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
     <div class="quiz-done" id="quizDone">
       <div class="score-big" id="finalScore"></div>
       <p id="finalMsg"></p>
-      <button type="button" class="quiz-btn" onclick="startQuiz()" style="margin-top:20px;">
+      <button type="button" class="quiz-btn quiz-btn--start" onclick="startQuiz()">
         <i class="ph ph-arrow-counter-clockwise" aria-hidden="true"></i> Try Again
       </button>
     </div>
@@ -916,10 +932,10 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
 
 <!-- ═══════════════════════════ CASES TAB -->
 <div id="tab-cases" class="tab-panel">
-  <div class="section-label" style="margin-bottom:12px;">Case Walkthroughs</div>
+  <div class="section-label">Case Walkthroughs</div>
 
   <div id="caseList">
-    <p style="font-size:14px;color:var(--ink-soft);margin-bottom:18px;line-height:1.7;">
+    <p class="section-intro">
       Step-by-step cases that walk through the full abstraction logic at each decision point. Select a case to begin.
     </p>
     <div class="case-list" id="caseListItems"></div>
@@ -961,7 +977,7 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
 <footer class="site-footer" role="contentinfo">
   <div class="site-footer-inner">
     <div>
-      <div class="site-footer-brand">AbstractionDesk<span style="color:var(--teal2)">QA</span></div>
+      <div class="site-footer-brand">AbstractionDesk<span>QA</span></div>
       <p>A free reference tool for core measure abstractors.<br>
       &copy; <span id="yr"></span> AbstractionDeskQA. Educational use only.</p>
     </div>
@@ -1193,7 +1209,7 @@ function addDurationToTally(type) {
     row.className = 'episode-row';
     row.innerHTML = `
       <input type="number" min="0" class="${cls} episode-input" value="${lastDurMins}" oninput="${calcFn}()">
-      <span style="font-size:13px;color:var(--ink-soft);font-family:var(--mono);">min</span>
+      <span class="unit-label">min</span>
       <button type="button" class="ep-remove" onclick="removeEpisode(this,'${type}')" title="Remove" aria-label="Remove episode">
         <i class="ph ph-x" aria-hidden="true"></i>
       </button>`;
@@ -1222,7 +1238,7 @@ function addEpisode(containerId, cls, calcFn) {
   row.className = 'episode-row';
   row.innerHTML = `
     <input type="number" min="0" placeholder="minutes" class="${cls} episode-input" oninput="${calcFn}()">
-    <span style="font-size:13px;color:var(--ink-soft);font-family:var(--mono);">min</span>
+    <span class="unit-label">min</span>
     <button type="button" class="ep-remove" onclick="removeEpisode(this,'${cls.includes('restraint') ? 'restraint' : 'seclusion'}')" title="Remove" aria-label="Remove episode">
       <i class="ph ph-x" aria-hidden="true"></i>
     </button>`;

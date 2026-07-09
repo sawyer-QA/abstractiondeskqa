@@ -92,6 +92,8 @@ textarea:focus-visible, select:focus-visible {
 .site-footer { background: #07131f; color: rgba(255,255,255,.45); padding: 28px 24px; font-family: 'Atkinson Hyperlegible', sans-serif; }
 .site-footer-inner { max-width: 1040px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 .site-footer-brand { font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 700; color: rgba(255,255,255,.7); margin-bottom: 4px; }
+.site-footer-brand span { color: var(--teal2); }
+.section-intro { font-size: 14px; color: var(--ink-soft); margin-bottom: 18px; line-height: 1.7; }
 .site-footer p { font-size: 13px; line-height: 1.65; }
 .site-footer a { color: #0da8a5; text-decoration: none; }
 .site-footer a:hover { text-decoration: underline; }
