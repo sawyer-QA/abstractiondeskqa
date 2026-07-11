@@ -400,7 +400,7 @@ main{max-width:var(--max);margin:0 auto;padding:32px 24px 72px;}
         <input type="time" id="tz-time" title="Leave blank to auto-suggest">
         <div class="tz-right">
           <div class="tz-label-row">Time Zero (SSPT) <span class="tz-hint">— leave blank to auto-suggest</span></div>
-          <select id="tz-source">
+          <select id="tz-source" aria-label="Time Zero source">
             <option value="">Source (if manually entered)</option>
             <option value="Provider attestation">Provider attestation</option>
             <option value="Abstractor determination">Abstractor determination</option>
@@ -657,7 +657,7 @@ function renderRows() {
     const detType = r.override || (r.label ? detectType(r.label) : 'other');
     const meta = TYPE_META[detType]; const isOvr = !!r.override;
     return `<div class="ev-row" data-ev-id="${r.id}">
-      <input type="time" class="ev-time" value="${r.time}" oninput="syncField(${r.id},'time',this.value)">
+      <input type="time" class="ev-time" aria-label="Event time" value="${r.time}" oninput="syncField(${r.id},'time',this.value)">
       <div class="ev-desc-wrap">
         <input type="text" class="ev-label" value="${esc(r.label)}"
           placeholder="Describe event — type auto-detected"
