@@ -590,18 +590,18 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
 </div>
 
 <!-- TABS -->
-<div class="tool-tabs" role="navigation" aria-label="Tool sections">
+<div class="tool-tabs" role="tablist" aria-label="Tool sections">
   <div class="tool-tabs-inner">
-    <button type="button" class="tab-btn active" data-tab="calc" aria-selected="true">
+    <button type="button" class="tab-btn active" id="tabbtn-calc" role="tab" data-tab="calc" aria-selected="true" aria-controls="tab-calc" tabindex="0">
       <i class="ph-duotone ph-calculator" aria-hidden="true"></i> Calculators
     </button>
-    <button type="button" class="tab-btn" data-tab="ref" aria-selected="false">
+    <button type="button" class="tab-btn" id="tabbtn-ref" role="tab" data-tab="ref" aria-selected="false" aria-controls="tab-ref" tabindex="-1">
       <i class="ph-duotone ph-book-open" aria-hidden="true"></i> Reference &amp; Guidance
     </button>
-    <button type="button" class="tab-btn" data-tab="quiz" aria-selected="false">
+    <button type="button" class="tab-btn" id="tabbtn-quiz" role="tab" data-tab="quiz" aria-selected="false" aria-controls="tab-quiz" tabindex="-1">
       <i class="ph-duotone ph-exam" aria-hidden="true"></i> Practice Quiz
     </button>
-    <button type="button" class="tab-btn" data-tab="cases" aria-selected="false">
+    <button type="button" class="tab-btn" id="tabbtn-cases" role="tab" data-tab="cases" aria-selected="false" aria-controls="tab-cases" tabindex="-1">
       <i class="ph-duotone ph-files" aria-hidden="true"></i> Case Walkthroughs
     </button>
   </div>
@@ -610,7 +610,7 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
 <main id="maincontent">
 
 <!-- ═══════════════════════════ CALCULATORS TAB -->
-<div id="tab-calc" class="tab-panel active">
+<div id="tab-calc" class="tab-panel active" role="tabpanel" aria-labelledby="tabbtn-calc" tabindex="0">
 
   <!-- INPATIENT HOURS — first -->
   <div class="section-label">Inpatient Hours</div>
@@ -757,7 +757,7 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
 
 
 <!-- ═══════════════════════════ REFERENCE TAB -->
-<div id="tab-ref" class="tab-panel">
+<div id="tab-ref" class="tab-panel" role="tabpanel" aria-labelledby="tabbtn-ref" tabindex="0">
 
   <!-- STRATA -->
   <div class="section-label">Age Strata</div>
@@ -896,7 +896,7 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
 
 
 <!-- ═══════════════════════════ QUIZ TAB -->
-<div id="tab-quiz" class="tab-panel">
+<div id="tab-quiz" class="tab-panel" role="tabpanel" aria-labelledby="tabbtn-quiz" tabindex="0">
   <div class="section-label">Practice Quiz</div>
   <div class="card quiz-wrap">
     <div class="card-title"><i class="ph-duotone ph-exam" aria-hidden="true"></i> Restraint &amp; Seclusion — 10 Questions</div>
@@ -931,7 +931,7 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
 
 
 <!-- ═══════════════════════════ CASES TAB -->
-<div id="tab-cases" class="tab-panel">
+<div id="tab-cases" class="tab-panel" role="tabpanel" aria-labelledby="tabbtn-cases" tabindex="0">
   <div class="section-label">Case Walkthroughs</div>
 
   <div id="caseList">

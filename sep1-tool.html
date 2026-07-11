@@ -349,18 +349,18 @@ main{max-width:var(--max);margin:0 auto;padding:32px 24px 72px;}
 </div>
 
 <!-- TABS -->
-<div class="tool-tabs" role="navigation" aria-label="Tool sections">
+<div class="tool-tabs" role="tablist" aria-label="Tool sections">
   <div class="tool-tabs-inner">
-    <button type="button" class="tab-btn active" data-tab="calc" aria-selected="true">
+    <button type="button" class="tab-btn active" id="tabbtn-calc" role="tab" data-tab="calc" aria-selected="true" aria-controls="tab-calc" tabindex="0">
       <i class="ph-duotone ph-timer" aria-hidden="true"></i> Timeline Tool
     </button>
-    <button type="button" class="tab-btn" data-tab="ref" aria-selected="false">
+    <button type="button" class="tab-btn" id="tabbtn-ref" role="tab" data-tab="ref" aria-selected="false" aria-controls="tab-ref" tabindex="-1">
       <i class="ph-duotone ph-book-open" aria-hidden="true"></i> Reference &amp; Guidance
     </button>
-    <button type="button" class="tab-btn" data-tab="quiz" aria-selected="false">
+    <button type="button" class="tab-btn" id="tabbtn-quiz" role="tab" data-tab="quiz" aria-selected="false" aria-controls="tab-quiz" tabindex="-1">
       <i class="ph-duotone ph-exam" aria-hidden="true"></i> Practice Quiz
     </button>
-    <button type="button" class="tab-btn" data-tab="cases" aria-selected="false">
+    <button type="button" class="tab-btn" id="tabbtn-cases" role="tab" data-tab="cases" aria-selected="false" aria-controls="tab-cases" tabindex="-1">
       <i class="ph-duotone ph-files" aria-hidden="true"></i> Case Walkthroughs
     </button>
   </div>
@@ -369,7 +369,7 @@ main{max-width:var(--max);margin:0 auto;padding:32px 24px 72px;}
 <main id="maincontent">
 
 <!-- ══ TAB 1: TIMELINE TOOL ══ -->
-<div id="tab-calc" class="tab-panel active">
+<div id="tab-calc" class="tab-panel active" role="tabpanel" aria-labelledby="tabbtn-calc" tabindex="0">
   <h2 class="section-label">Event Timeline &amp; Bundle Checker</h2>
 
   <!-- HOW TO USE -->
@@ -438,7 +438,7 @@ main{max-width:var(--max);margin:0 auto;padding:32px 24px 72px;}
 
 
 <!-- ══ TAB 2: REFERENCE & GUIDANCE ══ -->
-<div id="tab-ref" class="tab-panel">
+<div id="tab-ref" class="tab-panel" role="tabpanel" aria-labelledby="tabbtn-ref" tabindex="0">
   <h2 class="section-label section-label--lg">Quick Reference</h2>
 
   <div class="notice notice-info notice--tall">
@@ -522,7 +522,7 @@ main{max-width:var(--max);margin:0 auto;padding:32px 24px 72px;}
 
 
 <!-- ══ TAB 3: PRACTICE QUIZ ══ -->
-<div id="tab-quiz" class="tab-panel">
+<div id="tab-quiz" class="tab-panel" role="tabpanel" aria-labelledby="tabbtn-quiz" tabindex="0">
   <h2 class="section-label section-label--lg">Practice Quiz</h2>
   <div class="quiz-wrap" id="quizWrap">
     <div id="quizBody"></div>
@@ -538,7 +538,7 @@ main{max-width:var(--max);margin:0 auto;padding:32px 24px 72px;}
 
 
 <!-- ══ TAB 4: CASE WALKTHROUGHS ══ -->
-<div id="tab-cases" class="tab-panel">
+<div id="tab-cases" class="tab-panel" role="tabpanel" aria-labelledby="tabbtn-cases" tabindex="0">
   <h2 class="section-label section-label--lg">Case Walkthroughs</h2>
   <div id="caseList">
     <p class="section-intro">Step-by-step cases that walk through SEP-1 abstraction logic at each decision point. Select a case to begin.</p>
