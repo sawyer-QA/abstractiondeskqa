@@ -1521,7 +1521,6 @@ function renderCaseList() {
     div.onclick = () => showCase(i);
     div.setAttribute('role', 'button');
     div.setAttribute('tabindex', '0');
-    div.onkeydown = e => { if (e.key === 'Enter') showCase(i); };
     div.innerHTML = `
       <div class="case-card-body">
         <h3>${c.title}</h3>

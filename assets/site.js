@@ -33,6 +33,18 @@ document.addEventListener('DOMContentLoaded', function () {
     setTimeout(function () { btn.textContent = 'Copy link'; }, 2000);
   });
 
+  /* ── role="button" ENTER/SPACE ACTIVATION (T-18) — help-btn spans and case-card divs.
+     Excludes role="tab" (handled by the tablist listeners below) and anything without
+     role="button" (T-19: cmo doc-type-btn / sep1 type-picker need checkbox/popup
+     semantics, not plain activation, so they're left unmarked until that ticket). ── */
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Enter' && e.key !== ' ' && e.key !== 'Spacebar') return;
+    var el = e.target.closest('[role="button"]');
+    if (!el || el.tagName === 'BUTTON' || e.repeat) return;
+    if (e.key !== 'Enter') e.preventDefault();
+    el.click();
+  });
+
   /* ── switchTab (sep1-tool, hbips-tool) — T-17: roving-tabindex/keydown added, matches T-10's showTab pattern ── */
   var toolTabs = document.querySelector('.tool-tabs-inner');
   if (toolTabs) {

@@ -758,7 +758,7 @@ const CASES=[
 ];
 function renderCaseCards(){
   document.getElementById('case-card-grid').innerHTML=CASES.map((c,i)=>`
-    <div class="case-card" onclick="startCase(${i})">
+    <div class="case-card" onclick="startCase(${i})" role="button" tabindex="0">
       <h3>${c.title}</h3><p>${c.summary}</p>
       <span class="diff-pill diff-${c.diff}">${c.diff==='int'?'Intermediate':'Advanced'}</span>
       <div style="margin-top:12px;"><button type="button" class="btn">Start →</button></div>
