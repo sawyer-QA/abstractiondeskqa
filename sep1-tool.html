@@ -374,7 +374,7 @@ main{max-width:var(--max);margin:0 auto;padding:32px 24px 72px;}
 
   <!-- HOW TO USE -->
   <div class="how-box" id="how-box">
-    <div class="how-box-hdr" onclick="toggleHow()" aria-expanded="true" aria-controls="how-body">
+    <div class="how-box-hdr" onclick="toggleHow()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleHow();}" role="button" tabindex="0" aria-expanded="true" aria-controls="how-body">
       <span class="how-box-title"><span class="how-icon">ℹ</span> How to use this tool</span>
       <span class="how-toggle open" id="how-toggle" aria-hidden="true">▾</span>
     </div>
