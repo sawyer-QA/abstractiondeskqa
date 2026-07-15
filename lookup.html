@@ -307,14 +307,14 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
         <div class="full"><label class="flbl" for="fa">Answer / Guidance</label><textarea class="fta" id="fa" placeholder="The authoritative answer or interpretation…"></textarea></div>
         <div><label class="flbl" for="fm">Measure Set</label>
           <select class="fsel" id="fm"><option value="STK">STK — Stroke</option><option value="ASR-IP">ASR-IP</option><option value="ED-OP">ED-OP</option></select></div>
-        <div><label class="flbl" for="fspec">Specific Measure</label><input class="fi" id="fspec" placeholder="e.g. ASR-IP-1, ED-OP-18b"/></div>
+        <div><label class="flbl" for="fspec">Specific Measure</label><input class="fi" id="fspec" type="text" placeholder="e.g. ASR-IP-1, ED-OP-18b"/></div>
         <div><label class="flbl" for="ftype">Difficulty</label>
           <select class="fsel" id="ftype"><option value="routine">✅ Routine</option><option value="edge">⚡ Edge Case</option><option value="gray">❓ Gray Area</option></select></div>
-        <div><label class="flbl" for="fsrc">Source</label><input class="fi" id="fsrc" placeholder="TJC PMN, spec manual, training…"/></div>
+        <div><label class="flbl" for="fsrc">Source</label><input class="fi" id="fsrc" type="text" placeholder="TJC PMN, spec manual, training…"/></div>
         <div class="full">
           <label class="flbl" for="ttxt">Keyword Tags — type &amp; press Enter, or click suggestions</label>
           <div class="tw" id="tw" onclick="document.getElementById('ttxt').focus()">
-            <input class="ttxt" id="ttxt" placeholder="LKW, TNK, comfort measures…" onkeydown="handleTagKey(event)" oninput="onTagType(this.value)"/>
+            <input class="ttxt" id="ttxt" type="text" placeholder="LKW, TNK, comfort measures…" onkeydown="handleTagKey(event)" oninput="onTagType(this.value)"/>
           </div>
           <div class="sug-panel" id="sugPanel"><div class="sug-lbl" id="sugLbl">Suggestions</div><div class="sug-row" id="sugRow"></div></div>
         </div>
@@ -335,7 +335,7 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
     <div class="search-wrap">
       <span class="si"><i class="ph ph-magnifying-glass"></i></span>
       <label class="sr-only" for="srch">Search Q&amp;A entries</label>
-      <input class="search" id="srch" placeholder="Search by scenario, keyword, tag, data element…" oninput="render()"/>
+      <input class="search" id="srch" type="text" placeholder="Search by scenario, keyword, tag, data element…" oninput="render()"/>
     </div>
 
     <div class="frow">
@@ -361,7 +361,7 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
     <p class="modal-sub">Click any tag name to apply it as a filter on the Q&amp;A list. Browse by category or search by name or alias.</p>
 
     <label class="sr-only" for="tbSearch">Search tags by name or alias</label>
-    <input class="tb-search" id="tbSearch" placeholder="Search tags by name or alias…" oninput="renderTagBrowser()"/>
+    <input class="tb-search" id="tbSearch" type="text" placeholder="Search tags by name or alias…" oninput="renderTagBrowser()"/>
 
     <div class="cat-filter-bar" id="tbCatBar">
       <button type="button" class="cat-chip on" data-tbc="all" onclick="filterTBCat('all',this)">All</button>
@@ -407,10 +407,10 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
     <div class="tm-section">Suggest a New Tag</div>
     <div class="tm-add">
       <div class="tm-add-grid">
-        <div><label class="flbl" for="nt-id">Tag ID</label><input class="fi" id="nt-id" placeholder="e.g. stroke_lkw" style="font-family:var(--mono);"/></div>
-        <div><label class="flbl" for="nt-n">Tag Name</label><input class="fi" id="nt-n" placeholder="e.g. LKW" style="font-family:var(--mono);font-weight:600"/></div>
-        <div><label class="flbl" for="nt-a">Aliases</label><input class="fi" id="nt-a" placeholder="last known well, lkn, last seen normal"/></div>
-        <div><label class="flbl" for="nt-r">Related Tags</label><input class="fi" id="nt-r" placeholder="TLKW, DLKW, onset"/></div>
+        <div><label class="flbl" for="nt-id">Tag ID</label><input class="fi" id="nt-id" type="text" placeholder="e.g. stroke_lkw" style="font-family:var(--mono);"/></div>
+        <div><label class="flbl" for="nt-n">Tag Name</label><input class="fi" id="nt-n" type="text" placeholder="e.g. LKW" style="font-family:var(--mono);font-weight:600"/></div>
+        <div><label class="flbl" for="nt-a">Aliases</label><input class="fi" id="nt-a" type="text" placeholder="last known well, lkn, last seen normal"/></div>
+        <div><label class="flbl" for="nt-r">Related Tags</label><input class="fi" id="nt-r" type="text" placeholder="TLKW, DLKW, onset"/></div>
       </div>
       <div style="display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end;">
         <div><label class="flbl" for="nt-cat">Category</label>
@@ -459,8 +459,8 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
     <textarea id="pasteRaw" style="width:100%;font-family:var(--mono);font-size:11px;padding:9px;border:1.5px solid var(--border);border-radius:5px;min-height:120px;resize:vertical;margin-bottom:10px;outline:none;color:var(--ink);" placeholder="Q: If a patient woke up with stroke symptoms…&#10;&#10;A: Per TJC guidance…"></textarea>
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px">
       <div><label class="flbl" for="pm">Measure</label><select class="fsel" id="pm"><option value="STK">STK</option><option value="ASR-IP">ASR-IP</option><option value="ED-OP">ED-OP</option></select></div>
-      <div><label class="flbl" for="pspec">Specific Measure</label><input class="fi" id="pspec" placeholder="e.g. ASR-IP-1"/></div>
-      <div><label class="flbl" for="psrc">Source</label><input class="fi" id="psrc" placeholder="TJC PMN, training…"/></div>
+      <div><label class="flbl" for="pspec">Specific Measure</label><input class="fi" id="pspec" type="text" placeholder="e.g. ASR-IP-1"/></div>
+      <div><label class="flbl" for="psrc">Source</label><input class="fi" id="psrc" type="text" placeholder="TJC PMN, training…"/></div>
     </div>
     <div class="tag-review" id="tagReview" style="display:none">
       <h4><i class="ph-duotone ph-tag" style="vertical-align:middle;margin-right:4px;"></i>Auto-detected tags — click to accept or reject:</h4>
