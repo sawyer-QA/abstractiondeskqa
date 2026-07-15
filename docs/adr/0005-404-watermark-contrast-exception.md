@@ -2,7 +2,8 @@
 
 ## Status
 
-Accepted.
+Accepted — assertMatrix mechanics superseded by ADR-0006 (see that ADR for
+the corrected CI config).
 
 ## Context
 
