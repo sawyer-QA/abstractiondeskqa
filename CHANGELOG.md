@@ -20,6 +20,7 @@ All notable changes to this project are documented here. Format follows [Keep a 
 
 ### Changed
 
+- Lighthouse CI's accessibility gate (`lighthouserc.json`) moved from a flat sitewide `warn` to a per-page `assertMatrix`: `error` at `minScore: 0.95` on the 7 tool pages, `warn` at the same threshold on `404.html`, which carries one confirmed `color-contrast` false positive (its `aria-hidden` decorative watermark, redundant to real error text) documented as an accepted exception in ADR-0005 (ticket T-20).
 - Self-hosted the Phosphor icon webfont (regular + duotone weights) under `assets/phosphor/` on all 8 pages, replacing the synchronous `<script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js">` with two local `<link rel="stylesheet">` tags. Removes a render-blocking, unminified third-party script and its unpkg SPOF risk (audit finding F-02 / ticket T-02).
 - `lookup.html`'s `<title>` and `og:title` changed from "Stroke & ED Throughput · Q&A Bank" to "Q&A Lookup — AbstractionDeskQA" — the old title had no brand name and was stale relative to the page's actual scope, which now includes SEP-1/HBIPS content too (audit finding F-08).
 - `Sawyer-1.jpeg` (487 KB, no dimensions) on `404.html` replaced with `Sawyer-1.webp` (600×450, ~40 KB) with explicit `width`/`height` attributes on the `<img>`; original JPEG removed from the repo (audit finding F-10).
