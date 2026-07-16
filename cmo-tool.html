@@ -55,9 +55,10 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 
 /* ── CLASSIFIER ── */
 .doc-type-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin:14px 0;}
-.doc-type-btn{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;cursor:pointer;transition:all .18s;text-align:left;}
+.doc-type-btn{display:block;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;cursor:pointer;transition:all .18s;text-align:left;}
 .doc-type-btn:hover{border-color:var(--teal);}
 .doc-type-btn.selected{border-color:var(--teal);background:var(--teal-dim);}
+.doc-type-btn:focus-within{outline:3px solid var(--teal2);outline-offset:3px;}
 .doc-type-btn .dti{font-size:22px;margin-bottom:6px;color:var(--teal);line-height:1;}.doc-type-btn .dti i{font-size:22px;}
 .doc-type-btn .dtn{font-size:12px;font-weight:700;margin-bottom:2px;}
 .doc-type-btn .dtd{font-size:11px;color:var(--muted);}
@@ -228,46 +229,54 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
   <div class="card">
     <div class="card-label">Step 1 — What documentation is present?</div>
     <div class="doc-type-grid" id="doc-grid">
-      <div class="doc-type-btn" data-key="md_order" onclick="toggleDoc(this)">
+      <label class="doc-type-btn">
+        <input type="checkbox" class="sr-only" data-key="md_order">
         <div class="dti"><i class="ph-duotone ph-clipboard-text"></i></div>
         <div class="dtn">Physician Order</div>
         <div class="dtd">Explicit CMO order by MD/APN/PA in the order set or written orders</div>
-      </div>
-      <div class="doc-type-btn" data-key="md_note" onclick="toggleDoc(this)">
+      </label>
+      <label class="doc-type-btn">
+        <input type="checkbox" class="sr-only" data-key="md_note">
         <div class="dti"><i class="ph-duotone ph-note-pencil"></i></div>
         <div class="dtn">Physician Note — Discussion</div>
         <div class="dtd">Progress note or H&amp;P documenting a goals-of-care discussion with CMO decision</div>
-      </div>
-      <div class="doc-type-btn" data-key="polst" onclick="toggleDoc(this)">
+      </label>
+      <label class="doc-type-btn">
+        <input type="checkbox" class="sr-only" data-key="polst">
         <div class="dti"><i class="ph-duotone ph-file-text"></i></div>
         <div class="dtn">POLST / MOST / MOLST</div>
         <div class="dtd">Portable medical order form signed by physician</div>
-      </div>
-      <div class="doc-type-btn" data-key="hospice" onclick="toggleDoc(this)">
+      </label>
+      <label class="doc-type-btn">
+        <input type="checkbox" class="sr-only" data-key="hospice">
         <div class="dti"><i class="ph-duotone ph-house-line"></i></div>
         <div class="dtn">Hospice Enrollment/Referral</div>
         <div class="dtd">Documentation of hospice referral, enrollment, or transfer during this admission</div>
-      </div>
-      <div class="doc-type-btn" data-key="comfort_only" onclick="toggleDoc(this)">
+      </label>
+      <label class="doc-type-btn">
+        <input type="checkbox" class="sr-only" data-key="comfort_only">
         <div class="dti"><i class="ph-duotone ph-pill"></i></div>
         <div class="dtn">Comfort Care Orders Only</div>
         <div class="dtd">Symptom management orders (pain, positioning, mouth care) without a CMO designation</div>
-      </div>
-      <div class="doc-type-btn" data-key="family_note" onclick="toggleDoc(this)">
+      </label>
+      <label class="doc-type-btn">
+        <input type="checkbox" class="sr-only" data-key="family_note">
         <div class="dti"><i class="ph-duotone ph-users-three"></i></div>
         <div class="dtn">Family/Care Conference Note</div>
         <div class="dtd">Nursing or social work note documenting family meeting; no physician co-sign</div>
-      </div>
-      <div class="doc-type-btn" data-key="dnr_only" onclick="toggleDoc(this)">
+      </label>
+      <label class="doc-type-btn">
+        <input type="checkbox" class="sr-only" data-key="dnr_only">
         <div class="dti"><i class="ph-duotone ph-prohibit"></i></div>
         <div class="dtn">DNR/DNI Order Only</div>
         <div class="dtd">Do-not-resuscitate or do-not-intubate order without explicit CMO language</div>
-      </div>
-      <div class="doc-type-btn" data-key="palliative" onclick="toggleDoc(this)">
+      </label>
+      <label class="doc-type-btn">
+        <input type="checkbox" class="sr-only" data-key="palliative">
         <div class="dti"><i class="ph-duotone ph-handshake"></i></div>
         <div class="dtn">Palliative Care Consult</div>
         <div class="dtd">Palliative care team note documenting CMO recommendation or plan</div>
-      </div>
+      </label>
     </div>
   </div>
 
@@ -443,11 +452,14 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 
 // ── CLASSIFIER ──
 const selectedDocs = new Set();
-function toggleDoc(el){
-  const key = el.dataset.key;
-  if(selectedDocs.has(key)){selectedDocs.delete(key);el.classList.remove('selected');}
-  else{selectedDocs.add(key);el.classList.add('selected');}
-}
+document.getElementById('doc-grid').addEventListener('change', function(e){
+  const input = e.target.closest('input[type="checkbox"]');
+  if(!input) return;
+  const key = input.dataset.key;
+  const card = input.closest('.doc-type-btn');
+  if(input.checked){selectedDocs.add(key);card.classList.add('selected');}
+  else{selectedDocs.delete(key);card.classList.remove('selected');}
+});
 
 function resolveClassifier(){
   const prehosp = document.getElementById('flag-prehosp').checked;
@@ -536,6 +548,7 @@ function showCR(val, basis, rat){
 function clearClassifier(){
   selectedDocs.clear();
   document.querySelectorAll('.doc-type-btn').forEach(b=>b.classList.remove('selected'));
+  document.querySelectorAll('#doc-grid input[type="checkbox"]').forEach(i=>i.checked=false);
   ['flag-prehosp','flag-postbrain','flag-conflict','flag-withdrawn'].forEach(id=>document.getElementById(id).checked=false);
   const box = document.getElementById('classifier-result');
   box.classList.remove('show');
