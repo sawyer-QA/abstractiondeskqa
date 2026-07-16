@@ -94,9 +94,10 @@ main{max-width:var(--max);margin:0 auto;padding:32px 24px 72px;}
 .ev-row input[type=text]{height:36px;border:1.5px solid var(--border-mid);border-radius:8px;background:var(--canvas);padding:0 10px;padding-right:96px;font-family:var(--body);font-size:13px;color:var(--ink);outline:none;width:100%;min-width:0;transition:border-color .12s;}
 .ev-row input[type=text]:focus{border-color:var(--teal2);background:var(--white);}
 .ev-row input[type=text]::placeholder{color:var(--ink-soft);font-size:12px;}
-.type-badge{position:absolute;right:6px;font-family:var(--mono);font-size:9px;font-weight:500;padding:3px 7px;border-radius:4px;letter-spacing:.04em;cursor:pointer;user-select:none;white-space:nowrap;border:1px solid transparent;transition:opacity .12s;}
+.type-badge{position:absolute;right:6px;margin:0;font:inherit;font-family:var(--mono);font-size:9px;font-weight:500;padding:3px 7px;border-radius:4px;letter-spacing:.04em;cursor:pointer;user-select:none;white-space:nowrap;border:1px solid transparent;transition:opacity .12s;}
 .type-badge:hover{opacity:.75;}
 .type-badge::after{content:' ▾';font-size:8px;opacity:.6;}
+.type-badge::-moz-focus-inner{border:0;padding:0;}
 .type-picker{position:fixed;background:var(--white);border:1px solid var(--border-mid);border-radius:8px;box-shadow:var(--shadow);z-index:200;overflow:hidden;min-width:170px;display:none;}
 .tpo{display:flex;align-items:center;gap:8px;padding:8px 12px;cursor:pointer;font-size:12px;color:var(--ink-mid);transition:background .08s;}
 .tpo:hover{background:var(--canvas);}
@@ -555,12 +556,12 @@ main{max-width:var(--max);margin:0 auto;padding:32px 24px 72px;}
 </main>
 
 <!-- TYPE PICKER -->
-<div class="type-picker" id="type-picker">
-  <div class="tpo" onclick="overrideType('sirs')"><div class="tpo-dot dot-sirs"></div>SIRS</div>
-  <div class="tpo" onclick="overrideType('od')"><div class="tpo-dot dot-od"></div>Organ dysfunction</div>
-  <div class="tpo" onclick="overrideType('bundle')"><div class="tpo-dot dot-bundle"></div>Bundle element</div>
-  <div class="tpo" onclick="overrideType('shock')"><div class="tpo-dot dot-shock"></div>Shock / vasopressor</div>
-  <div class="tpo" onclick="overrideType('other')"><div class="tpo-dot dot-other"></div>Other</div>
+<div class="type-picker" id="type-picker" role="menu">
+  <div class="tpo" role="menuitem" tabindex="-1" data-type="sirs" onclick="overrideType('sirs')"><div class="tpo-dot dot-sirs"></div>SIRS</div>
+  <div class="tpo" role="menuitem" tabindex="-1" data-type="od" onclick="overrideType('od')"><div class="tpo-dot dot-od"></div>Organ dysfunction</div>
+  <div class="tpo" role="menuitem" tabindex="-1" data-type="bundle" onclick="overrideType('bundle')"><div class="tpo-dot dot-bundle"></div>Bundle element</div>
+  <div class="tpo" role="menuitem" tabindex="-1" data-type="shock" onclick="overrideType('shock')"><div class="tpo-dot dot-shock"></div>Shock / vasopressor</div>
+  <div class="tpo" role="menuitem" tabindex="-1" data-type="other" onclick="overrideType('other')"><div class="tpo-dot dot-other"></div>Other</div>
 </div>
 
 <!-- SHARE STRIP -->
@@ -662,8 +663,10 @@ function renderRows() {
         <input type="text" class="ev-label" value="${esc(r.label)}"
           placeholder="Describe event — type auto-detected"
           oninput="syncField(${r.id},'label',this.value)">
-        <span class="type-badge ${meta.badge}" style="${isOvr?'text-decoration:underline dotted 1px;':''}"
-          onclick="togglePicker(${r.id},this)" title="Click to override detected type">${meta.label.toUpperCase()}</span>
+        <button type="button" class="type-badge ${meta.badge}" style="${isOvr?'text-decoration:underline dotted 1px;':''}"
+          onclick="togglePicker(${r.id},this)" title="Click to override detected type"
+          aria-haspopup="menu" aria-expanded="${pickerActiveId===r.id}" aria-controls="type-picker"
+          aria-label="Override event type, currently ${meta.label}">${meta.label.toUpperCase()}</button>
       </div>
       <button type="button" class="rm-btn" onclick="removeRow(${r.id})" aria-label="Remove row">×</button>
     </div>`;
@@ -673,18 +676,56 @@ function renderRows() {
 // ── TYPE PICKER ───────────────────────────────────────────────
 function togglePicker(id, el) {
   const p = document.getElementById('type-picker');
-  if (pickerActiveId === id) { hidePicker(); return; }
+  if (pickerActiveId === id) { hidePicker(false); return; }
   pickerActiveId = id;
   const r = el.getBoundingClientRect();
   p.style.top = (r.bottom+4)+'px'; p.style.right = (window.innerWidth-r.right)+'px'; p.style.display='block';
+  el.setAttribute('aria-expanded','true');
+  const items = Array.from(p.querySelectorAll('[role="menuitem"]'));
+  const row = rows.find(r=>r.id===id);
+  const target = items.find(i => i.dataset.type === (row && row.override)) || items[0];
+  items.forEach(i=>i.tabIndex=-1);
+  target.tabIndex = 0;
+  target.focus();
 }
-function hidePicker() { document.getElementById('type-picker').style.display='none'; pickerActiveId=null; }
+function hidePicker(focusTrigger) {
+  const p = document.getElementById('type-picker');
+  p.style.display='none';
+  const id = pickerActiveId;
+  pickerActiveId = null;
+  if (id === null) return;
+  const trigger = document.querySelector('[data-ev-id="'+id+'"] .type-badge');
+  if (trigger) {
+    trigger.setAttribute('aria-expanded','false');
+    if (focusTrigger) trigger.focus();
+  }
+}
 function overrideType(type) {
   if (pickerActiveId===null) return;
-  const r = rows.find(r=>r.id===pickerActiveId); if (r) r.override=type;
-  hidePicker(); renderRows();
+  const id = pickerActiveId;
+  const r = rows.find(r=>r.id===id); if (r) r.override=type;
+  hidePicker(false);
+  renderRows();
+  setTimeout(() => { const el = document.querySelector('[data-ev-id="'+id+'"] .type-badge'); if (el) el.focus(); }, 30);
 }
-document.addEventListener('click', e => { if (!e.target.closest('.type-badge')&&!e.target.closest('.type-picker')) hidePicker(); });
+document.getElementById('type-picker').addEventListener('keydown', function(e){
+  if (e.key === 'Escape') { e.preventDefault(); hidePicker(true); return; }
+  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); document.activeElement.click(); return; }
+  if (!['ArrowUp','ArrowDown','Home','End'].includes(e.key)) return;
+  const items = Array.from(this.querySelectorAll('[role="menuitem"]'));
+  const i = items.indexOf(document.activeElement);
+  if (i === -1) return;
+  e.preventDefault();
+  let next;
+  if (e.key==='ArrowDown') next = items[(i+1)%items.length];
+  else if (e.key==='ArrowUp') next = items[(i-1+items.length)%items.length];
+  else if (e.key==='Home') next = items[0];
+  else next = items[items.length-1];
+  items.forEach(it=>it.tabIndex=-1);
+  next.tabIndex = 0;
+  next.focus();
+});
+document.addEventListener('click', e => { if (!e.target.closest('.type-badge')&&!e.target.closest('.type-picker')) hidePicker(false); });
 
 // ── BUILD TIMELINE ────────────────────────────────────────────
 function build() {
