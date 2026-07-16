@@ -59,9 +59,9 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 .doc-type-btn:hover{border-color:var(--teal);}
 .doc-type-btn.selected{border-color:var(--teal);background:var(--teal-dim);}
 .doc-type-btn:focus-within{outline:3px solid var(--teal2);outline-offset:3px;}
-.doc-type-btn .dti{font-size:22px;margin-bottom:6px;color:var(--teal);line-height:1;}.doc-type-btn .dti i{font-size:22px;}
-.doc-type-btn .dtn{font-size:12px;font-weight:700;margin-bottom:2px;}
-.doc-type-btn .dtd{font-size:11px;color:var(--muted);}
+.doc-type-btn .dti{display:block;font-size:22px;margin-bottom:6px;color:var(--teal);line-height:1;}.doc-type-btn .dti i{font-size:22px;}
+.doc-type-btn .dtn{display:block;font-size:12px;font-weight:700;margin-bottom:2px;}
+.doc-type-btn .dtd{display:block;font-size:11px;color:var(--muted);}
 .resolve-btn{width:100%;background:var(--teal);color:var(--bg);border:none;font-family:var(--sans);font-size:14px;font-weight:700;padding:13px 20px;border-radius:var(--radius);cursor:pointer;transition:background .18s;margin-top:4px;}
 .resolve-btn:hover{background:var(--teal2);}
 .result-box{background:var(--bg3);border:2px solid var(--teal);border-radius:var(--radius);padding:20px 22px;margin-top:16px;display:none;}
@@ -231,51 +231,51 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
     <div class="doc-type-grid" id="doc-grid">
       <label class="doc-type-btn">
         <input type="checkbox" class="sr-only" data-key="md_order">
-        <div class="dti"><i class="ph-duotone ph-clipboard-text"></i></div>
-        <div class="dtn">Physician Order</div>
-        <div class="dtd">Explicit CMO order by MD/APN/PA in the order set or written orders</div>
+        <span class="dti"><i class="ph-duotone ph-clipboard-text"></i></span>
+        <span class="dtn">Physician Order</span>
+        <span class="dtd">Explicit CMO order by MD/APN/PA in the order set or written orders</span>
       </label>
       <label class="doc-type-btn">
         <input type="checkbox" class="sr-only" data-key="md_note">
-        <div class="dti"><i class="ph-duotone ph-note-pencil"></i></div>
-        <div class="dtn">Physician Note — Discussion</div>
-        <div class="dtd">Progress note or H&amp;P documenting a goals-of-care discussion with CMO decision</div>
+        <span class="dti"><i class="ph-duotone ph-note-pencil"></i></span>
+        <span class="dtn">Physician Note — Discussion</span>
+        <span class="dtd">Progress note or H&amp;P documenting a goals-of-care discussion with CMO decision</span>
       </label>
       <label class="doc-type-btn">
         <input type="checkbox" class="sr-only" data-key="polst">
-        <div class="dti"><i class="ph-duotone ph-file-text"></i></div>
-        <div class="dtn">POLST / MOST / MOLST</div>
-        <div class="dtd">Portable medical order form signed by physician</div>
+        <span class="dti"><i class="ph-duotone ph-file-text"></i></span>
+        <span class="dtn">POLST / MOST / MOLST</span>
+        <span class="dtd">Portable medical order form signed by physician</span>
       </label>
       <label class="doc-type-btn">
         <input type="checkbox" class="sr-only" data-key="hospice">
-        <div class="dti"><i class="ph-duotone ph-house-line"></i></div>
-        <div class="dtn">Hospice Enrollment/Referral</div>
-        <div class="dtd">Documentation of hospice referral, enrollment, or transfer during this admission</div>
+        <span class="dti"><i class="ph-duotone ph-house-line"></i></span>
+        <span class="dtn">Hospice Enrollment/Referral</span>
+        <span class="dtd">Documentation of hospice referral, enrollment, or transfer during this admission</span>
       </label>
       <label class="doc-type-btn">
         <input type="checkbox" class="sr-only" data-key="comfort_only">
-        <div class="dti"><i class="ph-duotone ph-pill"></i></div>
-        <div class="dtn">Comfort Care Orders Only</div>
-        <div class="dtd">Symptom management orders (pain, positioning, mouth care) without a CMO designation</div>
+        <span class="dti"><i class="ph-duotone ph-pill"></i></span>
+        <span class="dtn">Comfort Care Orders Only</span>
+        <span class="dtd">Symptom management orders (pain, positioning, mouth care) without a CMO designation</span>
       </label>
       <label class="doc-type-btn">
         <input type="checkbox" class="sr-only" data-key="family_note">
-        <div class="dti"><i class="ph-duotone ph-users-three"></i></div>
-        <div class="dtn">Family/Care Conference Note</div>
-        <div class="dtd">Nursing or social work note documenting family meeting; no physician co-sign</div>
+        <span class="dti"><i class="ph-duotone ph-users-three"></i></span>
+        <span class="dtn">Family/Care Conference Note</span>
+        <span class="dtd">Nursing or social work note documenting family meeting; no physician co-sign</span>
       </label>
       <label class="doc-type-btn">
         <input type="checkbox" class="sr-only" data-key="dnr_only">
-        <div class="dti"><i class="ph-duotone ph-prohibit"></i></div>
-        <div class="dtn">DNR/DNI Order Only</div>
-        <div class="dtd">Do-not-resuscitate or do-not-intubate order without explicit CMO language</div>
+        <span class="dti"><i class="ph-duotone ph-prohibit"></i></span>
+        <span class="dtn">DNR/DNI Order Only</span>
+        <span class="dtd">Do-not-resuscitate or do-not-intubate order without explicit CMO language</span>
       </label>
       <label class="doc-type-btn">
         <input type="checkbox" class="sr-only" data-key="palliative">
-        <div class="dti"><i class="ph-duotone ph-handshake"></i></div>
-        <div class="dtn">Palliative Care Consult</div>
-        <div class="dtd">Palliative care team note documenting CMO recommendation or plan</div>
+        <span class="dti"><i class="ph-duotone ph-handshake"></i></span>
+        <span class="dtn">Palliative Care Consult</span>
+        <span class="dtd">Palliative care team note documenting CMO recommendation or plan</span>
       </label>
     </div>
   </div>
