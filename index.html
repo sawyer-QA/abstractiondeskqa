@@ -6,35 +6,23 @@
 <meta name="description" content="A free abstraction toolkit for hospital quality teams and core measure abstractors. Search real scenarios, use interactive calculators, practice quizzes, and case walkthroughs — grounded in TJC and CMS spec language.">
 <title>AbstractionDeskQA — Free Abstraction Toolkit for Core Measure Teams</title>
 <link rel="canonical" href="https://abstractiondeskqa.com/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://abstractiondeskqa.com/">
+<meta property="og:site_name" content="AbstractionDeskQA">
+<meta property="og:title" content="AbstractionDeskQA — Free Abstraction Toolkit for Core Measure Teams">
+<meta property="og:description" content="A free abstraction toolkit for hospital quality teams and core measure abstractors. Search real scenarios, use interactive calculators, practice quizzes, and case walkthroughs — grounded in TJC and CMS spec language.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <!-- Phosphor Icons -->
-<script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+<link rel="stylesheet" href="assets/phosphor/regular.css">
+<link rel="stylesheet" href="assets/phosphor/duotone.css">
+<!-- Shared design tokens / structural CSS (T-04) -->
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/site.css">
 <!-- Cloudflare Turnstile -->
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --ink:       #0f1923;
-    --ink-mid:   #3d4f62;
-    --ink-soft:  #6b7f94;
-    --canvas:    #f7f9fc;
-    --white:     #ffffff;
-    --navy:      #0d2240;
-    --teal:      #0a7c7a;
-    --teal2:     #0da8a5;
-    --teal-pale: #e4f5f4;
-    --amber:     #8a5200;
-    --amber-bg:  #fff8ec;
-    --amber-border: #e8c060;
-    --border:    #dbe2ec;
-    --heading:   'DM Sans', sans-serif;
-    --body:      'Atkinson Hyperlegible', sans-serif;
-    --radius:    10px;
-    --shadow:    0 4px 24px rgba(13,34,64,.09);
-    --shadow-sm: 0 2px 10px rgba(13,34,64,.06);
-    --max:       1040px;
-  }
   html { scroll-behavior: smooth; }
   body {
     font-family: var(--body);
@@ -46,21 +34,6 @@
   }
   a { color: var(--teal); }
   a:hover { text-decoration: underline; }
-  a:focus-visible, button:focus-visible, input:focus-visible,
-  textarea:focus-visible, select:focus-visible {
-    outline: 3px solid var(--teal2);
-    outline-offset: 3px;
-    border-radius: 4px;
-  }
-
-  /* SKIP LINK */
-  .skip-link {
-    position: absolute; top: -60px; left: 16px; z-index: 999;
-    background: var(--navy); color: white; padding: 10px 18px;
-    border-radius: var(--radius); font-weight: 700; font-size: 15px;
-    transition: top .2s; text-decoration: none;
-  }
-  .skip-link:focus { top: 16px; }
 
   /* NAV */
   .nav {
@@ -228,6 +201,8 @@
     max-width: 720px; line-height: 1.75;
     margin-bottom: 40px;
   }
+  .section-title--full { max-width: 100%; }
+  .section-sub--tight { margin-bottom: 32px; }
 
   /* HOW IT WORKS */
   .how-grid {
@@ -357,6 +332,9 @@
     font-weight: 400; text-transform: none;
     font-size: 13px; color: var(--ink-soft);
   }
+  .required-mark { color: var(--teal); }
+  .honeypot { display: none; }
+  .cf-turnstile { margin-bottom: 12px; }
   .form-input, .form-textarea, .form-select {
     width: 100%; padding: 11px 14px;
     border: 1.5px solid var(--border); border-radius: 7px;
@@ -383,36 +361,7 @@
     background: var(--teal-pale); border-radius: 8px; margin-top: 16px;
     font-size: 16px; color: var(--teal); font-weight: 700; line-height: 1.6;
   }
-
-  /* DISCLAIMER */
-  .disclaimer {
-    background: #eef2f8; border-top: 1px solid var(--border);
-    padding: 24px 24px;
-  }
-  .disclaimer-inner {
-    max-width: var(--max); margin: 0 auto;
-    font-size: 13px; color: var(--ink-soft); line-height: 1.75;
-  }
-
-  /* FOOTER */
-  footer {
-    background: #07131f;
-    color: rgba(255,255,255,.45);
-    padding: 28px 24px;
-  }
-  .footer-inner {
-    max-width: var(--max); margin: 0 auto;
-    display: flex; align-items: center;
-    justify-content: space-between; gap: 16px; flex-wrap: wrap;
-  }
-  .footer-brand {
-    font-family: var(--heading); font-size: 16px;
-    font-weight: 700; color: rgba(255,255,255,.7); margin-bottom: 4px;
-  }
-  footer p { font-size: 13px; line-height: 1.65; }
-  footer a { color: var(--teal2); text-decoration: none; }
-  footer a:hover { text-decoration: underline; }
-  .footer-links { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; }
+  .form-success-note { font-weight: 400; font-size: 15px; }
 
   /* RESPONSIVE */
   @media(max-width:640px){
@@ -422,7 +371,6 @@
     .stat:nth-child(even) { padding-left: 0; }
     .stat:nth-last-child(-n+2) { border-bottom: 1px solid var(--border); }
     .stat:last-child { border-bottom: none; }
-    .footer-inner { flex-direction: column; gap: 12px; }
     .form-wrap { padding: 24px 18px; }
   }
 
@@ -432,6 +380,29 @@
     transition: opacity .45s ease, transform .45s ease;
   }
   .fade-up.visible { opacity: 1; transform: translateY(0); }
+  .how-grid .how-card:nth-child(2) { transition-delay: .1s; }
+  .how-grid .how-card:nth-child(3) { transition-delay: .2s; }
+  .how-grid .how-card:nth-child(4) { transition-delay: .3s; }
+  .features-grid .feat:nth-child(2) { transition-delay: .07s; }
+  .features-grid .feat:nth-child(3) { transition-delay: .14s; }
+  .features-grid .feat:nth-child(4) { transition-delay: .21s; }
+  .features-grid .feat:nth-child(5) { transition-delay: .28s; }
+  .features-grid .feat:nth-child(6) { transition-delay: .35s; }
+  .tools-grid .tool-card:nth-child(1) { transition-delay: 0s; }
+  .tools-grid .tool-card:nth-child(2) { transition-delay: .1s; }
+  .tools-grid .tool-card:nth-child(3) { transition-delay: .2s; }
+  .tools-grid .tool-card:nth-child(4) { transition-delay: .3s; }
+  .tools-grid .tool-card:nth-child(5) { transition-delay: .4s; }
+  .tools-grid .tool-card:nth-child(6) { transition-delay: .5s; }
+  .tools-grid .tool-card:nth-child(7) { transition-delay: .6s; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QJPP46JWX3"></script>
 <script>
@@ -446,7 +417,7 @@
 <a href="#main" class="skip-link">Skip to main content</a>
 
 <!-- NAV -->
-<nav class="nav" role="navigation" aria-label="Main navigation">
+<nav class="nav" aria-label="Main navigation">
   <div class="nav-inner">
     <a href="/" class="nav-brand" aria-label="AbstractionDeskQA home">
       AbstractionDesk<span class="qa-badge">QA</span>
@@ -493,7 +464,7 @@
   </section>
 
   <!-- STATS -->
-  <div class="stats" role="complementary" aria-label="Tool highlights">
+  <aside class="stats" aria-label="Tool highlights">
     <div class="stats-inner">
       <div class="stat">
         <strong>Core measures</strong>
@@ -512,14 +483,14 @@
         Based on TJC v2026B
       </div>
     </div>
-  </div>
+  </aside>
 
   <!-- ABOUT -->
   <section class="section section-alt" aria-labelledby="about-heading">
     <div class="container">
       <div class="section-label" aria-hidden="true">What is Abstraction Desk QA?</div>
-      <h2 class="section-title" id="about-heading" style="max-width:100%;">A free abstraction toolkit for hospital quality teams and core measure abstractors.</h2>
-      <p style="font-size:16px;color:var(--ink-mid);max-width:720px;line-height:1.75;">Search real scenarios by the words you actually use. No login required.</p>
+      <h2 class="section-title section-title--full" id="about-heading">A free abstraction toolkit for hospital quality teams and core measure abstractors.</h2>
+      <p class="section-sub">Search real scenarios by the words you actually use. No login required.</p>
     </div>
   </section>
 
@@ -535,17 +506,17 @@
           <h3>Type what you see</h3>
           <p>Use words in the chart, abbreviations, or plain language — LKW, CSF, symptoms began, seclusion hours, CMO.</p>
         </div>
-        <div class="how-card fade-up" style="transition-delay:.1s">
+        <div class="how-card fade-up">
           <div class="how-step">Filter</div>
           <h3>Browse by keyword tag</h3>
           <p>Every entry is tagged with the exact terms abstractors use. Click any tag to filter instantly.</p>
         </div>
-        <div class="how-card fade-up" style="transition-delay:.2s">
+        <div class="how-card fade-up">
           <div class="how-step">Read</div>
           <h3>Get clear answers</h3>
           <p>Concise guidance with the spec rationale behind it, so you know not just what to abstract, but why.</p>
         </div>
-        <div class="how-card fade-up" style="transition-delay:.3s">
+        <div class="how-card fade-up">
           <div class="how-step">Note</div>
           <h3>Spot gray areas</h3>
           <p>Common abstraction pitfalls are marked, so you can identify the trickier spec guidelines.</p>
@@ -569,7 +540,7 @@
             <p>Search questions, answers, data elements, and tags at once.</p>
           </div>
         </div>
-        <div class="feat fade-up" style="transition-delay:.07s">
+        <div class="feat fade-up">
           <div class="ph-icon-wrap" role="img" aria-label="Tags">
             <i class="ph-duotone ph-tag"></i>
           </div>
@@ -578,7 +549,7 @@
             <p>Built from inclusion/exclusion language, acronyms, medical abbreviations, and clinical shorthand.</p>
           </div>
         </div>
-        <div class="feat fade-up" style="transition-delay:.14s">
+        <div class="feat fade-up">
           <div class="ph-icon-wrap" role="img" aria-label="Edge cases">
             <i class="ph-duotone ph-lightning"></i>
           </div>
@@ -587,7 +558,7 @@
             <p>Common abstraction traps are clearly marked (e.g., clinician hierarchy for LKW).</p>
           </div>
         </div>
-        <div class="feat fade-up" style="transition-delay:.21s">
+        <div class="feat fade-up">
           <div class="ph-icon-wrap" role="img" aria-label="Gray areas">
             <i class="ph-duotone ph-question"></i>
           </div>
@@ -596,7 +567,7 @@
             <p>Ambiguous scenarios identified so you know when to escalate.</p>
           </div>
         </div>
-        <div class="feat fade-up" style="transition-delay:.28s">
+        <div class="feat fade-up">
           <div class="ph-icon-wrap" role="img" aria-label="PDF export">
             <i class="ph-duotone ph-file-pdf"></i>
           </div>
@@ -605,7 +576,7 @@
             <p>Save any filtered view as a clean reference PDF for training, desk guides, or team meetings.</p>
           </div>
         </div>
-        <div class="feat fade-up" style="transition-delay:.35s">
+        <div class="feat fade-up">
           <div class="ph-icon-wrap" role="img" aria-label="Free to use">
             <i class="ph-duotone ph-lock-open"></i>
           </div>
@@ -627,7 +598,7 @@
       <div class="tools-grid">
 
         <!-- SEP-1 Tool — first -->
-        <a href="sep1-tool.html" class="tool-card fade-up" style="transition-delay:.0s" aria-label="Open the SEP-1 Time Zero Tool">
+        <a href="sep1-tool.html" class="tool-card fade-up" aria-label="Open the SEP-1 Time Zero Tool">
           <span class="tool-tag">SEP-1 Tool</span>
           <div class="tool-card-icon" aria-hidden="true">
             <i class="ph-duotone ph-chart-line-up"></i>
@@ -642,7 +613,7 @@
         </a>
 
         <!-- LKW Tool -->
-        <a href="lkw-tool.html" class="tool-card fade-up" style="transition-delay:.1s" aria-label="Open the LKW Resolution Tool">
+        <a href="lkw-tool.html" class="tool-card fade-up" aria-label="Open the LKW Resolution Tool">
           <span class="tool-tag">LKW Tool</span>
           <div class="tool-card-icon" aria-hidden="true">
             <i class="ph-duotone ph-clock-countdown"></i>
@@ -657,7 +628,7 @@
         </a>
 
         <!-- CMO Tool -->
-        <a href="cmo-tool.html" class="tool-card fade-up" style="transition-delay:.2s" aria-label="Open the CMO Abstraction Tool">
+        <a href="cmo-tool.html" class="tool-card fade-up" aria-label="Open the CMO Abstraction Tool">
           <span class="tool-tag">CMO Tool</span>
           <div class="tool-card-icon" aria-hidden="true">
             <i class="ph-duotone ph-heart-straight"></i>
@@ -672,7 +643,7 @@
         </a>
 
         <!-- HBIPS Tool -->
-        <a href="hbips-tool.html" class="tool-card fade-up" style="transition-delay:.3s" aria-label="Open the HBIPS Abstraction Tool">
+        <a href="hbips-tool.html" class="tool-card fade-up" aria-label="Open the HBIPS Abstraction Tool">
           <span class="tool-tag">HBIPS Tool</span>
           <div class="tool-card-icon" aria-hidden="true">
             <i class="ph-duotone ph-brain"></i>
@@ -687,7 +658,7 @@
         </a>
 
         <!-- Q&A Lookup -->
-        <a href="lookup.html" class="tool-card fade-up" style="transition-delay:.4s" aria-label="Open the Q&A Lookup tool">
+        <a href="lookup.html" class="tool-card fade-up" aria-label="Open the Q&A Lookup tool">
           <span class="tool-tag">Q&amp;A Lookup</span>
           <div class="tool-card-icon" aria-hidden="true">
             <i class="ph-duotone ph-books"></i>
@@ -702,7 +673,7 @@
         </a>
 
         <!-- Tag System -->
-        <a href="lookup.html" class="tool-card fade-up" style="transition-delay:.5s" aria-label="Open the Tag System in the Q&A tool">
+        <a href="lookup.html" class="tool-card fade-up" aria-label="Open the Tag System in the Q&A tool">
           <span class="tool-tag">Tag System</span>
           <div class="tool-card-icon" aria-hidden="true">
             <i class="ph-duotone ph-tag-chevron"></i>
@@ -717,7 +688,7 @@
         </a>
 
         <!-- Abstractly -->
-        <a href="abstractly.html" class="tool-card fade-up" style="transition-delay:.6s" aria-label="Play Abstractly — the core measure word game">
+        <a href="abstractly.html" class="tool-card fade-up" aria-label="Play Abstractly — the core measure word game">
           <span class="tool-tag">Abstractly</span>
           <div class="tool-card-icon" aria-hidden="true">
             <i class="ph-duotone ph-game-controller"></i>
@@ -740,7 +711,7 @@
     <div class="container">
       <div class="section-label" aria-hidden="true">Feedback and Contributions</div>
       <h2 class="section-title" id="feedback-heading">Tell us what you think</h2>
-      <p class="section-sub" style="margin-bottom:32px">
+      <p class="section-sub section-sub--tight">
         Is a scenario missing? Did an answer help you? Found an error? Want to contribute a tip or scenario? This form is for all of it.
       </p>
       <div class="form-wrap">
@@ -785,44 +756,44 @@
           </div>
           <div class="form-group">
             <label class="form-label" for="fb-msg">
-              Your Message <span style="color:var(--teal)">*</span>
+              Your Message <span class="required-mark">*</span>
             </label>
             <textarea class="form-textarea" id="fb-msg" name="message"
               placeholder="Describe a missing scenario, share a tip, flag an error, or tell us anything that would make this tool more useful."
               required aria-required="true"></textarea>
           </div>
           <!-- Honeypot: hidden from real users, bots fill it, submission is silently dropped -->
-          <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <input type="text" name="website" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
           <!-- Cloudflare Turnstile: replace YOUR_SITE_KEY with your key from the Cloudflare dashboard -->
-          <div class="cf-turnstile" data-sitekey="0x4AAAAAADf-2v3MWsS9bACq" data-theme="light" style="margin-bottom:12px;"></div>
+          <div class="cf-turnstile" data-sitekey="0x4AAAAAADf-2v3MWsS9bACq" data-theme="light"></div>
           <button type="submit" class="form-submit">Send</button>
           <p class="form-note">Your email is used only to reply to your submission. It will never be shared or used for marketing.</p>
         </form>
         <div class="form-success" id="formSuccess" role="alert" aria-live="polite">
           Thank you. Your submission was received.<br>
-          <span style="font-weight:400;font-size:15px">If you included an email address, we will be in touch.</span>
+          <span class="form-success-note">If you included an email address, we will be in touch.</span>
         </div>
       </div>
     </div>
   </section>
 
   <!-- SHARE STRIP -->
-  <div style="background:#e6f5f4;border-top:1px solid #b2dedd;border-bottom:1px solid #b2dedd;padding:18px 24px;">
-    <div style="max-width:1040px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+  <div class="share-strip">
+    <div class="share-strip-inner">
       <div>
-        <div style="font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;color:#0d1f3c;margin-bottom:3px;">Share with your team</div>
-        <div style="font-size:13px;color:#3d4f62;line-height:1.5;">Free abstraction reference for core measure teams — Q&A lookup, LKW tool, and more.</div>
+        <div class="share-strip-title">Share with your team</div>
+        <div class="share-strip-sub">Free abstraction reference for core measure teams — Q&amp;A lookup, LKW tool, and more.</div>
       </div>
-      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-        <code style="background:white;border:1px solid #b2dedd;border-radius:6px;padding:7px 14px;font-size:13px;color:#0b7a78;font-family:'DM Mono',monospace;white-space:nowrap;">https://abstractiondeskqa.com</code>
-        <button onclick="(()=>{navigator.clipboard.writeText('https://abstractiondeskqa.com');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy link',2000)})()" style="background:#0b7a78;color:white;border:none;border-radius:6px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif;" onmouseover="this.style.background='#0fa39f'" onmouseout="this.style.background='#0b7a78'">Copy link</button>
+      <div class="share-strip-actions">
+        <code class="share-url-pill">https://abstractiondeskqa.com</code>
+        <button type="button" class="share-copy-btn">Copy link</button>
       </div>
     </div>
   </div>
 
   <!-- DISCLAIMER -->
-  <div class="disclaimer" role="note" aria-label="Educational disclaimer">
-    <div class="disclaimer-inner">
+  <div class="site-disclaimer" role="note" aria-label="Educational disclaimer">
+    <div class="site-disclaimer-inner">
       <strong>Educational use only.</strong>
       AbstractionDeskQA is a reference aid to support abstractor training and workflow. It does not constitute compliance advice and is not a substitute for the official TJC or CMS Specifications Manual. Always verify abstraction decisions against the current specifications. Measure specs change — confirm you are using the correct version of the manual for your abstraction period.
     </div>
@@ -851,7 +822,7 @@
   <section class="section section-alt" id="newsletter" aria-labelledby="newsletter-heading">
     <div class="container" style="max-width:480px">
       <h2 class="section-title" id="newsletter-heading">Stay updated</h2>
-      <p class="section-sub">Get notified when new Q&As are added or spec changes affect your measures.</p>
+      <p class="section-sub">Get notified when new Q&amp;As are added or spec changes affect your measures.</p>
       PASTE MAILCHIMP EMBED CODE HERE
     </div>
   </section>
@@ -860,14 +831,14 @@
 </main>
 
 <!-- FOOTER -->
-<footer role="contentinfo">
-  <div class="footer-inner">
+<footer class="site-footer">
+  <div class="site-footer-inner">
     <div>
-      <div class="footer-brand">AbstractionDesk<span style="color:var(--teal2)">QA</span></div>
+      <div class="site-footer-brand">AbstractionDesk<span>QA</span></div>
       <p>A free abstraction toolkit for core measure teams.<br>
       &copy; <span id="yr"></span> AbstractionDeskQA. Educational use only.</p>
     </div>
-    <div class="footer-links">
+    <div class="site-footer-links">
       <a href="lookup.html">Q&amp;A Lookup</a>
       <a href="sep1-tool.html">SEP-1 Tool</a>
       <a href="lkw-tool.html">LKW Tool</a>
@@ -881,9 +852,8 @@
   </div>
 </footer>
 
+<script src="assets/site.js"></script>
 <script>
-document.getElementById('yr').textContent = new Date().getFullYear();
-
 const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1 });

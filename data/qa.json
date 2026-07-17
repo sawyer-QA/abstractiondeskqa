@@ -1,0 +1,313 @@
+{
+  "entries": [
+    {
+      "id": "e-1777179550501",
+      "measure": "ED-OP",
+      "specific": "LOS",
+      "type": "routine",
+      "question": "When does ED length of stay start and end for admitted patients?",
+      "answer": "ED  length of stay (LOS) starts at the documented ED arrival time and ends at the time the patient physically leaves the ED for an inpatient bed (ED departure time), not when the admit order is placed.",
+      "source": "spec manual",
+      "tags": [
+        "arrival time",
+        "departure time",
+        "boarding",
+        "ED patient"
+      ],
+      "date": "2026-04-01T07:00:00.000Z",
+      "approved": true,
+      "notes": ""
+    },
+    {
+      "id": "e-1777179666901",
+      "measure": "ED-OP",
+      "specific": "Arrival",
+      "type": "routine",
+      "question": "If there are multiple timestamps documented for arrival or departure, which should be used?",
+      "answer": "Use the earliest valid arrival time and the actual physical departure time. Follow facility abstraction guidelines if timestamps conflict.",
+      "source": "spec manual",
+      "tags": [
+        "arrival time",
+        "departure time"
+      ],
+      "date": "2026-04-01T07:00:00.000Z",
+      "approved": true,
+      "notes": ""
+    },
+    {
+      "id": "e-1777179742582",
+      "measure": "STK",
+      "specific": "LKW",
+      "type": "routine",
+      "question": "What qualifies as “last known well” (LKW)?",
+      "answer": "LKW is the last time the patient was documented to be at their neurological baseline, not when symptoms were discovered.",
+      "source": "spec manual",
+      "tags": [
+        "LKW",
+        "baseline",
+        "symptom onset",
+        "stroke timing"
+      ],
+      "date": "2026-04-01T07:00:00.000Z",
+      "approved": true,
+      "notes": ""
+    },
+    {
+      "id": "e-1777180394872",
+      "measure": "STK",
+      "specific": "LKW",
+      "type": "routine",
+      "question": "Patient woke up with stroke symptoms (\"wake-up stroke\"). Family states he was \"fine when he went to bed around 11 PM.\" No specific LKW time is documented in the chart by clinical staff. How do we abstract Last Known Well?",
+      "answer": "\"Around 11 PM\" may be abstracted as 23:00 if — and only if — that time is documented in the medical record by clinical staff (nurse, physician, or APP). Family-reported times are acceptable when charted. If no time appears in the record, LKW = Unknown and the case excludes from the denominator. A verbal family report that was never charted cannot be used. Best practice: have ED triage nurses document the specific family-reported time and the witness name.",
+      "source": "TJC Spec Manual v2026B; Data Element: Last Known Well",
+      "tags": [
+        "LKW",
+        "TLKW",
+        "PTA",
+        "wake-up stroke",
+        "family"
+      ],
+      "date": "2026-04-01T07:00:00.000Z",
+      "approved": true,
+      "notes": ""
+    },
+    {
+      "id": "e-1777180606386",
+      "measure": "STK",
+      "specific": "LKW",
+      "type": "edge",
+      "question": "EMS documented LKW as 09:15 on the run report. The ED physician note documents LKW as 09:45. Which time takes precedence?",
+      "answer": "The ED physician's 09:45. EMS run reports are pre-hospital documents and are not part of the hospital record unless explicitly referenced and incorporated by clinical staff. Exception: if the physician writes \"per EMS, LKW 09:15,\" that physician-acknowledged EMS time may be used.",
+      "source": "",
+      "tags": [
+        "LKW",
+        "TLKW",
+        "stroke",
+        "EMS",
+        "clinician hierarchy",
+        "PTA"
+      ],
+      "date": "2026-04-01T07:00:00.000Z",
+      "approved": true,
+      "notes": ""
+    },
+    {
+      "id": "e-1777180711310",
+      "measure": "STK",
+      "specific": "TNK",
+      "type": "edge",
+      "question": "IV alteplase initiated at 3 hours 22 minutes from LKW. Physician did not document a reason for extending past 3 hours. Does this pass?",
+      "answer": "Yes — ASR-IP-1 uses a 3.5-hour (210-minute) window. Three hours 22 minutes = 202 minutes, within the window. No \"Reason for Extending\" is needed. Very common error: confusing the older 3-hour window from STK measures with ASR-IP-1's 3.5-hour window. \"Reason for Extending\" only triggers when tPA is initiated after 210 minutes from LKW.",
+      "source": "TJC Spec Manual v2026B; MIF ASR-IP-1",
+      "tags": [
+        "TNK",
+        "LKW",
+        "time window",
+        "extending tPA"
+      ],
+      "date": "2026-04-01T07:00:00.000Z",
+      "approved": true,
+      "notes": ""
+    },
+    {
+      "id": "e-1777180924598",
+      "measure": "STK",
+      "specific": "Comfort Measures",
+      "type": "gray",
+      "question": "Patient discharged to hospice. No physician note specifically using the words \"comfort measures only.\" Does hospice discharge alone satisfy the Comfort Measures Only data element for ASR-IP-3?",
+      "answer": "No — hospice discharge alone does not satisfy CMO. The Comfort Measures Only data element requires explicit documentation that care has been redirected to comfort. A DNR order, hospice referral, or POLST alone does not automatically equal CMO. Look for physician or APP notes using CMO language, goals-of-care documentation, or a CMO order set. When only hospice disposition is documented without supporting CMO documentation, the case remains in the denominator and antithrombotic should be prescribed or a valid exception documented.",
+      "source": "TJC Spec Manual v2026B; Data Elements: Comfort Measures Only, Discharge Disposition",
+      "tags": [
+        "hospice",
+        "comfort measures",
+        "CMO",
+        "POLST",
+        "antithrombotic",
+        "disposition",
+        "reason no antithrombotic",
+        "code status"
+      ],
+      "date": "2026-04-01T07:00:00.000Z",
+      "approved": true,
+      "notes": ""
+    },
+    {
+      "id": "e-1777181017434",
+      "measure": "STK",
+      "specific": "Comfort Measures",
+      "type": "gray",
+      "question": "Patient has a POLST on file documenting DNR/DNI, but no physician note using \"comfort measures only\" language. Does the POLST alone satisfy the Comfort Measures Only data element?",
+      "answer": "Gray area — and a frequent source of inter-rater variation. A POLST/DNR documents resuscitation preferences, not necessarily a global comfort-focused care goal. CMO requires documentation that the entire care approach has shifted to comfort. Look for additional supporting documentation: physician notes with CMO language, goals-of-care or palliative care notes indicating CMO transition, or a CMO order. Do not assume CMO from DNR status alone. This is one of the most common abstractor disagreements — when in doubt, flag for team consensus.",
+      "source": "TJC PMN guidance; Data Element: Comfort Measures Only",
+      "tags": [
+        "POLST",
+        "CMO",
+        "comfort measures",
+        "ACP",
+        "code status",
+        "EOL",
+        "comfort care"
+      ],
+      "date": "2026-04-01T07:00:00.000Z",
+      "approved": true,
+      "notes": ""
+    },
+    {
+      "id": "e-1777181095169",
+      "measure": "STK",
+      "specific": "LKW",
+      "type": "gray",
+      "question": "Patient arrives at ED at 2330 with fatigue, SOB, and productive cough. Two hours after arrival develops right-sided weakness and facial drooping. How do you answer the Last Known Well data element (did LKW occur prior to arrival)?",
+      "answer": "No. If there is no documentation that LKW or stroke symptoms occurred prior to hospital arrival, AND there is documentation that LKW first occurred after arrival time, this is an in-house stroke — select No. The initial presenting complaints (fatigue, SOB, cough) are unrelated to the stroke. The neurological event developed in-house. The patient does not meet the criterion for LKW prior to arrival and will typically be excluded from the stroke measure denominator.",
+      "source": "TJC Spec Manual v2026B; Data Element: Last Known Well",
+      "tags": [
+        "LKW",
+        "in-house stroke",
+        "onset",
+        "arrival time",
+        "LKW",
+        "PTA",
+        "in-house stroke",
+        "AMA",
+        "arrival time"
+      ],
+      "date": "2026-04-01T07:00:00.000Z",
+      "approved": true,
+      "notes": ""
+    },
+    {
+      "id": "e-1777181200094",
+      "measure": "ED-OP",
+      "specific": "Arrival",
+      "type": "routine",
+      "question": "ED face sheet lists arrival time 1320. ED Registration Time 1325. ED Triage Time 1330. Consent to treat form has 1:17 AM. What is the Arrival Time?",
+      "answer": "1320 — the face sheet time. Use the earliest documented time from acceptable sources. The face sheet is a primary acceptable source. Registration (1325) and triage (1330) are later. The consent to treat form time of 1:17 AM is ambiguous (AM vs 24-hour format unclear) and is not a standard arrival time source. Always use earliest documented from acceptable sources.",
+      "source": "TJC Spec Manual v2026B; Data Element: Arrival Time",
+      "tags": [
+        "arrival time",
+        "ED patient",
+        "PTA"
+      ],
+      "date": "2026-04-01T07:00:00.000Z",
+      "approved": true,
+      "notes": ""
+    },
+    {
+      "id": "e-1777181276286",
+      "measure": "ED-OP",
+      "specific": "Arrival",
+      "type": "edge",
+      "question": "Patient arrives 04/01 at 2000. APN orders observation 04/02 at 0400. Patient physically leaves ED for observation unit 04/02 at 0500. Patient transferred to acute care 04/02 at 0445. What is the ED Departure Date/Time?",
+      "answer": "04/02 at 0400 — when the observation order was placed. ED Departure = the EARLIEST of: the time the patient physically left the ED, OR the time an inpatient or observation order was placed. The observation order at 0400 precedes physical departure at 0500. The transfer to acute care at 0445 is a distractor — departure was already established by the order at 0400.",
+      "source": "TJC Spec Manual v2026B; Data Element: ED Departure Date/Time",
+      "tags": [
+        "departure time",
+        "arrival time",
+        "admit time",
+        "transfer",
+        "observation",
+        "transfer",
+        "departure time"
+      ],
+      "date": "2026-04-01T07:00:00.000Z",
+      "approved": true,
+      "notes": ""
+    },
+    {
+      "id": "e-1777181408567",
+      "measure": "ED-OP",
+      "specific": "AMA",
+      "type": "gray",
+      "question": "Patient leaves the ED without signing AMA paperwork. Staff document \"patient eloped\" and note they \"left without being discharged.\" How do you answer Discharge Disposition?",
+      "answer": "Left Against Medical Advice / AMA. \"Eloped,\" \"patient directed discharge (PDD),\" and \"left without being discharged\" are all abstracted as AMA for the discharge disposition data element, regardless of whether the AMA form was signed. The patient's action — not the paperwork — defines the disposition. A signed AMA form is not required to select this value.",
+      "source": "TJC Spec Manual v2026B; Data Element: Discharge Disposition",
+      "tags": [
+        "AMA",
+        "disposition",
+        "ED patient",
+        "left without being seen",
+        "LWBS",
+        "eloped",
+        "patient directed discharge"
+      ],
+      "date": "2026-04-01T07:00:00.000Z",
+      "approved": true,
+      "notes": ""
+    },
+    {
+      "id": "",
+      "measure": "STK",
+      "specific": "Comfort Measure",
+      "type": "edge",
+      "question": "Patient arrives 3/1 at 1400. ED note documents “family considering comfort care.” On 3/2, MD note states “transition to comfort measures only.” How do you abstract timing?",
+      "answer": "Select Day 0–1.\nDiscussion of comfort care by a provider on Day 0 qualifies—even if formal transition occurs later. Earliest qualifying documentation determines abstraction.",
+      "source": "TJC PMN guidance; Data Element: Comfort Measures Only",
+      "tags": [
+        "CMO",
+        "timing",
+        "documentation",
+        "stroke",
+        "day0-1"
+      ],
+      "date": "2026-04-02T07:00:00.000Z",
+      "approved": true,
+      "notes": ""
+    },
+    {
+      "id": "",
+      "measure": "STK",
+      "specific": "Comfort Measure",
+      "type": "edge",
+      "question": "Patient arrives 6/10. Nursing note on 6/10 says “patient is comfort care.” First MD documentation of comfort measures is 6/12. What is correct abstraction?",
+      "answer": "Select Day 2 or after.\nOnly physician/APN/PA documentation counts. Nursing documentation alone does not qualify.",
+      "source": "TJC PMN guidance; Data Element: Comfort Measures Only",
+      "tags": [
+        "CMO",
+        "provider documentation",
+        "nursing vs MD",
+        "timing"
+      ],
+      "date": "2026-04-03T07:00:00.000Z",
+      "approved": true,
+      "notes": ""
+    },
+    {
+      "id": "",
+      "measure": "STK",
+      "specific": "Comfort Measure",
+      "type": "edge",
+      "question": "Patient arrives 9/1. MD note on 9/1: “Discussed hospice/comfort care with family.” No formal order placed. What is the correct abstraction?",
+      "answer": "Select Day 0–1.\nA provider discussion of comfort measures meets inclusion criteria—even without an order.",
+      "source": "TJC PMN guidance; Data Element: Comfort Measures Only",
+      "tags": [
+        "discussion counts",
+        "CMO",
+        "timing",
+        "abstraction rules"
+      ],
+      "date": "2026-04-04T07:00:00.000Z",
+      "approved": true,
+      "notes": ""
+    },
+    {
+      "id": "",
+      "measure": "STK",
+      "specific": "Comfort Measure",
+      "type": "edge",
+      "question": "Patient arrives 10/3. MD note on 10/5 states: “Patient was made comfort care on admission.” No earlier documentation available. What should you select?",
+      "answer": "Select Day 2 or after.\nAbstract based on when the documentation occurs, not when it claims the event happened.",
+      "source": "TJC PMN guidance; Data Element: Comfort Measures Only",
+      "tags": [
+        "CMO",
+        "late documentation",
+        "timing rules",
+        "common pitfall"
+      ],
+      "date": "2026-04-05T07:00:00.000Z",
+      "approved": true,
+      "notes": ""
+    }
+  ],
+  "tags": [],
+  "generatedAt": "2026-07-06T04:26:38.044834Z"
+}

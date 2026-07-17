@@ -1,46 +1,28 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <link rel="canonical" href="https://abstractiondeskqa.com/lkw-tool.html">
 <title>LKW Abstraction Tool — AbstractionDeskQA</title>
+<meta name="description" content="LKW Abstraction Tool — AbstractionDeskQA. Interactive Last Known Well (LKW) time resolution tool with priority-rule reference, practice quiz, and case walkthroughs for stroke abstraction.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://abstractiondeskqa.com/lkw-tool.html">
+<meta property="og:site_name" content="AbstractionDeskQA">
+<meta property="og:title" content="LKW Abstraction Tool — AbstractionDeskQA">
+<meta property="og:description" content="LKW Abstraction Tool — AbstractionDeskQA. Interactive Last Known Well (LKW) time resolution tool with priority-rule reference, practice quiz, and case walkthroughs for stroke abstraction.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet"/>
-<script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/phosphor/regular.css">
+<link rel="stylesheet" href="assets/phosphor/duotone.css">
+<!-- Shared design tokens / structural CSS (T-04) -->
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/site.css">
 <style>
-:root {
-  --bg: #0f1923;
-  --bg2: #172030;
-  --bg3: #1e2d40;
-  --bg4: #243448;
-  --teal: #2dd4bf;
-  --teal2: #14b8a6;
-  --teal-dim: rgba(45,212,191,0.12);
-  --teal-border: rgba(45,212,191,0.25);
-  --amber: #fbbf24;
-  --amber-dim: rgba(251,191,36,0.12);
-  --amber-border: rgba(251,191,36,0.3);
-  --red: #f87171;
-  --red-dim: rgba(248,113,113,0.12);
-  --red-border: rgba(248,113,113,0.3);
-  --green: #4ade80;
-  --green-dim: rgba(74,222,128,0.1);
-  --green-border: rgba(74,222,128,0.3);
-  --blue: #60a5fa;
-  --blue-dim: rgba(96,165,250,0.1);
-  --text: #e2eaf4;
-  --muted: #7a96b0;
-  --border: rgba(255,255,255,0.07);
-  --mono: 'DM Mono', monospace;
-  --sans: 'DM Sans', sans-serif;
-  --radius: 8px;
-}
 *{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.6;min-height:100vh;}
+body{background:var(--bg);color:var(--text);font-family:var(--body);font-size:14px;line-height:1.6;min-height:100vh;}
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 10% 0%,rgba(45,212,191,0.06) 0%,transparent 70%),radial-gradient(ellipse 40% 60% at 90% 100%,rgba(96,165,250,0.05) 0%,transparent 70%);pointer-events:none;z-index:0;}
 header{position:sticky;top:0;z-index:200;background:rgba(15,25,35,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:12px 20px;display:flex;align-items:center;gap:14px;}
 .hbadge{background:var(--teal);color:var(--bg);font-family:var(--mono);font-size:10px;font-weight:500;padding:3px 9px;border-radius:4px;letter-spacing:0.1em;white-space:nowrap;}
@@ -48,8 +30,8 @@ header{position:sticky;top:0;z-index:200;background:rgba(15,25,35,0.96);backdrop
 .hsub{font-size:11px;color:var(--muted);font-family:var(--mono);}
 .tabs{background:#ffffff;border-bottom:1px solid #dbe2ec;position:sticky;top:62px;z-index:70;box-shadow:0 2px 10px rgba(13,34,64,.06);}
 .tabs-inner{max-width:1040px;margin:0 auto;padding:0 24px;display:flex;gap:0;overflow-x:auto;}
-.tab{background:none;border:none;color:#6b7f94;font-family:'Atkinson Hyperlegible',sans-serif;font-size:14px;font-weight:600;padding:14px 18px 12px;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:color .15s,border-color .15s;display:flex;align-items:center;gap:6px;}
-.tab i{font-size:15px;}
+.tab{background:none;border:none;color:#5a6d81;font-family:'Atkinson Hyperlegible',sans-serif;font-size:14px;font-weight:600;padding:14px 18px 12px;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:color .15s,border-color .15s;display:flex;align-items:center;gap:6px;}
+.tab i{font-size:14px;vertical-align:middle;margin-right:5px;color:inherit;}
 .tab:hover{color:#0f1923;}
 .tab.on{color:#0a7c7a;border-bottom-color:#0a7c7a;}
 main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:1;}
@@ -57,17 +39,28 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 .panel.on{display:block;animation:fadeUp .22s ease;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-bottom:14px;}
-.card-label{font-family:var(--mono);font-size:10px;font-weight:500;color:var(--teal);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:12px;}
+.card--top-tight{margin-top:6px;}
+.card-label{font-family:var(--mono);font-size:10px;font-weight:500;color:var(--teal);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:14px;}
 .sh{font-size:20px;font-weight:700;margin-bottom:4px;}
 .ss{font-size:13px;color:var(--muted);margin-bottom:20px;}
 .cx{border-radius:var(--radius);padding:11px 14px;margin:10px 0;display:flex;gap:10px;font-size:13px;line-height:1.55;}
-.cx-icon{font-size:15px;flex-shrink:0;margin-top:1px;}
+.cx-icon{font-size:18px;flex-shrink:0;margin-top:1px;}
 .cx strong{display:block;font-size:10px;letter-spacing:.07em;text-transform:uppercase;margin-bottom:2px;}
+.cx strong.cx-inline{display:inline;}
+.cx--tight{margin-bottom:12px;}
+.cx--top-spaced{margin-top:12px;}
+.cx--flex{flex:1;min-width:220px;}
+.cx-pair{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;}
+.cx-list{margin-top:6px;padding-left:16px;line-height:1.9;}
 .cx.tip{background:var(--teal-dim);border-left:3px solid var(--teal);color:#99f6e4;}
+.cx.tip .cx-icon{color:#2dd4bf;}
 .cx.warn{background:var(--amber-dim);border-left:3px solid var(--amber);color:#fde68a;}
+.cx.warn .cx-icon{color:#fbbf24;}
 .cx.danger{background:var(--red-dim);border-left:3px solid var(--red);color:#fca5a5;}
+.cx.danger .cx-icon{color:#f87171;}
 .cx.ok{background:var(--green-dim);border-left:3px solid var(--green);color:#bbf7d0;}
 .cx.info{background:var(--blue-dim);border-left:3px solid var(--blue);color:#bfdbfe;}
+.cx.info .cx-icon{color:#60a5fa;}
 
 /* ── GRID ── */
 .grid-wrapper{overflow-x:auto;margin:16px 0;}
@@ -76,6 +69,11 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 .lkw-grid thead th.col-who{text-align:left;width:90px;}
 .lkw-grid thead th.col-pri{width:60px;}
 .pri-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:500;font-family:var(--mono);margin-bottom:4px;}
+.pri-badge--lg{font-size:12px;padding:4px 12px;}
+.grid-th-note{font-size:9px;color:var(--muted);font-weight:400;margin-top:2px;}
+.grid-note{font-size:10px;color:var(--muted);font-style:italic;}
+.legend-row{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 6px;font-size:12px;align-items:center;}
+.legend-label{color:var(--muted);font-family:var(--mono);font-size:10px;letter-spacing:.08em;}
 .pri-1{background:var(--red-dim);color:var(--red);border:1px solid var(--red-border);}
 .pri-2{background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber-border);}
 .pri-3{background:var(--teal-dim);color:var(--teal);border:1px solid var(--teal-border);}
@@ -91,6 +89,14 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 .gdate::placeholder,.gtime::placeholder{color:var(--muted);font-size:11px;}
 .gdate:focus,.gtime:focus{outline:none;border-color:var(--teal);}
 .unk-cell{text-align:center;vertical-align:middle;}
+.px-priority-num{font-family:var(--mono);font-weight:700;}
+.px-priority-num--md{color:var(--amber);}
+.px-priority-num--rn{color:var(--teal);}
+.px-cancel{color:var(--red);font-weight:600;}
+.px-na{color:var(--muted);font-style:italic;}
+.px-positive{color:var(--teal);}
+.px-subnote{font-size:10px;color:var(--muted);}
+.table-scroll{overflow-x:auto;}
 .unk-toggle{display:flex;flex-direction:column;gap:5px;align-items:center;}
 .unk-btn{background:var(--bg4);border:1px solid var(--border);color:var(--muted);font-family:var(--mono);font-size:11px;padding:4px 12px;border-radius:4px;cursor:pointer;transition:all .15s;width:52px;text-align:center;}
 .unk-btn:hover{border-color:var(--red);color:var(--red);}
@@ -110,6 +116,18 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 .res-val.no{color:var(--red);}
 .res-val.utd{color:var(--amber);}
 .res-val.plain{color:var(--teal);font-size:15px;line-height:1.5;}
+.res-val--wrap{font-size:12px;line-height:1.5;max-width:200px;}
+.flag-list{display:flex;flex-direction:column;gap:10px;font-size:13px;}
+.flag-label{display:flex;align-items:flex-start;gap:9px;cursor:pointer;}
+.flag-checkbox{width:15px;height:15px;margin-top:2px;}
+.flag-checkbox--exclude{accent-color:var(--red);}
+.flag-checkbox--caution{accent-color:var(--amber);}
+.flag-checkbox--info{accent-color:var(--teal);}
+.gq-prompt{font-weight:600;margin:12px 0 10px;}
+.gq-prompt--first{margin:0 0 12px;}
+.gq-answers{display:flex;gap:8px;flex-wrap:wrap;}
+.btn-icon{vertical-align:middle;margin-right:4px;}
+.btn-back{margin-bottom:14px;}
 .res-rule{font-size:12.5px;line-height:1.7;color:#c4d8ec;border-top:1px solid var(--border);padding-top:14px;margin-top:4px;}
 .rule-tag{display:inline-block;background:var(--bg4);border:1px solid var(--border);font-family:var(--mono);font-size:10px;color:var(--amber);padding:1px 7px;border-radius:3px;margin-right:6px;vertical-align:middle;}
 
@@ -125,6 +143,19 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 @media(max-width:600px){.qr-grid{grid-template-columns:1fr;}}
 .qr-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;}
 .qr-card h3{font-family:var(--mono);font-size:10px;color:var(--teal);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;}
+.calc-title-icon{vertical-align:middle;margin-right:4px;color:var(--teal);}
+.calc-block{margin-bottom:10px;}
+.calc-block-label{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.08em;margin-bottom:6px;}
+.calc-row{display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
+.calc-arrow{color:var(--muted);}
+.calc-sublabel{color:var(--muted);font-size:11px;}
+.calc-hint{font-size:10px;color:var(--muted);margin-top:5px;font-family:var(--mono);}
+.calc-in--w100{width:100px;}
+.calc-in--w72{width:72px;}
+.calc-in--w50{width:50px;}
+.calc-out{background:rgba(0,0,0,.2);cursor:default;color:var(--teal);}
+.calc-out--w72{width:72px;}
+.calc-out--w64{width:64px;}
 .qr-row{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:12px;}
 .qr-row:last-child{border-bottom:none;}
 .qr-k{color:var(--muted);flex-shrink:0;max-width:55%;}
@@ -176,19 +207,6 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 .hidden{display:none!important;}
 @media print{body{background:#fff;color:#111;}header,.tabs{display:none;}.result-box{border:2px solid #14b8a6;}}
 
-/* ── SITE NAV ── */
-.site-nav{background:#0d2240;border-bottom:1px solid rgba(255,255,255,.08);position:sticky;top:0;z-index:300;box-shadow:0 2px 12px rgba(0,0,0,.25);font-family:'Atkinson Hyperlegible',sans-serif;}
-.site-nav-inner{max-width:1040px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:62px;}
-.site-nav-brand{font-family:'DM Sans',sans-serif;font-size:20px;font-weight:700;color:white;letter-spacing:-.3px;display:flex;align-items:center;gap:10px;text-decoration:none;}
-.site-nav-brand:hover{text-decoration:none;}
-.site-nav-brand-sub{font-family:'DM Mono',monospace;font-size:11px;font-weight:400;color:rgba(255,255,255,.4);letter-spacing:.08em;text-transform:uppercase;}
-.site-qa-badge{background:#0da8a5;color:white;font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;letter-spacing:.6px;}
-.site-nav-links{display:flex;gap:6px;align-items:center;}
-.site-nav-cta{background:#0a7c7a;color:white;font-family:'Atkinson Hyperlegible',sans-serif;font-size:14px;font-weight:700;padding:8px 18px;border-radius:7px;border:none;cursor:pointer;transition:all .15s;text-decoration:none;white-space:nowrap;}
-.site-nav-cta:hover{background:#0da8a5;text-decoration:none;color:white;}
-.site-nav-cta-ghost{background:transparent;color:rgba(255,255,255,.85);font-family:'Atkinson Hyperlegible',sans-serif;font-size:14px;font-weight:600;padding:8px 18px;border-radius:7px;border:1.5px solid rgba(255,255,255,.3);cursor:pointer;transition:all .15s;text-decoration:none;white-space:nowrap;display:inline-flex;align-items:center;gap:6px;}
-.site-nav-cta-ghost:hover{border-color:rgba(255,255,255,.7);color:white;text-decoration:none;background:rgba(255,255,255,.08);}
-.site-nav-cta-ghost.active-page{background:#0a7c7a;border-color:#0a7c7a;color:white;}
 /* page hero */
 .page-title-bar{background:#0d2240;padding:36px 24px 30px;position:relative;overflow:hidden;}
 .page-title-bar::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 20% 0%,rgba(10,124,122,.22) 0%,transparent 65%);pointer-events:none;}
@@ -197,38 +215,13 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 .page-title-text{color:white;}
 .page-title-text h1{font-family:'DM Sans',sans-serif;font-size:clamp(24px,4vw,36px);font-weight:700;line-height:1.15;letter-spacing:-.3px;margin-bottom:10px;}
 .page-title-text p{font-size:15px;color:rgba(255,255,255,.62);max-width:620px;line-height:1.7;}
-/* site footer */
-.site-footer {
-  background: #07131f;
-  color: rgba(255,255,255,.45);
-  padding: 28px 24px;
-  font-family: 'Atkinson Hyperlegible', sans-serif;
-}
-.site-footer-inner {
-  max-width: 1040px; margin: 0 auto;
-  display: flex; align-items: center;
-  justify-content: space-between; gap: 16px; flex-wrap: wrap;
-}
-.site-footer-brand {
-  font-family: 'DM Sans', sans-serif; font-size: 16px;
-  font-weight: 700; color: rgba(255,255,255,.7); margin-bottom: 4px;
-}
-.site-footer p { font-size: 13px; line-height: 1.65; }
-.site-footer a { color: #0da8a5; text-decoration: none; }
-.site-footer a:hover { text-decoration: underline; }
-.site-footer-links { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; }
-.site-disclaimer {
-  background: #eef2f8; border-top: 1px solid #dbe2ec;
-  padding: 20px 24px;
-}
-.site-disclaimer-inner {
-  max-width: 1040px; margin: 0 auto;
-  font-size: 13px; color: #6b7f94; line-height: 1.75;
-  font-family: 'Atkinson Hyperlegible', sans-serif;
-}
-@media(max-width:640px){
-  .site-nav-links .site-nav-link { display: none; }
-  .site-footer-inner { flex-direction: column; gap: 12px; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 </style>
   <!-- Google tag (gtag.js) -->
@@ -242,9 +235,9 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 </head>
 <body>
 
-<a href="#maincontent" style="position:absolute;top:-60px;left:16px;z-index:999;background:#0d2240;color:white;padding:10px 18px;border-radius:10px;font-weight:700;font-size:15px;transition:top .2s;text-decoration:none;" onfocus="this.style.top='16px'" onblur="this.style.top='-60px'">Skip to main content</a>
+<a href="#maincontent" class="skip-link">Skip to main content</a>
 
-<nav class="site-nav" role="navigation" aria-label="Main navigation">
+<nav class="site-nav" aria-label="Site navigation">
   <div class="site-nav-inner">
     <a href="/" class="site-nav-brand" aria-label="AbstractionDeskQA home">
       AbstractionDesk<span class="site-qa-badge">QA</span>
@@ -277,23 +270,23 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 
 <nav class="tabs" role="tablist">
   <div class="tabs-inner">
-  <button class="tab on" onclick="showTab('grid')" data-t="grid"><i class="ph-duotone ph-table" style="font-size:14px;vertical-align:middle;margin-right:5px;color:inherit;"></i>LKW Resolution Grid</button>
-  <button class="tab" onclick="showTab('guided')" data-t="guided"><i class="ph-duotone ph-git-branch" style="font-size:14px;vertical-align:middle;margin-right:5px;color:inherit;"></i>Guided Workflow</button>
-  <button class="tab" onclick="showTab('ref')" data-t="ref"><i class="ph-duotone ph-clipboard-text" style="font-size:14px;vertical-align:middle;margin-right:5px;color:inherit;"></i>Quick Reference</button>
-  <button class="tab" onclick="showTab('quiz')" data-t="quiz"><i class="ph-duotone ph-exam" style="font-size:14px;vertical-align:middle;margin-right:5px;color:inherit;"></i>Practice Quiz</button>
-  <button class="tab" onclick="showTab('cases')" data-t="cases"><i class="ph-duotone ph-stethoscope" style="font-size:14px;vertical-align:middle;margin-right:5px;color:inherit;"></i>Case Walkthroughs</button>
+  <button type="button" class="tab on" id="tabbtn-grid" role="tab" aria-selected="true" aria-controls="tab-grid" tabindex="0" data-t="grid"><i class="ph-duotone ph-table"></i>LKW Resolution Grid</button>
+  <button type="button" class="tab" id="tabbtn-guided" role="tab" aria-selected="false" aria-controls="tab-guided" tabindex="-1" data-t="guided"><i class="ph-duotone ph-git-branch"></i>Guided Workflow</button>
+  <button type="button" class="tab" id="tabbtn-ref" role="tab" aria-selected="false" aria-controls="tab-ref" tabindex="-1" data-t="ref"><i class="ph-duotone ph-clipboard-text"></i>Quick Reference</button>
+  <button type="button" class="tab" id="tabbtn-quiz" role="tab" aria-selected="false" aria-controls="tab-quiz" tabindex="-1" data-t="quiz"><i class="ph-duotone ph-exam"></i>Practice Quiz</button>
+  <button type="button" class="tab" id="tabbtn-cases" role="tab" aria-selected="false" aria-controls="tab-cases" tabindex="-1" data-t="cases"><i class="ph-duotone ph-stethoscope"></i>Case Walkthroughs</button>
   </div>
 </nav>
 <main>
 
 <!-- ══ TAB 1: RESOLUTION GRID ══ -->
-<div id="tab-grid" class="panel on">
-  <div class="sh">LKW Resolution Grid</div>
+<div id="tab-grid" class="panel on" role="tabpanel" aria-labelledby="tabbtn-grid" tabindex="0">
+  <h2 class="sh">LKW Resolution Grid</h2>
   <p class="ss">Enter what you find in the chart for each source. The tool resolves your final abstraction values using spec priority rules.</p>
-  <div class="cx info"><span class="cx-icon"><i class="ph-duotone ph-info" style="font-size:18px;color:#60a5fa;"></i></span><div><strong>How to use</strong>Fill in each row with what the chart shows — dates, times, whether LKW/normal is explicitly stated vs. S/Sx only, and whether unknown is documented. Leave blank if not present. Hit <strong style="display:inline;">Resolve</strong> when done.</div></div>
+  <div class="cx info"><span class="cx-icon"><i class="ph-duotone ph-info"></i></span><div><strong>How to use</strong>Fill in each row with what the chart shows — dates, times, whether LKW/normal is explicitly stated vs. S/Sx only, and whether unknown is documented. Leave blank if not present. Hit <strong class="cx-inline">Resolve</strong> when done.</div></div>
 
-  <div style="display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 6px;font-size:12px;align-items:center;">
-    <span style="color:var(--muted);font-family:var(--mono);font-size:10px;letter-spacing:.08em;">COLUMN PRIORITY:</span>
+  <div class="legend-row">
+    <span class="legend-label">COLUMN PRIORITY:</span>
     <span class="pri-badge pri-1">1 — Unknown (MD)</span>
     <span class="pri-badge pri-2">2 — Code Stroke Form</span>
     <span class="pri-badge pri-3">3 — LKW / Normal</span>
@@ -306,129 +299,128 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
         <tr>
           <th class="col-who">Source</th>
           <th class="col-pri">Row<br>Priority</th>
-          <th><div><span class="pri-badge pri-1">Priority 1</span></div>Unknown<div style="font-size:9px;color:var(--muted);font-weight:400;margin-top:2px;">uncertain<br>unclear</div></th>
-          <th><div><span class="pri-badge pri-2">Priority 2</span></div>Code Stroke Form<div style="font-size:9px;color:var(--muted);font-weight:400;margin-top:2px;">RN-completed;<br>not MD priority</div></th>
-          <th><div><span class="pri-badge pri-3">Priority 3</span></div>LKW / Normal<div style="font-size:9px;color:var(--muted);font-weight:400;margin-top:2px;">explicitly last<br>known well</div></th>
-          <th><div><span class="pri-badge pri-4">Priority 4</span></div>S/Sx Only<div style="font-size:9px;color:var(--muted);font-weight:400;margin-top:2px;">symptom onset,<br>no explicit LKW</div></th>
+          <th><div><span class="pri-badge pri-1">Priority 1</span></div>Unknown<div class="grid-th-note">uncertain<br>unclear</div></th>
+          <th><div><span class="pri-badge pri-2">Priority 2</span></div>Code Stroke Form<div class="grid-th-note">RN-completed;<br>not MD priority</div></th>
+          <th><div><span class="pri-badge pri-3">Priority 3</span></div>LKW / Normal<div class="grid-th-note">explicitly last<br>known well</div></th>
+          <th><div><span class="pri-badge pri-4">Priority 4</span></div>S/Sx Only<div class="grid-th-note">symptom onset,<br>no explicit LKW</div></th>
         </tr>
       </thead>
       <tbody>
         <tr class="row-md">
-          <td style="text-align:center;vertical-align:middle;"><span class="who-pill pill-md">MD</span></td>
-          <td style="text-align:center;vertical-align:middle;"><span class="pri-badge pri-2" style="font-size:12px;padding:4px 12px;">1</span></td>
-          <td class="unk-cell"><div class="unk-toggle"><button class="unk-btn" id="md-unk-yes" onclick="toggleUnk('yes')">Yes</button><button class="unk-btn" id="md-unk-no" onclick="toggleUnk('no')">No</button></div></td>
-          <td style="vertical-align:middle;text-align:center;"><span style="font-size:10px;color:var(--muted);font-style:italic;">See RN row</span></td>
-          <td><div class="cell-input-wrap"><input class="gdate" id="md-lkw-date" placeholder="MM-DD-YYYY"/><input class="gtime" id="md-lkw-time" placeholder="HH:MM"/></div></td>
-          <td><div class="cell-input-wrap"><input class="gdate" id="md-sx-date" placeholder="MM-DD-YYYY"/><input class="gtime" id="md-sx-time" placeholder="HH:MM"/></div></td>
+          <td class="unk-cell"><span class="who-pill pill-md">MD</span></td>
+          <td class="unk-cell"><span class="pri-badge pri-2 pri-badge--lg">1</span></td>
+          <td class="unk-cell"><div class="unk-toggle"><button type="button" class="unk-btn" id="md-unk-yes" onclick="toggleUnk('yes')">Yes</button><button type="button" class="unk-btn" id="md-unk-no" onclick="toggleUnk('no')">No</button></div></td>
+          <td class="unk-cell"><span class="grid-note">See RN row</span></td>
+          <td><div class="cell-input-wrap"><input class="gdate" id="md-lkw-date" type="text" placeholder="MM-DD-YYYY"/><input class="gtime" id="md-lkw-time" type="text" placeholder="HH:MM"/></div></td>
+          <td><div class="cell-input-wrap"><input class="gdate" id="md-sx-date" type="text" placeholder="MM-DD-YYYY"/><input class="gtime" id="md-sx-time" type="text" placeholder="HH:MM"/></div></td>
         </tr>
         <tr class="row-rn">
-          <td style="text-align:center;vertical-align:middle;"><span class="who-pill pill-rn">RN</span></td>
-          <td style="text-align:center;vertical-align:middle;"><span class="pri-badge pri-3" style="font-size:12px;padding:4px 12px;">2</span></td>
+          <td class="unk-cell"><span class="who-pill pill-rn">RN</span></td>
+          <td class="unk-cell"><span class="pri-badge pri-3 pri-badge--lg">2</span></td>
           <td class="unk-cell"><div class="unk-x" title="RN unknown is irrelevant to abstraction">✕</div></td>
-          <td><div class="cell-input-wrap"><input class="gdate" id="csf-date" placeholder="MM-DD-YYYY"/><input class="gtime" id="csf-time" placeholder="HH:MM"/></div></td>
-          <td><div class="cell-input-wrap"><input class="gdate" id="rn-lkw-date" placeholder="MM-DD-YYYY"/><input class="gtime" id="rn-lkw-time" placeholder="HH:MM"/></div></td>
-          <td><div class="cell-input-wrap"><input class="gdate" id="rn-sx-date" placeholder="MM-DD-YYYY"/><input class="gtime" id="rn-sx-time" placeholder="HH:MM"/></div></td>
+          <td><div class="cell-input-wrap"><input class="gdate" id="csf-date" type="text" placeholder="MM-DD-YYYY"/><input class="gtime" id="csf-time" type="text" placeholder="HH:MM"/></div></td>
+          <td><div class="cell-input-wrap"><input class="gdate" id="rn-lkw-date" type="text" placeholder="MM-DD-YYYY"/><input class="gtime" id="rn-lkw-time" type="text" placeholder="HH:MM"/></div></td>
+          <td><div class="cell-input-wrap"><input class="gdate" id="rn-sx-date" type="text" placeholder="MM-DD-YYYY"/><input class="gtime" id="rn-sx-time" type="text" placeholder="HH:MM"/></div></td>
         </tr>
       </tbody>
     </table>
   </div>
 
-  <div class="card" style="margin-top:6px;">
+  <div class="card card--top-tight">
     <div class="card-label">Context Flags</div>
-    <div style="display:flex;flex-direction:column;gap:10px;font-size:13px;">
-      <label style="display:flex;align-items:flex-start;gap:9px;cursor:pointer;"><input type="checkbox" id="flag-inhouse" style="accent-color:var(--red);width:15px;height:15px;margin-top:2px;"/><span><strong>In-house stroke</strong> — LKW / stroke signs first occurred <em>after</em> hospital arrival</span></label>
-      <label style="display:flex;align-items:flex-start;gap:9px;cursor:pointer;"><input type="checkbox" id="flag-justprior" style="accent-color:var(--amber);width:15px;height:15px;margin-top:2px;"/><span><strong>"Just prior to ED arrival"</strong> — no specific time range documented</span></label>
-      <label style="display:flex;align-items:flex-start;gap:9px;cursor:pointer;"><input type="checkbox" id="flag-episodes" style="accent-color:var(--teal);width:15px;height:15px;margin-top:2px;" onchange="toggleEpiNote()"/><span><strong>Multiple symptom episodes</strong> with documented resolution between them</span></label>
+    <div class="flag-list">
+      <label class="flag-label"><input type="checkbox" id="flag-inhouse" class="flag-checkbox flag-checkbox--exclude"/><span><strong>In-house stroke</strong> — LKW / stroke signs first occurred <em>after</em> hospital arrival</span></label>
+      <label class="flag-label"><input type="checkbox" id="flag-justprior" class="flag-checkbox flag-checkbox--caution"/><span><strong>"Just prior to ED arrival"</strong> — no specific time range documented</span></label>
+      <label class="flag-label"><input type="checkbox" id="flag-episodes" class="flag-checkbox flag-checkbox--info" onchange="toggleEpiNote()"/><span><strong>Multiple symptom episodes</strong> with documented resolution between them</span></label>
     </div>
-    <div class="cx warn hidden" id="epi-note" style="margin-top:12px;"><span class="cx-icon"><i class="ph-duotone ph-warning" style="font-size:18px;color:#fbbf24;"></i></span><div><strong>Use Most Recent Episode</strong>When symptoms occurred, resolved, then recurred — use the time of the <strong>most recent episode</strong> before arrival. Not the first. Only applies when resolution is explicitly documented between episodes.</div></div>
+    <div class="cx warn hidden cx--top-spaced" id="epi-note"><span class="cx-icon"><i class="ph-duotone ph-warning"></i></span><div><strong>Use Most Recent Episode</strong>When symptoms occurred, resolved, then recurred — use the time of the <strong>most recent episode</strong> before arrival. Not the first. Only applies when resolution is explicitly documented between episodes.</div></div>
   </div>
 
-  <button class="resolve-btn" onclick="resolveGrid()">Resolve → Determine LKW Abstraction Values</button>
+  <button type="button" class="resolve-btn" onclick="resolveGrid()">Resolve → Determine LKW Abstraction Values</button>
 
   <div class="result-box" id="grid-result">
-    <div class="card-label" style="margin-bottom:14px;">Abstraction Result</div>
+    <div class="card-label">Abstraction Result</div>
     <div class="res-fields">
       <div><div class="res-field-label">Last Known Well (Y/N)</div><div class="res-val" id="r-yn">—</div></div>
       <div><div class="res-field-label">Date LKW</div><div class="res-val plain" id="r-date">—</div></div>
       <div><div class="res-field-label">Time LKW</div><div class="res-val plain" id="r-time">—</div></div>
-      <div><div class="res-field-label">Rule Applied</div><div class="res-val plain" id="r-rule" style="font-size:12px;line-height:1.5;max-width:200px;"></div></div>
+      <div><div class="res-field-label">Rule Applied</div><div class="res-val plain res-val--wrap" id="r-rule"></div></div>
     </div>
     <div class="res-rule" id="r-rationale"></div>
-    <div class="btn-row"><button class="btn" onclick="window.print()"><i class="ph ph-printer" style="vertical-align:middle;margin-right:4px;"></i>Print</button><button class="btn ghost" onclick="clearGrid()">↩ Clear</button></div>
+    <div class="btn-row"><button type="button" class="btn" onclick="window.print()"><i class="ph ph-printer btn-icon"></i>Print</button><button type="button" class="btn ghost" onclick="clearGrid()">↩ Clear</button></div>
   </div>
 </div>
 
 <!-- ══ TAB 2: GUIDED ══ -->
-<div id="tab-guided" class="panel">
-  <div class="sh">Guided Workflow</div>
+<div id="tab-guided" class="panel" role="tabpanel" aria-labelledby="tabbtn-guided" tabindex="0">
+  <h2 class="sh">Guided Workflow</h2>
   <p class="ss">Answer each question to determine your LKW abstraction values step by step.</p>
   <div class="card" id="gq1">
     <div class="card-label">Step 1 — Stroke Timing</div>
-    <div style="font-weight:600;margin-bottom:12px;">Did LKW / stroke signs first occur <em>after</em> hospital arrival?</div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;"><button class="btn" onclick="gAns(1,'inhouse')">Yes — in-house stroke</button><button class="btn ghost" onclick="gAns(1,'pre')">No — occurred before arrival</button></div>
+    <div class="gq-prompt gq-prompt--first">Did LKW / stroke signs first occur <em>after</em> hospital arrival?</div>
+    <div class="gq-answers"><button type="button" class="btn" onclick="gAns(1,'inhouse')">Yes — in-house stroke</button><button type="button" class="btn ghost" onclick="gAns(1,'pre')">No — occurred before arrival</button></div>
   </div>
   <div class="card hidden" id="gq2">
     <div class="card-label">Step 2 — Documentation Exists?</div>
-    <div class="cx warn"><span class="cx-icon"><i class="ph-duotone ph-warning" style="font-size:18px;color:#fbbf24;"></i></span><div><strong>S/Sx ≠ LKW</strong>Symptom onset and Last Known Well are different. Prefer explicit LKW documentation. Only fall back to symptom onset if no LKW time is documented anywhere.</div></div>
-    <div style="font-weight:600;margin:12px 0 10px;">Is there any documentation of date/time LKW or at baseline prior to arrival?</div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;"><button class="btn" onclick="gAns(2,'yes')">Yes</button><button class="btn ghost" onclick="gAns(2,'no')">No documentation at all</button></div>
+    <div class="cx warn"><span class="cx-icon"><i class="ph-duotone ph-warning"></i></span><div><strong>S/Sx ≠ LKW</strong>Symptom onset and Last Known Well are different. Prefer explicit LKW documentation. Only fall back to symptom onset if no LKW time is documented anywhere.</div></div>
+    <div class="gq-prompt">Is there any documentation of date/time LKW or at baseline prior to arrival?</div>
+    <div class="gq-answers"><button type="button" class="btn" onclick="gAns(2,'yes')">Yes</button><button type="button" class="btn ghost" onclick="gAns(2,'no')">No documentation at all</button></div>
   </div>
   <div class="card hidden" id="gq3">
     <div class="card-label">Step 3 — MD Documents Unknown?</div>
-    <div class="cx danger"><span class="cx-icon"><i class="ph-duotone ph-warning-octagon" style="font-size:18px;color:#f87171;"></i></span><div><strong>Priority 1 — MD Unknown cancels everything</strong>Any MD/APN/PA explicitly documenting "unknown/uncertain/unclear" cancels all nursing, EMS, and S/Sx times → NO.<br><br>Exceptions: (a) same MD corrects it later with a specific time, OR (b) stated as reason for no tPA on CSF and another part of record has a specific time.</div></div>
-    <div style="font-weight:600;margin:12px 0 10px;">Does any MD/APN/PA explicitly document LKW as unknown, uncertain, or unclear?</div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;"><button class="btn" onclick="gAns(3,'yes')">Yes — MD says unknown</button><button class="btn ghost" onclick="gAns(3,'no')">No</button></div>
+    <div class="cx danger"><span class="cx-icon"><i class="ph-duotone ph-warning-octagon"></i></span><div><strong>Priority 1 — MD Unknown cancels everything</strong>Any MD/APN/PA explicitly documenting "unknown/uncertain/unclear" cancels all nursing, EMS, and S/Sx times → NO.<br><br>Exceptions: (a) same MD corrects it later with a specific time, OR (b) stated as reason for no tPA on CSF and another part of record has a specific time.</div></div>
+    <div class="gq-prompt">Does any MD/APN/PA explicitly document LKW as unknown, uncertain, or unclear?</div>
+    <div class="gq-answers"><button type="button" class="btn" onclick="gAns(3,'yes')">Yes — MD says unknown</button><button type="button" class="btn ghost" onclick="gAns(3,'no')">No</button></div>
   </div>
   <div class="card hidden" id="gq4">
     <div class="card-label">Step 4 — Best Source</div>
-    <div class="cx tip"><span class="cx-icon"><i class="ph-duotone ph-clipboard-text" style="font-size:18px;color:#2dd4bf;"></i></span><div><strong>Column priority</strong>Code Stroke Form (Priority 2) → MD LKW/Normal (Priority 3) → RN LKW/Normal (Priority 3, Row 2) → MD S/Sx (Priority 4) → RN S/Sx (Priority 4, Row 2)</div></div>
-    <div style="font-weight:600;margin:12px 0 10px;">What is the highest-priority source with a documented date/time?</div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;"><button class="btn" onclick="gAns(4,'csf')">Code Stroke Form</button><button class="btn ghost" onclick="gAns(4,'md')">MD/APN/PA note</button><button class="btn ghost" onclick="gAns(4,'rn')">Nursing / EMS only</button></div>
+    <div class="cx tip"><span class="cx-icon"><i class="ph-duotone ph-clipboard-text"></i></span><div><strong>Column priority</strong>Code Stroke Form (Priority 2) → MD LKW/Normal (Priority 3) → RN LKW/Normal (Priority 3, Row 2) → MD S/Sx (Priority 4) → RN S/Sx (Priority 4, Row 2)</div></div>
+    <div class="gq-prompt">What is the highest-priority source with a documented date/time?</div>
+    <div class="gq-answers"><button type="button" class="btn" onclick="gAns(4,'csf')">Code Stroke Form</button><button type="button" class="btn ghost" onclick="gAns(4,'md')">MD/APN/PA note</button><button type="button" class="btn ghost" onclick="gAns(4,'rn')">Nursing / EMS only</button></div>
   </div>
   <div class="card hidden" id="gq5">
     <div class="card-label">Step 5 — Multiple Times?</div>
-    <div class="cx warn"><span class="cx-icon"><i class="ph-duotone ph-warning" style="font-size:18px;color:#fbbf24;"></i></span><div><strong>Resolution rules</strong><ul style="margin-top:6px;padding-left:16px;line-height:1.9;"><li>CSF specific time → wins</li><li>Multiple MD times (no CSF) → use <strong>earliest</strong></li><li>Multiple episodes with resolution → use <strong>most recent</strong> episode</li><li>Date LKW multiple dates → use <strong>earliest</strong></li></ul></div></div>
-    <div style="font-weight:600;margin:12px 0 10px;">Are multiple conflicting times documented?</div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;">
-      <button class="btn ghost" onclick="gAns(5,'single')">No — single time</button>
-      <button class="btn ghost" onclick="gAns(5,'csf')">Yes — CSF has specific time</button>
-      <button class="btn ghost" onclick="gAns(5,'mdmulti')">Yes — multiple MD times</button>
-      <button class="btn ghost" onclick="gAns(5,'episodes')">Yes — multiple episodes with resolution</button>
+    <div class="cx warn"><span class="cx-icon"><i class="ph-duotone ph-warning"></i></span><div><strong>Resolution rules</strong><ul class="cx-list"><li>CSF specific time → wins</li><li>Multiple MD times (no CSF) → use <strong>earliest</strong></li><li>Multiple episodes with resolution → use <strong>most recent</strong> episode</li><li>Date LKW multiple dates → use <strong>earliest</strong></li></ul></div></div>
+    <div class="gq-prompt">Are multiple conflicting times documented?</div>
+    <div class="gq-answers">
+      <button type="button" class="btn ghost" onclick="gAns(5,'single')">No — single time</button>
+      <button type="button" class="btn ghost" onclick="gAns(5,'csf')">Yes — CSF has specific time</button>
+      <button type="button" class="btn ghost" onclick="gAns(5,'mdmulti')">Yes — multiple MD times</button>
+      <button type="button" class="btn ghost" onclick="gAns(5,'episodes')">Yes — multiple episodes with resolution</button>
     </div>
   </div>
   <div class="result-box hidden" id="guided-result">
-    <div class="card-label" style="margin-bottom:14px;">Abstraction Result</div>
+    <div class="card-label">Abstraction Result</div>
     <div class="res-fields">
       <div><div class="res-field-label">LKW Y/N</div><div class="res-val" id="gr-yn">—</div></div>
       <div><div class="res-field-label">Date LKW</div><div class="res-val plain" id="gr-date">—</div></div>
       <div><div class="res-field-label">Time LKW</div><div class="res-val plain" id="gr-time">—</div></div>
     </div>
     <div class="res-rule" id="gr-rat"></div>
-    <div class="btn-row"><button class="btn" onclick="window.print()"><i class="ph ph-printer" style="vertical-align:middle;margin-right:4px;"></i>Print</button><button class="btn ghost" onclick="resetGuided()">↩ Start Over</button></div>
+    <div class="btn-row"><button type="button" class="btn" onclick="window.print()"><i class="ph ph-printer btn-icon"></i>Print</button><button type="button" class="btn ghost" onclick="resetGuided()">↩ Start Over</button></div>
   </div>
 </div>
 
 <!-- ══ TAB 3: QUICK REFERENCE ══ -->
-<div id="tab-ref" class="panel">
-  <div class="sh">Quick Reference</div>
+<div id="tab-ref" class="panel" role="tabpanel" aria-labelledby="tabbtn-ref" tabindex="0">
+  <h2 class="sh">Quick Reference</h2>
   <p class="ss">v2026B · Stroke</p>
 
   <div class="card">
     <div class="card-label">LKW Documentation Priority Matrix</div>
-    <div class="cx info" style="margin-bottom:12px;"><span class="cx-icon"><i class="ph-duotone ph-info" style="font-size:18px;color:#60a5fa;"></i></span><div>Column priority determines what <em>type</em> of documentation wins. Row priority determines <em>who</em> wins when the same column has multiple entries. The hierarchy shown here (1=Unknown, 2=Code Stroke Form (CSF), 3=LKW/Normal, 4=S/Sx) is the spec-derived hierarchy.</div></div>
-    <div style="overflow-x:auto;">
+    <div class="cx info cx--tight"><span class="cx-icon"><i class="ph-duotone ph-info"></i></span><div>Column priority determines what <em>type</em> of documentation wins. Row priority determines <em>who</em> wins when the same column has multiple entries. The hierarchy shown here (1=Unknown, 2=Code Stroke Form (CSF), 3=LKW/Normal, 4=S/Sx) is the spec-derived hierarchy.</div></div>
+    <div class="table-scroll">
     <table class="px-table">
       <thead><tr><th>Source</th><th>Row Priority</th><th><span class="pri-badge pri-1">1</span> Unknown</th><th><span class="pri-badge pri-2">2</span> Code Stroke Form (CSF)</th><th><span class="pri-badge pri-3">3</span> LKW/Normal</th><th><span class="pri-badge pri-4">4</span> S/Sx Only</th></tr></thead>
       <tbody>
-        <tr><td><span class="who-pill pill-md">MD</span></td><td style="font-family:var(--mono);font-weight:700;color:var(--amber);">1</td><td style="color:var(--red);font-weight:600;">Yes / No<br><span style="font-size:10px;color:var(--muted);font-weight:400;">YES = cancels ALL</span></td><td style="color:var(--muted);font-style:italic;">See RN row</td><td>Date / Time/s</td><td>Date / Time/s</td></tr>
-        <tr><td><span class="who-pill pill-rn">RN</span></td><td style="font-family:var(--mono);font-weight:700;color:var(--teal);">2</td><td style="color:var(--muted);font-style:italic;">✕ irrelevant</td><td style="color:var(--teal);">Date / Time/s<br><span style="font-size:10px;color:var(--muted);">Not MD-level priority — but beats all other positive sources</span></td><td>Date / Time/s</td><td>Date / Time/s</td></tr>
+        <tr><td><span class="who-pill pill-md">MD</span></td><td class="px-priority-num px-priority-num--md">1</td><td class="px-cancel">Yes / No<br><span class="px-subnote">YES = cancels ALL</span></td><td class="px-na">See RN row</td><td>Date / Time/s</td><td>Date / Time/s</td></tr>
+        <tr><td><span class="who-pill pill-rn">RN</span></td><td class="px-priority-num px-priority-num--rn">2</td><td class="px-na">✕ irrelevant</td><td class="px-positive">Date / Time/s<br><span class="px-subnote">Not MD-level priority — but beats all other positive sources</span></td><td>Date / Time/s</td><td>Date / Time/s</td></tr>
       </tbody>
     </table>
     </div>
-    <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;">
-      <div class="cx danger" style="flex:1;min-width:220px;"><span class="cx-icon"><i class="ph-duotone ph-warning-octagon" style="font-size:18px;color:#f87171;"></i></span><div><strong>Time LKW — Multiple times</strong>Multiple S/Sx episodes → most recent. Multiple MD times → earliest. MD unknown → cancels ALL. No CSF + multiple times → MD first.</div></div>
-      <div class="cx warn" style="flex:1;min-width:220px;"><span class="cx-icon"><i class="ph-duotone ph-warning" style="font-size:18px;color:#fbbf24;"></i></span><div><strong>Date LKW — Multiple dates</strong>Always use the <strong style="display:inline;">earliest</strong> date when multiple are documented.</div></div>
-      
+    <div class="cx-pair">
+      <div class="cx danger cx--flex"><span class="cx-icon"><i class="ph-duotone ph-warning-octagon"></i></span><div><strong>Time LKW — Multiple times</strong>Multiple S/Sx episodes → most recent. Multiple MD times → earliest. MD unknown → cancels ALL. No CSF + multiple times → MD first.</div></div>
+      <div class="cx warn cx--flex"><span class="cx-icon"><i class="ph-duotone ph-warning"></i></span><div><strong>Date LKW — Multiple dates</strong>Always use the <strong class="cx-inline">earliest</strong> date when multiple are documented.</div></div>
     </div>
   </div>
 
@@ -459,43 +451,43 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
       <div class="qr-row"><span class="qr-k">"Less than X hrs ago"</span><span class="qr-v">Use X → Arrival − X</span></div>
       <div class="qr-row"><span class="qr-k">"Just prior to arrival"</span><span class="qr-v">Use arrival time</span></div>
     </div>
-    <div class="qr-card"><h3><i class="ph-duotone ph-calculator" style="vertical-align:middle;margin-right:4px;color:var(--teal);"></i> Calculators</h3>
-      <div style="margin-bottom:10px;"><div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.08em;margin-bottom:6px;">MILITARY TIME CONVERTER</div>
-        <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
-          <input class="calc-in" id="conv-in" placeholder="5:31 PM" oninput="doConvert()" style="width:100px;"/>
-          <span style="color:var(--muted);">→</span>
-          <div class="calc-in" id="conv-out" style="width:72px;background:rgba(0,0,0,.2);cursor:default;color:var(--teal);">—</div>
+    <div class="qr-card"><h3><i class="ph-duotone ph-calculator calc-title-icon"></i> Calculators</h3>
+      <div class="calc-block"><div class="calc-block-label">MILITARY TIME CONVERTER</div>
+        <div class="calc-row">
+          <input class="calc-in calc-in--w100" id="conv-in" type="text" placeholder="5:31 PM" oninput="doConvert()"/>
+          <span class="calc-arrow">→</span>
+          <div class="calc-in calc-out calc-out--w72" id="conv-out">—</div>
         </div>
       </div>
-      <div><div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.08em;margin-bottom:6px;">HOURS-AGO SUBTRACTOR</div>
-        <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
-          <input class="calc-in" id="calc-arr" placeholder="1924" oninput="doCalc()" style="width:72px;"/>
-          <span style="color:var(--muted);font-size:11px;">− hrs:</span>
-          <input class="calc-in" id="calc-hrs" placeholder="3" oninput="doCalc()" style="width:50px;"/>
-          <span style="color:var(--muted);">→</span>
-          <div class="calc-in" id="calc-out" style="width:64px;background:rgba(0,0,0,.2);cursor:default;color:var(--teal);">—</div>
+      <div><div class="calc-block-label">HOURS-AGO SUBTRACTOR</div>
+        <div class="calc-row">
+          <input class="calc-in calc-in--w72" id="calc-arr" type="text" placeholder="1924" oninput="doCalc()"/>
+          <span class="calc-sublabel">− hrs:</span>
+          <input class="calc-in calc-in--w50" id="calc-hrs" type="number" step="any" placeholder="3" oninput="doCalc()"/>
+          <span class="calc-arrow">→</span>
+          <div class="calc-in calc-out calc-out--w64" id="calc-out">—</div>
         </div>
-        <div style="font-size:10px;color:var(--muted);margin-top:5px;font-family:var(--mono);">Always use MAX for ranges</div>
+        <div class="calc-hint">Always use MAX for ranges</div>
       </div>
     </div>
   </div>
 
   <div class="card"><div class="card-label">Top Abstractor Pitfalls</div>
-    <div class="cx danger"><span class="cx-icon"><i class="ph-duotone ph-warning-octagon" style="font-size:18px;color:#f87171;"></i></span><div><strong>Pitfall #1 — Using S/Sx when explicit LKW is documented</strong>"Patient normal at 8 PM" + "symptoms at 8:30 PM" → LKW = 20:00, not 20:30. Explicit LKW always beats symptom onset.</div></div>
-    <div class="cx danger"><span class="cx-icon"><i class="ph-duotone ph-warning-octagon" style="font-size:18px;color:#f87171;"></i></span><div><strong>Pitfall #2 — Ignoring MD "unknown" because nursing has a time</strong>MD Unknown (Priority 1) cancels everything. One MD saying unknown = NO. RN unknown = irrelevant.</div></div>
-    <div class="cx warn"><span class="cx-icon"><i class="ph-duotone ph-warning" style="font-size:18px;color:#fbbf24;"></i></span><div><strong>Pitfall #3 — Forgetting to advance date at midnight</strong>24:00 on 11-24 → 00:00 on 11-25. Always change the Date LKW when converting midnight.</div></div>
-    <div class="cx warn"><span class="cx-icon"><i class="ph-duotone ph-warning" style="font-size:18px;color:#fbbf24;"></i></span><div><strong>Pitfall #4 — Assuming wake-up stroke = unknown</strong>If the physician documents a bedtime as LKW — use it. Only "unknown" if MD explicitly states it.</div></div>
-    <div class="cx tip"><span class="cx-icon"><i class="ph-duotone ph-lightbulb" style="font-size:18px;color:#2dd4bf;"></i></span><div><strong>Pitfall #5 — Stroke Education Form ≠ Code Stroke Form</strong>Stroke Education Form and Core Measure Form are excluded. Only acute stroke response forms qualify as CSF.</div></div>
-    <div class="cx tip"><span class="cx-icon"><i class="ph-duotone ph-lightbulb" style="font-size:18px;color:#2dd4bf;"></i></span><div><strong>Pitfall #6 — Using first episode instead of last</strong>Symptoms → resolved → recurred = use most recent episode before arrival. Grid note: "symptom onset/resolved → closest to arrival."</div></div>
+    <div class="cx danger"><span class="cx-icon"><i class="ph-duotone ph-warning-octagon"></i></span><div><strong>Pitfall #1 — Using S/Sx when explicit LKW is documented</strong>"Patient normal at 8 PM" + "symptoms at 8:30 PM" → LKW = 20:00, not 20:30. Explicit LKW always beats symptom onset.</div></div>
+    <div class="cx danger"><span class="cx-icon"><i class="ph-duotone ph-warning-octagon"></i></span><div><strong>Pitfall #2 — Ignoring MD "unknown" because nursing has a time</strong>MD Unknown (Priority 1) cancels everything. One MD saying unknown = NO. RN unknown = irrelevant.</div></div>
+    <div class="cx warn"><span class="cx-icon"><i class="ph-duotone ph-warning"></i></span><div><strong>Pitfall #3 — Forgetting to advance date at midnight</strong>24:00 on 11-24 → 00:00 on 11-25. Always change the Date LKW when converting midnight.</div></div>
+    <div class="cx warn"><span class="cx-icon"><i class="ph-duotone ph-warning"></i></span><div><strong>Pitfall #4 — Assuming wake-up stroke = unknown</strong>If the physician documents a bedtime as LKW — use it. Only "unknown" if MD explicitly states it.</div></div>
+    <div class="cx tip"><span class="cx-icon"><i class="ph-duotone ph-lightbulb"></i></span><div><strong>Pitfall #5 — Stroke Education Form ≠ Code Stroke Form</strong>Stroke Education Form and Core Measure Form are excluded. Only acute stroke response forms qualify as CSF.</div></div>
+    <div class="cx tip"><span class="cx-icon"><i class="ph-duotone ph-lightbulb"></i></span><div><strong>Pitfall #6 — Using first episode instead of last</strong>Symptoms → resolved → recurred = use most recent episode before arrival. Grid note: "symptom onset/resolved → closest to arrival."</div></div>
   </div>
 </div>
 
 <!-- ══ TAB 4: QUIZ ══ -->
-<div id="tab-quiz" class="panel">
-  <div class="sh">Practice Quiz</div>
+<div id="tab-quiz" class="panel" role="tabpanel" aria-labelledby="tabbtn-quiz" tabindex="0">
+  <h2 class="sh">Practice Quiz</h2>
   <p class="ss">10 scenario-based questions covering every major LKW rule.</p>
   <div class="quiz-mode-row">
-    <button class="qmode-btn on" id="qm-mc" onclick="setQMode('mc')">Multiple Choice</button>
+    <button type="button" class="qmode-btn on" id="qm-mc" onclick="setQMode('mc')">Multiple Choice</button>
   </div>
   <div id="quiz-mc">
     <div class="q-prog-wrap">
@@ -507,30 +499,23 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 </div>
 
 <!-- ══ TAB 5: CASES ══ -->
-<div id="tab-cases" class="panel">
-  <div class="sh">Case Walkthroughs</div>
+<div id="tab-cases" class="panel" role="tabpanel" aria-labelledby="tabbtn-cases" tabindex="0">
+  <h2 class="sh">Case Walkthroughs</h2>
   <p class="ss">Step-by-step cases that explain the abstraction reasoning at every decision point.</p>
   <div id="case-selector">
-    <div class="cx tip"><span class="cx-icon"><i class="ph-duotone ph-stethoscope" style="font-size:18px;color:#2dd4bf;"></i></span><div><strong>How to use</strong>Select a case, then work through each step. The trainer's reasoning appears at each decision point.</div></div>
+    <div class="cx tip"><span class="cx-icon"><i class="ph-duotone ph-stethoscope"></i></span><div><strong>How to use</strong>Select a case, then work through each step. The trainer's reasoning appears at each decision point.</div></div>
     <div class="case-grid" id="case-card-grid"></div>
   </div>
   <div id="case-runner" class="hidden">
-    <button class="btn ghost" onclick="backToCases()" style="margin-bottom:14px;">← Back to Cases</button>
+    <button type="button" class="btn ghost btn-back" onclick="backToCases()">← Back to Cases</button>
     <div class="wt-dots" id="case-dots"></div>
     <div id="case-step-body"></div>
   </div>
 </div>
 
 </main>
+<script src="assets/site.js"></script>
 <script>
-// ── TABS ──
-function showTab(id){
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
-  document.getElementById('tab-'+id).classList.add('on');
-  document.querySelector('[data-t="'+id+'"]').classList.add('on');
-}
-
 // ── GRID ──
 const mdUnk={val:null};
 function toggleUnk(val){
@@ -723,9 +708,9 @@ function renderQ(){
   document.getElementById('quiz-card-body').innerHTML=`
     <div class="q-tags">${q.tags.map(t=>`<span class="qtag">${t}</span>`).join('')}</div>
     <div class="scenario-box"><span class="slabel"><i class="ph-duotone ph-file-text" style="vertical-align:middle;margin-right:4px;color:#fbbf24;"></i>Clinical Scenario</span>${q.sc}</div>
-    <div class="q-opts">${q.opts.map((o,i)=>`<button class="q-opt" onclick="ansQ(${i},this)">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}</div>
+    <div class="q-opts">${q.opts.map((o,i)=>`<button type="button" class="q-opt" onclick="ansQ(${i},this)">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}</div>
     <div class="q-feedback" id="qfb"></div>
-    <div style="margin-top:10px;"><button class="btn" id="qnext" onclick="nextQ()" style="display:none;">Next →</button></div>`;
+    <div style="margin-top:10px;"><button type="button" class="btn" id="qnext" onclick="nextQ()" style="display:none;">Next →</button></div>`;
 }
 function ansQ(i,btn){
   const q=Qs[curQ];answered++;
@@ -740,7 +725,7 @@ function ansQ(i,btn){
 function nextQ(){curQ++;renderQ();}
 function showQComplete(){
   const pct=Math.round(score/Qs.length*100);
-  document.getElementById('quiz-card-body').innerHTML=`<div style="text-align:center;padding:20px 0"><div style="font-size:52px;font-weight:700;font-family:var(--mono);color:${pct>=80?'var(--green)':pct>=60?'var(--amber)':'var(--red)'};">${pct}%</div><div style="font-size:16px;font-weight:700;margin:8px 0;">${score} / ${Qs.length} correct</div><div style="font-size:13px;color:var(--muted);margin-bottom:20px;">${pct>=80?'Strong command of LKW rules.':pct>=60?'Good. Review the rules that tripped you up.':'Recommend reviewing the Resolution Grid and Quick Reference before live abstraction.'}</div><button class="btn" onclick="initQuiz()">Try Again</button></div>`;
+  document.getElementById('quiz-card-body').innerHTML=`<div style="text-align:center;padding:20px 0"><div style="font-size:52px;font-weight:700;font-family:var(--mono);color:${pct>=80?'var(--green)':pct>=60?'var(--amber)':'var(--red)'};">${pct}%</div><div style="font-size:16px;font-weight:700;margin:8px 0;">${score} / ${Qs.length} correct</div><div style="font-size:13px;color:var(--muted);margin-bottom:20px;">${pct>=80?'Strong command of LKW rules.':pct>=60?'Good. Review the rules that tripped you up.':'Recommend reviewing the Resolution Grid and Quick Reference before live abstraction.'}</div><button type="button" class="btn" onclick="initQuiz()">Try Again</button></div>`;
 }
 function setQMode(m){
   document.getElementById('qm-mc').className='qmode-btn'+(m==='mc'?' on':'');
@@ -772,10 +757,10 @@ const CASES=[
 ];
 function renderCaseCards(){
   document.getElementById('case-card-grid').innerHTML=CASES.map((c,i)=>`
-    <div class="case-card" onclick="startCase(${i})">
+    <div class="case-card" onclick="startCase(${i})" role="button" tabindex="0">
       <h3>${c.title}</h3><p>${c.summary}</p>
       <span class="diff-pill diff-${c.diff}">${c.diff==='int'?'Intermediate':'Advanced'}</span>
-      <div style="margin-top:12px;"><button class="btn">Start →</button></div>
+      <div style="margin-top:12px;"><button type="button" class="btn">Start →</button></div>
     </div>`).join('');
 }
 let activeCase=null,caseStep=0;
@@ -792,12 +777,12 @@ function renderCaseStep(){
   };
   let html='';
   if(s.type==='chart'){
-    html=`<div class="card"><div class="card-label">Step ${caseStep+1} of ${steps.length} — Chart Documentation</div><div class="chart-box"><span class="clabel"><i class="ph-duotone ph-file-text" style="vertical-align:middle;margin-right:4px;color:#fbbf24;"></i>Chart Excerpt</span>${s.content}</div><div class="btn-row"><button class="btn" onclick="caseNext()">Continue →</button></div></div>`;
+    html=`<div class="card"><div class="card-label">Step ${caseStep+1} of ${steps.length} — Chart Documentation</div><div class="chart-box"><span class="clabel"><i class="ph-duotone ph-file-text" style="vertical-align:middle;margin-right:4px;color:#fbbf24;"></i>Chart Excerpt</span>${s.content}</div><div class="btn-row"><button type="button" class="btn" onclick="caseNext()">Continue →</button></div></div>`;
   }else if(s.type==='step'){
-    html=`<div class="card"><div class="card-label">Step ${caseStep+1} of ${steps.length} — ${s.label}</div><div style="font-size:13.5px;color:#c4d8ec;line-height:1.7;margin-bottom:10px;">${s.content}</div><div class="cx ${s.cx}"><span class="cx-icon">${icons[s.cx]}</span><div>${s.cxt}</div></div><div class="btn-row"><button class="btn ghost" onclick="casePrev()">← Back</button><button class="btn" onclick="caseNext()">Continue →</button></div></div>`;
+    html=`<div class="card"><div class="card-label">Step ${caseStep+1} of ${steps.length} — ${s.label}</div><div style="font-size:13.5px;color:#c4d8ec;line-height:1.7;margin-bottom:10px;">${s.content}</div><div class="cx ${s.cx}"><span class="cx-icon">${icons[s.cx]}</span><div>${s.cxt}</div></div><div class="btn-row"><button type="button" class="btn ghost" onclick="casePrev()">← Back</button><button type="button" class="btn" onclick="caseNext()">Continue →</button></div></div>`;
   }else if(s.type==='result'){
     const yn=s.yn==='YES';
-    html=`<div class="card"><div class="card-label">Step ${caseStep+1} of ${steps.length} — Final Abstraction</div><div class="res-fields" style="margin-bottom:14px;"><div><div class="res-field-label">LKW Y/N</div><div class="res-val ${yn?'yes':'no'}">${s.yn}</div></div><div><div class="res-field-label">Date LKW</div><div class="res-val plain">${s.date}</div></div><div><div class="res-field-label">Time LKW</div><div class="res-val plain">${s.time}</div></div></div><div class="cx ok"><span class="cx-icon"><i class="ph-duotone ph-check-circle" style="font-size:18px;color:#4ade80;"></i></span><div><strong>Rationale</strong>${s.rat}</div></div><div class="btn-row"><button class="btn ghost" onclick="casePrev()">← Back</button><button class="btn" onclick="backToCases()">← All Cases</button></div></div>`;
+    html=`<div class="card"><div class="card-label">Step ${caseStep+1} of ${steps.length} — Final Abstraction</div><div class="res-fields" style="margin-bottom:14px;"><div><div class="res-field-label">LKW Y/N</div><div class="res-val ${yn?'yes':'no'}">${s.yn}</div></div><div><div class="res-field-label">Date LKW</div><div class="res-val plain">${s.date}</div></div><div><div class="res-field-label">Time LKW</div><div class="res-val plain">${s.time}</div></div></div><div class="cx ok"><span class="cx-icon"><i class="ph-duotone ph-check-circle" style="font-size:18px;color:#4ade80;"></i></span><div><strong>Rationale</strong>${s.rat}</div></div><div class="btn-row"><button type="button" class="btn ghost" onclick="casePrev()">← Back</button><button type="button" class="btn" onclick="backToCases()">← All Cases</button></div></div>`;
   }
   document.getElementById('case-step-body').innerHTML=html;
 }
@@ -809,31 +794,31 @@ renderCaseCards();
 </script>
 
 <!-- SHARE STRIP -->
-<div style="background:#e6f5f4;border-top:1px solid #b2dedd;border-bottom:1px solid #b2dedd;padding:18px 24px;">
-  <div style="max-width:1040px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+<div class="share-strip">
+  <div class="share-strip-inner">
     <div>
-      <div style="font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;color:#0d1f3c;margin-bottom:3px;">Share with your team</div>
-      <div style="font-size:13px;color:#3d4f62;line-height:1.5;">Free abstraction reference for core measure teams — Q&A lookup, LKW tool, and more.</div>
+      <div class="share-strip-title">Share with your team</div>
+      <div class="share-strip-sub">Free abstraction reference for core measure teams — Q&amp;A lookup, LKW tool, and more.</div>
     </div>
-    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-      <code style="background:white;border:1px solid #b2dedd;border-radius:6px;padding:7px 14px;font-size:13px;color:#0b7a78;font-family:'DM Mono',monospace;white-space:nowrap;">https://abstractiondeskqa.com</code>
-      <button onclick="(()=>{navigator.clipboard.writeText('https://abstractiondeskqa.com');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy link',2000)})()" style="background:#0b7a78;color:white;border:none;border-radius:6px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif;" onmouseover="this.style.background='#0fa39f'" onmouseout="this.style.background='#0b7a78'">Copy link</button>
+    <div class="share-strip-actions">
+      <code class="share-url-pill">https://abstractiondeskqa.com</code>
+      <button type="button" class="share-copy-btn">Copy link</button>
     </div>
   </div>
 </div>
-<div class="site-disclaimer" role="note">
+<div class="site-disclaimer" role="note" aria-label="Educational disclaimer">
   <div class="site-disclaimer-inner">
     <strong>Educational use only.</strong>
     AbstractionDeskQA is a reference aid to support abstractor training and workflow. It does not constitute compliance advice and is not a substitute for the official TJC or CMS Specifications Manual. Always verify abstraction decisions against the current specifications.
   </div>
 </div>
 
-<footer class="site-footer" role="contentinfo">
+<footer class="site-footer">
   <div class="site-footer-inner">
     <div>
-      <div class="site-footer-brand">AbstractionDesk<span style="color:#0da8a5">QA</span></div>
+      <div class="site-footer-brand">AbstractionDesk<span>QA</span></div>
       <p>A free reference tool for core measure abstractors.<br>
-      &copy; <span id="siteYr"></span> AbstractionDeskQA. Educational use only.</p>
+      &copy; <span id="yr"></span> AbstractionDeskQA. Educational use only.</p>
     </div>
     <div class="site-footer-links">
       <a href="lookup.html">Q&amp;A Lookup</a>
@@ -845,8 +830,7 @@ renderCaseCards();
     </div>
   </div>
 </footer>
-<script>document.getElementById('siteYr').textContent=new Date().getFullYear();</script>
- <script data-name="BMC-Widget" 
+ <script data-name="BMC-Widget"
         data-cfasync="false"
         src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
         data-id="abstractiondeskqa"

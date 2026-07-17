@@ -4,17 +4,29 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="canonical" href="https://abstractiondeskqa.com/lookup.html">
-<title>Stroke & ED Throughput · Q&A Bank</title>
+<title>Q&amp;A Lookup — AbstractionDeskQA</title>
+<meta name="description" content="Searchable Q&amp;A bank for stroke, ED throughput, sepsis (SEP-1), and HBIPS core measure abstraction — real chart scenarios mapped to TJC and CMS spec language, with a shared tag taxonomy. Part of AbstractionDeskQA.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://abstractiondeskqa.com/lookup.html">
+<meta property="og:site_name" content="AbstractionDeskQA">
+<meta property="og:title" content="Q&A Lookup — AbstractionDeskQA">
+<meta property="og:description" content="Searchable Q&amp;A bank for stroke, ED throughput, sepsis (SEP-1), and HBIPS core measure abstraction — real chart scenarios mapped to TJC and CMS spec language, with a shared tag taxonomy. Part of AbstractionDeskQA.">
 <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+3:wght@300;400;500;600;700&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+<link rel="stylesheet" href="assets/phosphor/regular.css">
+<link rel="stylesheet" href="assets/phosphor/duotone.css">
+<!-- Shared design tokens / structural CSS (T-04) -->
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/site.css">
+<!-- Cloudflare Turnstile -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <style>
 :root{
   --ink:#1a1e2c; --navy:#0d1f3c; --navy2:#163560;
   --teal:#0b7a78; --teal2:#0fa39f; --teal-bg:#e6f5f4;
   --red:#b53030; --red-bg:#fceaea;
-  --amber:#c27a00; --amber-bg:#fdf3dc;
+  --amber:#a36600; --amber-bg:#fdf3dc;
   --green:#1a6e30; --green-bg:#e5f4ea;
-  --purple:#5430a8; --purple2:#7552d8; --purple-bg:#f0ebff;
+  --purple2:#9c85eb; --purple-bg:#f0ebff;
   --slate:#f1f4f8; --border:#d8dde8; --mid:#7a8499;
   --serif:'Bitter',Georgia,serif;
   --sans:'Source Sans 3',system-ui,sans-serif;
@@ -37,24 +49,11 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 .btn-purple{background:var(--purple);color:white;}
 .btn-purple:hover{background:var(--purple2);}
 
-/* ── TOOLS DROPDOWN ── */
-.nav-sep{width:1px;height:26px;background:rgba(255,255,255,.18);margin:0 4px;flex-shrink:0;}
-.tools-dropdown{position:relative;}
-.tools-dd-btn{display:flex;align-items:center;gap:5px;font-family:var(--sans);font-size:11.5px;font-weight:600;padding:5px 12px;border-radius:5px;cursor:pointer;background:rgba(255,255,255,.09);color:rgba(255,255,255,.82);border:1px solid rgba(255,255,255,.16);transition:all .13s;white-space:nowrap;}
-.tools-dd-btn:hover,.tools-dropdown.open .tools-dd-btn{background:rgba(255,255,255,.17);color:white;}
-.tools-dd-arrow{font-size:10px;transition:transform .18s;}
-.tools-dropdown.open .tools-dd-arrow{transform:rotate(180deg);}
-.tools-dd-menu{display:none;position:absolute;top:calc(100% + 6px);left:0;min-width:180px;background:var(--navy2);border:1px solid rgba(255,255,255,.15);border-radius:7px;box-shadow:0 8px 24px rgba(0,0,0,.35);overflow:hidden;z-index:200;}
-.tools-dropdown.open .tools-dd-menu{display:block;}
-.tools-dd-item{display:block;padding:9px 14px;font-family:var(--sans);font-size:12px;font-weight:600;color:rgba(255,255,255,.8);text-decoration:none;transition:background .12s;white-space:nowrap;}
-.tools-dd-item:hover{background:rgba(255,255,255,.1);color:white;text-decoration:none;}
-.tools-dd-item em{font-style:normal;font-size:9px;font-weight:400;color:rgba(255,255,255,.4);margin-left:4px;}
-
 .layout{display:grid;grid-template-columns:228px 1fr;min-height:calc(100vh - 50px);}
 
 .sidebar{background:white;border-right:1px solid var(--border);position:sticky;top:50px;height:calc(100vh - 50px);overflow-y:auto;display:flex;flex-direction:column;}
 .sb-lbl{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:var(--mid);padding:13px 15px 4px;display:block;}
-.sb-item{display:flex;align-items:center;justify-content:space-between;padding:7px 15px;cursor:pointer;font-size:12.5px;color:#4a5268;font-weight:500;transition:all .12s;border-left:3px solid transparent;}
+.sb-item{display:flex;align-items:center;justify-content:space-between;padding:7px 15px;cursor:pointer;font-size:12.5px;color:#4a5268;font-weight:500;transition:all .12s;border:none;border-left:3px solid transparent;background:none;width:100%;text-align:left;font-family:inherit;}
 .sb-item:hover{background:var(--slate);color:var(--navy);}
 .sb-item.on{background:var(--teal-bg);color:var(--teal);border-left-color:var(--teal);font-weight:700;}
 .sb-cnt{background:#eef0f5;color:var(--mid);font-size:9.5px;font-weight:700;padding:1px 6px;border-radius:8px;}
@@ -81,16 +80,16 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 .search:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(11,122,120,.09);}
 .search::placeholder{color:#a0aab8;}
 
-.atbar{display:none;align-items:center;gap:6px;flex-wrap:wrap;background:var(--purple-bg);border:1px solid rgba(84,48,168,.18);border-radius:6px;padding:6px 11px;margin-bottom:11px;}
+.atbar{display:none;align-items:center;gap:6px;flex-wrap:wrap;background:var(--purple-bg);border:1px solid rgba(123,92,229,.18);border-radius:6px;padding:6px 11px;margin-bottom:11px;}
 .atbar.on{display:flex;}
 .atbar-lbl{font-size:10px;font-weight:800;color:var(--purple);text-transform:uppercase;letter-spacing:.6px;}
 .atpill{font-family:var(--mono);font-size:10.5px;font-weight:600;background:var(--purple);color:white;border-radius:10px;padding:2px 8px 2px 10px;display:flex;align-items:center;gap:4px;}
 .atpill button{background:none;border:none;color:white;cursor:pointer;font-size:14px;line-height:1;opacity:.65;padding:0;}
 .atpill button:hover{opacity:1;}
-.clear-at{font-size:10.5px;color:var(--purple);cursor:pointer;font-weight:700;margin-left:auto;text-decoration:underline;}
+.clear-at{font-size:10.5px;color:var(--purple);cursor:pointer;font-weight:700;margin-left:auto;text-decoration:underline;border:none;background:none;font-family:inherit;}
 
 .frow{display:flex;gap:5px;margin-bottom:12px;flex-wrap:wrap;align-items:center;}
-.fchip{font-size:11px;font-weight:600;padding:4px 11px;border-radius:14px;cursor:pointer;border:1.5px solid var(--border);background:white;color:#4a5268;transition:all .12s;}
+.fchip{font-size:11px;font-weight:600;padding:4px 11px;border-radius:14px;cursor:pointer;border:1.5px solid var(--border);background:white;color:#4a5268;transition:all .12s;font-family:inherit;}
 .fchip:hover{border-color:var(--teal);color:var(--teal);}
 .fchip.on{background:var(--teal);border-color:var(--teal);color:white;}
 .fchip.fe{border-color:#d9a020;color:var(--amber);}
@@ -104,7 +103,7 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 
 .qa{background:white;border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden;transition:box-shadow .13s;}
 .qa:hover{box-shadow:0 3px 12px rgba(0,0,0,.07);}
-.qa-hdr{padding:12px 14px 10px;cursor:pointer;display:flex;gap:10px;align-items:flex-start;}
+.qa-hdr{padding:12px 14px 10px;cursor:pointer;display:flex;gap:10px;align-items:flex-start;border:none;background:none;width:100%;text-align:left;font-family:inherit;}
 .tog{width:18px;height:18px;border-radius:50%;background:#eef0f5;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--mid);flex-shrink:0;margin-top:2px;transition:all .13s;}
 .qa.open .tog{background:var(--teal);color:white;transform:rotate(45deg);}
 .qa-hdr-c{flex:1;min-width:0;}
@@ -115,8 +114,10 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 .bg{background:var(--red-bg);color:var(--red);}
 .br{background:var(--green-bg);color:var(--green);}
 .bs{background:var(--teal-bg);color:var(--teal);max-width:170px;overflow:hidden;text-overflow:ellipsis;}
-.ktag{font-family:var(--mono);font-size:9.5px;font-weight:500;background:var(--purple-bg);color:var(--purple);border:1px solid rgba(84,48,168,.22);padding:1px 6px;border-radius:8px;cursor:pointer;transition:all .1s;white-space:nowrap;}
+.ktag{font-family:var(--mono);font-size:9.5px;font-weight:500;background:var(--purple-bg);color:var(--purple);border:1px solid rgba(123,92,229,.22);padding:1px 6px;border-radius:8px;cursor:pointer;transition:all .1s;white-space:nowrap;}
 .ktag:hover{background:var(--purple);color:white;}
+.ktag-static{cursor:default;}
+.ktag-static:hover{background:var(--purple-bg);color:var(--purple);}
 .q-text{font-size:13px;font-weight:600;color:var(--navy);line-height:1.44;}
 .qa-body{display:none;border-top:1px solid #edf0f5;padding:12px 14px 12px 42px;}
 .qa.open .qa-body{display:block;}
@@ -140,7 +141,7 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 
 .tw{border:1.5px solid var(--border);border-radius:5px;padding:5px 7px;background:var(--slate);min-height:36px;cursor:text;display:flex;flex-wrap:wrap;gap:4px;align-items:center;transition:border-color .13s;}
 .tw:focus-within{border-color:var(--teal);background:white;}
-.tchip{font-family:var(--mono);font-size:10.5px;font-weight:600;background:var(--purple-bg);color:var(--purple);border:1px solid rgba(84,48,168,.25);border-radius:9px;padding:2px 6px 2px 8px;display:flex;align-items:center;gap:3px;}
+.tchip{font-family:var(--mono);font-size:10.5px;font-weight:600;background:var(--purple-bg);color:var(--purple);border:1px solid rgba(123,92,229,.25);border-radius:9px;padding:2px 6px 2px 8px;display:flex;align-items:center;gap:3px;}
 .tchip button{background:none;border:none;cursor:pointer;color:var(--purple);font-size:13px;line-height:1;padding:0;opacity:.55;}
 .tchip button:hover{opacity:1;}
 .ttxt{border:none;outline:none;font-family:var(--mono);font-size:11.5px;background:transparent;color:var(--ink);flex:1;min-width:90px;}
@@ -149,9 +150,9 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 .sug-panel.on{display:block;}
 .sug-row{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px;}
 .sug-lbl{font-size:9.5px;font-weight:800;color:var(--mid);text-transform:uppercase;letter-spacing:.5px;}
-.sug-chip{font-family:var(--mono);font-size:10px;font-weight:600;padding:3px 9px;border-radius:9px;cursor:pointer;border:1.5px dashed rgba(84,48,168,.35);color:var(--purple);background:white;transition:all .12s;}
+.sug-chip{font-family:var(--mono);font-size:10px;font-weight:600;padding:3px 9px;border-radius:9px;cursor:pointer;border:1.5px dashed rgba(123,92,229,.35);color:var(--purple);background:white;transition:all .12s;}
 .sug-chip:hover{background:var(--purple);color:white;border-style:solid;}
-.sug-chip.match{border-style:solid;border-color:rgba(84,48,168,.5);}
+.sug-chip.match{border-style:solid;border-color:rgba(123,92,229,.5);}
 .sug-hint{font-size:9px;color:var(--mid);margin-left:4px;font-style:italic;}
 
 .moverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.48);z-index:200;align-items:center;justify-content:center;}
@@ -168,7 +169,7 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 
 /* category filter bar inside TM */
 .cat-filter-bar{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px;}
-.cat-chip{font-size:10.5px;font-weight:600;padding:3px 10px;border-radius:12px;cursor:pointer;border:1.5px solid var(--border);background:white;color:#4a5268;transition:all .12s;white-space:nowrap;}
+.cat-chip{font-size:10.5px;font-weight:600;padding:3px 10px;border-radius:12px;cursor:pointer;border:1.5px solid var(--border);background:white;color:#4a5268;transition:all .12s;white-space:nowrap;font-family:inherit;}
 .cat-chip:hover{border-color:var(--teal);color:var(--teal);}
 .cat-chip.on{background:var(--teal);border-color:var(--teal);color:white;}
 
@@ -190,7 +191,7 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 .tag-src-sheet{background:var(--teal-bg);color:var(--teal);}
 .cat-badge{font-size:9px;font-weight:700;padding:2px 6px;border-radius:3px;background:var(--purple-bg);color:var(--purple);white-space:nowrap;}
 
-.tag-review{background:var(--purple-bg);border:1px solid rgba(84,48,168,.18);border-radius:6px;padding:10px 13px;margin-bottom:12px;}
+.tag-review{background:var(--purple-bg);border:1px solid rgba(123,92,229,.18);border-radius:6px;padding:10px 13px;margin-bottom:12px;}
 .tag-review h4{font-size:10px;font-weight:800;color:var(--purple);text-transform:uppercase;letter-spacing:.6px;margin-bottom:7px;}
 .rrow{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px;}
 .rchip{font-family:var(--mono);font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:10px;cursor:pointer;transition:all .12s;border:1.5px solid;display:flex;align-items:center;gap:4px;}
@@ -207,16 +208,47 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 /* TAG BROWSER MODAL */
 .tb-search{width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:6px;font-family:var(--sans);font-size:13px;color:var(--ink);background:var(--slate);outline:none;transition:border-color .13s;margin-bottom:12px;}
 .tb-search:focus{border-color:var(--teal);background:white;}
-.tb-tag-name{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--purple);background:var(--purple-bg);border:1px solid rgba(84,48,168,.22);padding:3px 10px;border-radius:8px;cursor:pointer;display:inline-block;transition:all .12s;}
+.tb-tag-name{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--purple);background:var(--purple-bg);border:1px solid rgba(123,92,229,.22);padding:3px 10px;border-radius:8px;cursor:pointer;display:inline-block;transition:all .12s;}
 .tb-tag-name:hover{background:var(--purple);color:white;}
 .tb-empty{text-align:center;padding:32px 16px;color:var(--mid);font-size:13px;}
 
 @media print{.bar,.sidebar,.frow,.search-wrap,.add-panel,.atbar,.bar-btns{display:none!important;}.layout{grid-template-columns:1fr;}.main{padding:0;}.qa-body{display:block!important;}.tog{display:none;}}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QJPP46JWX3"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-QJPP46JWX3');</script>
 </head>
 <body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+<h1 class="sr-only">Q&amp;A Lookup — AbstractionDeskQA</h1>
+
+<!-- NAV -->
+<nav class="site-nav" aria-label="Site navigation">
+  <div class="site-nav-inner">
+    <a href="/" class="site-nav-brand" aria-label="AbstractionDeskQA home">
+      AbstractionDesk<span class="site-qa-badge">QA</span>
+      <span class="site-nav-brand-sub">Q&amp;A Lookup</span>
+    </a>
+    <div class="site-nav-links">
+      <a href="index.html" class="site-nav-cta-ghost">
+        <i class="ph ph-arrow-left" aria-hidden="true"></i> Home
+      </a>
+      <a href="lkw-tool.html" class="site-nav-cta-ghost">LKW Tool</a>
+      <a href="cmo-tool.html" class="site-nav-cta-ghost">CMO Tool</a>
+      <a href="hbips-tool.html" class="site-nav-cta-ghost">HBIPS Tool</a>
+      <a href="sep1-tool.html" class="site-nav-cta-ghost">SEP-1 Tool</a>
+      <a href="lookup.html" class="site-nav-cta-ghost active-page" aria-current="page">Q&amp;A Lookup</a>
+    </div>
+  </div>
+</nav>
 
 <div class="bar">
   <div class="brand">
@@ -226,43 +258,29 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
     <span class="brand-scope">Q&amp;A Lookup</span>
   </div>
   <div class="bar-btns">
-    <!-- Tools dropdown -->
-    <div class="tools-dropdown" id="toolsDropdown">
-      <button class="tools-dd-btn" onclick="toggleToolsDD()" aria-haspopup="true" aria-expanded="false" id="toolsDDBtn">
-        ← Tools <span class="tools-dd-arrow">▾</span>
-      </button>
-      <div class="tools-dd-menu" role="menu">
-        <a href="/" class="tools-dd-item">Home</a>
-        <a href="sep1-tool.html" class="tools-dd-item">SEP-1 Tool <em>Time Zero</em></a>
-        <a href="lkw-tool.html" class="tools-dd-item">LKW Tool <em>Last Known Well</em></a>
-        <a href="cmo-tool.html" class="tools-dd-item">CMO Tool <em>Comfort Measures</em></a>
-        <a href="hbips-tool.html" class="tools-dd-item">HBIPS Tool <em>Psych Inpatient</em></a>
-      </div>
-    </div>
-    <div class="nav-sep"></div>
     <!-- Q&A actions -->
-    <button class="btn btn-ghost" onclick="toggleAdd()"><i class="ph ph-plus" style="vertical-align:middle;margin-right:3px;"></i>Add Q&amp;A</button>
-    <button class="btn btn-ghost" onclick="openPaste()"><i class="ph-duotone ph-clipboard-text" style="vertical-align:middle;margin-right:3px;"></i>Paste Raw</button>
-    <button class="btn btn-purple" onclick="openTM()"><i class="ph-duotone ph-tag" style="vertical-align:middle;margin-right:3px;"></i>Tags</button>
-    <button class="btn btn-teal" onclick="exportPDF()"><i class="ph ph-download-simple" style="vertical-align:middle;margin-right:3px;"></i>Export</button>
+    <button type="button" class="btn btn-ghost" onclick="toggleAdd()"><i class="ph ph-plus" style="vertical-align:middle;margin-right:3px;"></i>Add Q&amp;A</button>
+    <button type="button" class="btn btn-ghost" onclick="openPaste()"><i class="ph-duotone ph-clipboard-text" style="vertical-align:middle;margin-right:3px;"></i>Paste Raw</button>
+    <button type="button" class="btn btn-purple" onclick="openTM()"><i class="ph-duotone ph-tag" style="vertical-align:middle;margin-right:3px;"></i>Tags</button>
+    <button type="button" class="btn btn-teal" onclick="exportPDF()"><i class="ph ph-download-simple" style="vertical-align:middle;margin-right:3px;"></i>Export</button>
   </div>
 </div>
 
 <div class="layout">
   <div class="sidebar">
     <span class="sb-lbl">All Questions</span>
-    <div class="sb-item on" data-m="all" onclick="filterM('all',this)">All <span class="sb-cnt" id="cnt-all">0</span></div>
+    <button type="button" class="sb-item on" data-m="all" onclick="filterM('all',this)">All <span class="sb-cnt" id="cnt-all">0</span></button>
     <div class="sb-div"></div>
     <span class="sb-lbl">Measure Set</span>
-    <div class="sb-item" data-m="STROKE" onclick="filterM('STROKE',this)">Stroke <span class="sb-cnt" id="cnt-STROKE">0</span></div>
-    <div class="sb-item" data-m="ED-OP" onclick="filterM('ED-OP',this)">ED-OP — Throughput <span class="sb-cnt" id="cnt-ED-OP">0</span></div>
-    <div class="sb-item" data-m="HBIPS" onclick="filterM('HBIPS',this)">HBIPS — Psych Inpatient <span class="sb-cnt" id="cnt-HBIPS">0</span></div>
-    <div class="sb-item" data-m="SEP-1" onclick="filterM('SEP-1',this)">SEP-1 — Sepsis <span class="sb-cnt" id="cnt-SEP-1">0</span></div>
+    <button type="button" class="sb-item" data-m="STROKE" onclick="filterM('STROKE',this)">Stroke <span class="sb-cnt" id="cnt-STROKE">0</span></button>
+    <button type="button" class="sb-item" data-m="ED-OP" onclick="filterM('ED-OP',this)">ED-OP — Throughput <span class="sb-cnt" id="cnt-ED-OP">0</span></button>
+    <button type="button" class="sb-item" data-m="HBIPS" onclick="filterM('HBIPS',this)">HBIPS — Psych Inpatient <span class="sb-cnt" id="cnt-HBIPS">0</span></button>
+    <button type="button" class="sb-item" data-m="SEP-1" onclick="filterM('SEP-1',this)">SEP-1 — Sepsis <span class="sb-cnt" id="cnt-SEP-1">0</span></button>
     <div class="sb-div"></div>
     <span class="sb-lbl">Difficulty</span>
-    <div class="sb-item" data-m="__routine" onclick="filterM('__routine',this)">✅ Routine <span class="sb-cnt" id="cnt-routine">0</span></div>
-    <div class="sb-item" data-m="__gray" onclick="filterM('__gray',this)">❓ Gray Areas <span class="sb-cnt" id="cnt-gray">0</span></div>
-    <div class="sb-item" data-m="__edge" onclick="filterM('__edge',this)">⚡ Edge Cases <span class="sb-cnt" id="cnt-edge">0</span></div>
+    <button type="button" class="sb-item" data-m="__routine" onclick="filterM('__routine',this)">✅ Routine <span class="sb-cnt" id="cnt-routine">0</span></button>
+    <button type="button" class="sb-item" data-m="__gray" onclick="filterM('__gray',this)">❓ Gray Areas <span class="sb-cnt" id="cnt-gray">0</span></button>
+    <button type="button" class="sb-item" data-m="__edge" onclick="filterM('__edge',this)">⚡ Edge Cases <span class="sb-cnt" id="cnt-edge">0</span></button>
     <div class="sb-div"></div>
     <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 15px 4px;">
       <span class="sb-lbl" style="padding:0;margin:0;">Browse Tags</span>
@@ -270,64 +288,67 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
     </div>
     <div class="cloud-outer">
       <div class="cloud" id="tagCloud"></div>
-      <button onclick="openTagBrowser()" style="margin-top:8px;width:100%;background:none;border:1px dashed var(--border);border-radius:6px;color:var(--teal);font-family:var(--sans);font-size:11px;font-weight:600;padding:6px;cursor:pointer;transition:all .12s;" onmouseover="this.style.background='var(--teal-bg)'" onmouseout="this.style.background='none'">Browse all tags →</button>
+      <button type="button" onclick="openTagBrowser()" style="margin-top:8px;width:100%;background:none;border:1px dashed var(--border);border-radius:6px;color:var(--teal);font-family:var(--sans);font-size:11px;font-weight:600;padding:6px;cursor:pointer;transition:all .12s;" onmouseover="this.style.background='var(--teal-bg)'" onmouseout="this.style.background='none'">Browse all tags →</button>
     </div>
   </div>
 
-  <div class="main">
+  <main id="main" class="main">
+    <h2 class="sr-only">Search &amp; Browse Q&amp;A Entries</h2>
     <div class="loading-bar" id="loadingBar">
       <div class="spin"></div>
-      <span id="loadingMsg">Loading entries from Google Sheets…</span>
+      <span id="loadingMsg">Loading Q&amp;A data…</span>
     </div>
 
     <div class="add-panel" id="addPanel">
       <h3>Add New Q&amp;A Entry</h3>
       <div class="add-notice"><i class="ph-duotone ph-clock" style="vertical-align:middle;margin-right:5px;"></i><strong>Submissions go to Google Sheets for curator review.</strong> Your entry will appear on the site once approved.</div>
       <div class="fg2">
-        <div class="full"><label class="flbl">Question / Scenario</label><textarea class="fta" id="fq" placeholder="Describe the abstraction scenario…"></textarea></div>
-        <div class="full"><label class="flbl">Answer / Guidance</label><textarea class="fta" id="fa" placeholder="The authoritative answer or interpretation…"></textarea></div>
-        <div><label class="flbl">Measure Set</label>
+        <div class="full"><label class="flbl" for="fq">Question / Scenario</label><textarea class="fta" id="fq" placeholder="Describe the abstraction scenario…"></textarea></div>
+        <div class="full"><label class="flbl" for="fa">Answer / Guidance</label><textarea class="fta" id="fa" placeholder="The authoritative answer or interpretation…"></textarea></div>
+        <div><label class="flbl" for="fm">Measure Set</label>
           <select class="fsel" id="fm"><option value="STK">STK — Stroke</option><option value="ASR-IP">ASR-IP</option><option value="ED-OP">ED-OP</option></select></div>
-        <div><label class="flbl">Specific Measure</label><input class="fi" id="fspec" placeholder="e.g. ASR-IP-1, ED-OP-18b"/></div>
-        <div><label class="flbl">Difficulty</label>
+        <div><label class="flbl" for="fspec">Specific Measure</label><input class="fi" id="fspec" type="text" placeholder="e.g. ASR-IP-1, ED-OP-18b"/></div>
+        <div><label class="flbl" for="ftype">Difficulty</label>
           <select class="fsel" id="ftype"><option value="routine">✅ Routine</option><option value="edge">⚡ Edge Case</option><option value="gray">❓ Gray Area</option></select></div>
-        <div><label class="flbl">Source</label><input class="fi" id="fsrc" placeholder="TJC PMN, spec manual, training…"/></div>
+        <div><label class="flbl" for="fsrc">Source</label><input class="fi" id="fsrc" type="text" placeholder="TJC PMN, spec manual, training…"/></div>
         <div class="full">
-          <label class="flbl">Keyword Tags — type &amp; press Enter, or click suggestions</label>
+          <label class="flbl" for="ttxt">Keyword Tags — type &amp; press Enter, or click suggestions</label>
           <div class="tw" id="tw" onclick="document.getElementById('ttxt').focus()">
-            <input class="ttxt" id="ttxt" placeholder="LKW, TNK, comfort measures…" onkeydown="handleTagKey(event)" oninput="onTagType(this.value)"/>
+            <input class="ttxt" id="ttxt" type="text" placeholder="LKW, TNK, comfort measures…" onkeydown="handleTagKey(event)" oninput="onTagType(this.value)"/>
           </div>
           <div class="sug-panel" id="sugPanel"><div class="sug-lbl" id="sugLbl">Suggestions</div><div class="sug-row" id="sugRow"></div></div>
         </div>
       </div>
+      <div class="cf-turnstile" id="turnstileAdd" data-sitekey="0x4AAAAAADf-2v3MWsS9bACq" data-theme="light" style="margin-bottom:10px;"></div>
       <div class="factions">
-        <button class="btn btn-ghost" style="font-size:11px;padding:5px 11px" onclick="toggleAdd()">Cancel</button>
-        <button class="btn btn-teal" style="font-size:11px;padding:5px 11px" id="submitBtn" onclick="submitEntry()">Submit for Review</button>
+        <button type="button" class="btn btn-ghost" style="font-size:11px;padding:5px 11px" onclick="toggleAdd()">Cancel</button>
+        <button type="button" class="btn btn-teal" style="font-size:11px;padding:5px 11px" id="submitBtn" onclick="submitEntry()">Submit for Review</button>
       </div>
     </div>
 
     <div class="atbar" id="atbar">
       <span class="atbar-lbl"><i class="ph-duotone ph-tag" style="vertical-align:middle;margin-right:4px;"></i>Tag filter:</span>
       <div id="atpills" style="display:flex;gap:5px;flex-wrap:wrap;"></div>
-      <span class="clear-at" onclick="clearTagFilters()">Clear all</span>
+      <button type="button" class="clear-at" onclick="clearTagFilters()">Clear all</button>
     </div>
 
     <div class="search-wrap">
       <span class="si"><i class="ph ph-magnifying-glass"></i></span>
-      <input class="search" id="srch" placeholder="Search by scenario, keyword, tag, data element…" oninput="render()"/>
+      <label class="sr-only" for="srch">Search Q&amp;A entries</label>
+      <input class="search" id="srch" type="text" placeholder="Search by scenario, keyword, tag, data element…" oninput="render()"/>
     </div>
 
     <div class="frow">
       <span style="font-size:10px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.7px">Difficulty:</span>
-      <span class="fchip on" data-t="all" onclick="filterT('all',this)">All</span>
-      <span class="fchip" data-t="routine" onclick="filterT('routine',this)">✅ Routine</span>
-      <span class="fchip fe" data-t="edge" onclick="filterT('edge',this)">⚡ Edge</span>
-      <span class="fchip fg" data-t="gray" onclick="filterT('gray',this)">❓ Gray Area</span>
+      <button type="button" class="fchip on" data-t="all" onclick="filterT('all',this)">All</button>
+      <button type="button" class="fchip" data-t="routine" onclick="filterT('routine',this)">✅ Routine</button>
+      <button type="button" class="fchip fe" data-t="edge" onclick="filterT('edge',this)">⚡ Edge</button>
+      <button type="button" class="fchip fg" data-t="gray" onclick="filterT('gray',this)">❓ Gray Area</button>
     </div>
 
     <div class="rhdr"><div class="rcnt" id="rcnt"></div></div>
     <div id="cards"></div>
-  </div>
+  </main>
 </div>
 
 <!-- TAG BROWSER MODAL -->
@@ -335,21 +356,22 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
   <div class="modal" style="max-width:780px">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">
       <h3><i class="ph-duotone ph-tag-chevron" style="vertical-align:middle;margin-right:6px;color:var(--teal);"></i>Tag Browser</h3>
-      <button onclick="closeTagBrowser()" style="background:none;border:none;color:var(--mid);font-size:22px;cursor:pointer;line-height:1;padding:0 4px;">×</button>
+      <button type="button" onclick="closeTagBrowser()" style="background:none;border:none;color:var(--mid);font-size:22px;cursor:pointer;line-height:1;padding:0 4px;">×</button>
     </div>
     <p class="modal-sub">Click any tag name to apply it as a filter on the Q&amp;A list. Browse by category or search by name or alias.</p>
 
-    <input class="tb-search" id="tbSearch" placeholder="Search tags by name or alias…" oninput="renderTagBrowser()"/>
+    <label class="sr-only" for="tbSearch">Search tags by name or alias</label>
+    <input class="tb-search" id="tbSearch" type="text" placeholder="Search tags by name or alias…" oninput="renderTagBrowser()"/>
 
     <div class="cat-filter-bar" id="tbCatBar">
-      <span class="cat-chip on" data-tbc="all" onclick="filterTBCat('all',this)">All</span>
-      <span class="cat-chip" data-tbc="Stroke Timing" onclick="filterTBCat('Stroke Timing',this)">Stroke Timing</span>
-      <span class="cat-chip" data-tbc="Treatment" onclick="filterTBCat('Treatment',this)">Treatment</span>
-      <span class="cat-chip" data-tbc="Goals of Care" onclick="filterTBCat('Goals of Care',this)">Goals of Care</span>
-      <span class="cat-chip" data-tbc="ED Throughput" onclick="filterTBCat('ED Throughput',this)">ED Throughput</span>
-      <span class="cat-chip" data-tbc="Imaging" onclick="filterTBCat('Imaging',this)">Imaging</span>
-      <span class="cat-chip" data-tbc="Disposition" onclick="filterTBCat('Disposition',this)">Disposition</span>
-      <span class="cat-chip" data-tbc="Uncategorized" onclick="filterTBCat('Uncategorized',this)">Uncategorized</span>
+      <button type="button" class="cat-chip on" data-tbc="all" onclick="filterTBCat('all',this)">All</button>
+      <button type="button" class="cat-chip" data-tbc="Stroke Timing" onclick="filterTBCat('Stroke Timing',this)">Stroke Timing</button>
+      <button type="button" class="cat-chip" data-tbc="Treatment" onclick="filterTBCat('Treatment',this)">Treatment</button>
+      <button type="button" class="cat-chip" data-tbc="Goals of Care" onclick="filterTBCat('Goals of Care',this)">Goals of Care</button>
+      <button type="button" class="cat-chip" data-tbc="ED Throughput" onclick="filterTBCat('ED Throughput',this)">ED Throughput</button>
+      <button type="button" class="cat-chip" data-tbc="Imaging" onclick="filterTBCat('Imaging',this)">Imaging</button>
+      <button type="button" class="cat-chip" data-tbc="Disposition" onclick="filterTBCat('Disposition',this)">Disposition</button>
+      <button type="button" class="cat-chip" data-tbc="Uncategorized" onclick="filterTBCat('Uncategorized',this)">Uncategorized</button>
     </div>
 
     <table class="tm-table" id="tbTable">
@@ -364,7 +386,7 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
       <tbody id="tbBody"></tbody>
     </table>
     <div class="mactions">
-      <button class="btn btn-teal" onclick="closeTagBrowser()">Close</button>
+      <button type="button" class="btn btn-teal" onclick="closeTagBrowser()">Close</button>
     </div>
   </div>
 </div>
@@ -385,13 +407,13 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
     <div class="tm-section">Suggest a New Tag</div>
     <div class="tm-add">
       <div class="tm-add-grid">
-        <div><label class="flbl">Tag ID</label><input class="fi" id="nt-id" placeholder="e.g. stroke_lkw" style="font-family:var(--mono);"/></div>
-        <div><label class="flbl">Tag Name</label><input class="fi" id="nt-n" placeholder="e.g. LKW" style="font-family:var(--mono);font-weight:600"/></div>
-        <div><label class="flbl">Aliases</label><input class="fi" id="nt-a" placeholder="last known well, lkn, last seen normal"/></div>
-        <div><label class="flbl">Related Tags</label><input class="fi" id="nt-r" placeholder="TLKW, DLKW, onset"/></div>
+        <div><label class="flbl" for="nt-id">Tag ID</label><input class="fi" id="nt-id" type="text" placeholder="e.g. stroke_lkw" style="font-family:var(--mono);"/></div>
+        <div><label class="flbl" for="nt-n">Tag Name</label><input class="fi" id="nt-n" type="text" placeholder="e.g. LKW" style="font-family:var(--mono);font-weight:600"/></div>
+        <div><label class="flbl" for="nt-a">Aliases</label><input class="fi" id="nt-a" type="text" placeholder="last known well, lkn, last seen normal"/></div>
+        <div><label class="flbl" for="nt-r">Related Tags</label><input class="fi" id="nt-r" type="text" placeholder="TLKW, DLKW, onset"/></div>
       </div>
       <div style="display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end;">
-        <div><label class="flbl">Category</label>
+        <div><label class="flbl" for="nt-cat">Category</label>
           <select class="fsel" id="nt-cat">
             <option value="Stroke Timing">Stroke Timing</option>
             <option value="Treatment">Treatment</option>
@@ -402,29 +424,30 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
             <option value="Uncategorized">Uncategorized</option>
           </select>
         </div>
-        <button class="btn btn-teal" style="font-size:11px;padding:8px 16px;white-space:nowrap;" id="addTagBtn" onclick="addTagDef()">Submit Tag for Review</button>
+        <button type="button" class="btn btn-teal" style="font-size:11px;padding:8px 16px;white-space:nowrap;" id="addTagBtn" onclick="addTagDef()">Submit Tag for Review</button>
       </div>
+      <div class="cf-turnstile" id="turnstileTag" data-sitekey="0x4AAAAAADf-2v3MWsS9bACq" data-theme="light" style="margin-top:10px;"></div>
     </div>
 
     <div class="tm-section">Active Tags</div>
 
     <!-- Category filter bar -->
     <div class="cat-filter-bar" id="catFilterBar">
-      <span class="cat-chip on" data-cat="all" onclick="filterCat('all',this)">All</span>
-      <span class="cat-chip" data-cat="Stroke Timing" onclick="filterCat('Stroke Timing',this)">Stroke Timing</span>
-      <span class="cat-chip" data-cat="Treatment" onclick="filterCat('Treatment',this)">Treatment</span>
-      <span class="cat-chip" data-cat="Goals of Care" onclick="filterCat('Goals of Care',this)">Goals of Care</span>
-      <span class="cat-chip" data-cat="ED Throughput" onclick="filterCat('ED Throughput',this)">ED Throughput</span>
-      <span class="cat-chip" data-cat="Imaging" onclick="filterCat('Imaging',this)">Imaging</span>
-      <span class="cat-chip" data-cat="Disposition" onclick="filterCat('Disposition',this)">Disposition</span>
-      <span class="cat-chip" data-cat="Uncategorized" onclick="filterCat('Uncategorized',this)">Uncategorized</span>
+      <button type="button" class="cat-chip on" data-cat="all" onclick="filterCat('all',this)">All</button>
+      <button type="button" class="cat-chip" data-cat="Stroke Timing" onclick="filterCat('Stroke Timing',this)">Stroke Timing</button>
+      <button type="button" class="cat-chip" data-cat="Treatment" onclick="filterCat('Treatment',this)">Treatment</button>
+      <button type="button" class="cat-chip" data-cat="Goals of Care" onclick="filterCat('Goals of Care',this)">Goals of Care</button>
+      <button type="button" class="cat-chip" data-cat="ED Throughput" onclick="filterCat('ED Throughput',this)">ED Throughput</button>
+      <button type="button" class="cat-chip" data-cat="Imaging" onclick="filterCat('Imaging',this)">Imaging</button>
+      <button type="button" class="cat-chip" data-cat="Disposition" onclick="filterCat('Disposition',this)">Disposition</button>
+      <button type="button" class="cat-chip" data-cat="Uncategorized" onclick="filterCat('Uncategorized',this)">Uncategorized</button>
     </div>
 
     <table class="tm-table">
       <thead><tr><th style="width:100px">Tag</th><th style="width:90px">Category</th><th>Aliases</th><th>Related Tags</th><th style="width:60px">Source</th><th style="width:75px">Actions</th></tr></thead>
       <tbody id="tmBody"></tbody>
     </table>
-    <div class="mactions"><button class="btn btn-teal" onclick="closeTM()">Done</button></div>
+    <div class="mactions"><button type="button" class="btn btn-teal" onclick="closeTM()">Done</button></div>
   </div>
 </div>
 
@@ -435,33 +458,36 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
     <p class="modal-sub">Paste text from TJC PMN, CMS clarifications, or training notes. Preview tags before submitting for curator review.</p>
     <textarea id="pasteRaw" style="width:100%;font-family:var(--mono);font-size:11px;padding:9px;border:1.5px solid var(--border);border-radius:5px;min-height:120px;resize:vertical;margin-bottom:10px;outline:none;color:var(--ink);" placeholder="Q: If a patient woke up with stroke symptoms…&#10;&#10;A: Per TJC guidance…"></textarea>
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px">
-      <div><label class="flbl">Measure</label><select class="fsel" id="pm"><option value="STK">STK</option><option value="ASR-IP">ASR-IP</option><option value="ED-OP">ED-OP</option></select></div>
-      <div><label class="flbl">Specific Measure</label><input class="fi" id="pspec" placeholder="e.g. ASR-IP-1"/></div>
-      <div><label class="flbl">Source</label><input class="fi" id="psrc" placeholder="TJC PMN, training…"/></div>
+      <div><label class="flbl" for="pm">Measure</label><select class="fsel" id="pm"><option value="STK">STK</option><option value="ASR-IP">ASR-IP</option><option value="ED-OP">ED-OP</option></select></div>
+      <div><label class="flbl" for="pspec">Specific Measure</label><input class="fi" id="pspec" type="text" placeholder="e.g. ASR-IP-1"/></div>
+      <div><label class="flbl" for="psrc">Source</label><input class="fi" id="psrc" type="text" placeholder="TJC PMN, training…"/></div>
     </div>
     <div class="tag-review" id="tagReview" style="display:none">
       <h4><i class="ph-duotone ph-tag" style="vertical-align:middle;margin-right:4px;"></i>Auto-detected tags — click to accept or reject:</h4>
       <div class="rrow" id="rrow"></div>
       <div style="font-size:10.5px;color:var(--mid);font-style:italic">Purple = accepted · Gray = rejected · Click to toggle</div>
     </div>
+    <div class="cf-turnstile" id="turnstilePaste" data-sitekey="0x4AAAAAADf-2v3MWsS9bACq" data-theme="light" style="margin-bottom:10px;"></div>
     <div class="mactions">
-      <button class="btn btn-ghost" style="font-size:11px;padding:5px 11px" onclick="closePaste()">Cancel</button>
-      <button class="btn btn-purple" style="font-size:11px;padding:5px 11px" onclick="previewTags()"><i class="ph-duotone ph-tag" style="vertical-align:middle;margin-right:4px;"></i>Preview Tags</button>
-      <button class="btn btn-teal" style="font-size:11px;padding:5px 11px" id="pasteSubmitBtn" onclick="savePaste()">Submit for Review</button>
+      <button type="button" class="btn btn-ghost" style="font-size:11px;padding:5px 11px" onclick="closePaste()">Cancel</button>
+      <button type="button" class="btn btn-purple" style="font-size:11px;padding:5px 11px" onclick="previewTags()"><i class="ph-duotone ph-tag" style="vertical-align:middle;margin-right:4px;"></i>Preview Tags</button>
+      <button type="button" class="btn btn-teal" style="font-size:11px;padding:5px 11px" id="pasteSubmitBtn" onclick="savePaste()">Submit for Review</button>
     </div>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
+<script src="assets/site.js"></script>
 <script>
 // ══════════════════════════════════════════════════
 //  CONFIG
 // ══════════════════════════════════════════════════
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzTuYLUTw9dCPPjCzts68c_xGO1NCkaG3Sy2XpNRr8wQtcLLkeZeHWh5zE21M0Q1hurIg/exec';
+const DATA_URL   = './data/qa.json';
 const CACHE_KEY  = 'qc-sheets-cache-v1';
 const TAGS_KEY   = 'qc-local-tags-v2';
-const CACHE_TTL  = 5 * 60 * 1000;
+const CACHE_TTL  = 12 * 60 * 60 * 1000;
 
 const CATEGORIES = ['Stroke Timing','Treatment','Goals of Care','ED Throughput','Imaging','Disposition','Uncategorized'];
 
@@ -553,10 +579,10 @@ function mergeTagDefs(sheetTags){
 }
 
 // ══════════════════════════════════════════════════
-//  GOOGLE SHEETS FETCH
+//  QA DATA LOAD (static data/qa.json, regenerated nightly — T-07)
 // ══════════════════════════════════════════════════
-async function fetchFromSheets(){
-  showLoading('loading','Loading entries from Google Sheets…');
+async function loadQaData(){
+  showLoading('loading','Loading Q&A data…');
   loadLocalTags();
   const cached=getCached();
   if(cached){
@@ -566,28 +592,30 @@ async function fetchFromSheets(){
     refreshInBackground();return;
   }
   try{
-    const [qaData,tagData]=await Promise.all([fetchJSON(SCRIPT_URL),fetchJSON(SCRIPT_URL+'?type=tags')]);
+    const qaData=await fetchJSON(DATA_URL);
     entries=(qaData.entries&&qaData.entries.length)?qaData.entries:[...SEED];
-    const sheetTags=tagData.tags||[];
+    const sheetTags=qaData.tags||[];
     mergeTagDefs(sheetTags);
     setCache({entries,sheetTags});
     render();showLoading('hidden');
   }catch(err){
-    console.warn('Sheets fetch failed:',err);
+    console.warn('data/qa.json fetch failed:',err);
     entries=[...SEED];mergeTagDefs([]);
-    render();showLoading('warn','⚠️ Could not reach Google Sheets — showing seed data.');
+    render();showLoading('warn','⚠️ Could not load Q&A data — showing seed data.');
   }
 }
 async function refreshInBackground(){
   try{
-    const [qaData,tagData]=await Promise.all([fetchJSON(SCRIPT_URL),fetchJSON(SCRIPT_URL+'?type=tags')]);
-    const sheetTags=tagData.tags||[];
+    const qaData=await fetchJSON(DATA_URL);
+    const sheetTags=qaData.tags||[];
     entries=(qaData.entries&&qaData.entries.length)?qaData.entries:[...SEED];
     mergeTagDefs(sheetTags);setCache({entries,sheetTags});render();
   }catch(e){}
 }
 async function fetchJSON(url){const res=await fetch(url);if(!res.ok)throw new Error('HTTP '+res.status);return res.json();}
 async function postJSON(payload){const res=await fetch(SCRIPT_URL,{method:'POST',body:JSON.stringify(payload)});if(!res.ok)throw new Error('HTTP '+res.status);return res.json();}
+function getTurnstileToken(containerId){const el=document.querySelector('#'+containerId+' [name="cf-turnstile-response"]');return el?el.value:'';}
+function resetTurnstile(containerId){if(window.turnstile)turnstile.reset('#'+containerId);}
 function getCached(){
   try{const raw=localStorage.getItem(CACHE_KEY);if(!raw)return null;const{ts,data}=JSON.parse(raw);if(Date.now()-ts>CACHE_TTL)return null;return data;}
   catch(e){return null;}
@@ -632,7 +660,6 @@ function filtered(){
     return mOk&&tOk&&tagOk&&(!q||tx.includes(q));
   });
 }
-const esc=s=>(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 function typeBadge(t){
   if(t==='edge')return'<span class="badge be">⚡ Edge</span>';
   if(t==='gray')return'<span class="badge bg">❓ Gray</span>';
@@ -642,31 +669,59 @@ function render(){
   const f=filtered();
   document.getElementById('rcnt').innerHTML=`Showing <strong>${f.length}</strong> of <strong>${entries.length}</strong> entries`;
   updCounts();buildCloud();
-  if(!f.length){document.getElementById('cards').innerHTML=`<div class="empty"><h3>No results</h3><p>Try a different search or tag filter.</p></div>`;return;}
+  if(!f.length){document.getElementById('cards').innerHTML=`<div class="empty"><h3>No results</h3><p>Try a different search or tag filter.</p></div>`;logZeroResults();return;}
+  lastZeroKey=null;
   document.getElementById('cards').innerHTML=f.map(e=>`
     <div class="qa" id="c-${e.id}">
-      <div class="qa-hdr" onclick="togCard('c-${e.id}')">
-        <div class="tog">+</div>
+      <button type="button" class="qa-hdr" aria-expanded="false" aria-controls="c-${e.id}-body" onclick="togCard('c-${e.id}')">
+        <div class="tog" aria-hidden="true">+</div>
         <div class="qa-hdr-c">
           <div class="meta">
             <span class="badge bm">${esc(e.measure)}${e.specific?' · '+esc(e.specific):''}</span>
             ${typeBadge(e.type)}
             ${e.source?`<span class="badge bs">📎 ${esc(e.source.split(';')[0].split(',')[0].trim())}</span>`:''}
-            ${(e.tags||[]).map(t=>`<span class="ktag" onclick="event.stopPropagation();addTagFilter('${esc(t)}')">${esc(t)}</span>`).join('')}
+            ${(e.tags||[]).map(t=>`<span class="ktag ktag-static">${esc(t)}</span>`).join('')}
           </div>
           <div class="q-text">${esc(e.question)}</div>
         </div>
-      </div>
-      <div class="qa-body">
+      </button>
+      <div class="qa-body" id="c-${e.id}-body">
         <div class="ans">${esc(e.answer)}</div>
         <div class="qa-foot">
           <div class="qa-src"><span class="sdot"></span>${esc(e.source||'')}${e.date?' · '+e.date:''}</div>
-          <div class="qa-tags">${(e.tags||[]).map(t=>`<span class="ktag" onclick="addTagFilter('${esc(t)}')">${esc(t)}</span>`).join('')}</div>
+          <div class="qa-tags">${(e.tags||[]).map(t=>`<button type="button" class="ktag" onclick="addTagFilter('${esc(t)}')">${esc(t)}</button>`).join('')}</div>
         </div>
       </div>
     </div>`).join('');
 }
-function togCard(id){document.getElementById(id)?.classList.toggle('open');}
+function togCard(id){
+  const card=document.getElementById(id);
+  if(!card)return;
+  card.classList.toggle('open');
+  const btn=card.querySelector('.qa-hdr');
+  if(btn)btn.setAttribute('aria-expanded',card.classList.contains('open')?'true':'false');
+}
+let lastZeroKey=null;
+function logZeroResults(){
+  const q=(document.getElementById('srch')?.value||'').trim();
+  const key=JSON.stringify({q,m:actM,t:actT,tags:[...actTags].sort()});
+  if(key===lastZeroKey)return;
+  lastZeroKey=key;
+  gtag('event','qa_search_zero_results',{search_term:q,measure:actM,type:actT,tags:actTags.join(',')});
+}
+let deepLinkApplied=false;
+function applyDeepLink(){
+  if(deepLinkApplied)return;
+  const id=location.hash.slice(1);
+  if(!id.startsWith('c-'))return;
+  const el=document.getElementById(id);
+  if(!el)return;
+  deepLinkApplied=true;
+  el.classList.add('open');
+  const btn=el.querySelector('.qa-hdr');
+  if(btn)btn.setAttribute('aria-expanded','true');
+  el.scrollIntoView({behavior:'smooth',block:'center'});
+}
 function updCounts(){
   const strokeMeasures=['STK','ASR-IP','C-STK','ASR-OP'];
   const strokeCount=entries.filter(e=>strokeMeasures.some(m=>e.measure===m||String(e.measure).startsWith(m))).length;
@@ -686,7 +741,7 @@ function buildCloud(){
   const sorted=Object.entries(cnt).sort((a,b)=>b[1]-a[1]);
   const top12=sorted.slice(0,12);
   document.getElementById('tagCloud').innerHTML=top12.map(([t,c])=>
-    `<span class="ctag${actTags.includes(t)?' on':''}" onclick="addTagFilter('${esc(t)}')">${esc(t)}<span class="ctag-n">${c}</span></span>`
+    `<button type="button" class="ctag${actTags.includes(t)?' on':''}" onclick="addTagFilter('${esc(t)}')">${esc(t)}<span class="ctag-n">${c}</span></button>`
   ).join('');
   // update total tag count in sidebar label
   const totalEl=document.getElementById('sb-tag-total');
@@ -715,7 +770,7 @@ function renderAtBar(){
   const bar=document.getElementById('atbar');
   if(!actTags.length){bar.classList.remove('on');return;}
   bar.classList.add('on');
-  document.getElementById('atpills').innerHTML=actTags.map(t=>`<span class="atpill">${esc(t)}<button onclick="removeTagFilter('${esc(t)}')">×</button></span>`).join('');
+  document.getElementById('atpills').innerHTML=actTags.map(t=>`<span class="atpill">${esc(t)}<button type="button" onclick="removeTagFilter('${esc(t)}')">×</button></span>`).join('');
 }
 function filterCat(cat,el){
   activeCat=cat;
@@ -763,7 +818,7 @@ function renderTagBrowser(){
   document.getElementById('tbBody').innerHTML=visible.map(td=>`
     <tr>
       <td>
-        <span class="tb-tag-name" onclick="applyTagFromBrowser('${esc(td.name)}')" title="Click to filter Q&As by this tag">${esc(td.name)}</span>
+        <button type="button" class="tb-tag-name" onclick="applyTagFromBrowser('${esc(td.name)}')" title="Click to filter Q&As by this tag">${esc(td.name)}</button>
         ${cnt[td.name]?`<div style="font-size:9px;color:var(--mid);margin-top:3px;font-family:var(--mono);">${cnt[td.name]} Q&amp;A${cnt[td.name]!==1?'s':''}</div>`:''}
       </td>
       <td><span class="cat-badge">${esc(td.category||'Uncategorized')}</span></td>
@@ -789,7 +844,7 @@ function onTagType(val){
   const matches=tagDefs.filter(td=>td.name.toLowerCase().includes(lo)||(td.aliases&&td.aliases.some(a=>a.includes(lo)))).map(td=>td.name).filter(n=>!formTags.includes(n)).slice(0,8);
   if(matches.length){
     document.getElementById('sugLbl').textContent='Matching tags — click to add:';
-    document.getElementById('sugRow').innerHTML=matches.map(t=>`<span class="sug-chip match" onclick="addFormTag('${esc(t)}');document.getElementById('ttxt').value='';hideSug()">${esc(t)}</span>`).join('');
+    document.getElementById('sugRow').innerHTML=matches.map(t=>`<button type="button" class="sug-chip match" onclick="addFormTag('${esc(t)}');document.getElementById('ttxt').value='';hideSug()">${esc(t)}</button>`).join('');
     document.getElementById('sugPanel').classList.add('on');
   }else{hideSug();}
 }
@@ -809,7 +864,7 @@ function showSuggestions(){
   document.getElementById('sugRow').innerHTML=related.map(t=>{
     const d=tagDefs.find(x=>x.name===t);
     const hint=d?`<span class="sug-hint">${(d.aliases||[]).slice(0,2).join(', ')}</span>`:'';
-    return`<span class="sug-chip" onclick="addFormTag('${esc(t)}')">${esc(t)} ${hint}</span>`;
+    return`<button type="button" class="sug-chip" onclick="addFormTag('${esc(t)}')">${esc(t)} ${hint}</button>`;
   }).join('');
   document.getElementById('sugPanel').classList.add('on');
 }
@@ -823,9 +878,11 @@ async function submitEntry(){
   const q=document.getElementById('fq').value.trim();
   const a=document.getElementById('fa').value.trim();
   if(!q||!a){toast('Please enter both question and answer.');return;}
+  const tsToken=getTurnstileToken('turnstileAdd');
+  if(!tsToken){toast('Please complete the verification challenge.');return;}
   const auto=autoDetect(q+' '+a);
   const merged=[...new Set([...formTags,...auto])];
-  const payload={measure:document.getElementById('fm').value,specific:document.getElementById('fspec').value.trim(),type:document.getElementById('ftype').value,question:q,answer:a,source:document.getElementById('fsrc').value.trim(),tags:merged};
+  const payload={measure:document.getElementById('fm').value,specific:document.getElementById('fspec').value.trim(),type:document.getElementById('ftype').value,question:q,answer:a,source:document.getElementById('fsrc').value.trim(),tags:merged,turnstileToken:tsToken};
   const btn=document.getElementById('submitBtn');btn.textContent='Submitting…';btn.disabled=true;
   try{
     await postJSON(payload);
@@ -833,7 +890,7 @@ async function submitEntry(){
     toggleAdd();['fq','fa','fspec','fsrc'].forEach(id=>document.getElementById(id).value='');
     formTags=[];renderFormTags();
   }catch(err){toast('❌ Submission failed — check your connection and try again.');}
-  finally{btn.textContent='Submit for Review';btn.disabled=false;}
+  finally{btn.textContent='Submit for Review';btn.disabled=false;resetTurnstile('turnstileAdd');}
 }
 
 // ══════════════════════════════════════════════════
@@ -856,8 +913,8 @@ function renderTM(){
       <td>${srcLabel}</td>
       <td style="white-space:nowrap">
         ${canEdit
-          ?`<button class="tb-btn tb-edit" onclick="editLocalTag('${esc(td.name)}')">Edit</button>
-            <button class="tb-btn tb-del" onclick="delLocalTag('${esc(td.name)}')">Del</button>`
+          ?`<button type="button" class="tb-btn tb-edit" onclick="editLocalTag('${esc(td.name)}')">Edit</button>
+            <button type="button" class="tb-btn tb-del" onclick="delLocalTag('${esc(td.name)}')">Del</button>`
           :'<span style="font-size:10px;color:var(--mid);">Curator</span>'}
       </td>
     </tr>`;
@@ -869,6 +926,8 @@ async function addTagDef(){
   const name=document.getElementById('nt-n').value.trim();
   if(!name){toast('Tag name required.');return;}
   if(tagDefs.find(t=>t.name.toLowerCase()===name.toLowerCase())){toast('A tag with that name already exists.');return;}
+  const tsToken=getTurnstileToken('turnstileTag');
+  if(!tsToken){toast('Please complete the verification challenge.');return;}
   const aliases=document.getElementById('nt-a').value.split(',').map(s=>s.trim().toLowerCase()).filter(Boolean);
   const related=document.getElementById('nt-r').value.split(',').map(s=>s.trim()).filter(Boolean);
   const category=document.getElementById('nt-cat').value;
@@ -880,11 +939,11 @@ async function addTagDef(){
 
   const btn=document.getElementById('addTagBtn');btn.textContent='Submitting…';btn.disabled=true;
   try{
-    await postJSON({_type:'tag',...newTag});
+    await postJSON({_type:'tag',...newTag,turnstileToken:tsToken});
     toast(`✅ "${name}" saved locally and submitted for curator review!`);
   }catch(err){
     toast(`⚠️ "${name}" saved locally but could not reach Sheets.`);
-  }finally{btn.textContent='Submit Tag for Review';btn.disabled=false;}
+  }finally{btn.textContent='Submit Tag for Review';btn.disabled=false;resetTurnstile('turnstileTag');}
   ['nt-id','nt-n','nt-a','nt-r'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('nt-cat').value='Stroke Timing';
   renderTM();
@@ -922,12 +981,14 @@ function previewTags(){
 }
 function renderReview(){
   document.getElementById('rrow').innerHTML=reviewStates.map((r,i)=>
-    `<span class="rchip ${r.on?'acc':'rej'}" onclick="togReview(${i})">${r.on?'✓':'✕'} ${esc(r.tag)}</span>`).join('');
+    `<button type="button" class="rchip ${r.on?'acc':'rej'}" onclick="togReview(${i})">${r.on?'✓':'✕'} ${esc(r.tag)}</button>`).join('');
 }
 function togReview(i){reviewStates[i].on=!reviewStates[i].on;renderReview();}
 async function savePaste(){
   const raw=document.getElementById('pasteRaw').value.trim();
   if(!raw){toast('Nothing to save.');return;}
+  const tsToken=getTurnstileToken('turnstilePaste');
+  if(!tsToken){toast('Please complete the verification challenge.');return;}
   let q='',a=raw;
   const m=raw.match(/^Q[:\.\)]\s*([\s\S]+?)\n\n?A[:\.\)]\s*([\s\S]+)$/i);
   if(m){q=m[1].trim();a=m[2].trim();}
@@ -936,14 +997,14 @@ async function savePaste(){
   const lo=(q+a).toLowerCase();
   const isGray=['unclear','gray','ambiguous','conflict','varies','depends','debate','inconsistent'].some(k=>lo.includes(k));
   const isEdge=['transfer','ems','same system','woke up','discrepancy','exception','contraindic','eloped'].some(k=>lo.includes(k));
-  const payload={measure:document.getElementById('pm').value,specific:document.getElementById('pspec').value.trim(),type:isGray?'gray':isEdge?'edge':'routine',question:q,answer:a,source:document.getElementById('psrc').value.trim()||'Pasted source',tags};
+  const payload={measure:document.getElementById('pm').value,specific:document.getElementById('pspec').value.trim(),type:isGray?'gray':isEdge?'edge':'routine',question:q,answer:a,source:document.getElementById('psrc').value.trim()||'Pasted source',tags,turnstileToken:tsToken};
   const btn=document.getElementById('pasteSubmitBtn');btn.textContent='Submitting…';btn.disabled=true;
   try{
     await postJSON(payload);
     toast('✅ Submitted for curator review!');
     closePaste();document.getElementById('pasteRaw').value='';document.getElementById('pspec').value='';document.getElementById('psrc').value='';
   }catch(err){toast('❌ Submission failed — check your connection.');}
-  finally{btn.textContent='Submit for Review';btn.disabled=false;}
+  finally{btn.textContent='Submit for Review';btn.disabled=false;resetTurnstile('turnstilePaste');}
 }
 
 // ══════════════════════════════════════════════════
@@ -956,7 +1017,7 @@ function exportPDF(){
   const w=window.open('','_blank');
   w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Q&A — ${lbl}</title>
   <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;700&family=Source+Sans+3:wght@400;500;600&family=Source+Code+Pro:wght@400&display=swap" rel="stylesheet">
-  <style>body{font-family:'Source Sans 3',sans-serif;font-size:11.5px;color:#1a1e2c;padding:28px 36px;max-width:720px;margin:0 auto}.hdr{border-bottom:3px solid #0d1f3c;padding-bottom:12px;margin-bottom:20px}.hdr h1{font-family:'Bitter',serif;font-size:20px;color:#0d1f3c;margin-bottom:3px}.meta{font-size:10px;color:#7a8499}.qa{margin-bottom:15px;padding-bottom:14px;border-bottom:1px solid #edf0f5;page-break-inside:avoid}.tags{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:5px}.tag{font-size:8.5px;font-weight:700;padding:1px 6px;border-radius:3px;text-transform:uppercase}.tm{background:#eef0f5;color:#163560}.te{background:#fdf3dc;color:#7a4e00}.tg{background:#fceaea;color:#b53030}.tr{background:#e5f4ea;color:#1a6e30}.kw{font-family:'Source Code Pro',monospace;font-size:9px;background:#f0ebff;color:#5430a8;border:1px solid rgba(84,48,168,.2);padding:1px 5px;border-radius:6px}.q{font-weight:700;font-size:12px;margin-bottom:6px;color:#0d1f3c;line-height:1.4}.a{line-height:1.65;color:#2b3347}.src{font-size:9.5px;color:#7a8499;margin-top:6px;font-style:italic}.foot{margin-top:28px;font-size:9.5px;color:#7a8499;border-top:1px solid #edf0f5;padding-top:8px}</style></head><body>
+  <style>body{font-family:'Source Sans 3',sans-serif;font-size:11.5px;color:#1a1e2c;padding:28px 36px;max-width:720px;margin:0 auto}.hdr{border-bottom:3px solid #0d1f3c;padding-bottom:12px;margin-bottom:20px}.hdr h1{font-family:'Bitter',serif;font-size:20px;color:#0d1f3c;margin-bottom:3px}.meta{font-size:10px;color:#7a8499}.qa{margin-bottom:15px;padding-bottom:14px;border-bottom:1px solid #edf0f5;page-break-inside:avoid}.tags{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:5px}.tag{font-size:8.5px;font-weight:700;padding:1px 6px;border-radius:3px;text-transform:uppercase}.tm{background:#eef0f5;color:#163560}.te{background:#fdf3dc;color:#7a4e00}.tg{background:#fceaea;color:#b53030}.tr{background:#e5f4ea;color:#1a6e30}.kw{font-family:'Source Code Pro',monospace;font-size:9px;background:#f0ebff;color:#7B5CE5;border:1px solid rgba(123,92,229,.2);padding:1px 5px;border-radius:6px}.q{font-weight:700;font-size:12px;margin-bottom:6px;color:#0d1f3c;line-height:1.4}.a{line-height:1.65;color:#2b3347}.src{font-size:9.5px;color:#7a8499;margin-top:6px;font-style:italic}.foot{margin-top:28px;font-size:9.5px;color:#7a8499;border-top:1px solid #edf0f5;padding-top:8px}</style></head><body>
   <div class="hdr"><h1>${esc(lbl)} Q&A Reference${esc(tlbl)}</h1>
   <div class="meta">AbstractionDeskQA · ${new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})} · ${f.length} entries · TJC v2026B</div></div>
   ${f.map((e,i)=>`<div class="qa">
@@ -977,36 +1038,49 @@ function exportPDF(){
 // ══════════════════════════════════════════════════
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),3500);}
 
-// ══════════════════════════════════════════════════
-//  TOOLS DROPDOWN
-// ══════════════════════════════════════════════════
-function toggleToolsDD(){
-  const dd=document.getElementById('toolsDropdown');
-  const btn=document.getElementById('toolsDDBtn');
-  const isOpen=dd.classList.contains('open');
-  dd.classList.toggle('open',!isOpen);
-  btn.setAttribute('aria-expanded',String(!isOpen));
-}
-document.addEventListener('click',function(e){
-  const dd=document.getElementById('toolsDropdown');
-  if(dd&&!dd.contains(e.target))dd.classList.remove('open');
-});
-
-fetchFromSheets();
+loadQaData().then(applyDeepLink);
 </script>
 <!-- SHARE STRIP -->
-<div style="background:#e6f5f4;border-top:1px solid #b2dedd;border-bottom:1px solid #b2dedd;padding:18px 24px;">
-  <div style="max-width:1040px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+<div class="share-strip">
+  <div class="share-strip-inner">
     <div>
-      <div style="font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;color:#0d1f3c;margin-bottom:3px;">Share with your team</div>
-      <div style="font-size:13px;color:#3d4f62;line-height:1.5;">Free abstraction reference for core measure teams — Q&A lookup, LKW tool, and more.</div>
+      <div class="share-strip-title">Share with your team</div>
+      <div class="share-strip-sub">Free abstraction reference for core measure teams — Q&amp;A lookup, LKW tool, and more.</div>
     </div>
-    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-      <code style="background:white;border:1px solid #b2dedd;border-radius:6px;padding:7px 14px;font-size:13px;color:#0b7a78;font-family:'DM Mono',monospace;white-space:nowrap;">https://abstractiondeskqa.com</code>
-      <button onclick="(()=>{navigator.clipboard.writeText('https://abstractiondeskqa.com');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy link',2000)})()" style="background:#0b7a78;color:white;border:none;border-radius:6px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif;" onmouseover="this.style.background='#0fa39f'" onmouseout="this.style.background='#0b7a78'">Copy link</button>
+    <div class="share-strip-actions">
+      <code class="share-url-pill">https://abstractiondeskqa.com</code>
+      <button type="button" class="share-copy-btn">Copy link</button>
     </div>
   </div>
 </div>
+
+<!-- DISCLAIMER -->
+<div class="site-disclaimer" role="note" aria-label="Educational disclaimer">
+  <div class="site-disclaimer-inner">
+    <strong>Educational use only.</strong>
+    AbstractionDeskQA is a reference aid to support abstractor training and workflow. It does not constitute compliance advice and is not a substitute for the official TJC or CMS Specifications Manual. Always verify abstraction decisions against the current specification version for your abstraction period.
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div>
+      <div class="site-footer-brand">AbstractionDesk<span style="color:#0da8a5">QA</span></div>
+      <p>A free abstraction toolkit for core measure teams.<br>
+      &copy; <span id="yr"></span> AbstractionDeskQA. Educational use only.</p>
+    </div>
+    <div class="site-footer-links">
+      <a href="sep1-tool.html">SEP-1 Tool</a>
+      <a href="lkw-tool.html">LKW Tool</a>
+      <a href="cmo-tool.html">CMO Tool</a>
+      <a href="hbips-tool.html">HBIPS Tool</a>
+      <a href="abstractly.html">Abstractly</a>
+      <a href="index.html#feedback">Feedback</a>
+    </div>
+  </div>
+</footer>
+
 <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="abstractiondeskqa" data-description="Support AbstractionDeskQA" data-message="Support ongoing development of this free reference tool." data-color="#0a7c7a" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
 </body>
 </html>

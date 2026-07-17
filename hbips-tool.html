@@ -6,41 +6,23 @@
 <meta name="description" content="HBIPS Tool — AbstractionDeskQA. Hospital-Based Inpatient Psychiatric Services (HBIPS) restraint and seclusion measure calculators, abstraction reference, practice quiz, and case walkthroughs.">
 <link rel="canonical" href="https://abstractiondeskqa.com/hbips-tool.html">
 <title>HBIPS Tool — AbstractionDeskQA</title>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://abstractiondeskqa.com/hbips-tool.html">
+<meta property="og:site_name" content="AbstractionDeskQA">
+<meta property="og:title" content="HBIPS Tool — AbstractionDeskQA">
+<meta property="og:description" content="HBIPS Tool — AbstractionDeskQA. Hospital-Based Inpatient Psychiatric Services (HBIPS) restraint and seclusion measure calculators, abstraction reference, practice quiz, and case walkthroughs.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/phosphor/regular.css">
+<link rel="stylesheet" href="assets/phosphor/duotone.css">
+<!-- Shared design tokens / structural CSS (T-04) -->
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/site.css">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QJPP46JWX3"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-QJPP46JWX3');</script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
-  --ink:        #0f1923;
-  --ink-mid:    #3d4f62;
-  --ink-soft:   #6b7f94;
-  --canvas:     #f7f9fc;
-  --white:      #ffffff;
-  --navy:       #0d2240;
-  --teal:       #0a7c7a;
-  --teal2:      #0da8a5;
-  --teal-pale:  #e4f5f4;
-  --teal-mid:   #c2ece9;
-  --amber:      #8a5200;
-  --amber-bg:   #fff8ec;
-  --amber-border: #e8c060;
-  --red:        #9b1c1c;
-  --red-bg:     #fef2f2;
-  --red-border: #fca5a5;
-  --green:      #166534;
-  --green-bg:   #f0fdf4;
-  --green-border:#86efac;
-  --border:     #dbe2ec;
-  --border-mid: #c4cdd9;
-  --heading:    'DM Sans', sans-serif;
-  --body:       'Atkinson Hyperlegible', sans-serif;
-  --mono:       'Courier New', Courier, monospace;
-  --radius:     10px;
-  --shadow:     0 4px 24px rgba(13,34,64,.09);
-  --shadow-sm:  0 2px 10px rgba(13,34,64,.06);
-  --max:        1040px;
-}
 html { scroll-behavior: smooth; }
 body {
   font-family: var(--body);
@@ -52,69 +34,6 @@ body {
 }
 a { color: var(--teal); }
 a:hover { text-decoration: underline; }
-a:focus-visible, button:focus-visible, input:focus-visible,
-select:focus-visible {
-  outline: 3px solid var(--teal2);
-  outline-offset: 3px;
-  border-radius: 4px;
-}
-
-/* ── SKIP ── */
-.skip-link {
-  position: absolute; top: -60px; left: 16px; z-index: 999;
-  background: var(--navy); color: white; padding: 10px 18px;
-  border-radius: var(--radius); font-weight: 700; font-size: 15px;
-  transition: top .2s; text-decoration: none;
-}
-.skip-link:focus { top: 16px; }
-
-/* ── NAV ── */
-.nav {
-  background: var(--navy);
-  border-bottom: 1px solid rgba(255,255,255,.08);
-  position: sticky; top: 0; z-index: 80;
-  box-shadow: 0 2px 12px rgba(0,0,0,.25);
-}
-.nav-inner {
-  max-width: var(--max); margin: 0 auto; padding: 0 24px;
-  display: flex; align-items: center; justify-content: space-between;
-  height: 62px;
-}
-.nav-brand {
-  font-family: var(--heading); font-size: 20px; font-weight: 700;
-  color: white; letter-spacing: -.3px;
-  display: flex; align-items: center; gap: 10px;
-  text-decoration: none;
-}
-.nav-brand:hover { text-decoration: none; }
-.nav-brand-sub {
-  font-family: var(--mono); font-size: 11px; font-weight: 400;
-  color: rgba(255,255,255,.4); letter-spacing: .08em; text-transform: uppercase;
-}
-.qa-badge {
-  background: var(--teal2); color: white;
-  font-size: 10px; font-weight: 700; padding: 2px 7px;
-  border-radius: 4px; letter-spacing: .6px; font-family: var(--body);
-}
-.nav-links { display: flex; gap: 6px; align-items: center; }
-.nav-cta {
-  background: var(--teal); color: white;
-  font-family: var(--body); font-size: 14px; font-weight: 700;
-  padding: 8px 18px; border-radius: 7px; border: none;
-  cursor: pointer; transition: all .15s; text-decoration: none;
-  white-space: nowrap;
-}
-.nav-cta:hover { background: var(--teal2); text-decoration: none; color: white; }
-.nav-cta-ghost {
-  background: transparent; color: rgba(255,255,255,.85);
-  font-family: var(--body); font-size: 14px; font-weight: 600;
-  padding: 8px 18px; border-radius: 7px;
-  border: 1.5px solid rgba(255,255,255,.3); cursor: pointer;
-  transition: all .15s; text-decoration: none; white-space: nowrap;
-  display: inline-flex; align-items: center; gap: 6px;
-}
-.nav-cta-ghost:hover { border-color: rgba(255,255,255,.7); color: white; text-decoration: none; background: rgba(255,255,255,.08); }
-.nav-cta-ghost.active-page { background: var(--teal); border-color: var(--teal); color: white; }
 
 /* ── PAGE HERO ── */
 .page-hero {
@@ -188,7 +107,7 @@ main { max-width: var(--max); margin: 0 auto; padding: 32px 24px 72px; }
 /* ── SECTION LABEL ── */
 .section-label {
   font-size: 11px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 1.6px; color: var(--teal); margin-bottom: 10px;
+  letter-spacing: 1.6px; color: var(--teal); margin-bottom: 12px;
   display: flex; align-items: center; gap: 8px;
 }
 .section-label::before {
@@ -205,6 +124,7 @@ main { max-width: var(--max); margin: 0 auto; padding: 32px 24px 72px; }
   box-shadow: var(--shadow-sm);
 }
 .card + .card { margin-top: 18px; }
+.card--spaced { margin-bottom: 20px; }
 .card-title {
   font-family: var(--heading); font-size: 16px; font-weight: 700;
   color: var(--navy); margin-bottom: 4px;
@@ -212,13 +132,18 @@ main { max-width: var(--max); margin: 0 auto; padding: 32px 24px 72px; }
 }
 .card-title i { color: var(--teal); font-size: 20px; }
 .card-sub { font-size: 13px; color: var(--ink-soft); margin-bottom: 18px; line-height: 1.6; }
+.card-sub--tight { margin-bottom: 16px; }
 
 /* ── CALC GRID ── */
-.calc-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; }
+.calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 16px; }
+.calc-grid--mb14 { margin-bottom: 14px; }
 @media(max-width:700px) { .calc-grid { grid-template-columns: 1fr; } }
 
 /* ── FIELD ── */
 .field { display: flex; flex-direction: column; gap: 5px; }
+.field--tight { margin-bottom: 10px; }
+.input-narrow { max-width: 160px; }
+.input-mono { font-family: var(--mono); letter-spacing: .1em; }
 .field label {
   font-size: 11px; font-weight: 700; text-transform: uppercase;
   letter-spacing: .7px; color: var(--ink-mid);
@@ -234,7 +159,7 @@ main { max-width: var(--max); margin: 0 auto; padding: 32px 24px 72px; }
 .field input:focus, .field select:focus {
   outline: none; border-color: var(--teal); background: white;
 }
-.field .hint { font-size: 12px; color: var(--ink-soft); line-height: 1.5; }
+.field .hint { font-size: 12px; color: var(--ink-soft); line-height: 1.5; margin-top: 4px; }
 
 /* ── HELP TRIGGER ── */
 .help-btn {
@@ -264,6 +189,9 @@ main { max-width: var(--max); margin: 0 auto; padding: 32px 24px 72px; }
 .result-box {
   display: none;
   margin-top: 14px;
+}
+.result-box--spaced {
+  margin-top: 16px;
   padding: 14px 16px;
   border-radius: 8px;
   background: var(--green-bg);
@@ -327,6 +255,10 @@ main { max-width: var(--max); margin: 0 auto; padding: 32px 24px 72px; }
   color: var(--ink-soft); cursor: pointer; transition: all .15s;
 }
 .add-ep-btn:hover { border-color: var(--teal); color: var(--teal); background: var(--teal-pale); }
+.add-ep-btn--active { border-style: solid; border-color: var(--teal); color: var(--teal); }
+.add-ep-row { display: none; margin-top: 12px; gap: 10px; flex-wrap: wrap; }
+.entry-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px; }
+.unit-label { font-size: 13px; color: var(--ink-soft); font-family: var(--mono); }
 .clear-btn {
   margin-top: 16px; margin-left: 8px;
   background: none; color: var(--ink-soft);
@@ -385,7 +317,8 @@ main { max-width: var(--max); margin: 0 auto; padding: 32px 24px 72px; }
   font-size: 14px; line-height: 1.65; margin-top: 14px;
 }
 .notice i { font-size: 17px; flex-shrink: 0; margin-top: 2px; }
-.notice-tip { background: var(--teal-pale); border: 1px solid var(--teal-mid); color: var(--teal); }
+.notice--spaced { margin-top: 16px; }
+.notice-tip { background: var(--teal-pale); border: 1px solid var(--teal-mid); color: #0a5f5d; }
 .notice-warn { background: var(--amber-bg); border: 1px solid var(--amber-border); color: var(--amber); }
 .notice-danger { background: var(--red-bg); border: 1px solid var(--red-border); color: var(--red); }
 
@@ -476,6 +409,7 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
   color: var(--navy); line-height: 1.45; margin-bottom: 6px;
 }
 .quiz-scenario {
+  display: none;
   background: var(--canvas); border: 1px solid var(--border);
   border-radius: 8px; padding: 14px 16px;
   font-size: 14px; color: var(--ink-mid); line-height: 1.7;
@@ -517,6 +451,7 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
   cursor: pointer; transition: all .15s; display: inline-flex; align-items: center; gap: 7px;
 }
 .quiz-btn:hover { background: var(--teal2); }
+.quiz-btn--start { margin-top: 20px; }
 .quiz-btn:disabled { background: var(--border-mid); cursor: not-allowed; }
 .quiz-btn i { font-size: 14px; }
 .quiz-restart {
@@ -604,35 +539,18 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
 .rv-val { font-family: var(--heading); font-size: 20px; font-weight: 700; color: white; }
 .rv-val.highlight { color: var(--teal2); }
 
-/* ── DISCLAIMER ── */
-.disclaimer {
-  background: #eef2f8; border-top: 1px solid var(--border);
-  padding: 24px; margin-top: 60px;
-}
-.disclaimer-inner {
-  max-width: var(--max); margin: 0 auto;
-  font-size: 13px; color: var(--ink-soft); line-height: 1.75;
-}
-
-/* ── FOOTER ── */
-footer { background: #07131f; color: rgba(255,255,255,.45); padding: 28px 24px; }
-.footer-inner {
-  max-width: var(--max); margin: 0 auto;
-  display: flex; align-items: center;
-  justify-content: space-between; gap: 16px; flex-wrap: wrap;
-}
-.footer-brand { font-family: var(--heading); font-size: 16px; font-weight: 700; color: rgba(255,255,255,.7); margin-bottom: 4px; }
-footer p { font-size: 13px; line-height: 1.65; }
-footer a { color: var(--teal2); text-decoration: none; }
-footer a:hover { text-decoration: underline; }
-.footer-links { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; }
-
 @media(max-width:640px) {
-  .nav-links .nav-cta-ghost:not(:first-child) { display: none; }
-  .footer-inner { flex-direction: column; gap: 12px; }
   .result-vals { grid-template-columns: 1fr 1fr; }
   .leave-pair-row { grid-template-columns: 1fr 1fr; }
   .leave-pair-row .lp-remove { grid-column: 1 / -1; width: fit-content; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 </style>
 </head>
@@ -641,27 +559,27 @@ footer a:hover { text-decoration: underline; }
 <a href="#maincontent" class="skip-link">Skip to main content</a>
 
 <!-- NAV -->
-<nav class="nav" role="navigation" aria-label="Site navigation">
-  <div class="nav-inner">
-    <a href="/" class="nav-brand" aria-label="AbstractionDeskQA home">
-      AbstractionDesk<span class="qa-badge">QA</span>
-      <span class="nav-brand-sub">HBIPS Tool</span>
+<nav class="site-nav" aria-label="Site navigation">
+  <div class="site-nav-inner">
+    <a href="/" class="site-nav-brand" aria-label="AbstractionDeskQA home">
+      AbstractionDesk<span class="site-qa-badge">QA</span>
+      <span class="site-nav-brand-sub">HBIPS Tool</span>
     </a>
-    <div class="nav-links">
-      <a href="index.html" class="nav-cta-ghost">
+    <div class="site-nav-links">
+      <a href="index.html" class="site-nav-cta-ghost">
         <i class="ph ph-arrow-left" aria-hidden="true"></i> Home
       </a>
-      <a href="lkw-tool.html" class="nav-cta-ghost">LKW Tool</a>
-      <a href="cmo-tool.html" class="nav-cta-ghost">CMO Tool</a>
-      <a href="hbips-tool.html" class="nav-cta-ghost active-page">HBIPS Tool</a>
-      <a href="sep1-tool.html" class="nav-cta-ghost">SEP-1 Tool</a>
-      <a href="lookup.html" class="nav-cta">Q&amp;A Lookup</a>
+      <a href="lkw-tool.html" class="site-nav-cta-ghost">LKW Tool</a>
+      <a href="cmo-tool.html" class="site-nav-cta-ghost">CMO Tool</a>
+      <a href="hbips-tool.html" class="site-nav-cta-ghost active-page">HBIPS Tool</a>
+      <a href="sep1-tool.html" class="site-nav-cta-ghost">SEP-1 Tool</a>
+      <a href="lookup.html" class="site-nav-cta">Q&amp;A Lookup</a>
     </div>
   </div>
 </nav>
 
 <!-- PAGE HERO -->
-<div class="page-hero" role="banner">
+<header class="page-hero">
   <div class="page-hero-inner">
     <div class="page-eyebrow" aria-hidden="true">
       HBIPS Event Measures
@@ -669,21 +587,21 @@ footer a:hover { text-decoration: underline; }
     <h1>HBIPS Tool</h1>
     <p class="page-hero-sub">Hospital-Based Inpatient Psychiatric Services — Restraint &amp; Seclusion Hours.<br>Calculators, abstraction reference, practice quiz, and case walkthroughs.</p>
   </div>
-</div>
+</header>
 
 <!-- TABS -->
-<div class="tool-tabs" role="navigation" aria-label="Tool sections">
+<div class="tool-tabs" role="tablist" aria-label="Tool sections">
   <div class="tool-tabs-inner">
-    <button class="tab-btn active" onclick="switchTab('calc', this)" aria-selected="true">
+    <button type="button" class="tab-btn active" id="tabbtn-calc" role="tab" data-tab="calc" aria-selected="true" aria-controls="tab-calc" tabindex="0">
       <i class="ph-duotone ph-calculator" aria-hidden="true"></i> Calculators
     </button>
-    <button class="tab-btn" onclick="switchTab('ref', this)" aria-selected="false">
+    <button type="button" class="tab-btn" id="tabbtn-ref" role="tab" data-tab="ref" aria-selected="false" aria-controls="tab-ref" tabindex="-1">
       <i class="ph-duotone ph-book-open" aria-hidden="true"></i> Reference &amp; Guidance
     </button>
-    <button class="tab-btn" onclick="switchTab('quiz', this)" aria-selected="false">
+    <button type="button" class="tab-btn" id="tabbtn-quiz" role="tab" data-tab="quiz" aria-selected="false" aria-controls="tab-quiz" tabindex="-1">
       <i class="ph-duotone ph-exam" aria-hidden="true"></i> Practice Quiz
     </button>
-    <button class="tab-btn" onclick="switchTab('cases', this)" aria-selected="false">
+    <button type="button" class="tab-btn" id="tabbtn-cases" role="tab" data-tab="cases" aria-selected="false" aria-controls="tab-cases" tabindex="-1">
       <i class="ph-duotone ph-files" aria-hidden="true"></i> Case Walkthroughs
     </button>
   </div>
@@ -692,18 +610,18 @@ footer a:hover { text-decoration: underline; }
 <main id="maincontent">
 
 <!-- ═══════════════════════════ CALCULATORS TAB -->
-<div id="tab-calc" class="tab-panel active">
+<div id="tab-calc" class="tab-panel active" role="tabpanel" aria-labelledby="tabbtn-calc" tabindex="0">
 
   <!-- INPATIENT HOURS — first -->
-  <div class="section-label" style="margin-bottom:12px;">Inpatient Hours</div>
+  <div class="section-label">Inpatient Hours</div>
   <div class="card">
     <div class="card-title"><i class="ph-duotone ph-calendar-dots" aria-hidden="true"></i> Total Inpatient Hours</div>
     <p class="card-sub">Enter the admit and discharge dates. Add any full-day leave passes below. The result is the total inpatient hours for this patient.</p>
 
-    <div class="calc-grid" style="grid-template-columns:1fr 1fr;margin-bottom:14px;">
+    <div class="calc-grid calc-grid--mb14">
       <div class="field">
         <label>Admit date <span class="help-btn" onclick="toggleHelp('h-admit')" title="Help" role="button" tabindex="0">?</span></label>
-        <input type="date" id="denomAdmit" oninput="calcDenom()">
+        <input type="date" id="denomAdmit" aria-label="Admit date" oninput="calcDenom()">
         <div class="help-panel" id="h-admit">
           <strong>Count the admission day.</strong>
           The day the patient was admitted counts as day 1.
@@ -711,7 +629,7 @@ footer a:hover { text-decoration: underline; }
       </div>
       <div class="field">
         <label>Discharge date <span class="help-btn" onclick="toggleHelp('h-disch')" title="Help" role="button" tabindex="0">?</span></label>
-        <input type="date" id="denomDisch" oninput="calcDenom()">
+        <input type="date" id="denomDisch" aria-label="Discharge date" oninput="calcDenom()">
         <div class="help-panel" id="h-disch">
           <strong>Do not count the discharge day.</strong>
           Example: admitted Monday, discharged Friday = 4 days (Mon, Tue, Wed, Thu).
@@ -719,19 +637,19 @@ footer a:hover { text-decoration: underline; }
       </div>
     </div>
 
-    <div class="field" style="margin-bottom:10px;">
+    <div class="field field--tight">
       <label>Leave days (full-day only) <span class="help-btn" onclick="toggleHelp('h-leave')" title="Help" role="button" tabindex="0">?</span></label>
-      <input type="number" id="leaveDaysSimple" min="0" value="0" style="max-width:160px;" oninput="calcDenom()">
+      <input type="number" id="leaveDaysSimple" min="0" value="0" class="input-narrow" aria-label="Leave days" oninput="calcDenom()">
       <div class="help-panel" id="h-leave">
         <strong>Full-day therapeutic passes only.</strong>
         Only count days the patient was fully absent on a therapeutic leave pass. Time off the unit for labs, procedures, or appointments does not count.
       </div>
-      <span class="hint" style="margin-top:4px;">Enter 0 if no leave passes</span>
+      <span class="hint">Enter 0 if no leave passes</span>
     </div>
 
     <div class="result-box" id="denomResult"></div>
 
-    <div class="notice notice-tip" style="margin-top:16px;">
+    <div class="notice notice-tip notice--spaced">
       <i class="ph-duotone ph-info" aria-hidden="true"></i>
       <div>Only subtract full-day therapeutic leave passes. A trip off the unit for a procedure or appointment does not reduce the count.</div>
     </div>
@@ -740,43 +658,43 @@ footer a:hover { text-decoration: underline; }
   <hr class="div">
 
   <!-- DURATION CALCULATOR -->
-  <div class="section-label" style="margin-bottom:12px;">Episode Duration</div>
+  <div class="section-label">Episode Duration</div>
   <div class="card">
     <div class="card-title"><i class="ph-duotone ph-timer" aria-hidden="true"></i> Start &amp; End Time → Minutes</div>
     <p class="card-sub">Enter the start and end time of a single episode in military time. Handles midnight crossings automatically. Then add the result directly to your restraint or seclusion tally below.</p>
 
-    <div class="calc-grid" style="grid-template-columns:1fr 1fr;margin-bottom:16px;">
+    <div class="calc-grid">
       <div class="field">
         <label>Time started <span class="help-btn" onclick="toggleHelp('h-tstart')" title="Help" role="button" tabindex="0">?</span></label>
-        <input type="text" id="durStart" placeholder="e.g. 1415" maxlength="4" style="font-family:var(--mono);letter-spacing:.1em;" oninput="calcDuration()">
+        <input type="text" id="durStart" placeholder="e.g. 1415" maxlength="4" class="input-mono" oninput="calcDuration()">
         <div class="help-panel" id="h-tstart">
           <strong>Military time — 4 digits, no colon.</strong>
           Examples: 0830 = 8:30 AM &nbsp;·&nbsp; 1415 = 2:15 PM &nbsp;·&nbsp; 0005 = 12:05 AM
         </div>
-        <span class="hint" style="margin-top:4px;">Military time, 4 digits — e.g. 1415</span>
+        <span class="hint">Military time, 4 digits — e.g. 1415</span>
       </div>
       <div class="field">
         <label>Time ended <span class="help-btn" onclick="toggleHelp('h-tend')" title="Help" role="button" tabindex="0">?</span></label>
-        <input type="text" id="durEnd" placeholder="e.g. 1620" maxlength="4" style="font-family:var(--mono);letter-spacing:.1em;" oninput="calcDuration()">
+        <input type="text" id="durEnd" placeholder="e.g. 1620" maxlength="4" class="input-mono" oninput="calcDuration()">
         <div class="help-panel" id="h-tend">
           <strong>If the episode crossed midnight</strong> (e.g. started 2230, ended 0045 the next day), enter the end time as-is. The calculator will detect the crossing and add 24 hours automatically.
         </div>
-        <span class="hint" style="margin-top:4px;">Military time, 4 digits — e.g. 1620</span>
+        <span class="hint">Military time, 4 digits — e.g. 1620</span>
       </div>
     </div>
 
     <div class="result-box" id="durResult"></div>
 
-    <div id="durAddBtns" style="display:none;margin-top:12px;display:none;gap:10px;flex-wrap:wrap;">
-      <button class="add-ep-btn" id="durAddRestraint" onclick="addDurationToTally('restraint')" style="border-style:solid;border-color:var(--teal);color:var(--teal);">
+    <div id="durAddBtns" class="add-ep-row">
+      <button type="button" class="add-ep-btn add-ep-btn--active" id="durAddRestraint" onclick="addDurationToTally('restraint')">
         <i class="ph ph-plus" aria-hidden="true"></i> Add to Restraint tally
       </button>
-      <button class="add-ep-btn" id="durAddSeclusion" onclick="addDurationToTally('seclusion')" style="border-style:solid;border-color:var(--teal);color:var(--teal);">
+      <button type="button" class="add-ep-btn add-ep-btn--active" id="durAddSeclusion" onclick="addDurationToTally('seclusion')">
         <i class="ph ph-plus" aria-hidden="true"></i> Add to Seclusion tally
       </button>
     </div>
 
-    <div class="notice notice-warn" style="margin-top:16px;">
+    <div class="notice notice-warn notice--spaced">
       <i class="ph-duotone ph-warning" aria-hidden="true"></i>
       <div><strong>Episode crosses midnight?</strong> Per spec, this counts as two separate events — one for each date. Abstract them as two separate entries, each with their own date. Use this calculator once per date segment.</div>
     </div>
@@ -785,27 +703,27 @@ footer a:hover { text-decoration: underline; }
   <hr class="div">
 
   <!-- RESTRAINT HOURS — second -->
-  <div class="section-label" style="margin-bottom:12px;">Restraint Hours — HBIPS-2</div>
+  <div class="section-label">Restraint Hours — HBIPS-2</div>
   <div class="card">
     <div class="card-title"><i class="ph-duotone ph-handshake" aria-hidden="true"></i> Physical Restraint Episodes</div>
     <p class="card-sub">Enter the duration of each restraint episode in minutes. Add a row for each episode. The total converts automatically to hours.</p>
 
-    <div id="restraintEntries" style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px;">
+    <div id="restraintEntries" class="entry-list">
       <div class="episode-row">
         <input type="number" min="0" placeholder="minutes" class="restraint-min episode-input" oninput="calcRestraint()">
-        <span style="font-size:13px;color:var(--ink-soft);font-family:var(--mono);">min</span>
-        <button class="ep-remove" onclick="removeEpisode(this,'restraint')" title="Remove" aria-label="Remove episode">
+        <span class="unit-label">min</span>
+        <button type="button" class="ep-remove" onclick="removeEpisode(this,'restraint')" title="Remove" aria-label="Remove episode">
           <i class="ph ph-x" aria-hidden="true"></i>
         </button>
       </div>
     </div>
-    <button class="add-ep-btn" onclick="addEpisode('restraintEntries','restraint-min','calcRestraint')">
+    <button type="button" class="add-ep-btn" onclick="addEpisode('restraintEntries','restraint-min','calcRestraint')">
       <i class="ph ph-plus" aria-hidden="true"></i> Add restraint episode
     </button>
 
-    <div class="result-box" id="restraintResult" style="margin-top:16px;"></div>
+    <div class="result-box result-box--spaced" id="restraintResult"></div>
 
-    <div class="notice notice-warn" style="margin-top:16px;">
+    <div class="notice notice-warn notice--spaced">
       <i class="ph-duotone ph-warning" aria-hidden="true"></i>
       <div><strong>Always round UP.</strong> 60 min = 1 hr &nbsp;|&nbsp; 61 min = 2 hr &nbsp;|&nbsp; 120 min = 2 hr &nbsp;|&nbsp; 121 min = 3 hr. Standard rounding (half-up) is incorrect for this measure. This same rule applies to seclusion episodes below.</div>
     </div>
@@ -814,38 +732,38 @@ footer a:hover { text-decoration: underline; }
   <hr class="div">
 
   <!-- SECLUSION HOURS — third -->
-  <div class="section-label" style="margin-bottom:12px;">Seclusion Hours — HBIPS-3</div>
+  <div class="section-label">Seclusion Hours — HBIPS-3</div>
   <div class="card">
     <div class="card-title"><i class="ph-duotone ph-door" aria-hidden="true"></i> Seclusion Episodes</div>
     <p class="card-sub">Enter the duration of each seclusion episode in minutes. Add a row for each episode. The total converts automatically to hours.</p>
 
-    <div id="seclusionEntries" style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px;">
+    <div id="seclusionEntries" class="entry-list">
       <div class="episode-row">
         <input type="number" min="0" placeholder="minutes" class="seclusion-min episode-input" oninput="calcSeclusion()">
-        <span style="font-size:13px;color:var(--ink-soft);font-family:var(--mono);">min</span>
-        <button class="ep-remove" onclick="removeEpisode(this,'seclusion')" title="Remove" aria-label="Remove episode">
+        <span class="unit-label">min</span>
+        <button type="button" class="ep-remove" onclick="removeEpisode(this,'seclusion')" title="Remove" aria-label="Remove episode">
           <i class="ph ph-x" aria-hidden="true"></i>
         </button>
       </div>
     </div>
-    <button class="add-ep-btn" onclick="addEpisode('seclusionEntries','seclusion-min','calcSeclusion')">
+    <button type="button" class="add-ep-btn" onclick="addEpisode('seclusionEntries','seclusion-min','calcSeclusion')">
       <i class="ph ph-plus" aria-hidden="true"></i> Add seclusion episode
     </button>
 
-    <div class="result-box" id="seclusionResult" style="margin-top:16px;"></div>
+    <div class="result-box result-box--spaced" id="seclusionResult"></div>
   </div>
 
 </div><!-- /tab-calc -->
 
 
 <!-- ═══════════════════════════ REFERENCE TAB -->
-<div id="tab-ref" class="tab-panel">
+<div id="tab-ref" class="tab-panel" role="tabpanel" aria-labelledby="tabbtn-ref" tabindex="0">
 
   <!-- STRATA -->
-  <div class="section-label" style="margin-bottom:12px;">Age Strata</div>
-  <div class="card" style="margin-bottom:20px;">
+  <div class="section-label">Age Strata</div>
+  <div class="card card--spaced">
     <div class="card-title"><i class="ph-duotone ph-users-three" aria-hidden="true"></i> Age Strata — Restraint &amp; Seclusion Measures</div>
-    <p class="card-sub" style="margin-bottom:16px;">Age is calculated at the <strong>event date</strong> — not admission or discharge. A patient who turns 13 on the event date moves from Strata B to Strata C on that day. Age = 0 is excluded.</p>
+    <p class="card-sub card-sub--tight">Age is calculated at the <strong>event date</strong> — not admission or discharge. A patient who turns 13 on the event date moves from Strata B to Strata C on that day. Age = 0 is excluded.</p>
     <div class="strata-grid">
       <div class="strata-band b">
         <div class="sb-code">Strata B</div>
@@ -872,19 +790,19 @@ footer a:hover { text-decoration: underline; }
         <div class="sb-code-line">HBIPS-2e / 3e</div>
       </div>
     </div>
-    <div class="notice notice-tip" style="margin-top:14px;">
+    <div class="notice notice-tip">
       <i class="ph-duotone ph-info" aria-hidden="true"></i>
       <div>Strata boundaries are inclusive on the lower end: age 13 = Strata C (not B). Age 18 = Strata D. Age 65 = Strata E. Calculate age precisely using month and day, not birth year alone.</div>
     </div>
   </div>
 
   <!-- AGE / STRATA CALCULATOR -->
-  <div class="section-label" style="margin-bottom:12px;">Age &amp; Strata Calculator</div>
-  <div class="card" style="margin-bottom:20px;">
+  <div class="section-label">Age &amp; Strata Calculator</div>
+  <div class="card card--spaced">
     <div class="card-title"><i class="ph-duotone ph-calculator" aria-hidden="true"></i> Age at Event Date → Strata Assignment</div>
     <p class="card-sub">Enter the patient's date of birth and the event date. Age is always calculated at the event date — not admission or discharge. Handles birthday-on-event-date and leap day edge cases correctly.</p>
 
-    <div class="calc-grid" style="grid-template-columns:1fr 1fr;margin-bottom:16px;">
+    <div class="calc-grid">
       <div class="field">
         <label>Date of birth</label>
         <input type="date" id="strataDoB" oninput="calcStrata()">
@@ -902,7 +820,7 @@ footer a:hover { text-decoration: underline; }
   </div>
 
   <!-- PITFALLS -->
-  <div class="section-label" style="margin-bottom:12px;">Common Abstraction Pitfalls</div>
+  <div class="section-label">Common Abstraction Pitfalls</div>
   <div class="card">
     <div class="card-title"><i class="ph-duotone ph-seal-warning" aria-hidden="true"></i> Where New Abstractors Go Wrong</div>
     <p class="card-sub">These are the most frequent errors seen during training and QA review.</p>
@@ -978,9 +896,9 @@ footer a:hover { text-decoration: underline; }
 
 
 <!-- ═══════════════════════════ QUIZ TAB -->
-<div id="tab-quiz" class="tab-panel">
-  <div class="section-label" style="margin-bottom:12px;">Practice Quiz</div>
-  <div class="card quiz-wrap" style="max-width:680px;">
+<div id="tab-quiz" class="tab-panel" role="tabpanel" aria-labelledby="tabbtn-quiz" tabindex="0">
+  <div class="section-label">Practice Quiz</div>
+  <div class="card quiz-wrap">
     <div class="card-title"><i class="ph-duotone ph-exam" aria-hidden="true"></i> Restraint &amp; Seclusion — 10 Questions</div>
     <p class="card-sub">Scenario-based questions covering age strata, denominator calculation, ceiling rounding, event type, and UTD logic.</p>
 
@@ -990,21 +908,21 @@ footer a:hover { text-decoration: underline; }
         <span class="quiz-score" id="quizScore">Score: 0 / 0</span>
       </div>
       <div class="quiz-q" id="quizQ"></div>
-      <div class="quiz-scenario" id="quizScenario" style="display:none;"></div>
+      <div class="quiz-scenario" id="quizScenario"></div>
       <div class="quiz-opts" id="quizOpts" role="list"></div>
       <div class="quiz-feedback" id="quizFeedback"></div>
       <div class="quiz-nav">
-        <button class="quiz-btn" id="quizNext" onclick="nextQ()" disabled>
+        <button type="button" class="quiz-btn" id="quizNext" onclick="nextQ()" disabled>
           Next <i class="ph ph-arrow-right" aria-hidden="true"></i>
         </button>
-        <button class="quiz-restart" onclick="startQuiz()">Restart</button>
+        <button type="button" class="quiz-restart" onclick="startQuiz()">Restart</button>
       </div>
     </div>
 
     <div class="quiz-done" id="quizDone">
       <div class="score-big" id="finalScore"></div>
       <p id="finalMsg"></p>
-      <button class="quiz-btn" onclick="startQuiz()" style="margin-top:20px;">
+      <button type="button" class="quiz-btn quiz-btn--start" onclick="startQuiz()">
         <i class="ph ph-arrow-counter-clockwise" aria-hidden="true"></i> Try Again
       </button>
     </div>
@@ -1013,18 +931,18 @@ footer a:hover { text-decoration: underline; }
 
 
 <!-- ═══════════════════════════ CASES TAB -->
-<div id="tab-cases" class="tab-panel">
-  <div class="section-label" style="margin-bottom:12px;">Case Walkthroughs</div>
+<div id="tab-cases" class="tab-panel" role="tabpanel" aria-labelledby="tabbtn-cases" tabindex="0">
+  <div class="section-label">Case Walkthroughs</div>
 
   <div id="caseList">
-    <p style="font-size:14px;color:var(--ink-soft);margin-bottom:18px;line-height:1.7;">
+    <p class="section-intro">
       Step-by-step cases that walk through the full abstraction logic at each decision point. Select a case to begin.
     </p>
     <div class="case-list" id="caseListItems"></div>
   </div>
 
   <div class="case-detail" id="caseDetail">
-    <button class="case-back" onclick="showCaseList()">
+    <button type="button" class="case-back" onclick="showCaseList()">
       <i class="ph ph-arrow-left" aria-hidden="true"></i> Back to Cases
     </button>
     <div id="caseContent"></div>
@@ -1033,37 +951,37 @@ footer a:hover { text-decoration: underline; }
 
 </main>
 
-<!-- DISCLAIMER -->
 <!-- SHARE STRIP -->
-<div style="background:#e6f5f4;border-top:1px solid #b2dedd;border-bottom:1px solid #b2dedd;padding:18px 24px;">
-  <div style="max-width:1040px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+<div class="share-strip">
+  <div class="share-strip-inner">
     <div>
-      <div style="font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;color:#0d1f3c;margin-bottom:3px;">Share with your team</div>
-      <div style="font-size:13px;color:#3d4f62;line-height:1.5;">Free abstraction reference for core measure teams — Q&A lookup, LKW tool, and more.</div>
+      <div class="share-strip-title">Share with your team</div>
+      <div class="share-strip-sub">Free abstraction reference for core measure teams — Q&amp;A lookup, LKW tool, and more.</div>
     </div>
-    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-      <code style="background:white;border:1px solid #b2dedd;border-radius:6px;padding:7px 14px;font-size:13px;color:#0b7a78;font-family:'DM Mono',monospace;white-space:nowrap;">https://abstractiondeskqa.com</code>
-      <button onclick="(()=>{navigator.clipboard.writeText('https://abstractiondeskqa.com');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy link',2000)})()" style="background:#0b7a78;color:white;border:none;border-radius:6px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif;" onmouseover="this.style.background='#0fa39f'" onmouseout="this.style.background='#0b7a78'">Copy link</button>
+    <div class="share-strip-actions">
+      <code class="share-url-pill">https://abstractiondeskqa.com</code>
+      <button type="button" class="share-copy-btn">Copy link</button>
     </div>
   </div>
 </div>
 
-<div class="disclaimer" role="note" aria-label="Educational disclaimer">
-  <div class="disclaimer-inner">
+<!-- DISCLAIMER -->
+<div class="site-disclaimer" role="note" aria-label="Educational disclaimer">
+  <div class="site-disclaimer-inner">
     <strong>Educational use only.</strong>
     AbstractionDeskQA is a reference aid to support abstractor training and workflow. It does not constitute compliance advice and is not a substitute for the official TJC or CMS Specifications Manual. Always verify abstraction decisions against the current specification version for your abstraction period.
   </div>
 </div>
 
 <!-- FOOTER -->
-<footer role="contentinfo">
-  <div class="footer-inner">
+<footer class="site-footer">
+  <div class="site-footer-inner">
     <div>
-      <div class="footer-brand">AbstractionDesk<span style="color:var(--teal2)">QA</span></div>
+      <div class="site-footer-brand">AbstractionDesk<span>QA</span></div>
       <p>A free reference tool for core measure abstractors.<br>
       &copy; <span id="yr"></span> AbstractionDeskQA. Educational use only.</p>
     </div>
-    <div class="footer-links">
+    <div class="site-footer-links">
       <a href="lookup.html">Q&amp;A Lookup</a>
       <a href="lkw-tool.html">LKW Tool</a>
       <a href="cmo-tool.html">CMO Tool</a>
@@ -1082,15 +1000,8 @@ footer a:hover { text-decoration: underline; }
   data-color="#0a7c7a" data-position="Right"
   data-x_margin="18" data-y_margin="18"></script>
 
+<script src="assets/site.js"></script>
 <script>
-// ── TABS ────────────────────────────────────────────────────────────────────
-function switchTab(id, btn) {
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
-  document.getElementById('tab-' + id).classList.add('active');
-  btn.classList.add('active'); btn.setAttribute('aria-selected','true');
-}
-
 // ── HELP PANELS ──────────────────────────────────────────────────────────────
 function toggleHelp(id) {
   document.getElementById(id).classList.toggle('open');
@@ -1298,8 +1209,8 @@ function addDurationToTally(type) {
     row.className = 'episode-row';
     row.innerHTML = `
       <input type="number" min="0" class="${cls} episode-input" value="${lastDurMins}" oninput="${calcFn}()">
-      <span style="font-size:13px;color:var(--ink-soft);font-family:var(--mono);">min</span>
-      <button class="ep-remove" onclick="removeEpisode(this,'${type}')" title="Remove" aria-label="Remove episode">
+      <span class="unit-label">min</span>
+      <button type="button" class="ep-remove" onclick="removeEpisode(this,'${type}')" title="Remove" aria-label="Remove episode">
         <i class="ph ph-x" aria-hidden="true"></i>
       </button>`;
     container.appendChild(row);
@@ -1327,8 +1238,8 @@ function addEpisode(containerId, cls, calcFn) {
   row.className = 'episode-row';
   row.innerHTML = `
     <input type="number" min="0" placeholder="minutes" class="${cls} episode-input" oninput="${calcFn}()">
-    <span style="font-size:13px;color:var(--ink-soft);font-family:var(--mono);">min</span>
-    <button class="ep-remove" onclick="removeEpisode(this,'${cls.includes('restraint') ? 'restraint' : 'seclusion'}')" title="Remove" aria-label="Remove episode">
+    <span class="unit-label">min</span>
+    <button type="button" class="ep-remove" onclick="removeEpisode(this,'${cls.includes('restraint') ? 'restraint' : 'seclusion'}')" title="Remove" aria-label="Remove episode">
       <i class="ph ph-x" aria-hidden="true"></i>
     </button>`;
   container.appendChild(row);
@@ -1610,7 +1521,6 @@ function renderCaseList() {
     div.onclick = () => showCase(i);
     div.setAttribute('role', 'button');
     div.setAttribute('tabindex', '0');
-    div.onkeydown = e => { if (e.key === 'Enter') showCase(i); };
     div.innerHTML = `
       <div class="case-card-body">
         <h3>${c.title}</h3>
@@ -1670,7 +1580,6 @@ function showCaseList() {
 }
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
-document.getElementById('yr').textContent = new Date().getFullYear();
 startQuiz();
 renderCaseList();
 </script>

@@ -1,56 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="canonical" href="https://abstractiondeskqa.com/cmo-tool.html">
 <title>CMO Abstraction Tool — AbstractionDeskQA</title>
+<meta name="description" content="CMO Abstraction Tool — AbstractionDeskQA. Interactive CMO (Comfort Measures Only) exclusion classification tool with reference guide, practice quiz, and case walkthroughs.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://abstractiondeskqa.com/cmo-tool.html">
+<meta property="og:site_name" content="AbstractionDeskQA">
+<meta property="og:title" content="CMO Abstraction Tool — AbstractionDeskQA">
+<meta property="og:description" content="CMO Abstraction Tool — AbstractionDeskQA. Interactive CMO (Comfort Measures Only) exclusion classification tool with reference guide, practice quiz, and case walkthroughs.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet"/>
-<script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/phosphor/regular.css">
+<link rel="stylesheet" href="assets/phosphor/duotone.css">
+<!-- Shared design tokens / structural CSS (T-04) -->
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/site.css">
 <style>
-:root {
-  --bg: #0f1923;
-  --bg2: #172030;
-  --bg3: #1e2d40;
-  --bg4: #243448;
-  --teal: #2dd4bf;
-  --teal2: #14b8a6;
-  --teal-dim: rgba(45,212,191,0.12);
-  --teal-border: rgba(45,212,191,0.25);
-  --amber: #fbbf24;
-  --amber-dim: rgba(251,191,36,0.12);
-  --amber-border: rgba(251,191,36,0.3);
-  --red: #f87171;
-  --red-dim: rgba(248,113,113,0.12);
-  --red-border: rgba(248,113,113,0.3);
-  --green: #4ade80;
-  --green-dim: rgba(74,222,128,0.1);
-  --green-border: rgba(74,222,128,0.3);
-  --blue: #60a5fa;
-  --blue-dim: rgba(96,165,250,0.1);
-  --purple: #a78bfa;
-  --purple-dim: rgba(167,139,250,0.12);
-  --purple-border: rgba(167,139,250,0.3);
-  --text: #e2eaf4;
-  --muted: #7a96b0;
-  --border: rgba(255,255,255,0.07);
-  --mono: 'DM Mono', monospace;
-  --sans: 'DM Sans', sans-serif;
-  --radius: 8px;
-}
 *{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.6;min-height:100vh;}
-body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 10% 0%,rgba(45,212,191,0.06) 0%,transparent 70%),radial-gradient(ellipse 40% 60% at 90% 100%,rgba(167,139,250,0.05) 0%,transparent 70%);pointer-events:none;z-index:0;}
+body{background:var(--bg);color:var(--text);font-family:var(--body);font-size:14px;line-height:1.6;min-height:100vh;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 10% 0%,rgba(45,212,191,0.06) 0%,transparent 70%),radial-gradient(ellipse 40% 60% at 90% 100%,rgba(123,92,229,0.05) 0%,transparent 70%);pointer-events:none;z-index:0;}
 header{position:sticky;top:0;z-index:200;background:rgba(15,25,35,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:12px 20px;display:flex;align-items:center;gap:14px;}
 .hbadge{background:var(--teal);color:var(--bg);font-family:var(--mono);font-size:10px;font-weight:500;padding:3px 9px;border-radius:4px;letter-spacing:0.1em;white-space:nowrap;}
 .htitle{font-size:15px;font-weight:700;}
 .hsub{font-size:11px;color:var(--muted);font-family:var(--mono);}
 .tabs{background:#ffffff;border-bottom:1px solid #dbe2ec;position:sticky;top:62px;z-index:70;box-shadow:0 2px 10px rgba(13,34,64,.06);}
 .tabs-inner{max-width:1040px;margin:0 auto;padding:0 24px;display:flex;gap:0;overflow-x:auto;}
-.tab{background:none;border:none;color:#6b7f94;font-family:'Atkinson Hyperlegible',sans-serif;font-size:14px;font-weight:600;padding:14px 18px 12px;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:color .15s,border-color .15s;display:flex;align-items:center;gap:6px;}
+.tab{background:none;border:none;color:#5a6d81;font-family:'Atkinson Hyperlegible',sans-serif;font-size:14px;font-weight:600;padding:14px 18px 12px;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:color .15s,border-color .15s;display:flex;align-items:center;gap:6px;}
 .tab i{font-size:15px;}
 .tab:hover{color:#0f1923;}
 .tab.on{color:#0a7c7a;border-bottom-color:#0a7c7a;}
@@ -59,12 +38,14 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 .panel.on{display:block;animation:fadeUp .22s ease;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-bottom:14px;}
-.card-label{font-family:var(--mono);font-size:10px;font-weight:500;color:var(--teal);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:12px;}
+.card-label{font-family:var(--mono);font-size:10px;font-weight:500;color:var(--teal);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:14px;}
 .sh{font-size:20px;font-weight:700;margin-bottom:4px;}
 .ss{font-size:13px;color:var(--muted);margin-bottom:20px;}
 .cx{border-radius:var(--radius);padding:11px 14px;margin:10px 0;display:flex;gap:10px;font-size:13px;line-height:1.55;}
 .cx-icon{font-size:16px;flex-shrink:0;margin-top:1px;line-height:1;}.cx-icon i{font-size:16px;}
 .cx strong{display:block;font-size:10px;letter-spacing:.07em;text-transform:uppercase;margin-bottom:2px;}
+.cx strong.cx-inline{display:inline;}
+.cx--tight{margin-bottom:12px;}
 .cx.tip{background:var(--teal-dim);border-left:3px solid var(--teal);color:#99f6e4;}
 .cx.warn{background:var(--amber-dim);border-left:3px solid var(--amber);color:#fde68a;}
 .cx.danger{background:var(--red-dim);border-left:3px solid var(--red);color:#fca5a5;}
@@ -74,12 +55,13 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 
 /* ── CLASSIFIER ── */
 .doc-type-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin:14px 0;}
-.doc-type-btn{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;cursor:pointer;transition:all .18s;text-align:left;}
+.doc-type-btn{display:block;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;cursor:pointer;transition:all .18s;text-align:left;}
 .doc-type-btn:hover{border-color:var(--teal);}
 .doc-type-btn.selected{border-color:var(--teal);background:var(--teal-dim);}
-.doc-type-btn .dti{font-size:22px;margin-bottom:6px;color:var(--teal);line-height:1;}.doc-type-btn .dti i{font-size:22px;}
-.doc-type-btn .dtn{font-size:12px;font-weight:700;margin-bottom:2px;}
-.doc-type-btn .dtd{font-size:11px;color:var(--muted);}
+.doc-type-btn:focus-within{outline:3px solid var(--teal2);outline-offset:3px;}
+.doc-type-btn .dti{display:block;font-size:22px;margin-bottom:6px;color:var(--teal);line-height:1;}.doc-type-btn .dti i{font-size:22px;}
+.doc-type-btn .dtn{display:block;font-size:12px;font-weight:700;margin-bottom:2px;}
+.doc-type-btn .dtd{display:block;font-size:11px;color:var(--muted);}
 .resolve-btn{width:100%;background:var(--teal);color:var(--bg);border:none;font-family:var(--sans);font-size:14px;font-weight:700;padding:13px 20px;border-radius:var(--radius);cursor:pointer;transition:background .18s;margin-top:4px;}
 .resolve-btn:hover{background:var(--teal2);}
 .result-box{background:var(--bg3);border:2px solid var(--teal);border-radius:var(--radius);padding:20px 22px;margin-top:16px;display:none;}
@@ -90,6 +72,18 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 .res-val.yes{color:var(--green);}
 .res-val.no{color:var(--red);}
 .res-val.plain{color:var(--teal);font-size:15px;line-height:1.5;}
+.res-basis{font-size:13px;max-width:280px;}
+.flag-list{display:flex;flex-direction:column;gap:10px;font-size:13px;}
+.flag-label{display:flex;align-items:flex-start;gap:9px;cursor:pointer;}
+.flag-checkbox{width:15px;height:15px;margin-top:2px;}
+.flag-checkbox--exclude{accent-color:var(--red);}
+.flag-checkbox--caution{accent-color:var(--amber);}
+.gq-prompt{font-weight:600;margin:12px 0 10px;}
+.gq-prompt--first{margin:0 0 12px;}
+.gq-answers{display:flex;gap:8px;flex-wrap:wrap;}
+.gq-answers--first{margin-top:12px;}
+.table-scroll{overflow-x:auto;}
+.btn-back{margin-bottom:14px;}
 .res-rule{font-size:12.5px;line-height:1.7;color:#c4d8ec;border-top:1px solid var(--border);padding-top:14px;margin-top:4px;}
 .rule-tag{display:inline-block;background:var(--bg4);border:1px solid var(--border);font-family:var(--mono);font-size:10px;color:var(--amber);padding:1px 7px;border-radius:3px;margin-right:6px;vertical-align:middle;}
 
@@ -112,6 +106,7 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 .qr-v.y{color:var(--green);}
 .qr-v.n{color:var(--red);}
 .qr-v.w{color:var(--amber);}
+.qr-v--bold{font-weight:700;}
 .px-table{width:100%;border-collapse:collapse;font-size:12.5px;}
 .px-table th{background:var(--bg3);padding:8px 12px;font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:left;border:1px solid var(--border);}
 .px-table td{padding:8px 12px;border:1px solid var(--border);color:#c4d8ec;line-height:1.5;vertical-align:top;}
@@ -157,19 +152,6 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 /* ── GUIDED ── */
 .gstep-badge{display:inline-block;background:var(--bg4);border:1px solid var(--border);font-family:var(--mono);font-size:10px;color:var(--muted);padding:2px 8px;border-radius:4px;margin-bottom:10px;}
 
-/* ── SITE NAV ── */
-.site-nav{background:#0d2240;border-bottom:1px solid rgba(255,255,255,.08);position:sticky;top:0;z-index:300;box-shadow:0 2px 12px rgba(0,0,0,.25);font-family:'Atkinson Hyperlegible',sans-serif;}
-.site-nav-inner{max-width:1040px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:62px;}
-.site-nav-brand{font-family:'DM Sans',sans-serif;font-size:20px;font-weight:700;color:white;letter-spacing:-.3px;display:flex;align-items:center;gap:10px;text-decoration:none;}
-.site-nav-brand:hover{text-decoration:none;}
-.site-nav-brand-sub{font-family:'DM Mono',monospace;font-size:11px;font-weight:400;color:rgba(255,255,255,.4);letter-spacing:.08em;text-transform:uppercase;}
-.site-qa-badge{background:#0da8a5;color:white;font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;letter-spacing:.6px;}
-.site-nav-links{display:flex;gap:6px;align-items:center;}
-.site-nav-cta{background:#0a7c7a;color:white;font-family:'Atkinson Hyperlegible',sans-serif;font-size:14px;font-weight:700;padding:8px 18px;border-radius:7px;border:none;cursor:pointer;transition:all .15s;text-decoration:none;white-space:nowrap;}
-.site-nav-cta:hover{background:#0da8a5;text-decoration:none;color:white;}
-.site-nav-cta-ghost{background:transparent;color:rgba(255,255,255,.85);font-family:'Atkinson Hyperlegible',sans-serif;font-size:14px;font-weight:600;padding:8px 18px;border-radius:7px;border:1.5px solid rgba(255,255,255,.3);cursor:pointer;transition:all .15s;text-decoration:none;white-space:nowrap;display:inline-flex;align-items:center;gap:6px;}
-.site-nav-cta-ghost:hover{border-color:rgba(255,255,255,.7);color:white;text-decoration:none;background:rgba(255,255,255,.08);}
-.site-nav-cta-ghost.active-page{background:#0a7c7a;border-color:#0a7c7a;color:white;}
 .page-title-bar{background:#0d2240;padding:36px 24px 30px;position:relative;overflow:hidden;}
 .page-title-bar::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 20% 0%,rgba(10,124,122,.22) 0%,transparent 65%);pointer-events:none;}
 .page-title-inner{max-width:1040px;margin:0 auto;position:relative;}
@@ -177,16 +159,14 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 .page-title-text{color:white;}
 .page-title-text h1{font-family:'DM Sans',sans-serif;font-size:clamp(24px,4vw,36px);font-weight:700;line-height:1.15;letter-spacing:-.3px;margin-bottom:10px;}
 .page-title-text p{font-size:15px;color:rgba(255,255,255,.62);max-width:620px;line-height:1.7;}
-.site-footer{background:#07131f;color:rgba(255,255,255,.45);padding:28px 24px;font-family:'Atkinson Hyperlegible',sans-serif;}
-.site-footer-inner{max-width:1040px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
-.site-footer-brand{font-family:'DM Sans',sans-serif;font-size:16px;font-weight:700;color:rgba(255,255,255,.7);margin-bottom:4px;}
-.site-footer p{font-size:13px;line-height:1.65;}
-.site-footer a{color:#0da8a5;text-decoration:none;}
-.site-footer a:hover{text-decoration:underline;}
-.site-footer-links{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;}
-.site-disclaimer{background:#eef2f8;border-top:1px solid #dbe2ec;padding:20px 24px;}
-.site-disclaimer-inner{max-width:1040px;margin:0 auto;font-size:13px;color:#6b7f94;line-height:1.75;font-family:'Atkinson Hyperlegible',sans-serif;}
-@media(max-width:640px){.site-nav-links .site-nav-cta-ghost:not(:first-child){display:none;}.site-footer-inner{flex-direction:column;gap:12px;}}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
 </style>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QJPP46JWX3"></script>
@@ -194,9 +174,9 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 </head>
 <body>
 
-<a href="#maincontent" style="position:absolute;top:-60px;left:16px;z-index:999;background:#0d2240;color:white;padding:10px 18px;border-radius:10px;font-weight:700;font-size:15px;transition:top .2s;text-decoration:none;" onfocus="this.style.top='16px'" onblur="this.style.top='-60px'">Skip to main content</a>
+<a href="#maincontent" class="skip-link">Skip to main content</a>
 
-<nav class="site-nav" role="navigation" aria-label="Main navigation">
+<nav class="site-nav" aria-label="Site navigation">
   <div class="site-nav-inner">
     <a href="/" class="site-nav-brand" aria-label="AbstractionDeskQA home">
       AbstractionDesk<span class="site-qa-badge">QA</span>
@@ -229,157 +209,165 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 
 <nav class="tabs" role="tablist">
   <div class="tabs-inner">
-  <button class="tab on" onclick="showTab('classifier')" data-t="classifier"><i class="ph-duotone ph-funnel"></i> Case Classifier</button>
-  <button class="tab" onclick="showTab('guided')" data-t="guided"><i class="ph-duotone ph-git-branch"></i> Guided Workflow</button>
-  <button class="tab" onclick="showTab('ref')" data-t="ref"><i class="ph-duotone ph-clipboard-text"></i> Quick Reference</button>
-  <button class="tab" onclick="showTab('quiz')" data-t="quiz"><i class="ph-duotone ph-target"></i> Practice Quiz</button>
-  <button class="tab" onclick="showTab('cases')" data-t="cases"><i class="ph-duotone ph-stethoscope"></i> Case Walkthroughs</button>
+  <button type="button" class="tab on" id="tabbtn-classifier" role="tab" aria-selected="true" aria-controls="tab-classifier" tabindex="0" data-t="classifier"><i class="ph-duotone ph-funnel"></i> Case Classifier</button>
+  <button type="button" class="tab" id="tabbtn-guided" role="tab" aria-selected="false" aria-controls="tab-guided" tabindex="-1" data-t="guided"><i class="ph-duotone ph-git-branch"></i> Guided Workflow</button>
+  <button type="button" class="tab" id="tabbtn-ref" role="tab" aria-selected="false" aria-controls="tab-ref" tabindex="-1" data-t="ref"><i class="ph-duotone ph-clipboard-text"></i> Quick Reference</button>
+  <button type="button" class="tab" id="tabbtn-quiz" role="tab" aria-selected="false" aria-controls="tab-quiz" tabindex="-1" data-t="quiz"><i class="ph-duotone ph-target"></i> Practice Quiz</button>
+  <button type="button" class="tab" id="tabbtn-cases" role="tab" aria-selected="false" aria-controls="tab-cases" tabindex="-1" data-t="cases"><i class="ph-duotone ph-stethoscope"></i> Case Walkthroughs</button>
   </div>
 </nav>
 
 <main>
 
 <!-- ══ TAB 1: CASE CLASSIFIER ══ -->
-<div id="tab-classifier" class="panel on">
-  <div class="sh">CMO Case Classifier</div>
+<div id="tab-classifier" class="panel on" role="tabpanel" aria-labelledby="tabbtn-classifier" tabindex="0">
+  <h2 class="sh">CMO Case Classifier</h2>
   <p class="ss">Identify what type of CMO documentation is in your chart, then resolve whether it satisfies the denominator exclusion.</p>
 
-  <div class="cx info"><span class="cx-icon"><i class="ph-duotone ph-info"></i></span><div><strong>How to use</strong>Select every documentation type present in the chart. The tool evaluates whether any combination meets the specification. Multiple selections are allowed — check all that apply, then hit <strong style="display:inline;">Evaluate</strong>.</div></div>
+  <div class="cx info"><span class="cx-icon"><i class="ph-duotone ph-info"></i></span><div><strong>How to use</strong>Select every documentation type present in the chart. The tool evaluates whether any combination meets the specification. Multiple selections are allowed — check all that apply, then hit <strong class="cx-inline">Evaluate</strong>.</div></div>
 
   <div class="card">
     <div class="card-label">Step 1 — What documentation is present?</div>
     <div class="doc-type-grid" id="doc-grid">
-      <div class="doc-type-btn" data-key="md_order" onclick="toggleDoc(this)">
-        <div class="dti"><i class="ph-duotone ph-clipboard-text"></i></div>
-        <div class="dtn">Physician Order</div>
-        <div class="dtd">Explicit CMO order by MD/APN/PA in the order set or written orders</div>
-      </div>
-      <div class="doc-type-btn" data-key="md_note" onclick="toggleDoc(this)">
-        <div class="dti"><i class="ph-duotone ph-note-pencil"></i></div>
-        <div class="dtn">Physician Note — Discussion</div>
-        <div class="dtd">Progress note or H&P documenting a goals-of-care discussion with CMO decision</div>
-      </div>
-      <div class="doc-type-btn" data-key="polst" onclick="toggleDoc(this)">
-        <div class="dti"><i class="ph-duotone ph-file-text"></i></div>
-        <div class="dtn">POLST / MOST / MOLST</div>
-        <div class="dtd">Portable medical order form signed by physician</div>
-      </div>
-      <div class="doc-type-btn" data-key="hospice" onclick="toggleDoc(this)">
-        <div class="dti"><i class="ph-duotone ph-house-line"></i></div>
-        <div class="dtn">Hospice Enrollment/Referral</div>
-        <div class="dtd">Documentation of hospice referral, enrollment, or transfer during this admission</div>
-      </div>
-      <div class="doc-type-btn" data-key="comfort_only" onclick="toggleDoc(this)">
-        <div class="dti"><i class="ph-duotone ph-pill"></i></div>
-        <div class="dtn">Comfort Care Orders Only</div>
-        <div class="dtd">Symptom management orders (pain, positioning, mouth care) without a CMO designation</div>
-      </div>
-      <div class="doc-type-btn" data-key="family_note" onclick="toggleDoc(this)">
-        <div class="dti"><i class="ph-duotone ph-users-three"></i></div>
-        <div class="dtn">Family/Care Conference Note</div>
-        <div class="dtd">Nursing or social work note documenting family meeting; no physician co-sign</div>
-      </div>
-      <div class="doc-type-btn" data-key="dnr_only" onclick="toggleDoc(this)">
-        <div class="dti"><i class="ph-duotone ph-prohibit"></i></div>
-        <div class="dtn">DNR/DNI Order Only</div>
-        <div class="dtd">Do-not-resuscitate or do-not-intubate order without explicit CMO language</div>
-      </div>
-      <div class="doc-type-btn" data-key="palliative" onclick="toggleDoc(this)">
-        <div class="dti"><i class="ph-duotone ph-handshake"></i></div>
-        <div class="dtn">Palliative Care Consult</div>
-        <div class="dtd">Palliative care team note documenting CMO recommendation or plan</div>
-      </div>
+      <label class="doc-type-btn">
+        <input type="checkbox" class="sr-only" data-key="md_order">
+        <span class="dti"><i class="ph-duotone ph-clipboard-text"></i></span>
+        <span class="dtn">Physician Order</span>
+        <span class="dtd">Explicit CMO order by MD/APN/PA in the order set or written orders</span>
+      </label>
+      <label class="doc-type-btn">
+        <input type="checkbox" class="sr-only" data-key="md_note">
+        <span class="dti"><i class="ph-duotone ph-note-pencil"></i></span>
+        <span class="dtn">Physician Note — Discussion</span>
+        <span class="dtd">Progress note or H&amp;P documenting a goals-of-care discussion with CMO decision</span>
+      </label>
+      <label class="doc-type-btn">
+        <input type="checkbox" class="sr-only" data-key="polst">
+        <span class="dti"><i class="ph-duotone ph-file-text"></i></span>
+        <span class="dtn">POLST / MOST / MOLST</span>
+        <span class="dtd">Portable medical order form signed by physician</span>
+      </label>
+      <label class="doc-type-btn">
+        <input type="checkbox" class="sr-only" data-key="hospice">
+        <span class="dti"><i class="ph-duotone ph-house-line"></i></span>
+        <span class="dtn">Hospice Enrollment/Referral</span>
+        <span class="dtd">Documentation of hospice referral, enrollment, or transfer during this admission</span>
+      </label>
+      <label class="doc-type-btn">
+        <input type="checkbox" class="sr-only" data-key="comfort_only">
+        <span class="dti"><i class="ph-duotone ph-pill"></i></span>
+        <span class="dtn">Comfort Care Orders Only</span>
+        <span class="dtd">Symptom management orders (pain, positioning, mouth care) without a CMO designation</span>
+      </label>
+      <label class="doc-type-btn">
+        <input type="checkbox" class="sr-only" data-key="family_note">
+        <span class="dti"><i class="ph-duotone ph-users-three"></i></span>
+        <span class="dtn">Family/Care Conference Note</span>
+        <span class="dtd">Nursing or social work note documenting family meeting; no physician co-sign</span>
+      </label>
+      <label class="doc-type-btn">
+        <input type="checkbox" class="sr-only" data-key="dnr_only">
+        <span class="dti"><i class="ph-duotone ph-prohibit"></i></span>
+        <span class="dtn">DNR/DNI Order Only</span>
+        <span class="dtd">Do-not-resuscitate or do-not-intubate order without explicit CMO language</span>
+      </label>
+      <label class="doc-type-btn">
+        <input type="checkbox" class="sr-only" data-key="palliative">
+        <span class="dti"><i class="ph-duotone ph-handshake"></i></span>
+        <span class="dtn">Palliative Care Consult</span>
+        <span class="dtd">Palliative care team note documenting CMO recommendation or plan</span>
+      </label>
     </div>
   </div>
 
   <div class="card" id="timing-card">
     <div class="card-label">Step 2 — Timing Flags</div>
-    <div style="display:flex;flex-direction:column;gap:10px;font-size:13px;">
-      <label style="display:flex;align-items:flex-start;gap:9px;cursor:pointer;"><input type="checkbox" id="flag-prehosp" style="accent-color:var(--amber);width:15px;height:15px;margin-top:2px;"/><span><strong>Pre-hospital CMO</strong> — CMO was established before this hospital encounter (e.g., existing POLST from prior admission or outpatient setting)</span></label>
-      <label style="display:flex;align-items:flex-start;gap:9px;cursor:pointer;"><input type="checkbox" id="flag-postbrain" style="accent-color:var(--red);width:15px;height:15px;margin-top:2px;"/><span><strong>After brain death declaration</strong> — CMO documented only after formal brain death determination</span></label>
-      <label style="display:flex;align-items:flex-start;gap:9px;cursor:pointer;"><input type="checkbox" id="flag-conflict" style="accent-color:var(--red);width:15px;height:15px;margin-top:2px;"/><span><strong>Conflicting documentation</strong> — CMO is documented but aggressive treatment continues (e.g., full code status maintained alongside comfort note)</span></label>
-      <label style="display:flex;align-items:flex-start;gap:9px;cursor:pointer;"><input type="checkbox" id="flag-withdrawn" style="accent-color:var(--amber);width:15px;height:15px;margin-top:2px;"/><span><strong>CMO later rescinded</strong> — CMO was ordered but subsequently reversed or updated to full treatment during this admission</span></label>
+    <div class="flag-list">
+      <label class="flag-label"><input type="checkbox" id="flag-prehosp" class="flag-checkbox flag-checkbox--caution"/><span><strong>Pre-hospital CMO</strong> — CMO was established before this hospital encounter (e.g., existing POLST from prior admission or outpatient setting)</span></label>
+      <label class="flag-label"><input type="checkbox" id="flag-postbrain" class="flag-checkbox flag-checkbox--exclude"/><span><strong>After brain death declaration</strong> — CMO documented only after formal brain death determination</span></label>
+      <label class="flag-label"><input type="checkbox" id="flag-conflict" class="flag-checkbox flag-checkbox--exclude"/><span><strong>Conflicting documentation</strong> — CMO is documented but aggressive treatment continues (e.g., full code status maintained alongside comfort note)</span></label>
+      <label class="flag-label"><input type="checkbox" id="flag-withdrawn" class="flag-checkbox flag-checkbox--caution"/><span><strong>CMO later rescinded</strong> — CMO was ordered but subsequently reversed or updated to full treatment during this admission</span></label>
     </div>
   </div>
 
-  <button class="resolve-btn" onclick="resolveClassifier()">Evaluate → Determine CMO Exclusion Status</button>
+  <button type="button" class="resolve-btn" onclick="resolveClassifier()">Evaluate → Determine CMO Exclusion Status</button>
 
   <div class="result-box" id="classifier-result">
-    <div class="card-label" style="margin-bottom:14px;">Exclusion Result</div>
+    <div class="card-label">Exclusion Result</div>
     <div class="res-fields">
       <div><div class="res-field-label">CMO Exclusion</div><div class="res-val" id="r-cmo">—</div></div>
-      <div><div class="res-field-label">Basis</div><div class="res-val plain" id="r-basis" style="font-size:13px;max-width:280px;">—</div></div>
+      <div><div class="res-field-label">Basis</div><div class="res-val plain res-basis" id="r-basis">—</div></div>
     </div>
     <div class="res-rule" id="r-rationale"></div>
-    <div class="btn-row"><button class="btn" onclick="window.print()"><i class="ph ph-printer"></i> Print</button><button class="btn ghost" onclick="clearClassifier()">↩ Clear</button></div>
+    <div class="btn-row"><button type="button" class="btn" onclick="window.print()"><i class="ph ph-printer"></i> Print</button><button type="button" class="btn ghost" onclick="clearClassifier()">↩ Clear</button></div>
   </div>
 </div>
 
 <!-- ══ TAB 2: GUIDED ══ -->
-<div id="tab-guided" class="panel">
-  <div class="sh">Guided Workflow</div>
+<div id="tab-guided" class="panel" role="tabpanel" aria-labelledby="tabbtn-guided" tabindex="0">
+  <h2 class="sh">Guided Workflow</h2>
   <p class="ss">Answer each question to determine CMO exclusion eligibility step by step.</p>
 
   <div class="card" id="gq1">
     <div class="gstep-badge">Step 1 — Document Type</div>
-    <div style="font-weight:600;margin-bottom:12px;">Is there a physician, APN, or PA order or documented discussion designating the patient as Comfort Measures Only?</div>
+    <div class="gq-prompt gq-prompt--first">Is there a physician, APN, or PA order or documented discussion designating the patient as Comfort Measures Only?</div>
     <div class="cx warn"><span class="cx-icon"><i class="ph-duotone ph-warning"></i></span><div><strong>This is the threshold question</strong>The source must come from a licensed independent practitioner — MD, DO, APN, or PA. Nursing notes, social work notes, or family conference documentation alone do not qualify without an LIP co-signature or a corresponding physician order.</div></div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;"><button class="btn" onclick="gAns(1,'yes')">Yes — LIP order or note present</button><button class="btn ghost" onclick="gAns(1,'no')">No LIP documentation</button></div>
+    <div class="gq-answers gq-answers--first"><button type="button" class="btn" onclick="gAns(1,'yes')">Yes — LIP order or note present</button><button type="button" class="btn ghost" onclick="gAns(1,'no')">No LIP documentation</button></div>
   </div>
 
   <div class="card hidden" id="gq2">
     <div class="gstep-badge">Step 2 — POLST Evaluation</div>
     <div class="cx purple"><span class="cx-icon"><i class="ph-duotone ph-file-text"></i></span><div><strong>POLST is a physician order — but check what's selected</strong>A POLST in the chart is a signed medical order. However, you must verify the POLST section that addresses medical interventions. A POLST with "Full Treatment" or "Limited Interventions" checked does NOT satisfy CMO. Only a POLST with "Comfort-Focused Treatment" (or equivalent) checked qualifies.</div></div>
-    <div style="font-weight:600;margin:12px 0 10px;">Does this include a POLST/MOST/MOLST?</div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;"><button class="btn" onclick="gAns(2,'polst_cmo')">Yes — Comfort-Focused Treatment is checked</button><button class="btn ghost" onclick="gAns(2,'polst_other')">Yes — but Full Treatment or Limited is checked</button><button class="btn ghost" onclick="gAns(2,'no_polst')">No POLST present</button></div>
+    <div class="gq-prompt">Does this include a POLST/MOST/MOLST?</div>
+    <div class="gq-answers"><button type="button" class="btn" onclick="gAns(2,'polst_cmo')">Yes — Comfort-Focused Treatment is checked</button><button type="button" class="btn ghost" onclick="gAns(2,'polst_other')">Yes — but Full Treatment or Limited is checked</button><button type="button" class="btn ghost" onclick="gAns(2,'no_polst')">No POLST present</button></div>
   </div>
 
   <div class="card hidden" id="gq3">
     <div class="gstep-badge">Step 3 — Timing</div>
     <div class="cx danger"><span class="cx-icon"><i class="ph-duotone ph-warning-octagon"></i></span><div><strong>Timing is critical</strong>The CMO designation must be established as the care plan for this admission — not documented after brain death, and not a pre-admission-only status that was not reaffirmed or continued during this encounter.</div></div>
-    <div style="font-weight:600;margin:12px 0 10px;">Was the CMO documentation established during this admission (prior to death, discharge, or brain death declaration)?</div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;"><button class="btn" onclick="gAns(3,'yes')">Yes — documented during this admission</button><button class="btn ghost" onclick="gAns(3,'postbrain')">Only after brain death declaration</button><button class="btn ghost" onclick="gAns(3,'prehosp_only')">Pre-hospital only, not reaffirmed</button></div>
+    <div class="gq-prompt">Was the CMO documentation established during this admission (prior to death, discharge, or brain death declaration)?</div>
+    <div class="gq-answers"><button type="button" class="btn" onclick="gAns(3,'yes')">Yes — documented during this admission</button><button type="button" class="btn ghost" onclick="gAns(3,'postbrain')">Only after brain death declaration</button><button type="button" class="btn ghost" onclick="gAns(3,'prehosp_only')">Pre-hospital only, not reaffirmed</button></div>
   </div>
 
   <div class="card hidden" id="gq4">
     <div class="gstep-badge">Step 4 — Conflicting Documentation</div>
     <div class="cx warn"><span class="cx-icon"><i class="ph-duotone ph-warning"></i></span><div><strong>Conflicting documentation is a red flag</strong>If CMO is ordered but the medical record simultaneously shows aggressive interventions being pursued (full-code resuscitation, ongoing aggressive chemotherapy, ICU-level interventions), you should flag this for review. A CMO exclusion applies when CMO is the established plan — not when it's documented alongside conflicting treatment goals.</div></div>
-    <div style="font-weight:600;margin:12px 0 10px;">Is the CMO plan consistent with the overall treatment record?</div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;"><button class="btn" onclick="gAns(4,'consistent')">Yes — care aligns with CMO</button><button class="btn ghost" onclick="gAns(4,'conflict')">Conflicting documentation present</button></div>
+    <div class="gq-prompt">Is the CMO plan consistent with the overall treatment record?</div>
+    <div class="gq-answers"><button type="button" class="btn" onclick="gAns(4,'consistent')">Yes — care aligns with CMO</button><button type="button" class="btn ghost" onclick="gAns(4,'conflict')">Conflicting documentation present</button></div>
   </div>
 
   <div class="result-box hidden" id="guided-result">
-    <div class="card-label" style="margin-bottom:14px;">Abstraction Result</div>
+    <div class="card-label">Abstraction Result</div>
     <div class="res-fields">
       <div><div class="res-field-label">CMO Exclusion</div><div class="res-val" id="gr-yn">—</div></div>
     </div>
     <div class="res-rule" id="gr-rat"></div>
-    <div class="btn-row"><button class="btn" onclick="window.print()"><i class="ph ph-printer"></i> Print</button><button class="btn ghost" onclick="resetGuided()">↩ Start Over</button></div>
+    <div class="btn-row"><button type="button" class="btn" onclick="window.print()"><i class="ph ph-printer"></i> Print</button><button type="button" class="btn ghost" onclick="resetGuided()">↩ Start Over</button></div>
   </div>
 </div>
 
 <!-- ══ TAB 3: QUICK REFERENCE ══ -->
-<div id="tab-ref" class="panel">
-  <div class="sh">Quick Reference</div>
+<div id="tab-ref" class="panel" role="tabpanel" aria-labelledby="tabbtn-ref" tabindex="0">
+  <h2 class="sh">Quick Reference</h2>
   <p class="ss">v2026A · CMO Denominator Exclusion — STK-6 / ASR-IP</p>
 
   <div class="card">
     <div class="card-label">Documentation Eligibility Matrix</div>
-    <div class="cx info" style="margin-bottom:12px;"><span class="cx-icon"><i class="ph-duotone ph-info"></i></span><div>Not all comfort-related documentation is equal. This matrix shows what qualifies, what does not, and what requires additional scrutiny before counting.</div></div>
-    <div style="overflow-x:auto;">
+    <div class="cx info cx--tight"><span class="cx-icon"><i class="ph-duotone ph-info"></i></span><div>Not all comfort-related documentation is equal. This matrix shows what qualifies, what does not, and what requires additional scrutiny before counting.</div></div>
+    <div class="table-scroll">
     <table class="px-table">
       <thead><tr><th>Documentation Type</th><th>Qualifies?</th><th>Key Condition / Caveat</th></tr></thead>
       <tbody>
-        <tr><td><strong>Physician/APN/PA explicit CMO order</strong></td><td style="color:var(--green);font-weight:700;">✓ Yes</td><td>Strongest basis. Confirm order was not subsequently rescinded.</td></tr>
-        <tr><td><strong>Physician progress note — CMO discussion</strong></td><td style="color:var(--green);font-weight:700;">✓ Yes</td><td>Must document the decision, not just that a conversation occurred. "Discussed goals of care" alone is insufficient.</td></tr>
-        <tr><td><strong>POLST — Comfort-Focused Treatment checked</strong></td><td style="color:var(--green);font-weight:700;">✓ Yes</td><td>POLST is a physician order. Verify the correct section is completed and signed.</td></tr>
-        <tr><td><strong>POLST — Full Treatment or Limited checked</strong></td><td style="color:var(--red);font-weight:700;">✗ No</td><td>POLST is present but does not indicate CMO. Section checked matters, not just presence of form.</td></tr>
-        <tr><td><strong>Hospice enrollment during admission</strong></td><td style="color:var(--amber);font-weight:700;">⚠ Review</td><td>Hospice referral ≠ automatic CMO. Verify accompanying physician order or note explicitly designating CMO.</td></tr>
-        <tr><td><strong>Palliative care consult note — CMO plan</strong></td><td style="color:var(--amber);font-weight:700;">⚠ Review</td><td>Palliative consult recommending CMO is not sufficient alone. Requires attending order or documentation adopting the plan.</td></tr>
-        <tr><td><strong>DNR/DNI order without CMO language</strong></td><td style="color:var(--red);font-weight:700;">✗ No</td><td>DNR ≠ CMO. Resuscitation limitation is not the same as comfort-focused care designation.</td></tr>
-        <tr><td><strong>Nursing/social work comfort care note</strong></td><td style="color:var(--red);font-weight:700;">✗ No</td><td>Non-LIP documentation does not satisfy the exclusion alone. Nursing "comfort care" charting is not a CMO order.</td></tr>
-        <tr><td><strong>Symptom management orders only</strong></td><td style="color:var(--red);font-weight:700;">✗ No</td><td>"Comfort care measures" (pain meds, positioning, mouth care) ordered without CMO designation do not qualify.</td></tr>
-        <tr><td><strong>Family meeting note — comfort decision</strong></td><td style="color:var(--red);font-weight:700;">✗ No</td><td>Family agreement documented without an LIP order or co-signed note does not satisfy the exclusion.</td></tr>
+        <tr><td><strong>Physician/APN/PA explicit CMO order</strong></td><td class="qr-v y qr-v--bold">✓ Yes</td><td>Strongest basis. Confirm order was not subsequently rescinded.</td></tr>
+        <tr><td><strong>Physician progress note — CMO discussion</strong></td><td class="qr-v y qr-v--bold">✓ Yes</td><td>Must document the decision, not just that a conversation occurred. "Discussed goals of care" alone is insufficient.</td></tr>
+        <tr><td><strong>POLST — Comfort-Focused Treatment checked</strong></td><td class="qr-v y qr-v--bold">✓ Yes</td><td>POLST is a physician order. Verify the correct section is completed and signed.</td></tr>
+        <tr><td><strong>POLST — Full Treatment or Limited checked</strong></td><td class="qr-v n qr-v--bold">✗ No</td><td>POLST is present but does not indicate CMO. Section checked matters, not just presence of form.</td></tr>
+        <tr><td><strong>Hospice enrollment during admission</strong></td><td class="qr-v w qr-v--bold">⚠ Review</td><td>Hospice referral ≠ automatic CMO. Verify accompanying physician order or note explicitly designating CMO.</td></tr>
+        <tr><td><strong>Palliative care consult note — CMO plan</strong></td><td class="qr-v w qr-v--bold">⚠ Review</td><td>Palliative consult recommending CMO is not sufficient alone. Requires attending order or documentation adopting the plan.</td></tr>
+        <tr><td><strong>DNR/DNI order without CMO language</strong></td><td class="qr-v n qr-v--bold">✗ No</td><td>DNR ≠ CMO. Resuscitation limitation is not the same as comfort-focused care designation.</td></tr>
+        <tr><td><strong>Nursing/social work comfort care note</strong></td><td class="qr-v n qr-v--bold">✗ No</td><td>Non-LIP documentation does not satisfy the exclusion alone. Nursing "comfort care" charting is not a CMO order.</td></tr>
+        <tr><td><strong>Symptom management orders only</strong></td><td class="qr-v n qr-v--bold">✗ No</td><td>"Comfort care measures" (pain meds, positioning, mouth care) ordered without CMO designation do not qualify.</td></tr>
+        <tr><td><strong>Family meeting note — comfort decision</strong></td><td class="qr-v n qr-v--bold">✗ No</td><td>Family agreement documented without an LIP order or co-signed note does not satisfy the exclusion.</td></tr>
       </tbody>
     </table>
     </div>
@@ -432,8 +420,8 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 </div>
 
 <!-- ══ TAB 4: QUIZ ══ -->
-<div id="tab-quiz" class="panel">
-  <div class="sh">Practice Quiz</div>
+<div id="tab-quiz" class="panel" role="tabpanel" aria-labelledby="tabbtn-quiz" tabindex="0">
+  <h2 class="sh">Practice Quiz</h2>
   <p class="ss">10 scenario-based questions covering CMO documentation, POLST interpretation, timing rules, and common pitfalls.</p>
   <div class="q-prog-wrap">
     <div class="q-prog-meta"><span id="qprog-label">Question 1 of 10</span><span id="qscore-label">Score: 0 / 0</span></div>
@@ -443,15 +431,15 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 </div>
 
 <!-- ══ TAB 5: CASES ══ -->
-<div id="tab-cases" class="panel">
-  <div class="sh">Case Walkthroughs</div>
+<div id="tab-cases" class="panel" role="tabpanel" aria-labelledby="tabbtn-cases" tabindex="0">
+  <h2 class="sh">Case Walkthroughs</h2>
   <p class="ss">Step-by-step cases that walk through CMO abstraction reasoning at every decision point.</p>
   <div id="case-selector">
     <div class="cx tip"><span class="cx-icon"><i class="ph-duotone ph-stethoscope"></i></span><div><strong>How to use</strong>Select a case, then work through each step. The trainer's reasoning appears at each decision point — including why certain documentation counts or does not count.</div></div>
     <div class="case-grid" id="case-card-grid"></div>
   </div>
   <div id="case-runner" class="hidden">
-    <button class="btn ghost" onclick="backToCases()" style="margin-bottom:14px;">← Back to Cases</button>
+    <button type="button" class="btn ghost btn-back" onclick="backToCases()">← Back to Cases</button>
     <div class="wt-dots" id="case-dots"></div>
     <div id="case-step-body"></div>
   </div>
@@ -459,22 +447,19 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 
 </main>
 
+<script src="assets/site.js"></script>
 <script>
-// ── TABS ──
-function showTab(id){
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
-  document.getElementById('tab-'+id).classList.add('on');
-  document.querySelector('[data-t="'+id+'"]').classList.add('on');
-}
 
 // ── CLASSIFIER ──
 const selectedDocs = new Set();
-function toggleDoc(el){
-  const key = el.dataset.key;
-  if(selectedDocs.has(key)){selectedDocs.delete(key);el.classList.remove('selected');}
-  else{selectedDocs.add(key);el.classList.add('selected');}
-}
+document.getElementById('doc-grid').addEventListener('change', function(e){
+  const input = e.target.closest('input[type="checkbox"]');
+  if(!input) return;
+  const key = input.dataset.key;
+  const card = input.closest('.doc-type-btn');
+  if(input.checked){selectedDocs.add(key);card.classList.add('selected');}
+  else{selectedDocs.delete(key);card.classList.remove('selected');}
+});
 
 function resolveClassifier(){
   const prehosp = document.getElementById('flag-prehosp').checked;
@@ -563,6 +548,7 @@ function showCR(val, basis, rat){
 function clearClassifier(){
   selectedDocs.clear();
   document.querySelectorAll('.doc-type-btn').forEach(b=>b.classList.remove('selected'));
+  document.querySelectorAll('#doc-grid input[type="checkbox"]').forEach(i=>i.checked=false);
   ['flag-prehosp','flag-postbrain','flag-conflict','flag-withdrawn'].forEach(id=>document.getElementById(id).checked=false);
   const box = document.getElementById('classifier-result');
   box.classList.remove('show');
@@ -633,9 +619,9 @@ function renderQ(){
   document.getElementById('quiz-card-body').innerHTML=`
     <div class="q-tags">${q.tags.map(t=>`<span class="qtag">${t}</span>`).join('')}</div>
     <div class="scenario-box"><span class="slabel"><i class="ph-duotone ph-file-text"></i> Clinical Scenario</span>${q.sc}</div>
-    <div class="q-opts">${q.opts.map((o,i)=>`<button class="q-opt" onclick="ansQ(${i},this)">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}</div>
+    <div class="q-opts">${q.opts.map((o,i)=>`<button type="button" class="q-opt" onclick="ansQ(${i},this)">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}</div>
     <div class="q-feedback" id="qfb"></div>
-    <div style="margin-top:10px;"><button class="btn" id="qnext" onclick="nextQ()" style="display:none;">Next →</button></div>`;
+    <div style="margin-top:10px;"><button type="button" class="btn" id="qnext" onclick="nextQ()" style="display:none;">Next →</button></div>`;
 }
 function ansQ(i,btn){
   const q=Qs[curQ];answered++;
@@ -650,7 +636,7 @@ function ansQ(i,btn){
 function nextQ(){curQ++;renderQ();}
 function showQComplete(){
   const pct=Math.round(score/Qs.length*100);
-  document.getElementById('quiz-card-body').innerHTML=`<div style="text-align:center;padding:20px 0"><div style="font-size:52px;font-weight:700;font-family:var(--mono);color:${pct>=80?'var(--green)':pct>=60?'var(--amber)':'var(--red)'}">${pct}%</div><div style="font-size:16px;font-weight:700;margin:8px 0;">${score} / ${Qs.length} correct</div><div style="font-size:13px;color:var(--muted);margin-bottom:20px;">${pct>=80?'Strong command of CMO documentation rules.':pct>=60?'Good. Review the pitfalls that tripped you up.':'Recommend reviewing the Quick Reference tab before live abstraction.'}</div><button class="btn" onclick="initQuiz()">Try Again</button></div>`;
+  document.getElementById('quiz-card-body').innerHTML=`<div style="text-align:center;padding:20px 0"><div style="font-size:52px;font-weight:700;font-family:var(--mono);color:${pct>=80?'var(--green)':pct>=60?'var(--amber)':'var(--red)'}">${pct}%</div><div style="font-size:16px;font-weight:700;margin:8px 0;">${score} / ${Qs.length} correct</div><div style="font-size:13px;color:var(--muted);margin-bottom:20px;">${pct>=80?'Strong command of CMO documentation rules.':pct>=60?'Good. Review the pitfalls that tripped you up.':'Recommend reviewing the Quick Reference tab before live abstraction.'}</div><button type="button" class="btn" onclick="initQuiz()">Try Again</button></div>`;
 }
 
 // ── CASES ──
@@ -685,10 +671,10 @@ const CASES=[
 
 function renderCaseCards(){
   document.getElementById('case-card-grid').innerHTML=CASES.map((c,i)=>`
-    <div class="case-card" onclick="startCase(${i})">
+    <div class="case-card" onclick="startCase(${i})" role="button" tabindex="0">
       <h3>${c.title}</h3><p>${c.summary}</p>
       <span class="diff-pill diff-${c.diff}">${c.diff==='int'?'Intermediate':'Advanced'}</span>
-      <div style="margin-top:12px;"><button class="btn">Start →</button></div>
+      <div style="margin-top:12px;"><button type="button" class="btn">Start →</button></div>
     </div>`).join('');
 }
 
@@ -702,12 +688,12 @@ function renderCaseStep(){
   const icons={tip:'<i class="ph-duotone ph-lightbulb"></i>',warn:'<i class="ph-duotone ph-warning"></i>',danger:'<i class="ph-duotone ph-warning-octagon"></i>',ok:'<i class="ph-duotone ph-check-circle"></i>'};
   let html='';
   if(s.type==='chart'){
-    html=`<div class="card"><div class="card-label">Step ${caseStep+1} of ${steps.length} — Chart Documentation</div><div class="chart-box"><span class="clabel"><i class="ph-duotone ph-file-text"></i> Chart Excerpt</span>${s.content}</div><div class="btn-row"><button class="btn" onclick="caseNext()">Continue →</button></div></div>`;
+    html=`<div class="card"><div class="card-label">Step ${caseStep+1} of ${steps.length} — Chart Documentation</div><div class="chart-box"><span class="clabel"><i class="ph-duotone ph-file-text"></i> Chart Excerpt</span>${s.content}</div><div class="btn-row"><button type="button" class="btn" onclick="caseNext()">Continue →</button></div></div>`;
   }else if(s.type==='step'){
-    html=`<div class="card"><div class="card-label">Step ${caseStep+1} of ${steps.length} — ${s.label}</div><div style="font-size:13.5px;color:#c4d8ec;line-height:1.7;margin-bottom:10px;">${s.content}</div><div class="cx ${s.cx}"><span class="cx-icon">${icons[s.cx]}</span><div>${s.cxt}</div></div><div class="btn-row"><button class="btn ghost" onclick="casePrev()">← Back</button><button class="btn" onclick="caseNext()">Continue →</button></div></div>`;
+    html=`<div class="card"><div class="card-label">Step ${caseStep+1} of ${steps.length} — ${s.label}</div><div style="font-size:13.5px;color:#c4d8ec;line-height:1.7;margin-bottom:10px;">${s.content}</div><div class="cx ${s.cx}"><span class="cx-icon">${icons[s.cx]}</span><div>${s.cxt}</div></div><div class="btn-row"><button type="button" class="btn ghost" onclick="casePrev()">← Back</button><button type="button" class="btn" onclick="caseNext()">Continue →</button></div></div>`;
   }else if(s.type==='result'){
     const yn=s.yn==='YES';
-    html=`<div class="card"><div class="card-label">Step ${caseStep+1} of ${steps.length} — Final Abstraction</div><div class="res-fields" style="margin-bottom:14px;"><div><div class="res-field-label">CMO Exclusion</div><div class="res-val ${yn?'yes':'no'}">${s.yn}</div></div></div><div class="cx ok"><span class="cx-icon"><i class="ph-duotone ph-check-circle"></i></span><div><strong>Rationale</strong>${s.rat}</div></div><div class="btn-row"><button class="btn ghost" onclick="casePrev()">← Back</button><button class="btn" onclick="backToCases()">← All Cases</button></div></div>`;
+    html=`<div class="card"><div class="card-label">Step ${caseStep+1} of ${steps.length} — Final Abstraction</div><div class="res-fields" style="margin-bottom:14px;"><div><div class="res-field-label">CMO Exclusion</div><div class="res-val ${yn?'yes':'no'}">${s.yn}</div></div></div><div class="cx ok"><span class="cx-icon"><i class="ph-duotone ph-check-circle"></i></span><div><strong>Rationale</strong>${s.rat}</div></div><div class="btn-row"><button type="button" class="btn ghost" onclick="casePrev()">← Back</button><button type="button" class="btn" onclick="backToCases()">← All Cases</button></div></div>`;
   }
   document.getElementById('case-step-body').innerHTML=html;
 }
@@ -719,31 +705,31 @@ renderCaseCards();
 </script>
 
 <!-- SHARE STRIP -->
-<div style="background:#e6f5f4;border-top:1px solid #b2dedd;border-bottom:1px solid #b2dedd;padding:18px 24px;">
-  <div style="max-width:1040px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+<div class="share-strip">
+  <div class="share-strip-inner">
     <div>
-      <div style="font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;color:#0d1f3c;margin-bottom:3px;">Share with your team</div>
-      <div style="font-size:13px;color:#3d4f62;line-height:1.5;">Free abstraction reference for core measure teams — Q&A lookup, LKW tool, and more.</div>
+      <div class="share-strip-title">Share with your team</div>
+      <div class="share-strip-sub">Free abstraction reference for core measure teams — Q&amp;A lookup, LKW tool, and more.</div>
     </div>
-    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-      <code style="background:white;border:1px solid #b2dedd;border-radius:6px;padding:7px 14px;font-size:13px;color:#0b7a78;font-family:'DM Mono',monospace;white-space:nowrap;">https://abstractiondeskqa.com</code>
-      <button onclick="(()=>{navigator.clipboard.writeText('https://abstractiondeskqa.com');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy link',2000)})()" style="background:#0b7a78;color:white;border:none;border-radius:6px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif;" onmouseover="this.style.background='#0fa39f'" onmouseout="this.style.background='#0b7a78'">Copy link</button>
+    <div class="share-strip-actions">
+      <code class="share-url-pill">https://abstractiondeskqa.com</code>
+      <button type="button" class="share-copy-btn">Copy link</button>
     </div>
   </div>
 </div>
-<div class="site-disclaimer" role="note">
+<div class="site-disclaimer" role="note" aria-label="Educational disclaimer">
   <div class="site-disclaimer-inner">
     <strong>Educational use only.</strong>
     AbstractionDeskQA is a reference aid to support abstractor training and workflow. It does not constitute compliance advice and is not a substitute for the official TJC or CMS Specifications Manual. Always verify abstraction decisions against the current specifications.
   </div>
 </div>
 
-<footer class="site-footer" role="contentinfo">
+<footer class="site-footer">
   <div class="site-footer-inner">
     <div>
-      <div class="site-footer-brand">AbstractionDesk<span style="color:#0da8a5">QA</span></div>
+      <div class="site-footer-brand">AbstractionDesk<span>QA</span></div>
       <p>A free reference tool for core measure abstractors.<br>
-      &copy; <span id="siteYr"></span> AbstractionDeskQA. Educational use only.</p>
+      &copy; <span id="yr"></span> AbstractionDeskQA. Educational use only.</p>
     </div>
     <div class="site-footer-links">
       <a href="lookup.html">Q&amp;A Lookup</a>
@@ -755,7 +741,6 @@ renderCaseCards();
     </div>
   </div>
 </footer>
-<script>document.getElementById('siteYr').textContent=new Date().getFullYear();</script>
 <script data-name="BMC-Widget"
         data-cfasync="false"
         src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"

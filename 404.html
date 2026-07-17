@@ -6,15 +6,24 @@
 <meta name="description" content="Page not found — AbstractionDeskQA">
 <title>404 — Page Not Found | AbstractionDeskQA</title>
 <link rel="canonical" href="https://abstractiondeskqa.com/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://abstractiondeskqa.com/">
+<meta property="og:site_name" content="AbstractionDeskQA">
+<meta property="og:title" content="404 — Page Not Found | AbstractionDeskQA">
+<meta property="og:description" content="Page not found — AbstractionDeskQA">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+<link rel="stylesheet" href="assets/phosphor/regular.css">
+<link rel="stylesheet" href="assets/phosphor/duotone.css">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QJPP46JWX3"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-QJPP46JWX3');</script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
     --ink:       #0f1923;
     --ink-mid:   #3d4f62;
-    --ink-soft:  #6b7f94;
+    --ink-soft:  #5a6d81;
     --canvas:    #f7f9fc;
     --white:     #ffffff;
     --navy:      #0d2240;
@@ -234,6 +243,7 @@
     font-family: var(--heading); font-size: 16px;
     font-weight: 700; color: white; margin-bottom: 4px;
   }
+  .footer-brand span { color: var(--teal2); }
   footer p { font-size: 13px; line-height: 1.6; }
   .footer-links {
     display: flex; flex-wrap: wrap; gap: 6px 18px;
@@ -241,14 +251,22 @@
   }
   .footer-links a { color: rgba(255,255,255,.5); text-decoration: none; }
   .footer-links a:hover { color: var(--teal2); }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
 </style>
 </head>
 <body>
 
-<nav class="nav" role="navigation" aria-label="Main navigation">
+<nav class="nav" aria-label="Main navigation">
   <div class="nav-inner">
     <a href="/" class="nav-brand" aria-label="AbstractionDeskQA home">
-      AbstractionDesk<span style="color:var(--teal2)">QA</span>
+      AbstractionDesk
       <span class="qa-badge" aria-hidden="true">QA</span>
     </a>
     <div class="nav-links">
@@ -265,7 +283,7 @@
   <div class="error-wrap">
     <div class="error-code" aria-hidden="true">404</div>
     <div class="sawyer-wrap">
-      <img src="Sawyer-1.jpeg" alt="Sawyer the dog, mascot of AbstractionDeskQA" class="sawyer-img">
+      <img src="Sawyer-1.webp" alt="Sawyer the dog, mascot of AbstractionDeskQA" class="sawyer-img" width="600" height="450">
       <span class="sawyer-badge">Sawyer</span>
     </div>
     <h1 class="error-title">Sawyer couldn't find that page.</h1>
@@ -302,10 +320,10 @@
   </div>
 </main>
 
-<footer role="contentinfo">
+<footer>
   <div class="footer-inner">
     <div>
-      <div class="footer-brand">AbstractionDesk<span style="color:var(--teal2)">QA</span></div>
+      <div class="footer-brand">AbstractionDesk<span>QA</span></div>
       <p>A free abstraction toolkit for core measure teams.<br>
       &copy; <span id="yr"></span> AbstractionDeskQA. Educational use only.</p>
     </div>
