@@ -158,6 +158,29 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 .moverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.48);z-index:200;align-items:center;justify-content:center;}
 .moverlay.open{display:flex;}
 .modal{background:white;border-radius:10px;padding:22px;max-width:780px;width:94%;box-shadow:0 20px 60px rgba(0,0,0,.28);max-height:90vh;overflow-y:auto;}
+.modal-sm{max-width:520px;}
+.cf-turnstile-mb{margin-bottom:10px;}
+.cf-turnstile-mt{margin-top:10px;}
+.sb-header-row{display:flex;align-items:center;justify-content:space-between;padding:13px 15px 4px;}
+.modal-header-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;}
+.pill-row{display:flex;gap:5px;flex-wrap:wrap;}
+.tag-form-grid{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end;}
+.paste-meta-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px;}
+.col-tag-browser{width:120px;}
+.col-cat-browser{width:110px;}
+.col-tag-mgr{width:100px;}
+.col-cat-mgr{width:90px;}
+.col-source-mgr{width:60px;}
+.col-actions-mgr{width:75px;}
+.nav-home-link{text-decoration:none;color:inherit;display:flex;align-items:baseline;gap:6px;}
+.sb-lbl-reset{padding:0;margin:0;}
+.sb-tag-total{font-size:9px;color:var(--mid);font-family:var(--mono);}
+.difficulty-label{font-size:10px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.7px;}
+.modal-close{background:none;border:none;color:var(--mid);font-size:22px;cursor:pointer;line-height:1;padding:0 4px;}
+.mono-input{font-family:var(--mono);}
+.mono-input-bold{font-family:var(--mono);font-weight:600;}
+.paste-textarea{width:100%;font-family:var(--mono);font-size:11px;padding:9px;border:1.5px solid var(--border);border-radius:5px;min-height:120px;resize:vertical;margin-bottom:10px;outline:none;color:var(--ink);}
+.review-hint{font-size:10.5px;color:var(--mid);font-style:italic;}
 .modal h3{font-family:var(--serif);font-size:17px;color:var(--navy);margin-bottom:5px;}
 .modal-sub{font-size:12px;color:var(--mid);margin-bottom:15px;line-height:1.55;}
 
@@ -191,8 +214,17 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 .tag-src-sheet{background:var(--teal-bg);color:var(--teal);}
 .cat-badge{font-size:9px;font-weight:700;padding:2px 6px;border-radius:3px;background:var(--purple-bg);color:var(--purple);white-space:nowrap;}
 
-.tag-review{background:var(--purple-bg);border:1px solid rgba(123,92,229,.18);border-radius:6px;padding:10px 13px;margin-bottom:12px;}
+.tag-review{background:var(--purple-bg);border:1px solid rgba(123,92,229,.18);border-radius:6px;padding:10px 13px;margin-bottom:12px;display:none;}
 .tag-review h4{font-size:10px;font-weight:800;color:var(--purple);text-transform:uppercase;letter-spacing:.6px;margin-bottom:7px;}
+.tagbrowser-cta{margin-top:8px;width:100%;background:none;border:1px dashed var(--border);border-radius:6px;color:var(--teal);font-family:var(--sans);font-size:11px;font-weight:600;padding:6px;cursor:pointer;transition:all .12s;}
+.tagbrowser-cta:hover{background:var(--teal-bg);}
+.ic-3{vertical-align:middle;margin-right:3px;}
+.ic-4{vertical-align:middle;margin-right:4px;}
+.ic-5{vertical-align:middle;margin-right:5px;}
+.ic-6t{vertical-align:middle;margin-right:6px;color:var(--teal);}
+.footer-brand-accent{color:#0da8a5;}
+.btn-sm{font-size:11px;padding:5px 11px;}
+.btn-sm-wide{font-size:11px;padding:8px 16px;white-space:nowrap;}
 .rrow{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px;}
 .rchip{font-family:var(--mono);font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:10px;cursor:pointer;transition:all .12s;border:1.5px solid;display:flex;align-items:center;gap:4px;}
 .rchip.acc{border-color:var(--purple);background:var(--purple);color:white;}
@@ -252,17 +284,17 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 
 <div class="bar">
   <div class="brand">
-    <a href="/" style="text-decoration:none;color:inherit;display:flex;align-items:baseline;gap:6px" aria-label="Back to AbstractionDeskQA home">
+    <a href="/" class="nav-home-link" aria-label="Back to AbstractionDeskQA home">
       <span class="brand-name">AbstractionDesk<em>QA</em></span>
     </a>
     <span class="brand-scope">Q&amp;A Lookup</span>
   </div>
   <div class="bar-btns">
     <!-- Q&A actions -->
-    <button type="button" class="btn btn-ghost" onclick="toggleAdd()"><i class="ph ph-plus" style="vertical-align:middle;margin-right:3px;"></i>Add Q&amp;A</button>
-    <button type="button" class="btn btn-ghost" onclick="openPaste()"><i class="ph-duotone ph-clipboard-text" style="vertical-align:middle;margin-right:3px;"></i>Paste Raw</button>
-    <button type="button" class="btn btn-purple" onclick="openTM()"><i class="ph-duotone ph-tag" style="vertical-align:middle;margin-right:3px;"></i>Tags</button>
-    <button type="button" class="btn btn-teal" onclick="exportPDF()"><i class="ph ph-download-simple" style="vertical-align:middle;margin-right:3px;"></i>Export</button>
+    <button type="button" class="btn btn-ghost" onclick="toggleAdd()"><i class="ph ph-plus ic-3"></i>Add Q&amp;A</button>
+    <button type="button" class="btn btn-ghost" onclick="openPaste()"><i class="ph-duotone ph-clipboard-text ic-3"></i>Paste Raw</button>
+    <button type="button" class="btn btn-purple" onclick="openTM()"><i class="ph-duotone ph-tag ic-3"></i>Tags</button>
+    <button type="button" class="btn btn-teal" onclick="exportPDF()"><i class="ph ph-download-simple ic-3"></i>Export</button>
   </div>
 </div>
 
@@ -282,13 +314,13 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
     <button type="button" class="sb-item" data-m="__gray" onclick="filterM('__gray',this)">❓ Gray Areas <span class="sb-cnt" id="cnt-gray">0</span></button>
     <button type="button" class="sb-item" data-m="__edge" onclick="filterM('__edge',this)">⚡ Edge Cases <span class="sb-cnt" id="cnt-edge">0</span></button>
     <div class="sb-div"></div>
-    <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 15px 4px;">
-      <span class="sb-lbl" style="padding:0;margin:0;">Browse Tags</span>
-      <span id="sb-tag-total" style="font-size:9px;color:var(--mid);font-family:var(--mono);"></span>
+    <div class="sb-header-row">
+      <span class="sb-lbl sb-lbl-reset">Browse Tags</span>
+      <span id="sb-tag-total" class="sb-tag-total"></span>
     </div>
     <div class="cloud-outer">
       <div class="cloud" id="tagCloud"></div>
-      <button type="button" onclick="openTagBrowser()" style="margin-top:8px;width:100%;background:none;border:1px dashed var(--border);border-radius:6px;color:var(--teal);font-family:var(--sans);font-size:11px;font-weight:600;padding:6px;cursor:pointer;transition:all .12s;" onmouseover="this.style.background='var(--teal-bg)'" onmouseout="this.style.background='none'">Browse all tags →</button>
+      <button type="button" class="tagbrowser-cta" onclick="openTagBrowser()">Browse all tags →</button>
     </div>
   </div>
 
@@ -301,7 +333,7 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 
     <div class="add-panel" id="addPanel">
       <h3>Add New Q&amp;A Entry</h3>
-      <div class="add-notice"><i class="ph-duotone ph-clock" style="vertical-align:middle;margin-right:5px;"></i><strong>Submissions go to Google Sheets for curator review.</strong> Your entry will appear on the site once approved.</div>
+      <div class="add-notice"><i class="ph-duotone ph-clock ic-5"></i><strong>Submissions go to Google Sheets for curator review.</strong> Your entry will appear on the site once approved.</div>
       <div class="fg2">
         <div class="full"><label class="flbl" for="fq">Question / Scenario</label><textarea class="fta" id="fq" placeholder="Describe the abstraction scenario…"></textarea></div>
         <div class="full"><label class="flbl" for="fa">Answer / Guidance</label><textarea class="fta" id="fa" placeholder="The authoritative answer or interpretation…"></textarea></div>
@@ -319,16 +351,16 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
           <div class="sug-panel" id="sugPanel"><div class="sug-lbl" id="sugLbl">Suggestions</div><div class="sug-row" id="sugRow"></div></div>
         </div>
       </div>
-      <div class="cf-turnstile" id="turnstileAdd" data-sitekey="0x4AAAAAADf-2v3MWsS9bACq" data-theme="light" style="margin-bottom:10px;"></div>
+      <div class="cf-turnstile cf-turnstile-mb" id="turnstileAdd" data-sitekey="0x4AAAAAADf-2v3MWsS9bACq" data-theme="light"></div>
       <div class="factions">
-        <button type="button" class="btn btn-ghost" style="font-size:11px;padding:5px 11px" onclick="toggleAdd()">Cancel</button>
-        <button type="button" class="btn btn-teal" style="font-size:11px;padding:5px 11px" id="submitBtn" onclick="submitEntry()">Submit for Review</button>
+        <button type="button" class="btn btn-ghost btn-sm" onclick="toggleAdd()">Cancel</button>
+        <button type="button" class="btn btn-teal btn-sm" id="submitBtn" onclick="submitEntry()">Submit for Review</button>
       </div>
     </div>
 
     <div class="atbar" id="atbar">
-      <span class="atbar-lbl"><i class="ph-duotone ph-tag" style="vertical-align:middle;margin-right:4px;"></i>Tag filter:</span>
-      <div id="atpills" style="display:flex;gap:5px;flex-wrap:wrap;"></div>
+      <span class="atbar-lbl"><i class="ph-duotone ph-tag ic-4"></i>Tag filter:</span>
+      <div id="atpills" class="pill-row"></div>
       <button type="button" class="clear-at" onclick="clearTagFilters()">Clear all</button>
     </div>
 
@@ -339,7 +371,7 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
     </div>
 
     <div class="frow">
-      <span style="font-size:10px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.7px">Difficulty:</span>
+      <span class="difficulty-label">Difficulty:</span>
       <button type="button" class="fchip on" data-t="all" onclick="filterT('all',this)">All</button>
       <button type="button" class="fchip" data-t="routine" onclick="filterT('routine',this)">✅ Routine</button>
       <button type="button" class="fchip fe" data-t="edge" onclick="filterT('edge',this)">⚡ Edge</button>
@@ -353,10 +385,10 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 
 <!-- TAG BROWSER MODAL -->
 <div class="moverlay" id="tagBrowserModal" onclick="if(event.target===this)closeTagBrowser()">
-  <div class="modal" style="max-width:780px">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">
-      <h3><i class="ph-duotone ph-tag-chevron" style="vertical-align:middle;margin-right:6px;color:var(--teal);"></i>Tag Browser</h3>
-      <button type="button" onclick="closeTagBrowser()" style="background:none;border:none;color:var(--mid);font-size:22px;cursor:pointer;line-height:1;padding:0 4px;">×</button>
+  <div class="modal">
+    <div class="modal-header-row">
+      <h3><i class="ph-duotone ph-tag-chevron ic-6t"></i>Tag Browser</h3>
+      <button type="button" class="modal-close" onclick="closeTagBrowser()">×</button>
     </div>
     <p class="modal-sub">Click any tag name to apply it as a filter on the Q&amp;A list. Browse by category or search by name or alias.</p>
 
@@ -377,8 +409,8 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
     <table class="tm-table" id="tbTable">
       <thead>
         <tr>
-          <th style="width:120px">Tag</th>
-          <th style="width:110px">Category</th>
+          <th class="col-tag-browser">Tag</th>
+          <th class="col-cat-browser">Category</th>
           <th>Aliases</th>
           <th>Related Tags</th>
         </tr>
@@ -394,25 +426,25 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 <!-- TAG MANAGER MODAL -->
 <div class="moverlay" id="tmModal" onclick="if(event.target===this)closeTM()">
   <div class="modal">
-    <h3><i class="ph-duotone ph-tag" style="vertical-align:middle;margin-right:6px;color:var(--teal);"></i>Tag Manager</h3>
+    <h3><i class="ph-duotone ph-tag ic-6t"></i>Tag Manager</h3>
     <p class="modal-sub">
       Each tag has <strong>aliases</strong> — chart words and phrases that trigger auto-detection — and <strong>related tags</strong> shown as suggestions when that tag is used.<br><br>
       Tags marked <span class="tag-src-pill tag-src-sheet">SHEET</span> are curator-approved and active for all users. Tags marked <span class="tag-src-pill tag-src-local">LOCAL</span> live in your browser until submitted for review. Suggest a new tag below and it saves locally right away while awaiting approval.
     </p>
 
     <div class="tm-notice">
-      <i class="ph-duotone ph-plus-circle" style="vertical-align:middle;margin-right:5px;"></i><strong>Suggest a new tag below</strong> — it goes to Google Sheets for curator review before appearing site-wide. It saves locally in your browser so you can use it right away.
+      <i class="ph-duotone ph-plus-circle ic-5"></i><strong>Suggest a new tag below</strong> — it goes to Google Sheets for curator review before appearing site-wide. It saves locally in your browser so you can use it right away.
     </div>
 
     <div class="tm-section">Suggest a New Tag</div>
     <div class="tm-add">
       <div class="tm-add-grid">
-        <div><label class="flbl" for="nt-id">Tag ID</label><input class="fi" id="nt-id" type="text" placeholder="e.g. stroke_lkw" style="font-family:var(--mono);"/></div>
-        <div><label class="flbl" for="nt-n">Tag Name</label><input class="fi" id="nt-n" type="text" placeholder="e.g. LKW" style="font-family:var(--mono);font-weight:600"/></div>
+        <div><label class="flbl" for="nt-id">Tag ID</label><input class="fi mono-input" id="nt-id" type="text" placeholder="e.g. stroke_lkw"/></div>
+        <div><label class="flbl" for="nt-n">Tag Name</label><input class="fi mono-input-bold" id="nt-n" type="text" placeholder="e.g. LKW"/></div>
         <div><label class="flbl" for="nt-a">Aliases</label><input class="fi" id="nt-a" type="text" placeholder="last known well, lkn, last seen normal"/></div>
         <div><label class="flbl" for="nt-r">Related Tags</label><input class="fi" id="nt-r" type="text" placeholder="TLKW, DLKW, onset"/></div>
       </div>
-      <div style="display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end;">
+      <div class="tag-form-grid">
         <div><label class="flbl" for="nt-cat">Category</label>
           <select class="fsel" id="nt-cat">
             <option value="Stroke Timing">Stroke Timing</option>
@@ -424,9 +456,9 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
             <option value="Uncategorized">Uncategorized</option>
           </select>
         </div>
-        <button type="button" class="btn btn-teal" style="font-size:11px;padding:8px 16px;white-space:nowrap;" id="addTagBtn" onclick="addTagDef()">Submit Tag for Review</button>
+        <button type="button" class="btn btn-teal btn-sm-wide" id="addTagBtn" onclick="addTagDef()">Submit Tag for Review</button>
       </div>
-      <div class="cf-turnstile" id="turnstileTag" data-sitekey="0x4AAAAAADf-2v3MWsS9bACq" data-theme="light" style="margin-top:10px;"></div>
+      <div class="cf-turnstile cf-turnstile-mt" id="turnstileTag" data-sitekey="0x4AAAAAADf-2v3MWsS9bACq" data-theme="light"></div>
     </div>
 
     <div class="tm-section">Active Tags</div>
@@ -444,7 +476,7 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
     </div>
 
     <table class="tm-table">
-      <thead><tr><th style="width:100px">Tag</th><th style="width:90px">Category</th><th>Aliases</th><th>Related Tags</th><th style="width:60px">Source</th><th style="width:75px">Actions</th></tr></thead>
+      <thead><tr><th class="col-tag-mgr">Tag</th><th class="col-cat-mgr">Category</th><th>Aliases</th><th>Related Tags</th><th class="col-source-mgr">Source</th><th class="col-actions-mgr">Actions</th></tr></thead>
       <tbody id="tmBody"></tbody>
     </table>
     <div class="mactions"><button type="button" class="btn btn-teal" onclick="closeTM()">Done</button></div>
@@ -453,25 +485,25 @@ body{font-family:var(--sans);background:var(--slate);color:var(--ink);min-height
 
 <!-- PASTE MODAL -->
 <div class="moverlay" id="pasteModal" onclick="if(event.target===this)closePaste()">
-  <div class="modal" style="max-width:520px">
-    <h3><i class="ph-duotone ph-clipboard-text" style="vertical-align:middle;margin-right:6px;color:var(--teal);"></i>Paste Raw Q&amp;A</h3>
+  <div class="modal modal-sm">
+    <h3><i class="ph-duotone ph-clipboard-text ic-6t"></i>Paste Raw Q&amp;A</h3>
     <p class="modal-sub">Paste text from TJC PMN, CMS clarifications, or training notes. Preview tags before submitting for curator review.</p>
-    <textarea id="pasteRaw" style="width:100%;font-family:var(--mono);font-size:11px;padding:9px;border:1.5px solid var(--border);border-radius:5px;min-height:120px;resize:vertical;margin-bottom:10px;outline:none;color:var(--ink);" placeholder="Q: If a patient woke up with stroke symptoms…&#10;&#10;A: Per TJC guidance…"></textarea>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px">
+    <textarea id="pasteRaw" class="paste-textarea" placeholder="Q: If a patient woke up with stroke symptoms…&#10;&#10;A: Per TJC guidance…"></textarea>
+    <div class="paste-meta-grid">
       <div><label class="flbl" for="pm">Measure</label><select class="fsel" id="pm"><option value="STK">STK</option><option value="ASR-IP">ASR-IP</option><option value="ED-OP">ED-OP</option></select></div>
       <div><label class="flbl" for="pspec">Specific Measure</label><input class="fi" id="pspec" type="text" placeholder="e.g. ASR-IP-1"/></div>
       <div><label class="flbl" for="psrc">Source</label><input class="fi" id="psrc" type="text" placeholder="TJC PMN, training…"/></div>
     </div>
-    <div class="tag-review" id="tagReview" style="display:none">
-      <h4><i class="ph-duotone ph-tag" style="vertical-align:middle;margin-right:4px;"></i>Auto-detected tags — click to accept or reject:</h4>
+    <div class="tag-review" id="tagReview">
+      <h4><i class="ph-duotone ph-tag ic-4"></i>Auto-detected tags — click to accept or reject:</h4>
       <div class="rrow" id="rrow"></div>
-      <div style="font-size:10.5px;color:var(--mid);font-style:italic">Purple = accepted · Gray = rejected · Click to toggle</div>
+      <div class="review-hint">Purple = accepted · Gray = rejected · Click to toggle</div>
     </div>
-    <div class="cf-turnstile" id="turnstilePaste" data-sitekey="0x4AAAAAADf-2v3MWsS9bACq" data-theme="light" style="margin-bottom:10px;"></div>
+    <div class="cf-turnstile cf-turnstile-mb" id="turnstilePaste" data-sitekey="0x4AAAAAADf-2v3MWsS9bACq" data-theme="light"></div>
     <div class="mactions">
-      <button type="button" class="btn btn-ghost" style="font-size:11px;padding:5px 11px" onclick="closePaste()">Cancel</button>
-      <button type="button" class="btn btn-purple" style="font-size:11px;padding:5px 11px" onclick="previewTags()"><i class="ph-duotone ph-tag" style="vertical-align:middle;margin-right:4px;"></i>Preview Tags</button>
-      <button type="button" class="btn btn-teal" style="font-size:11px;padding:5px 11px" id="pasteSubmitBtn" onclick="savePaste()">Submit for Review</button>
+      <button type="button" class="btn btn-ghost btn-sm" onclick="closePaste()">Cancel</button>
+      <button type="button" class="btn btn-purple btn-sm" onclick="previewTags()"><i class="ph-duotone ph-tag ic-4"></i>Preview Tags</button>
+      <button type="button" class="btn btn-teal btn-sm" id="pasteSubmitBtn" onclick="savePaste()">Submit for Review</button>
     </div>
   </div>
 </div>
@@ -1066,7 +1098,7 @@ loadQaData().then(applyDeepLink);
 <footer class="site-footer">
   <div class="site-footer-inner">
     <div>
-      <div class="site-footer-brand">AbstractionDesk<span style="color:#0da8a5">QA</span></div>
+      <div class="site-footer-brand">AbstractionDesk<span class="footer-brand-accent">QA</span></div>
       <p>A free abstraction toolkit for core measure teams.<br>
       &copy; <span id="yr"></span> AbstractionDeskQA. Educational use only.</p>
     </div>

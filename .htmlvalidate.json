@@ -2,7 +2,7 @@
   "extends": ["html-validate:recommended"],
   "rules": {
     "void-style": "warn",
-    "no-inline-style": "warn",
+    "no-inline-style": "error",
     "prefer-native-element": "warn"
   }
 }
