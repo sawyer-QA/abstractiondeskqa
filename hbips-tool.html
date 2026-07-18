@@ -416,8 +416,9 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
   margin-bottom: 18px; font-style: italic;
 }
 .quiz-opts { display: flex; flex-direction: column; gap: 9px; margin-bottom: 16px; }
+.quiz-opts li { list-style: none; margin: 0; }
 .quiz-opt {
-  display: flex; align-items: flex-start; gap: 11px;
+  display: flex; align-items: flex-start; gap: 11px; width: 100%;
   padding: 12px 15px; border-radius: 8px;
   border: 1.5px solid var(--border); background: var(--white);
   cursor: pointer; transition: all .15s; font-size: 14px; line-height: 1.55;
@@ -909,7 +910,7 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
       </div>
       <div class="quiz-q" id="quizQ"></div>
       <div class="quiz-scenario" id="quizScenario"></div>
-      <div class="quiz-opts" id="quizOpts" role="list"></div>
+      <ul class="quiz-opts" id="quizOpts"></ul>
       <div class="quiz-feedback" id="quizFeedback"></div>
       <div class="quiz-nav">
         <button type="button" class="quiz-btn" id="quizNext" onclick="nextQ()" disabled>
@@ -1395,11 +1396,13 @@ function renderQ() {
   opts.innerHTML = '';
   q.opts.forEach((o, i) => {
     const btn = document.createElement('button');
+    btn.type = 'button';
     btn.className = 'quiz-opt';
-    btn.setAttribute('role', 'listitem');
     btn.innerHTML = `<span class="opt-letter">${String.fromCharCode(65+i)}</span>${o}`;
     btn.onclick = () => answerQ(i);
-    opts.appendChild(btn);
+    const li = document.createElement('li');
+    li.appendChild(btn);
+    opts.appendChild(li);
   });
   const fb = document.getElementById('quizFeedback');
   fb.className = 'quiz-feedback'; fb.textContent = '';
