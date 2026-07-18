@@ -416,8 +416,9 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
   margin-bottom: 18px; font-style: italic;
 }
 .quiz-opts { display: flex; flex-direction: column; gap: 9px; margin-bottom: 16px; }
+.quiz-opts li { list-style: none; margin: 0; }
 .quiz-opt {
-  display: flex; align-items: flex-start; gap: 11px;
+  display: flex; align-items: flex-start; gap: 11px; width: 100%;
   padding: 12px 15px; border-radius: 8px;
   border: 1.5px solid var(--border); background: var(--white);
   cursor: pointer; transition: all .15s; font-size: 14px; line-height: 1.55;
@@ -620,7 +621,7 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
 
     <div class="calc-grid calc-grid--mb14">
       <div class="field">
-        <label>Admit date <span class="help-btn" onclick="toggleHelp('h-admit')" title="Help" role="button" tabindex="0">?</span></label>
+        <label>Admit date <button type="button" class="help-btn" onclick="toggleHelp('h-admit')" title="Help">?</button></label>
         <input type="date" id="denomAdmit" aria-label="Admit date" oninput="calcDenom()">
         <div class="help-panel" id="h-admit">
           <strong>Count the admission day.</strong>
@@ -628,7 +629,7 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
         </div>
       </div>
       <div class="field">
-        <label>Discharge date <span class="help-btn" onclick="toggleHelp('h-disch')" title="Help" role="button" tabindex="0">?</span></label>
+        <label>Discharge date <button type="button" class="help-btn" onclick="toggleHelp('h-disch')" title="Help">?</button></label>
         <input type="date" id="denomDisch" aria-label="Discharge date" oninput="calcDenom()">
         <div class="help-panel" id="h-disch">
           <strong>Do not count the discharge day.</strong>
@@ -638,7 +639,7 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
     </div>
 
     <div class="field field--tight">
-      <label>Leave days (full-day only) <span class="help-btn" onclick="toggleHelp('h-leave')" title="Help" role="button" tabindex="0">?</span></label>
+      <label>Leave days (full-day only) <button type="button" class="help-btn" onclick="toggleHelp('h-leave')" title="Help">?</button></label>
       <input type="number" id="leaveDaysSimple" min="0" value="0" class="input-narrow" aria-label="Leave days" oninput="calcDenom()">
       <div class="help-panel" id="h-leave">
         <strong>Full-day therapeutic passes only.</strong>
@@ -665,7 +666,7 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
 
     <div class="calc-grid">
       <div class="field">
-        <label>Time started <span class="help-btn" onclick="toggleHelp('h-tstart')" title="Help" role="button" tabindex="0">?</span></label>
+        <label>Time started <button type="button" class="help-btn" onclick="toggleHelp('h-tstart')" title="Help">?</button></label>
         <input type="text" id="durStart" placeholder="e.g. 1415" maxlength="4" class="input-mono" oninput="calcDuration()">
         <div class="help-panel" id="h-tstart">
           <strong>Military time — 4 digits, no colon.</strong>
@@ -674,7 +675,7 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
         <span class="hint">Military time, 4 digits — e.g. 1415</span>
       </div>
       <div class="field">
-        <label>Time ended <span class="help-btn" onclick="toggleHelp('h-tend')" title="Help" role="button" tabindex="0">?</span></label>
+        <label>Time ended <button type="button" class="help-btn" onclick="toggleHelp('h-tend')" title="Help">?</button></label>
         <input type="text" id="durEnd" placeholder="e.g. 1620" maxlength="4" class="input-mono" oninput="calcDuration()">
         <div class="help-panel" id="h-tend">
           <strong>If the episode crossed midnight</strong> (e.g. started 2230, ended 0045 the next day), enter the end time as-is. The calculator will detect the crossing and add 24 hours automatically.
@@ -808,7 +809,7 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
         <input type="date" id="strataDoB" oninput="calcStrata()">
       </div>
       <div class="field">
-        <label>Event date <span class="help-btn" onclick="toggleHelp('h-eventdate')" title="Help" role="button" tabindex="0">?</span></label>
+        <label>Event date <button type="button" class="help-btn" onclick="toggleHelp('h-eventdate')" title="Help">?</button></label>
         <input type="date" id="strataEvent" oninput="calcStrata()">
         <div class="help-panel" id="h-eventdate">
           <strong>Use the date the event occurred</strong> — not the admission date. A patient who has their birthday on the event date moves into the next strata that same day.
@@ -909,7 +910,7 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
       </div>
       <div class="quiz-q" id="quizQ"></div>
       <div class="quiz-scenario" id="quizScenario"></div>
-      <div class="quiz-opts" id="quizOpts" role="list"></div>
+      <ul class="quiz-opts" id="quizOpts"></ul>
       <div class="quiz-feedback" id="quizFeedback"></div>
       <div class="quiz-nav">
         <button type="button" class="quiz-btn" id="quizNext" onclick="nextQ()" disabled>
@@ -1395,11 +1396,13 @@ function renderQ() {
   opts.innerHTML = '';
   q.opts.forEach((o, i) => {
     const btn = document.createElement('button');
+    btn.type = 'button';
     btn.className = 'quiz-opt';
-    btn.setAttribute('role', 'listitem');
     btn.innerHTML = `<span class="opt-letter">${String.fromCharCode(65+i)}</span>${o}`;
     btn.onclick = () => answerQ(i);
-    opts.appendChild(btn);
+    const li = document.createElement('li');
+    li.appendChild(btn);
+    opts.appendChild(li);
   });
   const fb = document.getElementById('quizFeedback');
   fb.className = 'quiz-feedback'; fb.textContent = '';

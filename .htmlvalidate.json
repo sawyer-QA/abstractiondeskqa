@@ -3,6 +3,6 @@
   "rules": {
     "void-style": "warn",
     "no-inline-style": "error",
-    "prefer-native-element": "warn"
+    "prefer-native-element": "error"
   }
 }

@@ -375,10 +375,10 @@ main{max-width:var(--max);margin:0 auto;padding:32px 24px 72px;}
 
   <!-- HOW TO USE -->
   <div class="how-box" id="how-box">
-    <div class="how-box-hdr" onclick="toggleHow()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleHow();}" role="button" tabindex="0" aria-expanded="true" aria-controls="how-body">
+    <button type="button" class="how-box-hdr" onclick="toggleHow()" aria-expanded="true" aria-controls="how-body">
       <span class="how-box-title"><span class="how-icon">ℹ</span> How to use this tool</span>
       <span class="how-toggle open" id="how-toggle" aria-hidden="true">▾</span>
-    </div>
+    </button>
     <div class="how-box-body open" id="how-body">
       <p>Enter the charted time and a brief description for each clinical event relevant to SEP-1 review. The tool automatically identifies event types (SIRS, organ dysfunction, bundle elements, vasopressors) and builds a chronological timeline. <strong>Replace the example entries below with your patient's documented events.</strong> Include all findings that may affect Time Zero determination.</p>
       <div class="how-tips">
