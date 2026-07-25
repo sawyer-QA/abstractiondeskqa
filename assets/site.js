@@ -33,6 +33,17 @@ document.addEventListener('DOMContentLoaded', function () {
     setTimeout(function () { btn.textContent = 'Copy link'; }, 2000);
   });
 
+  /* ── Q&A CARD TOGGLE (lookup.html only) — togCard() is defined in
+     lookup.html's own inline script, not here. This listener is registered
+     sitewide (site.js loads on all 8 pages), so the typeof guard below is
+     deliberate: elsewhere it's a no-op, not a bug. ── */
+  document.addEventListener('click', function (evt) {
+    var hdr = evt.target.closest && evt.target.closest('[data-card-id]');
+    if (!hdr) return;
+    if (typeof togCard !== 'function') return;
+    togCard(hdr.dataset.cardId);
+  });
+
   /* ── role="button" ENTER/SPACE ACTIVATION (T-18) — help-btn spans and case-card divs.
      Excludes role="tab" (handled by the tablist listeners below) and anything without
      role="button" (T-19: cmo doc-type-btn / sep1 type-picker need checkbox/popup

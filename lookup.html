@@ -704,8 +704,8 @@ function render(){
   if(!f.length){document.getElementById('cards').innerHTML=`<div class="empty"><h3>No results</h3><p>Try a different search or tag filter.</p></div>`;logZeroResults();return;}
   lastZeroKey=null;
   document.getElementById('cards').innerHTML=f.map(e=>`
-    <div class="qa" id="c-${e.id}">
-      <button type="button" class="qa-hdr" aria-expanded="false" aria-controls="c-${e.id}-body" onclick="togCard('c-${e.id}')">
+    <div class="qa" id="c-${esc(e.id)}">
+      <button type="button" class="qa-hdr" aria-expanded="false" aria-controls="c-${esc(e.id)}-body" data-card-id="c-${esc(e.id)}">
         <div class="tog" aria-hidden="true">+</div>
         <div class="qa-hdr-c">
           <div class="meta">
