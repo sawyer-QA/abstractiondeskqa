@@ -1,3 +1,12 @@
 AUDIT-abstractiondeskqa.md
 CLAUDE.md
 apps-script-turnstile-doPost-snippet.gs
+
+# session scratch files (verification logs, ticket-scoped working notes)
+log.txt
+status.txt
+verify.json
+htmlvalidate-full.json
+t[0-9][0-9]-*.txt
+T-*-impl-plan-prompt.txt
+SESSION-*-HANDOFF.md
