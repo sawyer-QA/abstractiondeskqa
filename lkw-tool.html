@@ -515,6 +515,7 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 
 </main>
 <script src="assets/site.js"></script>
+<script src="assets/spec-logic/lkw.js"></script>
 <script>
 // ── GRID ──
 const mdUnk={val:null};
@@ -532,66 +533,19 @@ function ht(t){return !!(t&&t.length>=3);}
 function hd(d){return !!(d&&d.length>=6);}
 
 function resolveGrid(){
-  const inhouse=document.getElementById('flag-inhouse').checked;
-  const justprior=document.getElementById('flag-justprior').checked;
-  const episodes=document.getElementById('flag-episodes').checked;
-  const mdSxD=gv('md-sx-date'),mdSxT=gv('md-sx-time');
-  const mdLkwD=gv('md-lkw-date'),mdLkwT=gv('md-lkw-time');
-  const rnSxD=gv('rn-sx-date'),rnSxT=gv('rn-sx-time');
-  const rnLkwD=gv('rn-lkw-date'),rnLkwT=gv('rn-lkw-time');
-  const csfD=gv('csf-date'),csfT=gv('csf-time');
-
-  // RULE 0: In-house
-  if(inhouse){
-    showR('NO','UTD','UTD','In-House Stroke','LKW first occurred after Arrival Time. Per spec: select No. Date and Time LKW = UTD.');
-    return;
-  }
-  // RULE 1: MD Unknown (Priority 1 — cancels ALL)
-  if(mdUnk.val==='yes'){
-    showR('NO','UTD','UTD','MD/APN/PA — Unknown (Priority 1)','A physician, APN, or PA explicitly documented LKW as unknown/uncertain/unclear. <strong>This cancels all LKW/S/Sx documentation</strong> from nursing and EMS —column Priority 1.<br><br><span class="rule-tag">EXCEPTION CHECK</span> Verify: (a) Did the same MD later cross it out and document a specific time? (b) Is this stated as reason for no tPA on a CSF while another CSF entry has a specific time? If either applies, result may change to YES.');
-    return;
-  }
-  // RULE 2: Just prior to arrival
-  if(justprior){
-    showR('YES','[Arrival Date]','[Arrival Time]','"Just Prior to Arrival" Exception','The only Time LKW documented is a vague reference immediately before arrival with no specific time range. Use Arrival Time as Time LKW and Arrival Date as Date LKW. Last Known Well = Yes.');
-    return;
-  }
-  // RULE 3: CSF (Priority 2 column — beats all positive sources)
-  if(ht(csfT)){
-    const d=hd(csfD)?csfD:'[from CSF or associated documentation]';
-    const epiNote=episodes?'<br><br>🔄 Multiple episodes flag set — CSF time still takes precedence unless an MD explicitly documented unknown.':'';
-    showR('YES',d,csfT,'Code Stroke Form (CSF) — Priority 2','Code Stroke Form has a specific time. Per the abstraction rules, a CSF (Priority 2 column) time takes precedence over other documented LKW times when present.'+epiNote+'<br><br><span class="rule-tag">CSF EXCEPTION CHECK</span> Confirm no physician has explicitly documented LKW as unknown.');
-    return;
-  }
-  // RULE 4: MD LKW/Normal (Priority 3 col, Row 1)
-  if(ht(mdLkwT)){
-    const d=hd(mdLkwD)?mdLkwD:(hd(rnLkwD)?rnLkwD:'[confirm date]');
-    let multi='';
-    if(ht(rnLkwT)&&rnLkwT!==mdLkwT) multi='<br><br><span class="rule-tag">MULTIPLE TIMES</span> RN also documented LKW time ('+rnLkwT+'). MD time (Row Priority 1) takes precedence.';
-    showR('YES',d,mdLkwT,'MD — LKW/Normal (Priority 3, Row 1)','MD/APN/PA explicitly documented patient at baseline/LKW with a specific time. Row Priority 1. Last Known Well = Yes.'+multi);
-    return;
-  }
-  // RULE 5: RN LKW/Normal (Priority 3 col, Row 2) — no MD LKW
-  if(ht(rnLkwT)){
-    const d=hd(rnLkwD)?rnLkwD:'[confirm date]';
-    showR('YES',d,rnLkwT,'RN — LKW/Normal (Priority 3, Row 2)','No MD LKW time and no MD "unknown." Nursing documented LKW/Normal with a specific time. Use nursing LKW time. Last Known Well = Yes.<br><br><i class="ph-duotone ph-warning" style="color:#fbbf24;vertical-align:middle;"></i> Confirm no physician note conflicts with this — a conflicting physician time or "unknown" would change this result.');
-    return;
-  }
-  // RULE 6: MD S/Sx (Priority 4 col, Row 1)
-  if(ht(mdSxT)){
-    const d=hd(mdSxD)?mdSxD:'[confirm date]';
-    const epiNote=episodes?'<br><br>🔄 <strong>Multiple episodes with resolution:</strong> Use the most recent episode before arrival.':'';
-    showR('YES',d,mdSxT,'MD — S/Sx Only (Priority 4, fallback)','No explicit LKW/Normal documentation. Using symptom onset time from MD (Priority 4 column). Per spec, when only symptom onset is documented without an explicit LKW reference, use symptom onset time.'+epiNote);
-    return;
-  }
-  // RULE 7: RN S/Sx (Priority 4 col, Row 2) — lowest priority
-  if(ht(rnSxT)){
-    const d=hd(rnSxD)?rnSxD:'[confirm date]';
-    showR('YES',d,rnSxT,'RN — S/Sx Only (Priority 4, Row 2 — lowest)','No MD documentation of any kind. No CSF. Using nursing S/Sx onset time as last resort.<br><br><i class="ph-duotone ph-warning" style="color:#fbbf24;vertical-align:middle;"></i> <strong>Strongly verify</strong> there is truly no physician documentation or Code Stroke Form before relying on nursing S/Sx only.');
-    return;
-  }
-  // RULE 8: Nothing
-  showR('NO','UTD','UTD','No Documentation Found','No date or time of LKW, symptom onset, or baseline found in any source. Last Known Well = No, Date = UTD, Time = UTD.');
+  const input={
+    inhouse:document.getElementById('flag-inhouse').checked,
+    justprior:document.getElementById('flag-justprior').checked,
+    episodes:document.getElementById('flag-episodes').checked,
+    mdUnk:mdUnk.val,
+    mdSxD:gv('md-sx-date'),mdSxT:gv('md-sx-time'),
+    mdLkwD:gv('md-lkw-date'),mdLkwT:gv('md-lkw-time'),
+    rnSxD:gv('rn-sx-date'),rnSxT:gv('rn-sx-time'),
+    rnLkwD:gv('rn-lkw-date'),rnLkwT:gv('rn-lkw-time'),
+    csfD:gv('csf-date'),csfT:gv('csf-time')
+  };
+  const result=window.resolveLkw(input);
+  showR(result.yn,result.date,result.time,result.rule,result.rationale);
 }
 
 function showR(yn,d,t,rule,rat){
