@@ -191,14 +191,24 @@ describe('resolveTimeZero — auto branches', () => {
   });
 });
 
-describe('resolveTimeZero — preserved quirk (raw label embedding)', () => {
-  test('tzChecks text embeds the raw, unescaped event label', () => {
-    // LOCKS QUIRK 1 (sep1.js header): "tzChecks[].text embeds raw, unescaped event
-    // labels (no esc() call)." This is an XSS-class behavior preserved deliberately
-    // in T-08; it has its own future ticket and must NOT be silently escaped here.
+describe('resolveTimeZero — label escaping', () => {
+  test('tzChecks text HTML-escapes the event label', () => {
+    // T-25: what T-08 preserved as "LOCKS QUIRK 1" (tzChecks[].text embedding raw,
+    // unescaped event labels) is now fixed via escLabel() -- see sep1.js. This test
+    // used to assert the raw <b> survived verbatim; it now asserts it's escaped.
     const events = [ev('sirs', '10:00', 'HR <b>120</b>'), ev('od', '10:30', 'Lactate 3.4')];
     const r = resolveTimeZero(events, '', '');
-    assert.equal(r.tzChecks[0].text, 'SIRS criteria — "HR <b>120</b>" at 10:00');
+    assert.equal(r.tzChecks[0].text, 'SIRS criteria — "HR &lt;b&gt;120&lt;/b&gt;" at 10:00');
+  });
+
+  test('tzChecks text escapes a single quote in the event label', () => {
+    // Regression coverage for the entity this fix specifically added over a naive
+    // 4-entity escape (& < > "): site.js's esc() escapes ' too (closes F-01/F-18),
+    // and escLabel() mirrors that -- this is the case that would catch a regression
+    // back to the narrower entity set.
+    const events = [ev('sirs', '10:00', "Pt O'Brien febrile"), ev('od', '10:30', 'Lactate 3.4')];
+    const r = resolveTimeZero(events, '', '');
+    assert.equal(r.tzChecks[0].text, 'SIRS criteria — "Pt O&#39;Brien febrile" at 10:00');
   });
 });
 

@@ -7,11 +7,13 @@
    Extraction is behavior-neutral: resolveTimeZero() is a 1:1 transcription of
    build()'s former inline Time-Zero logic (sep1-tool.html lines 742, 745-771
    as of T-08), including pre-existing quirks that are intentionally NOT fixed
-   here -- tzChecks[].text embeds raw, unescaped event labels (no esc() call),
-   the SIRS/OD pairing loop takes the first array match within the 6-hour
-   window rather than the nearest match, and the OD-before-SIRS fallback
-   branch's label is applied unconditionally, not derived from actual
-   chronological order. See CHANGELOG/ARCHITECTURE for T-08. */
+   here -- the SIRS/OD pairing loop takes the first array match within the
+   6-hour window rather than the nearest match, and the OD-before-SIRS
+   fallback branch's label is applied unconditionally, not derived from
+   actual chronological order. (A third quirk, tzChecks[].text embedding raw
+   unescaped event labels, was preserved at extraction time but has since
+   been fixed -- see escLabel() below and T-25.) See CHANGELOG/ARCHITECTURE
+   for T-08. */
 
 const DETECT_RULES = [
   { type:'sirs', re:/(?:^|[\s,;:=\-–])(?:t|temp|temperature|tmax|fever|febrile|hypotherm)[\s:=]?\d|fever|\btemp\b|tmax\b|febrile|hypotherm|chills|\b(?:hr|heart.?rate|pulse|tachycard)[\s:=]?\d|\btachycard|\b(?:rr|resp.?rate|respirat|breathe|tachypnea)[\s:=]?\d|\btachypnea|\b(?:wbc|white.?blood|leukocyt|leukopenia|bandemia|band[s]?\s*[=%]?)[\s:=]?\d|\bleukocyt|\bleukopenia|\bbandemia/i },
@@ -35,6 +37,18 @@ function detectOrderVsCompleted(label, type) {
 function t2m(t){const [h,m]=t.split(':').map(Number);return h*60+m;}
 function m2t(m){const d=Math.floor(m/1440),r=((m%1440)+1440)%1440,h=Math.floor(r/60),mn=r%60;return `${String(h).padStart(2,'0')}:${String(mn).padStart(2,'0')}${d>0?` (+${d}d)`:''}`;}
 
+/* escLabel: intentionally duplicates site.js's esc() (same 5-entity escape:
+   & < > " ') rather than calling it. sep1.test.js requires this file in
+   isolation under node:test, where site.js (which only defines esc as a
+   classic-script global) is never loaded -- a bare esc() call here would
+   ReferenceError under require(). Named escLabel, not esc, so it doesn't
+   redeclare site.js's global esc when both load on sep1-tool.html (T-25). */
+function escLabel(s) {
+  s = (s === null || s === undefined) ? '' : String(s);
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
 function resolveTimeZero(validEvents, manualTz, manualSrc) {
   let tzMins,tzTime,tzSource,tzChecks=[],allSirsForDisplay=[];
   const sirsEvs=validEvents.filter(e=>e.type==='sirs'), odEvs=validEvents.filter(e=>e.type==='od');
@@ -50,14 +64,14 @@ function resolveTimeZero(validEvents, manualTz, manualSrc) {
     if (paired) {
       tzMins=paired.mins; tzTime=paired.time; tzSource='Auto-suggested';
       const gap=Math.abs(pairedOd.mins-paired.mins), gapStr=gap<60?`${gap} min`:`${Math.floor(gap/60)}h ${gap%60}m`;
-      tzChecks=[{ok:true,text:`SIRS criteria — "${paired.label}" at ${paired.time}`},{ok:true,text:`Organ dysfunction — "${pairedOd.label}" at ${pairedOd.time}`},{ok:true,text:`Events ${gapStr} apart — within 6-hour pairing window`},{ok:false,text:`Confirm alignment with provider documentation before submitting`}];
+      tzChecks=[{ok:true,text:`SIRS criteria — "${escLabel(paired.label)}" at ${paired.time}`},{ok:true,text:`Organ dysfunction — "${escLabel(pairedOd.label)}" at ${pairedOd.time}`},{ok:true,text:`Events ${gapStr} apart — within 6-hour pairing window`},{ok:false,text:`Confirm alignment with provider documentation before submitting`}];
     } else if (odEvs.length&&sirsEvs.length) {
       const eo=odEvs[0],fs=sirsEvs[0],gap=Math.abs(fs.mins-eo.mins),gapStr=gap<60?`${gap} min`:`${Math.floor(gap/60)}h ${gap%60}m`;
       tzMins=eo.mins; tzTime=eo.time; tzSource='Auto-suggested (OD before SIRS)';
-      tzChecks=[{ok:true,text:`Organ dysfunction — "${eo.label}" at ${eo.time}`},{ok:true,text:`SIRS criteria — "${fs.label}" at ${fs.time}`},{ok:true,text:`Events ${gapStr} apart — within pairing window`},{ok:false,text:`OD preceded SIRS — verify provider documentation`},{ok:false,text:`Confirm alignment with provider documentation before submitting`}];
+      tzChecks=[{ok:true,text:`Organ dysfunction — "${escLabel(eo.label)}" at ${eo.time}`},{ok:true,text:`SIRS criteria — "${escLabel(fs.label)}" at ${fs.time}`},{ok:true,text:`Events ${gapStr} apart — within pairing window`},{ok:false,text:`OD preceded SIRS — verify provider documentation`},{ok:false,text:`Confirm alignment with provider documentation before submitting`}];
     } else if (odEvs.length) {
       tzMins=odEvs[0].mins; tzTime=odEvs[0].time; tzSource='Fallback — organ dysfunction only (no SIRS entered)';
-      tzChecks=[{ok:false,text:`No SIRS criteria found — add SIRS events or enter Time Zero manually`},{ok:false,text:`Using earliest organ dysfunction: "${odEvs[0].label}" at ${odEvs[0].time}`}];
+      tzChecks=[{ok:false,text:`No SIRS criteria found — add SIRS events or enter Time Zero manually`},{ok:false,text:`Using earliest organ dysfunction: "${escLabel(odEvs[0].label)}" at ${odEvs[0].time}`}];
     } else {
       tzMins=validEvents[0].mins; tzTime=validEvents[0].time; tzSource='Fallback — insufficient data';
       tzChecks=[{ok:false,text:`Could not identify SIRS or organ dysfunction events`},{ok:false,text:`Add SIRS and organ dysfunction events, or enter Time Zero manually`}];
@@ -70,6 +84,6 @@ function resolveTimeZero(validEvents, manualTz, manualSrc) {
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     DETECT_RULES, ORDERED_FLAG, COMPLETED_FLAG,
-    detectType, detectOrderVsCompleted, t2m, m2t, resolveTimeZero,
+    detectType, detectOrderVsCompleted, t2m, m2t, escLabel, resolveTimeZero,
   };
 }
