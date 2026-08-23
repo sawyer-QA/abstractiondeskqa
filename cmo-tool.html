@@ -448,6 +448,7 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 </main>
 
 <script src="assets/site.js"></script>
+<script src="assets/spec-logic/cmo.js"></script>
 <script>
 
 // ── CLASSIFIER ──
@@ -462,75 +463,14 @@ document.getElementById('doc-grid').addEventListener('change', function(e){
 });
 
 function resolveClassifier(){
-  const prehosp = document.getElementById('flag-prehosp').checked;
-  const postbrain = document.getElementById('flag-postbrain').checked;
-  const conflict = document.getElementById('flag-conflict').checked;
-  const withdrawn = document.getElementById('flag-withdrawn').checked;
-
-  // RULE: CMO was withdrawn
-  if(withdrawn){
-    showCR('NO','CMO Rescinded','A CMO designation was documented but subsequently reversed or changed back to a full treatment plan during this admission. The exclusion does not apply when CMO was not the final care plan at time of discharge or death.<br><br><span class="rule-tag">VERIFY</span> Review the full order history and physician notes to confirm the rescission and its timing.');
-    return;
-  }
-
-  // RULE: Post-brain death only
-  if(postbrain){
-    showCR('NO','Post-Brain Death Only','CMO was documented only after a formal brain death declaration. The exclusion requires that CMO be established as the active care plan for a living patient during the admission — not as a procedural documentation step after death is pronounced.');
-    return;
-  }
-
-  // RULE: Conflicting documentation
-  if(conflict && !selectedDocs.has('md_order') && !selectedDocs.has('md_note')){
-    showCR('NO','Conflicting Documentation — No Clear LIP CMO Plan','Conflicting documentation is present and there is no explicit physician order or note establishing CMO as the plan. This case requires clinical review.');
-    return;
-  }
-
-  // RULE: Strongest — explicit MD order
-  if(selectedDocs.has('md_order')){
-    let rat = 'A physician, APN, or PA issued an explicit comfort measures only order — the strongest possible basis for this exclusion.<br><br><span class="rule-tag">VERIFY</span> Confirm the order was not subsequently rescinded and that no conflicting full-treatment orders were placed after it.';
-    if(conflict) rat += '<br><br><span class="rule-tag">⚠ FLAG</span> Conflicting documentation was noted. Review whether the CMO order was the active plan at time of death/discharge.';
-    showCR('YES','Physician CMO Order',rat);
-    return;
-  }
-
-  // RULE: MD note with CMO decision
-  if(selectedDocs.has('md_note')){
-    let rat = 'A physician progress note documents a goals-of-care discussion with a CMO decision.<br><br><span class="rule-tag">VERIFY</span> The note must document the <em>decision</em> — not merely that a discussion occurred. Phrases like "discussed goals of care" without an outcome documented are insufficient. Look for language such as "patient/family agreed to comfort measures only," "transitioned to CMO," or equivalent.';
-    if(conflict) rat += '<br><br><span class="rule-tag">⚠ FLAG</span> Conflicting documentation noted. Ensure the CMO decision in the note was the operative plan.';
-    showCR('YES','Physician Documentation of CMO Decision',rat);
-    return;
-  }
-
-  // RULE: POLST — needs to check which section
-  if(selectedDocs.has('polst')){
-    showCR('REVIEW','POLST Present — Verify Section','A POLST/MOST/MOLST is in the chart. This is a physician order, but you must verify which section is completed.<br><br>✓ <strong style="display:inline;">Comfort-Focused Treatment</strong> (or state equivalent) checked → Exclusion applies.<br>✗ <strong style="display:inline;">Full Treatment</strong> checked → Does NOT qualify.<br>✗ <strong style="display:inline;">Limited Interventions</strong> checked → Does NOT qualify.<br><br><span class="rule-tag">ACTION REQUIRED</span> Open the POLST form, identify which medical intervention option is checked, and rerun this classifier with that information.');
-    return;
-  }
-
-  // RULE: Hospice without accompanying CMO order/note
-  if(selectedDocs.has('hospice')){
-    showCR('REVIEW','Hospice Documentation — Verify CMO Order','Hospice enrollment or referral is documented. This strongly suggests CMO intent but is not sufficient alone.<br><br><span class="rule-tag">ACTION REQUIRED</span> Look for an accompanying physician order or note explicitly establishing CMO. If a physician order or CMO discussion note is also present, rerun with that selection added.<br><br>If only hospice documentation exists and no explicit CMO order or physician CMO note is present → the exclusion does not apply.');
-    return;
-  }
-
-  // RULE: Palliative care consult only
-  if(selectedDocs.has('palliative')){
-    showCR('NO','Palliative Consult Without Attending Adoption','A palliative care consult documented a CMO recommendation or plan. However, a consulting team recommendation does not establish CMO — the attending of record must adopt the plan via a corresponding order or documentation.<br><br><span class="rule-tag">CHECK</span> Is there an attending or covering physician note that adopts the CMO plan? If yes, rerun selecting "Physician Note — Discussion."');
-    return;
-  }
-
-  // RULE: Comfort care orders / DNR / family note / no qualifying doc
-  if(selectedDocs.has('comfort_only') || selectedDocs.has('dnr_only') || selectedDocs.has('family_note')){
-    let specifics = [];
-    if(selectedDocs.has('dnr_only')) specifics.push('A DNR/DNI order is present — code status limitation is not a CMO designation.');
-    if(selectedDocs.has('comfort_only')) specifics.push('Comfort care or symptom management orders are present — these are not the same as a CMO plan.');
-    if(selectedDocs.has('family_note')) specifics.push('A family/care conference note is present — without a physician order or LIP co-signature, this does not qualify.');
-    showCR('NO','No Qualifying Documentation',specifics.join('<br><br>')+'<br><br>None of the selected documentation meets the CMO exclusion criteria. A licensed independent practitioner (MD, DO, APN, or PA) must explicitly designate the patient as Comfort Measures Only via an order or progress note.');
-    return;
-  }
-
-  // Nothing selected
-  showCR('NO','No Documentation Selected','No CMO-related documentation was selected. If no relevant documentation is present in the chart, the exclusion does not apply.');
+  const r = resolveCmo({
+    docs: selectedDocs,
+    prehosp: document.getElementById('flag-prehosp').checked,
+    postbrain: document.getElementById('flag-postbrain').checked,
+    conflict: document.getElementById('flag-conflict').checked,
+    withdrawn: document.getElementById('flag-withdrawn').checked
+  });
+  showCR(r.val, r.basis, r.rationale);
 }
 
 function showCR(val, basis, rat){
