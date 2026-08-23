@@ -1002,6 +1002,7 @@ hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
   data-x_margin="18" data-y_margin="18"></script>
 
 <script src="assets/site.js"></script>
+<script src="assets/spec-logic/hbips.js"></script>
 <script>
 // ── HELP PANELS ──────────────────────────────────────────────────────────────
 function toggleHelp(id) {
@@ -1010,112 +1011,54 @@ function toggleHelp(id) {
 
 // ── DENOMINATOR — DATE + LEAVE DAYS ──────────────────────────────────────────
 function calcDenom() {
-  const a = document.getElementById('denomAdmit').value;
-  const d = document.getElementById('denomDisch').value;
-  const leaveVal = parseInt(document.getElementById('leaveDaysSimple').value) || 0;
   const res = document.getElementById('denomResult');
+  const r = resolveDenom({
+    admit: document.getElementById('denomAdmit').value,
+    disch: document.getElementById('denomDisch').value,
+    leave: document.getElementById('leaveDaysSimple').value
+  });
 
-  if (!a || !d) { res.classList.remove('visible'); return; }
-
-  const admit = new Date(a + 'T00:00:00');
-  const disch = new Date(d + 'T00:00:00');
-  if (disch <= admit) {
+  if (!r.ok) {
+    if (r.error === 'incomplete') { res.classList.remove('visible'); return; }
     res.className = 'result-box visible err';
-    res.innerHTML = 'Discharge date must be after admit date.';
+    res.innerHTML = r.message;
     return;
   }
 
-  const rawDays = Math.round((disch - admit) / 86400000);
-  const leaveDays = Math.max(0, Math.min(leaveVal, rawDays));
-  const netDays = rawDays - leaveDays;
-  const hours = netDays * 24;
-
-  let html = `<div class="result-row"><span class="result-key">Admit to discharge</span><span class="result-val">${rawDays} day${rawDays !== 1 ? 's' : ''}</span></div>`;
-  if (leaveDays > 0) html += `<div class="result-row"><span class="result-key">Leave days</span><span class="result-val">&minus; ${leaveDays} day${leaveDays !== 1 ? 's' : ''}</span></div>`;
-  html += `<div class="result-row net"><span class="result-key">Net inpatient days</span><span class="result-val">${netDays}</span></div>`;
-  html += `<div class="result-row net"><span class="result-key">Your inpatient hours</span><span class="result-val">${hours.toLocaleString()} hrs</span></div>`;
+  let html = `<div class="result-row"><span class="result-key">Admit to discharge</span><span class="result-val">${r.rawDays} day${r.rawDays !== 1 ? 's' : ''}</span></div>`;
+  if (r.leaveDays > 0) html += `<div class="result-row"><span class="result-key">Leave days</span><span class="result-val">&minus; ${r.leaveDays} day${r.leaveDays !== 1 ? 's' : ''}</span></div>`;
+  html += `<div class="result-row net"><span class="result-key">Net inpatient days</span><span class="result-val">${r.netDays}</span></div>`;
+  html += `<div class="result-row net"><span class="result-key">Your inpatient hours</span><span class="result-val">${r.hours.toLocaleString()} hrs</span></div>`;
   res.className = 'result-box visible';
   res.innerHTML = html;
 }
 
 // ── AGE / STRATA CALCULATOR ───────────────────────────────────────────────────
 function calcStrata() {
-  const dobVal   = document.getElementById('strataDoB').value;
-  const evVal    = document.getElementById('strataEvent').value;
-  const res      = document.getElementById('strataResult');
+  const res = document.getElementById('strataResult');
+  const r = resolveStrata({
+    dob: document.getElementById('strataDoB').value,
+    event: document.getElementById('strataEvent').value
+  });
 
-  if (!dobVal || !evVal) { res.classList.remove('visible'); return; }
-
-  const dob   = new Date(dobVal + 'T00:00:00');
-  const ev    = new Date(evVal  + 'T00:00:00');
-
-  if (isNaN(dob) || isNaN(ev)) {
+  if (!r.ok) {
+    if (r.error === 'incomplete') { res.classList.remove('visible'); return; }
     res.className = 'result-box visible err';
-    res.innerHTML = 'Enter valid dates for both fields.';
+    res.innerHTML = r.message;
     return;
   }
-  if (ev < dob) {
-    res.className = 'result-box visible err';
-    res.innerHTML = 'Event date cannot be before date of birth.';
-    return;
-  }
-
-  // Precise age — handles leap-day birthdays
-  let age = ev.getFullYear() - dob.getFullYear();
-  const evMD  = ev.getMonth()  * 100 + ev.getDate();
-  const dobMD = dob.getMonth() * 100 + dob.getDate();
-
-  // Feb 29 birthday in non-leap year → treat as Feb 28
-  let effectiveDobMD = dobMD;
-  if (dob.getMonth() === 1 && dob.getDate() === 29) {
-    const evYear = ev.getFullYear();
-    const isLeap = (evYear % 4 === 0 && (evYear % 100 !== 0 || evYear % 400 === 0));
-    if (!isLeap) effectiveDobMD = 1 * 100 + 28;
-  }
-  if (evMD < effectiveDobMD) age--;
-
-  // Strata assignment
-  let strata, strataLabel, measures, strataColor, excluded = false;
-  if (age < 0) {
-    res.className = 'result-box visible err';
-    res.innerHTML = 'Event date is before date of birth.';
-    return;
-  } else if (age === 0) {
-    excluded = true;
-    strata = null; strataLabel = 'Age 0 — Excluded';
-    measures = 'Not in measure population. Set Reject Case Flag = Yes.';
-    strataColor = 'var(--red)';
-  } else if (age <= 12) {
-    strata = 'B'; strataLabel = 'Strata B · Age 1–12 · Children';
-    measures = 'HBIPS-2b &nbsp;/&nbsp; HBIPS-3b';
-    strataColor = '#1a4090';
-  } else if (age <= 17) {
-    strata = 'C'; strataLabel = 'Strata C · Age 13–17 · Adolescents';
-    measures = 'HBIPS-2c &nbsp;/&nbsp; HBIPS-3c';
-    strataColor = '#5b21b6';
-  } else if (age <= 64) {
-    strata = 'D'; strataLabel = 'Strata D · Age 18–64 · Adults';
-    measures = 'HBIPS-2d &nbsp;/&nbsp; HBIPS-3d';
-    strataColor = 'var(--green)';
-  } else {
-    strata = 'E'; strataLabel = 'Strata E · Age ≥65 · Older Adults';
-    measures = 'HBIPS-2e &nbsp;/&nbsp; HBIPS-3e';
-    strataColor = 'var(--amber)';
-  }
-
-  const isBirthday = (evMD === dobMD || (dobMD === 229 && evMD === 228));
 
   let html = `
-    <div class="result-row"><span class="result-key">Age at event date</span><span class="result-val" style="color:${strataColor};">${age} yr${age !== 1 ? 's' : ''}</span></div>
-    <div class="result-row net"><span class="result-key">${strataLabel}</span><span class="result-val" style="color:${strataColor};">${strata ? strata : '—'}</span></div>
-    <div class="result-row"><span class="result-key">Applies to</span><span class="result-val" style="font-size:13px;">${measures}</span></div>`;
+    <div class="result-row"><span class="result-key">Age at event date</span><span class="result-val" style="color:${r.strataColor};">${r.age} yr${r.age !== 1 ? 's' : ''}</span></div>
+    <div class="result-row net"><span class="result-key">${r.strataLabel}</span><span class="result-val" style="color:${r.strataColor};">${r.strata ? r.strata : '—'}</span></div>
+    <div class="result-row"><span class="result-key">Applies to</span><span class="result-val" style="font-size:13px;">${r.measures}</span></div>`;
 
-  if (isBirthday && !excluded) {
+  if (r.isBirthday && !r.excluded) {
     html += `<div style="margin-top:10px;font-size:12px;padding:8px 12px;background:var(--amber-bg);border:1px solid var(--amber-border);border-radius:6px;color:var(--amber);">
-      <strong>Today is this patient's birthday.</strong> Age has been updated to ${age} as of the event date — strata assignment reflects the new age.
+      <strong>Today is this patient's birthday.</strong> Age has been updated to ${r.age} as of the event date — strata assignment reflects the new age.
     </div>`;
   }
-  if (excluded) {
+  if (r.excluded) {
     html += `<div style="margin-top:10px;font-size:12px;padding:8px 12px;background:var(--red-bg);border:1px solid var(--red-border);border-radius:6px;color:var(--red);">
       <strong>Age 0 — not in measure population.</strong> Set Reject Case Flag = Yes.
     </div>`;
@@ -1128,59 +1071,32 @@ function calcStrata() {
 // ── DURATION CALCULATOR ───────────────────────────────────────────────────────
 let lastDurMins = 0;
 
-function parseMilitary(str) {
-  const s = str.trim().replace(/\D/g, '');
-  if (s.length !== 4) return null;
-  const h = parseInt(s.slice(0, 2));
-  const m = parseInt(s.slice(2));
-  if (h > 23 || m > 59) return null;
-  return h * 60 + m;
-}
-
-function fmtMilitary(totalMins) {
-  const h = Math.floor(totalMins / 60) % 24;
-  const m = totalMins % 60;
-  const ampm = h < 12 ? 'AM' : 'PM';
-  const h12 = h % 12 === 0 ? 12 : h % 12;
-  return `${String(h).padStart(2,'0')}${String(m).padStart(2,'0')} (${h12}:${String(m).padStart(2,'0')} ${ampm})`;
-}
-
 function calcDuration() {
-  const startStr = document.getElementById('durStart').value;
-  const endStr   = document.getElementById('durEnd').value;
-  const res      = document.getElementById('durResult');
-  const btns     = document.getElementById('durAddBtns');
+  const res  = document.getElementById('durResult');
+  const btns = document.getElementById('durAddBtns');
+  const r = resolveDuration({
+    start: document.getElementById('durStart').value,
+    end:   document.getElementById('durEnd').value
+  });
 
-  if (!startStr || !endStr || startStr.length < 4 || endStr.length < 4) {
-    res.classList.remove('visible');
-    btns.style.display = 'none';
-    return;
-  }
-
-  const startMins = parseMilitary(startStr);
-  const endMins   = parseMilitary(endStr);
-
-  if (startMins === null || endMins === null) {
+  if (!r.ok) {
+    if (r.error === 'incomplete') {
+      res.classList.remove('visible');
+      btns.style.display = 'none';
+      return;
+    }
     res.className = 'result-box visible err';
-    res.innerHTML = 'Enter valid military time — 4 digits, hours 00–23, minutes 00–59.';
+    res.innerHTML = r.message;
     btns.style.display = 'none';
     return;
   }
 
-  let diff = endMins - startMins;
-  let crossedMidnight = false;
-  if (diff <= 0) {
-    // End time is next day
-    diff += 24 * 60;
-    crossedMidnight = true;
-  }
+  lastDurMins = r.diff;
 
-  lastDurMins = diff;
-
-  let html = `<div class="result-row"><span class="result-key">Start</span><span class="result-val">${fmtMilitary(startMins)}</span></div>`;
-  html += `<div class="result-row"><span class="result-key">End</span><span class="result-val">${fmtMilitary(endMins)}${crossedMidnight ? ' <span style="font-size:11px;color:var(--amber);font-family:var(--body);font-weight:700;">+1 day</span>' : ''}</span></div>`;
-  html += `<div class="result-row net"><span class="result-key">Duration</span><span class="result-val">${diff} min</span></div>`;
-  if (crossedMidnight) {
+  let html = `<div class="result-row"><span class="result-key">Start</span><span class="result-val">${r.startLabel}</span></div>`;
+  html += `<div class="result-row"><span class="result-key">End</span><span class="result-val">${r.endLabel}${r.crossedMidnight ? ' <span style="font-size:11px;color:var(--amber);font-family:var(--body);font-weight:700;">+1 day</span>' : ''}</span></div>`;
+  html += `<div class="result-row net"><span class="result-key">Duration</span><span class="result-val">${r.diff} min</span></div>`;
+  if (r.crossedMidnight) {
     html += `<div style="margin-top:8px;font-size:12px;color:var(--amber);padding:7px 10px;background:var(--amber-bg);border-radius:6px;border:1px solid var(--amber-border);">
       <strong>Crosses midnight.</strong> Per spec, abstract as two separate events — one for each date. Use this calculator once per date segment.
     </div>`;
@@ -1258,34 +1174,27 @@ function removeEpisode(btn, type) {
 }
 
 function getEpisodeTotal(cls) {
-  let total = 0, count = 0;
-  document.querySelectorAll('.' + cls).forEach(inp => {
-    const v = parseFloat(inp.value);
-    if (!isNaN(v) && v > 0) { total += v; count++; }
-  });
-  return { total, count };
+  const vals = [];
+  document.querySelectorAll('.' + cls).forEach(inp => vals.push(inp.value));
+  return resolveEpisodes(vals);
 }
 
-function renderEpisodeResult(resultId, type, mins, count) {
+function renderEpisodeResult(resultId, type, r) {
   const res = document.getElementById(resultId);
-  if (mins === 0) { res.classList.remove('visible'); return; }
-  const hrs = Math.ceil(mins / 60);
-  const exact = (mins / 60).toFixed(4);
+  if (r.empty) { res.classList.remove('visible'); return; }
   res.className = 'result-box visible';
   res.innerHTML = `
-    <div class="result-row"><span class="result-key">${count} episode${count !== 1 ? 's' : ''} — total minutes</span><span class="result-val">${mins} min</span></div>
-    <div class="result-row"><span class="result-key">Exact hours</span><span class="result-val">${exact}</span></div>
-    <div class="result-row net"><span class="result-key">Hours (rounded up)</span><span class="result-val">${hrs} hr</span></div>`;
+    <div class="result-row"><span class="result-key">${r.count} episode${r.count !== 1 ? 's' : ''} — total minutes</span><span class="result-val">${r.total} min</span></div>
+    <div class="result-row"><span class="result-key">Exact hours</span><span class="result-val">${r.exact}</span></div>
+    <div class="result-row net"><span class="result-key">Hours (rounded up)</span><span class="result-val">${r.hours} hr</span></div>`;
 }
 
 function calcRestraint() {
-  const { total, count } = getEpisodeTotal('restraint-min');
-  renderEpisodeResult('restraintResult', 'restraint', total, count);
+  renderEpisodeResult('restraintResult', 'restraint', getEpisodeTotal('restraint-min'));
 }
 
 function calcSeclusion() {
-  const { total, count } = getEpisodeTotal('seclusion-min');
-  renderEpisodeResult('seclusionResult', 'seclusion', total, count);
+  renderEpisodeResult('seclusionResult', 'seclusion', getEpisodeTotal('seclusion-min'));
 }
 
 // ── CONVERTER (kept for any legacy references) ────────────────────────────────
