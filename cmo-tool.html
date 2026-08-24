@@ -78,6 +78,11 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
 .flag-checkbox{width:15px;height:15px;margin-top:2px;}
 .flag-checkbox--exclude{accent-color:var(--red);}
 .flag-checkbox--caution{accent-color:var(--amber);}
+.prehosp-sub{margin:2px 0 2px 24px;padding:10px 12px;border:1px solid var(--border);border-left:3px solid var(--amber);border-radius:6px;background:var(--bg3);}
+.prehosp-sub legend{font-size:12px;font-weight:700;padding:0 4px;}
+.prehosp-opts{display:flex;gap:16px;margin-top:8px;}
+.prehosp-opt{display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;}
+.prehosp-radio{width:15px;height:15px;accent-color:var(--amber);}
 .gq-prompt{font-weight:600;margin:12px 0 10px;}
 .gq-prompt--first{margin:0 0 12px;}
 .gq-answers{display:flex;gap:8px;flex-wrap:wrap;}
@@ -284,6 +289,7 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
     <div class="card-label">Step 2 — Timing Flags</div>
     <div class="flag-list">
       <label class="flag-label"><input type="checkbox" id="flag-prehosp" class="flag-checkbox flag-checkbox--caution"/><span><strong>Pre-hospital CMO</strong> — CMO was established before this hospital encounter (e.g., existing POLST from prior admission or outpatient setting)</span></label>
+      <fieldset class="prehosp-sub hidden" id="prehosp-access"><legend>Was the pre-hospital CMO documentation available to the treating LIP during this encounter?</legend><div class="prehosp-opts"><label class="prehosp-opt"><input type="radio" name="prehosp-access" id="prehosp-access-yes" value="yes" class="prehosp-radio"/><span>Yes</span></label><label class="prehosp-opt"><input type="radio" name="prehosp-access" id="prehosp-access-no" value="no" class="prehosp-radio"/><span>No</span></label></div></fieldset>
       <label class="flag-label"><input type="checkbox" id="flag-postbrain" class="flag-checkbox flag-checkbox--exclude"/><span><strong>After brain death declaration</strong> — CMO documented only after formal brain death determination</span></label>
       <label class="flag-label"><input type="checkbox" id="flag-conflict" class="flag-checkbox flag-checkbox--exclude"/><span><strong>Conflicting documentation</strong> — CMO is documented but aggressive treatment continues (e.g., full code status maintained alongside comfort note)</span></label>
       <label class="flag-label"><input type="checkbox" id="flag-withdrawn" class="flag-checkbox flag-checkbox--caution"/><span><strong>CMO later rescinded</strong> — CMO was ordered but subsequently reversed or updated to full treatment during this admission</span></label>
@@ -462,10 +468,21 @@ document.getElementById('doc-grid').addEventListener('change', function(e){
   else{selectedDocs.delete(key);card.classList.remove('selected');}
 });
 
+// Reveal the LIP-accessibility sub-question only when Pre-hospital CMO is checked.
+document.getElementById('flag-prehosp').addEventListener('change', function(){
+  const sub = document.getElementById('prehosp-access');
+  sub.classList.toggle('hidden', !this.checked);
+  if(!this.checked){
+    document.getElementById('prehosp-access-yes').checked = false;
+    document.getElementById('prehosp-access-no').checked = false;
+  }
+});
+
 function resolveClassifier(){
   const r = resolveCmo({
     docs: selectedDocs,
     prehosp: document.getElementById('flag-prehosp').checked,
+    prehospAccess: document.getElementById('prehosp-access-yes').checked ? 'yes' : (document.getElementById('prehosp-access-no').checked ? 'no' : ''),
     postbrain: document.getElementById('flag-postbrain').checked,
     conflict: document.getElementById('flag-conflict').checked,
     withdrawn: document.getElementById('flag-withdrawn').checked
@@ -490,6 +507,9 @@ function clearClassifier(){
   document.querySelectorAll('.doc-type-btn').forEach(b=>b.classList.remove('selected'));
   document.querySelectorAll('#doc-grid input[type="checkbox"]').forEach(i=>i.checked=false);
   ['flag-prehosp','flag-postbrain','flag-conflict','flag-withdrawn'].forEach(id=>document.getElementById(id).checked=false);
+  document.getElementById('prehosp-access-yes').checked = false;
+  document.getElementById('prehosp-access-no').checked = false;
+  document.getElementById('prehosp-access').classList.add('hidden');
   const box = document.getElementById('classifier-result');
   box.classList.remove('show');
   box.style.display = 'none';
