@@ -309,7 +309,7 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
         <tr class="row-md">
           <td class="unk-cell"><span class="who-pill pill-md">MD</span></td>
           <td class="unk-cell"><span class="pri-badge pri-2 pri-badge--lg">1</span></td>
-          <td class="unk-cell"><div class="unk-toggle"><button type="button" class="unk-btn" id="md-unk-yes" onclick="toggleUnk('yes')">Yes</button><button type="button" class="unk-btn" id="md-unk-no" onclick="toggleUnk('no')">No</button></div></td>
+          <td class="unk-cell"><div class="unk-toggle"><button type="button" class="unk-btn" id="md-unk-yes" data-act="toggle-unk" data-val="yes">Yes</button><button type="button" class="unk-btn" id="md-unk-no" data-act="toggle-unk" data-val="no">No</button></div></td>
           <td class="unk-cell"><span class="grid-note">See RN row</span></td>
           <td><div class="cell-input-wrap"><input class="gdate" id="md-lkw-date" type="text" placeholder="MM-DD-YYYY"/><input class="gtime" id="md-lkw-time" type="text" placeholder="HH:MM"/></div></td>
           <td><div class="cell-input-wrap"><input class="gdate" id="md-sx-date" type="text" placeholder="MM-DD-YYYY"/><input class="gtime" id="md-sx-time" type="text" placeholder="HH:MM"/></div></td>
@@ -336,7 +336,7 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
     <div class="cx warn hidden cx--top-spaced" id="epi-note"><span class="cx-icon"><i class="ph-duotone ph-warning"></i></span><div><strong>Use Most Recent Episode</strong>When symptoms occurred, resolved, then recurred — use the time of the <strong>most recent episode</strong> before arrival. Not the first. Only applies when resolution is explicitly documented between episodes.</div></div>
   </div>
 
-  <button type="button" class="resolve-btn" onclick="resolveGrid()">Resolve → Determine LKW Abstraction Values</button>
+  <button type="button" class="resolve-btn" data-act="resolve">Resolve → Determine LKW Abstraction Values</button>
 
   <div class="result-box" id="grid-result">
     <div class="card-label">Abstraction Result</div>
@@ -347,7 +347,7 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
       <div><div class="res-field-label">Rule Applied</div><div class="res-val plain res-val--wrap" id="r-rule"></div></div>
     </div>
     <div class="res-rule" id="r-rationale"></div>
-    <div class="btn-row"><button type="button" class="btn" onclick="window.print()"><i class="ph ph-printer btn-icon"></i>Print</button><button type="button" class="btn ghost" onclick="clearGrid()">↩ Clear</button></div>
+    <div class="btn-row"><button type="button" class="btn" data-act="print"><i class="ph ph-printer btn-icon"></i>Print</button><button type="button" class="btn ghost" data-act="clear">↩ Clear</button></div>
   </div>
 </div>
 
@@ -358,35 +358,35 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
   <div class="card" id="gq1">
     <div class="card-label">Step 1 — Stroke Timing</div>
     <div class="gq-prompt gq-prompt--first">Did LKW / stroke signs first occur <em>after</em> hospital arrival?</div>
-    <div class="gq-answers"><button type="button" class="btn" onclick="gAns(1,'inhouse')">Yes — in-house stroke</button><button type="button" class="btn ghost" onclick="gAns(1,'pre')">No — occurred before arrival</button></div>
+    <div class="gq-answers"><button type="button" class="btn" data-act="g-ans" data-step="1" data-val="inhouse">Yes — in-house stroke</button><button type="button" class="btn ghost" data-act="g-ans" data-step="1" data-val="pre">No — occurred before arrival</button></div>
   </div>
   <div class="card hidden" id="gq2">
     <div class="card-label">Step 2 — Documentation Exists?</div>
     <div class="cx warn"><span class="cx-icon"><i class="ph-duotone ph-warning"></i></span><div><strong>S/Sx ≠ LKW</strong>Symptom onset and Last Known Well are different. Prefer explicit LKW documentation. Only fall back to symptom onset if no LKW time is documented anywhere.</div></div>
     <div class="gq-prompt">Is there any documentation of date/time LKW or at baseline prior to arrival?</div>
-    <div class="gq-answers"><button type="button" class="btn" onclick="gAns(2,'yes')">Yes</button><button type="button" class="btn ghost" onclick="gAns(2,'no')">No documentation at all</button></div>
+    <div class="gq-answers"><button type="button" class="btn" data-act="g-ans" data-step="2" data-val="yes">Yes</button><button type="button" class="btn ghost" data-act="g-ans" data-step="2" data-val="no">No documentation at all</button></div>
   </div>
   <div class="card hidden" id="gq3">
     <div class="card-label">Step 3 — MD Documents Unknown?</div>
     <div class="cx danger"><span class="cx-icon"><i class="ph-duotone ph-warning-octagon"></i></span><div><strong>Priority 1 — MD Unknown cancels everything</strong>Any MD/APN/PA explicitly documenting "unknown/uncertain/unclear" cancels all nursing, EMS, and S/Sx times → NO.<br><br>Exceptions: (a) same MD corrects it later with a specific time, OR (b) stated as reason for no tPA on CSF and another part of record has a specific time.</div></div>
     <div class="gq-prompt">Does any MD/APN/PA explicitly document LKW as unknown, uncertain, or unclear?</div>
-    <div class="gq-answers"><button type="button" class="btn" onclick="gAns(3,'yes')">Yes — MD says unknown</button><button type="button" class="btn ghost" onclick="gAns(3,'no')">No</button></div>
+    <div class="gq-answers"><button type="button" class="btn" data-act="g-ans" data-step="3" data-val="yes">Yes — MD says unknown</button><button type="button" class="btn ghost" data-act="g-ans" data-step="3" data-val="no">No</button></div>
   </div>
   <div class="card hidden" id="gq4">
     <div class="card-label">Step 4 — Best Source</div>
     <div class="cx tip"><span class="cx-icon"><i class="ph-duotone ph-clipboard-text"></i></span><div><strong>Column priority</strong>Code Stroke Form (Priority 2) → MD LKW/Normal (Priority 3) → RN LKW/Normal (Priority 3, Row 2) → MD S/Sx (Priority 4) → RN S/Sx (Priority 4, Row 2)</div></div>
     <div class="gq-prompt">What is the highest-priority source with a documented date/time?</div>
-    <div class="gq-answers"><button type="button" class="btn" onclick="gAns(4,'csf')">Code Stroke Form</button><button type="button" class="btn ghost" onclick="gAns(4,'md')">MD/APN/PA note</button><button type="button" class="btn ghost" onclick="gAns(4,'rn')">Nursing / EMS only</button></div>
+    <div class="gq-answers"><button type="button" class="btn" data-act="g-ans" data-step="4" data-val="csf">Code Stroke Form</button><button type="button" class="btn ghost" data-act="g-ans" data-step="4" data-val="md">MD/APN/PA note</button><button type="button" class="btn ghost" data-act="g-ans" data-step="4" data-val="rn">Nursing / EMS only</button></div>
   </div>
   <div class="card hidden" id="gq5">
     <div class="card-label">Step 5 — Multiple Times?</div>
     <div class="cx warn"><span class="cx-icon"><i class="ph-duotone ph-warning"></i></span><div><strong>Resolution rules</strong><ul class="cx-list"><li>CSF specific time → wins</li><li>Multiple MD times (no CSF) → use <strong>earliest</strong></li><li>Multiple episodes with resolution → use <strong>most recent</strong> episode</li><li>Date LKW multiple dates → use <strong>earliest</strong></li></ul></div></div>
     <div class="gq-prompt">Are multiple conflicting times documented?</div>
     <div class="gq-answers">
-      <button type="button" class="btn ghost" onclick="gAns(5,'single')">No — single time</button>
-      <button type="button" class="btn ghost" onclick="gAns(5,'csf')">Yes — CSF has specific time</button>
-      <button type="button" class="btn ghost" onclick="gAns(5,'mdmulti')">Yes — multiple MD times</button>
-      <button type="button" class="btn ghost" onclick="gAns(5,'episodes')">Yes — multiple episodes with resolution</button>
+      <button type="button" class="btn ghost" data-act="g-ans" data-step="5" data-val="single">No — single time</button>
+      <button type="button" class="btn ghost" data-act="g-ans" data-step="5" data-val="csf">Yes — CSF has specific time</button>
+      <button type="button" class="btn ghost" data-act="g-ans" data-step="5" data-val="mdmulti">Yes — multiple MD times</button>
+      <button type="button" class="btn ghost" data-act="g-ans" data-step="5" data-val="episodes">Yes — multiple episodes with resolution</button>
     </div>
   </div>
   <div class="result-box hidden" id="guided-result">
@@ -397,7 +397,7 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
       <div><div class="res-field-label">Time LKW</div><div class="res-val plain" id="gr-time">—</div></div>
     </div>
     <div class="res-rule" id="gr-rat"></div>
-    <div class="btn-row"><button type="button" class="btn" onclick="window.print()"><i class="ph ph-printer btn-icon"></i>Print</button><button type="button" class="btn ghost" onclick="resetGuided()">↩ Start Over</button></div>
+    <div class="btn-row"><button type="button" class="btn" data-act="print"><i class="ph ph-printer btn-icon"></i>Print</button><button type="button" class="btn ghost" data-act="reset-guided">↩ Start Over</button></div>
   </div>
 </div>
 
@@ -487,7 +487,7 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
   <h2 class="sh">Practice Quiz</h2>
   <p class="ss">10 scenario-based questions covering every major LKW rule.</p>
   <div class="quiz-mode-row">
-    <button type="button" class="qmode-btn on" id="qm-mc" onclick="setQMode('mc')">Multiple Choice</button>
+    <button type="button" class="qmode-btn on" id="qm-mc" data-act="set-qmode" data-val="mc">Multiple Choice</button>
   </div>
   <div id="quiz-mc">
     <div class="q-prog-wrap">
@@ -507,7 +507,7 @@ main{max-width:1000px;margin:0 auto;padding:24px 20px;position:relative;z-index:
     <div class="case-grid" id="case-card-grid"></div>
   </div>
   <div id="case-runner" class="hidden">
-    <button type="button" class="btn ghost btn-back" onclick="backToCases()">← Back to Cases</button>
+    <button type="button" class="btn ghost btn-back" data-act="cases">← Back to Cases</button>
     <div class="wt-dots" id="case-dots"></div>
     <div id="case-step-body"></div>
   </div>
@@ -582,7 +582,7 @@ function gAns(q,val){
       b.style.background='';
       b.style.color='';
     });
-    const clicked=card.querySelector('[onclick*="\''+val+'\'"]');
+    const clicked=card.querySelector('[data-val="'+val+'"]');
     if(clicked){
       clicked.style.borderColor='var(--teal)';
       clicked.style.background='var(--teal-dim)';
@@ -662,13 +662,13 @@ function renderQ(){
   document.getElementById('quiz-card-body').innerHTML=`
     <div class="q-tags">${q.tags.map(t=>`<span class="qtag">${t}</span>`).join('')}</div>
     <div class="scenario-box"><span class="slabel"><i class="ph-duotone ph-file-text" style="vertical-align:middle;margin-right:4px;color:#fbbf24;"></i>Clinical Scenario</span>${q.sc}</div>
-    <div class="q-opts">${q.opts.map((o,i)=>`<button type="button" class="q-opt" onclick="ansQ(${i},this)">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}</div>
+    <div class="q-opts">${q.opts.map((o,i)=>`<button type="button" class="q-opt" data-act="ans-q" data-idx="${i}">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}</div>
     <div class="q-feedback" id="qfb"></div>
-    <div style="margin-top:10px;"><button type="button" class="btn" id="qnext" onclick="nextQ()" style="display:none;">Next →</button></div>`;
+    <div style="margin-top:10px;"><button type="button" class="btn" id="qnext" data-act="next-q" style="display:none;">Next →</button></div>`;
 }
 function ansQ(i,btn){
   const q=Qs[curQ];answered++;
-  document.querySelectorAll('.q-opt').forEach(b=>b.onclick=null);
+  document.querySelectorAll('.q-opt').forEach(b=>b.removeAttribute('data-act'));
   document.querySelectorAll('.q-opt').forEach((b,j)=>{if(j===q.correct)b.classList.add('correct');});
   const fb=document.getElementById('qfb');
   if(i===q.correct){score++;btn.classList.add('correct');fb.className='q-feedback correct show';fb.innerHTML=`<i class="ph-duotone ph-check-circle" style="color:#4ade80;vertical-align:middle;margin-right:4px;"></i> <strong>Correct!</strong> ${q.fb}`;}
@@ -679,7 +679,7 @@ function ansQ(i,btn){
 function nextQ(){curQ++;renderQ();}
 function showQComplete(){
   const pct=Math.round(score/Qs.length*100);
-  document.getElementById('quiz-card-body').innerHTML=`<div style="text-align:center;padding:20px 0"><div style="font-size:52px;font-weight:700;font-family:var(--mono);color:${pct>=80?'var(--green)':pct>=60?'var(--amber)':'var(--red)'};">${pct}%</div><div style="font-size:16px;font-weight:700;margin:8px 0;">${score} / ${Qs.length} correct</div><div style="font-size:13px;color:var(--muted);margin-bottom:20px;">${pct>=80?'Strong command of LKW rules.':pct>=60?'Good. Review the rules that tripped you up.':'Recommend reviewing the Resolution Grid and Quick Reference before live abstraction.'}</div><button type="button" class="btn" onclick="initQuiz()">Try Again</button></div>`;
+  document.getElementById('quiz-card-body').innerHTML=`<div style="text-align:center;padding:20px 0"><div style="font-size:52px;font-weight:700;font-family:var(--mono);color:${pct>=80?'var(--green)':pct>=60?'var(--amber)':'var(--red)'};">${pct}%</div><div style="font-size:16px;font-weight:700;margin:8px 0;">${score} / ${Qs.length} correct</div><div style="font-size:13px;color:var(--muted);margin-bottom:20px;">${pct>=80?'Strong command of LKW rules.':pct>=60?'Good. Review the rules that tripped you up.':'Recommend reviewing the Resolution Grid and Quick Reference before live abstraction.'}</div><button type="button" class="btn" data-act="init-quiz">Try Again</button></div>`;
 }
 function setQMode(m){
   document.getElementById('qm-mc').className='qmode-btn'+(m==='mc'?' on':'');
@@ -711,7 +711,7 @@ const CASES=[
 ];
 function renderCaseCards(){
   document.getElementById('case-card-grid').innerHTML=CASES.map((c,i)=>`
-    <div class="case-card" onclick="startCase(${i})" role="button" tabindex="0">
+    <div class="case-card" data-act="start-case" data-idx="${i}" role="button" tabindex="0">
       <h3>${c.title}</h3><p>${c.summary}</p>
       <span class="diff-pill diff-${c.diff}">${c.diff==='int'?'Intermediate':'Advanced'}</span>
       <div style="margin-top:12px;"><button type="button" class="btn">Start →</button></div>
@@ -731,12 +731,12 @@ function renderCaseStep(){
   };
   let html='';
   if(s.type==='chart'){
-    html=`<div class="card"><div class="card-label">Step ${caseStep+1} of ${steps.length} — Chart Documentation</div><div class="chart-box"><span class="clabel"><i class="ph-duotone ph-file-text" style="vertical-align:middle;margin-right:4px;color:#fbbf24;"></i>Chart Excerpt</span>${s.content}</div><div class="btn-row"><button type="button" class="btn" onclick="caseNext()">Continue →</button></div></div>`;
+    html=`<div class="card"><div class="card-label">Step ${caseStep+1} of ${steps.length} — Chart Documentation</div><div class="chart-box"><span class="clabel"><i class="ph-duotone ph-file-text" style="vertical-align:middle;margin-right:4px;color:#fbbf24;"></i>Chart Excerpt</span>${s.content}</div><div class="btn-row"><button type="button" class="btn" data-act="case-next">Continue →</button></div></div>`;
   }else if(s.type==='step'){
-    html=`<div class="card"><div class="card-label">Step ${caseStep+1} of ${steps.length} — ${s.label}</div><div style="font-size:13.5px;color:#c4d8ec;line-height:1.7;margin-bottom:10px;">${s.content}</div><div class="cx ${s.cx}"><span class="cx-icon">${icons[s.cx]}</span><div>${s.cxt}</div></div><div class="btn-row"><button type="button" class="btn ghost" onclick="casePrev()">← Back</button><button type="button" class="btn" onclick="caseNext()">Continue →</button></div></div>`;
+    html=`<div class="card"><div class="card-label">Step ${caseStep+1} of ${steps.length} — ${s.label}</div><div style="font-size:13.5px;color:#c4d8ec;line-height:1.7;margin-bottom:10px;">${s.content}</div><div class="cx ${s.cx}"><span class="cx-icon">${icons[s.cx]}</span><div>${s.cxt}</div></div><div class="btn-row"><button type="button" class="btn ghost" data-act="case-prev">← Back</button><button type="button" class="btn" data-act="case-next">Continue →</button></div></div>`;
   }else if(s.type==='result'){
     const yn=s.yn==='YES';
-    html=`<div class="card"><div class="card-label">Step ${caseStep+1} of ${steps.length} — Final Abstraction</div><div class="res-fields" style="margin-bottom:14px;"><div><div class="res-field-label">LKW Y/N</div><div class="res-val ${yn?'yes':'no'}">${s.yn}</div></div><div><div class="res-field-label">Date LKW</div><div class="res-val plain">${s.date}</div></div><div><div class="res-field-label">Time LKW</div><div class="res-val plain">${s.time}</div></div></div><div class="cx ok"><span class="cx-icon"><i class="ph-duotone ph-check-circle" style="font-size:18px;color:#4ade80;"></i></span><div><strong>Rationale</strong>${s.rat}</div></div><div class="btn-row"><button type="button" class="btn ghost" onclick="casePrev()">← Back</button><button type="button" class="btn" onclick="backToCases()">← All Cases</button></div></div>`;
+    html=`<div class="card"><div class="card-label">Step ${caseStep+1} of ${steps.length} — Final Abstraction</div><div class="res-fields" style="margin-bottom:14px;"><div><div class="res-field-label">LKW Y/N</div><div class="res-val ${yn?'yes':'no'}">${s.yn}</div></div><div><div class="res-field-label">Date LKW</div><div class="res-val plain">${s.date}</div></div><div><div class="res-field-label">Time LKW</div><div class="res-val plain">${s.time}</div></div></div><div class="cx ok"><span class="cx-icon"><i class="ph-duotone ph-check-circle" style="font-size:18px;color:#4ade80;"></i></span><div><strong>Rationale</strong>${s.rat}</div></div><div class="btn-row"><button type="button" class="btn ghost" data-act="case-prev">← Back</button><button type="button" class="btn" data-act="cases">← All Cases</button></div></div>`;
   }
   document.getElementById('case-step-body').innerHTML=html;
 }
@@ -745,6 +745,27 @@ function casePrev(){if(caseStep>0){caseStep--;renderCaseStep();}}
 
 initQuiz();
 renderCaseCards();
+
+document.addEventListener('click', function (e) {
+  var el = e.target.closest('[data-act]');
+  if (!el) return;
+  switch (el.dataset.act) {
+    case 'resolve':      resolveGrid(); break;
+    case 'print':        window.print(); break;
+    case 'clear':        clearGrid(); break;
+    case 'reset-guided': resetGuided(); break;
+    case 'cases':        backToCases(); break;
+    case 'next-q':       nextQ(); break;
+    case 'init-quiz':    initQuiz(); break;
+    case 'case-next':    caseNext(); break;
+    case 'case-prev':    casePrev(); break;
+    case 'toggle-unk':   toggleUnk(el.dataset.val); break;
+    case 'set-qmode':    setQMode(el.dataset.val); break;
+    case 'start-case':   startCase(+el.dataset.idx); break;
+    case 'ans-q':        ansQ(+el.dataset.idx, el); break;
+    case 'g-ans':        gAns(+el.dataset.step, el.dataset.val); break;
+  }
+});
 </script>
 
 <!-- SHARE STRIP -->
