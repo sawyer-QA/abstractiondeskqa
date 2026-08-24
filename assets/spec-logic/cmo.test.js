@@ -4,19 +4,21 @@
  * structure of lkw.test.js: one describe block per priority branch, plus
  * ordering tests that lock the short-circuit hierarchy, plus a contract block.
  *
- * These tests lock CURRENT behavior. Where current behavior is a known finding
- * rather than a desired end state (the dead prehosp flag), the test says so
- * explicitly so a future fix trips it deliberately rather than silently.
+ * These tests lock CURRENT behavior. The T-26 KNOWN FINDING block that locked
+ * #flag-prehosp at its dead-input behavior was removed by T-28, which wired the
+ * flag up as a real LIP-accessibility gate; its replacement is the gate block
+ * near the bottom of this file.
  */
 
 const test = require('node:test');
 const assert = require('node:assert');
-const { toDocSet, resolveCmo } = require('./cmo.js');
+const { toDocSet, toAccess, resolveCmo } = require('./cmo.js');
 
 // Convenience: build an input with sane defaults.
 function inp(docs, flags){
-  return Object.assign({ docs: docs || [], prehosp:false, postbrain:false,
-                         conflict:false, withdrawn:false }, flags || {});
+  return Object.assign({ docs: docs || [], prehosp:false, prehospAccess:'',
+                         postbrain:false, conflict:false, withdrawn:false },
+                       flags || {});
 }
 
 test.describe('toDocSet', () => {
@@ -32,6 +34,22 @@ test.describe('toDocSet', () => {
   test('returns an empty Set for null/undefined', () => {
     assert.strictEqual(toDocSet(null).size, 0);
     assert.strictEqual(toDocSet(undefined).size, 0);
+  });
+});
+
+test.describe('toAccess', () => {
+  test('passes explicit yes/no through', () => {
+    assert.strictEqual(toAccess('yes'), 'yes');
+    assert.strictEqual(toAccess('no'), 'no');
+  });
+  test('trims and lowercases before matching', () => {
+    assert.strictEqual(toAccess('  YES '), 'yes');
+    assert.strictEqual(toAccess('No'), 'no');
+  });
+  test('treats non-strings and unexpected values as unanswered', () => {
+    for (const v of [undefined, null, true, false, 0, 1, {}, [], 'maybe', '']) {
+      assert.strictEqual(toAccess(v), '', 'expected unanswered for: ' + String(v));
+    }
   });
 });
 
@@ -174,21 +192,121 @@ test.describe('empty state', () => {
   });
 });
 
-test.describe('KNOWN FINDING: prehosp is a dead input', () => {
-  // These lock CURRENT behavior, which is that #flag-prehosp changes nothing.
-  // Per spec, a prior-dated CMO/POLST qualifies on whether it was ACCESSIBLE to
-  // the treating LIP during this encounter, not on its date \u2014 so wiring this up
-  // needs a new UI sub-question, not just a new branch. When that ticket lands,
-  // these two tests SHOULD fail, and that failure is the intended signal.
-  test('prehosp does not change the empty-state result', () => {
-    const off = resolveCmo(inp([], {prehosp:false}));
-    const on  = resolveCmo(inp([], {prehosp:true}));
-    assert.deepStrictEqual(on, off);
+test.describe('pre-hospital CMO \u2014 LIP-accessibility gate (T-28)', () => {
+  // Replaces the T-26 "KNOWN FINDING: prehosp is a dead input" block. Domain
+  // rule: a prior-dated CMO/POLST qualifies on whether it was ACCESSIBLE to the
+  // treating LIP for this encounter, not on the document's date.
+  const SAMPLES = [
+    ['md_order'], ['md_note'], ['polst'], ['hospice'], ['palliative'],
+    ['dnr_only'], ['comfort_only','family_note'], []
+  ];
+  const VERIFY_LINE = 'confirmed accessible to the treating LIP';
+
+  test('unchecked: prehospAccess is ignored entirely', () => {
+    for (const docs of SAMPLES) {
+      const base = resolveCmo(inp(docs));
+      for (const a of ['', 'yes', 'no', undefined, null]) {
+        assert.deepStrictEqual(resolveCmo(inp(docs, {prehospAccess:a})), base,
+          'unchecked result moved for docs=' + docs.join('+') + ' access=' + String(a));
+      }
+    }
   });
-  test('prehosp does not change a POLST result', () => {
-    const off = resolveCmo(inp(['polst'], {prehosp:false}));
-    const on  = resolveCmo(inp(['polst'], {prehosp:true}));
-    assert.deepStrictEqual(on, off);
+
+  test("checked + 'yes' preserves the underlying determination", () => {
+    for (const docs of SAMPLES) {
+      const base = resolveCmo(inp(docs));
+      const gated = resolveCmo(inp(docs, {prehosp:true, prehospAccess:'yes'}));
+      assert.strictEqual(gated.val, base.val, 'val moved for docs=' + docs.join('+'));
+      assert.strictEqual(gated.basis, base.basis, 'basis moved for docs=' + docs.join('+'));
+    }
+  });
+
+  test("checked + 'yes' appends the accessibility VERIFY line exactly once", () => {
+    for (const docs of SAMPLES) {
+      const base = resolveCmo(inp(docs));
+      const gated = resolveCmo(inp(docs, {prehosp:true, prehospAccess:'yes'}));
+      assert.ok(gated.rationale.startsWith(base.rationale),
+        'suffix is not a pure append for docs=' + docs.join('+'));
+      assert.strictEqual(gated.rationale.split(VERIFY_LINE).length - 1, 1,
+        'VERIFY line count wrong for docs=' + docs.join('+'));
+    }
+  });
+
+  test("checked + 'no' returns REVIEW regardless of documentation", () => {
+    for (const docs of SAMPLES) {
+      const r = resolveCmo(inp(docs, {prehosp:true, prehospAccess:'no'}));
+      assert.strictEqual(r.val, 'REVIEW', 'docs=' + docs.join('+'));
+      assert.strictEqual(r.basis, 'Pre-hospital CMO \u2014 Not Accessible to Treating LIP');
+    }
+  });
+
+  test("checked + 'no' states the limit and the next step", () => {
+    const r = resolveCmo(inp(['polst'], {prehosp:true, prehospAccess:'no'}));
+    assert.match(r.rationale, /cannot qualify/);
+    assert.match(r.rationale, /ACTION REQUIRED/);
+    assert.match(r.rationale, /only documentation from this encounter/);
+    assert.ok(!r.rationale.includes(VERIFY_LINE), 'no result must not carry the VERIFY line');
+  });
+
+  test("checked + '' returns REVIEW, explains the rule, and asks for the answer", () => {
+    const r = resolveCmo(inp(['polst'], {prehosp:true, prehospAccess:''}));
+    assert.strictEqual(r.val, 'REVIEW');
+    assert.strictEqual(r.basis, 'Pre-hospital CMO \u2014 Accessibility Unanswered');
+    assert.match(r.rationale, /has not been answered/);
+    assert.match(r.rationale, /not on the document's date/);
+    assert.match(r.rationale, /Answer the accessibility question and re-run/);
+  });
+
+  test('absent/odd access values are unanswered, never treated as no', () => {
+    const unanswered = resolveCmo(inp(['polst'], {prehosp:true, prehospAccess:''}));
+    for (const a of [undefined, null, 'maybe', true, 0]) {
+      const r = resolveCmo(inp(['polst'], {prehosp:true, prehospAccess:a}));
+      assert.deepStrictEqual(r, unanswered, 'access=' + String(a) + ' did not fall to unanswered');
+    }
+  });
+
+  test('withdrawn still outranks the gate', () => {
+    for (const a of ['', 'no', 'yes']) {
+      const r = resolveCmo(inp(['md_order'], {withdrawn:true, prehosp:true, prehospAccess:a}));
+      assert.strictEqual(r.val, 'NO');
+      assert.strictEqual(r.basis, 'CMO Rescinded');
+    }
+  });
+
+  test('post-brain-death still outranks the gate', () => {
+    for (const a of ['', 'no', 'yes']) {
+      const r = resolveCmo(inp(['md_order'], {postbrain:true, prehosp:true, prehospAccess:a}));
+      assert.strictEqual(r.val, 'NO');
+      assert.strictEqual(r.basis, 'Post-Brain Death Only');
+    }
+  });
+
+  test('withdrawn/postbrain return before the gate, so they never carry the VERIFY line', () => {
+    // Consequence of the locked ordering: those branches short-circuit first, so
+    // accessibility is never established and there is nothing to confirm.
+    for (const f of [{withdrawn:true}, {postbrain:true}]) {
+      const r = resolveCmo(inp(['md_order'], Object.assign({prehosp:true, prehospAccess:'yes'}, f)));
+      assert.ok(!r.rationale.includes(VERIFY_LINE));
+    }
+  });
+
+  test('the gate outranks the conflict branch', () => {
+    const gated = resolveCmo(inp(['hospice'], {conflict:true, prehosp:true, prehospAccess:'no'}));
+    assert.strictEqual(gated.val, 'REVIEW');
+    assert.match(gated.basis, /Not Accessible to Treating LIP/);
+    // and once accessibility is established, the conflict branch runs normally
+    const cleared = resolveCmo(inp(['hospice'], {conflict:true, prehosp:true, prehospAccess:'yes'}));
+    assert.strictEqual(cleared.val, 'NO');
+    assert.match(cleared.basis, /No Clear LIP CMO Plan/);
+    assert.ok(cleared.rationale.includes(VERIFY_LINE));
+  });
+
+  test('gate results honor the {val, basis, rationale} contract', () => {
+    for (const a of ['', 'no']) {
+      const r = resolveCmo(inp(['polst'], {prehosp:true, prehospAccess:a}));
+      assert.deepStrictEqual(Object.keys(r).sort(), ['basis','rationale','val']);
+      assert.strictEqual(typeof r.rationale, 'string');
+    }
   });
 });
 
