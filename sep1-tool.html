@@ -640,11 +640,11 @@ function renderRows() {
     const detType = r.override || (r.label ? detectType(r.label) : 'other');
     const meta = TYPE_META[detType]; const isOvr = !!r.override;
     return `<div class="ev-row" data-ev-id="${r.id}">
-      <input type="time" class="ev-time" aria-label="Event time" value="${r.time}" oninput="syncField(${r.id},'time',this.value)">
+      <input type="time" class="ev-time" aria-label="Event time" value="${r.time}" data-input="sync-time">
       <div class="ev-desc-wrap">
         <input type="text" class="ev-label" value="${esc(r.label)}"
           placeholder="Describe event — type auto-detected"
-          oninput="syncField(${r.id},'label',this.value)">
+          data-input="sync-label">
         <button type="button" class="type-badge ${meta.badge}" style="${isOvr?'text-decoration:underline dotted 1px;':''}"
           data-act="toggle-picker" title="Click to override detected type"
           aria-haspopup="menu" aria-expanded="${pickerActiveId===r.id}" aria-controls="type-picker"
@@ -940,6 +940,18 @@ document.addEventListener('click', function (e) {
     case 'start-case':    startCase(+el.dataset.idx); break;
     case 'toggle-picker': togglePicker(+el.closest('.ev-row').dataset.evId, el); break;
     case 'remove-row':    removeRow(+el.closest('.ev-row').dataset.evId); break;
+  }
+});
+
+document.addEventListener('input', function (e) {
+  var el = e.target.closest('[data-input]');
+  if (!el) return;
+  // +evId: syncField matches rows with ===, and dataset values are strings.
+  // Without the numeric cast every keystroke silently updates nothing.
+  var id = +el.closest('.ev-row').dataset.evId;
+  switch (el.dataset.input) {
+    case 'sync-time':  syncField(id, 'time', el.value); break;
+    case 'sync-label': syncField(id, 'label', el.value); break;
   }
 });
 </script>
