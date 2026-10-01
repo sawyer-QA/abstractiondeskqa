@@ -662,6 +662,26 @@ function casePrev(){if(caseStep>0){caseStep--;renderCaseStep();}}
 
 initQuiz();
 renderCaseCards();
+
+// Delegated click dispatcher for data-act (T-27 cmo; missing from 35de91c).
+document.addEventListener('click', function (e) {
+  var el = e.target.closest('[data-act]');
+  if (!el) return;
+  switch (el.dataset.act) {
+    case 'resolve':      resolveClassifier(); break;
+    case 'print':        window.print(); break;
+    case 'clear':        clearClassifier(); break;
+    case 'g-ans':        gAns(+el.dataset.step, el.dataset.val); break;
+    case 'reset-guided': resetGuided(); break;
+    case 'init-quiz':    initQuiz(); break;
+    case 'next-q':       nextQ(); break;
+    case 'ans-q':        ansQ(+el.dataset.idx, el); break;
+    case 'start-case':   startCase(+el.dataset.idx); break;
+    case 'cases':        backToCases(); break;
+    case 'case-next':    caseNext(); break;
+    case 'case-prev':    casePrev(); break;
+  }
+});
 </script>
 
 <!-- SHARE STRIP -->
