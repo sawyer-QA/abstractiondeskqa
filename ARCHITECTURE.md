@@ -10,11 +10,10 @@ Static multi-page toolkit for hospital core measure abstractors. GitHub Pages ho
 ```
 ┌────────────────────────────── abstractiondeskqa.com (GitHub Pages) ─┐
 │ index  lookup  sep1  lkw  cmo  hbips  abstractly  404               │
-│   │       │                                                        │
-│   │       ├─ GET data/qa.json (same-origin static) ──► SEED fallback│
-│   │       ├─ POST submissions ──► Google Apps Script ──► Sheets    │
-│   │       └─ cache: localStorage (12h TTL)                         │
-│   └─ feedback POST ──► formly.email (+ Cloudflare Turnstile)       │
+│           │                                                        │
+│           ├─ GET data/qa.json (same-origin static) ──► SEED fallback│
+│           ├─ POST submissions ──► Google Apps Script ──► Sheets    │
+│           └─ cache: localStorage (12h TTL)                         │
 │ all pages ──► GA4 · Google Fonts · phosphor icons (self-hosted) · BMC│
 │                                                                      │
 │ nightly (CI): scripts/sync-qa-data.mjs ─► Apps Script ─► Sheets     │
@@ -26,7 +25,7 @@ Static multi-page toolkit for hospital core measure abstractors. GitHub Pages ho
 
 | Component | File | Purpose | External deps | State |
 |---|---|---|---|---|
-| Landing | index.html | Marketing, feedback form | formly.email, Turnstile, GA4 | none |
+| Landing | index.html | Marketing | GA4 | none |
 | Q&A Lookup | lookup.html | Search/filter Q&A bank, tag taxonomy, community submissions, print-PDF export | `data/qa.json` (static, read), Apps Script/Sheets (writes only), GA4 | localStorage caches (`qc-sheets-cache-v1`, `qc-local-tags-v2`), module-level lets |
 | SEP-1 Tool | sep1-tool.html | Time Zero (SSPT) reasoning: SIRS/OD detection, bundle windows | GA4 | in-memory |
 | LKW Tool | lkw-tool.html | LKW priority resolution + quiz + walkthroughs (dark theme) | GA4 | in-memory |
@@ -41,7 +40,7 @@ Static multi-page toolkit for hospital core measure abstractors. GitHub Pages ho
 
 1. **Read (T-07):** Load → check `qc-sheets-cache-v1` (TTL 12h). Hit → render, refresh in background against `data/qa.json`. Miss → GET same-origin `data/qa.json` (static, regenerated nightly — see step 5).
 2. Fetch failure or empty `entries` → `entries = [...SEED]` (embedded fallback), tag defaults merged, visible warning badge shown. There is intentionally no live-Sheets fallback tier between the static file and SEED — the whole point of T-07/TD-4 was to remove the read path's live-Sheets dependency, not add a rare-case one back in. **Known gap:** the background refresh's own fetch failures are still silent (no badge, no telemetry) — only the cold-load failure path is user-visible.
-3. User submissions (add panel, paste modal) → client-side auto-tag detection → review chips → POST JSON to `SCRIPT_URL` → sheet row awaiting curator approval. **Known gap:** no bot protection or rate limit on this path (index form has Turnstile; this doesn't).
+3. User submissions (add panel, paste modal) → client-side auto-tag detection → review chips → POST JSON to `SCRIPT_URL` → sheet row awaiting curator approval. The Apps Script backend verifies the Cloudflare Turnstile token server-side and rejects a missing or invalid one (T-11). **Known gap:** no rate limit on this path.
 4. Render: full innerHTML template re-render; interactivity via inline onclick handlers calling globals.
 5. **Nightly sync (T-07):** `.github/workflows/sync-qa-data.yml` (schedule + `workflow_dispatch`) runs `scripts/sync-qa-data.mjs`, which GETs the same two Apps Script endpoints (`SCRIPT_URL`, `SCRIPT_URL?type=tags`), runs a heuristic PHI scrubber over every entry, and writes `data/qa.json` (`{entries, tags, generatedAt}`). The workflow verifies the diff touches only `data/qa.json` before committing as `github-actions[bot]` directly to `main` — see ADR-0004 for the scoped exception to the normal PR-only rule.
 
@@ -52,8 +51,7 @@ Static multi-page toolkit for hospital core measure abstractors. GitHub Pages ho
 | Google Apps Script + Sheets | lookup (writes only, as of T-07); nightly sync workflow (read, for regeneration) | Quotas, cold-start latency, no SLA — no longer on the per-visitor read path (T-07 closed TD-4). Still the curator authoring surface and the write-submission target. |
 | `data/qa.json` (static, same-origin) | lookup (reads) | Regenerated nightly by `scripts/sync-qa-data.mjs`; staleness bounded by ~24h cadence + 12h client cache TTL. See ADR-0004. |
 | Google Fonts | all pages | lookup loads a disjoint second type system with duplicate requests |
-| formly.email + Turnstile | index | Healthy |
-| Cloudflare Turnstile | lookup (client-side widget only, T-03a) | Widget + token attached to all 3 submission POSTs; **not yet enforced** — Apps Script doesn't verify the token yet (T-11, external to this repo) |
+| Cloudflare Turnstile | lookup | Widget + token attached to all 3 submission POSTs (T-03a); server-side verification is live per T-11 (closed 2026-07-18). The Apps Script backend that verifies the token lives outside this repo. |
 | GA4 `G-QJPP46JWX3` | 8/8 pages | Pageviews (+ one custom event, `qa_search_zero_results`, on lookup.html); no broader event telemetry |
 | BuyMeACoffee widget | 7 pages | Cosmetic |
 
@@ -104,6 +102,7 @@ Static multi-page toolkit for hospital core measure abstractors. GitHub Pages ho
 - **[ADR-0007 — Accept void-style as a permanent warn](docs/adr/0007-void-style-accepted-as-warn.md).** *Accepted.* `void-style` (self-closing vs. omitted void elements) is a pure stylistic convention with no a11y/behavior/rendering difference; 36 `selfclosing` instances across 4 pages surfaced as one of the largest single-rule buckets in T-22's html-validate triage. Downgraded to `warn` permanently rather than normalized — no ticket owns re-tightening it.
 - **[ADR-0008 — Test runner: node:test (not vitest)](docs/adr/0008-test-runner-node-test.md).** *Accepted.* Context: T-08 spec-logic unit tests need a runner; repo carries no npm dependency tree (ADR-0001). Decision: Node's built-in `node:test` + `node:assert`, run via `node --test`. vitest rejected — it would add the repo's first npm dependency tree.
 - **[ADR-0009 — Spec-logic extraction mechanism: global shim (not ES modules)](docs/adr/0009-spec-logic-extraction-global-shim.md).** *Accepted.* Context: extracting SEP-1 Time-Zero logic from `sep1-tool.html` had to keep inline `onclick` handlers and the `file://` workflow working while remaining `require()`-able by node:test. Decision: global shim (top-level declarations + guarded CommonJS tail), matching `assets/site.js`. ES modules rejected (break inline handlers + `file://` CORS); UMD rejected (namespacing buys nothing at single-module scale).
+- **[ADR-0010 — Remove the homepage feedback form and retire Formly](docs/adr/0010-remove-homepage-feedback-form.md).** *Accepted.* Context: the form's honeypot and Turnstile checks ran only in the browser, so bots could POST straight to formly.email, and it received only spam and zero real submissions. Decision: remove the form and retire Formly (T-33). Turnstile and the Apps Script verifier stay in service on lookup.html; nothing in T-03a or T-11 is superseded. Any future contact channel must verify on a server path the client cannot skip.
 - ADR template: `docs/adr/NNNN-title.md` → Context / Decision / Status / Consequences / Alternatives considered.
 
 ## 8. Changelog Discipline
@@ -118,6 +117,7 @@ Current coverage: **0%**. CI (`.github/workflows/ci.yml`, T-06): html-validate (
 
 (append-only; newest first)
 
+- **2026-11-01** — T-33: Removed the homepage feedback form and retired the Formly integration (ADR-0010). **The form's protections never left the browser.** The submit handler checked the honeypot and the Turnstile token, then disabled both fields before posting, so nothing on any server ever saw them, and bots could POST directly to formly.email without loading the page. It received only spam and zero real submissions, so removal was chosen over building a verified write path for a form nobody used. lookup.html differs on the point that matters: its submissions go through Apps Script, which verifies the token server-side (T-11), so its Turnstile widgets, loader, and `SCRIPT_URL` were left alone and T-03a/T-11 are not superseded. Also removed rules this ticket orphaned: `.form-wrap`'s override in the responsive block, `.section-sub--tight`, and `.wip-inner a`. Updated the dependency map and the lookup data-flow step, which still described Turnstile as unenforced and unprotected after T-11 closed. Earlier notes that mention the form or `#feedback` (the T-04 carve-out and T-03a entries) stay as written, since this section is append-only. The Formly account shutoff is handled outside the repo.
 - **2026-09-30** — T-32: `cmo-tool.html` shipped from 2026-08-24 with no click listener (`35de91c`); fixed in `1ace636`, merged `6cba343`. **The lesson is about what the T-27 verification actually proved.** Every count in that instruction file measured markup: `onclick=` down, `data-act=` up. None measured the listener, and a file can pass every markup count with no dispatcher at all. From here, every T-27-style instruction file lists the listener itself in its expected counts (`addEventListener('<event>'` 0 → 1), and recon includes a caller check: each handler function must appear at least twice (definition plus call). On main before the fix, `resolveClassifier(`, `clearClassifier(` and `gAns(` each appeared exactly once, which is the whole bug in one number. The symptom was visible on 2026-08-24 and was filed as T-30 (“Evaluate with nothing selected fails silently”), most likely because the first Evaluate press tested happened to have nothing selected.
 - **2026-09-30** — T-27 (sep1, non-`onclick` sweep, first of four pages): migrated `sep1-tool.html`’s 2 inline `oninput` handlers to one page-local delegated `input` listener (`838d1b4`, merged `5a4aab6`), under the page-local ruling recorded for sep1 on 2026-08-24. **The sweep needs one listener per event type, not one per sweep.** 19 of the 21 remaining handlers are `oninput`, but lkw carries an `onchange` (the `#flag-episodes` checkbox) and lookup an `onkeydown` on the same `#ttxt` input that also carries an `oninput`. A plan written from the label “oninput sweep” would register input listeners for all 21 and silently break those two. **`this` does not survive delegation.** Three of the 21 pass `this.value` or `event` (sep1’s two and lookup’s `#ttxt`); inside a delegated listener `this` is the document, so each must read the element resolved by `closest()` or the event argument instead. The `onclick` phase never met this pattern. **A numeric id read from `dataset` needs an explicit cast when its consumer compares with `===`.** `syncField()` does, and an uncast string id fails without any error. The T-31 baseline was recorded before the change: on pre-migration `main` the description field loses focus entirely after the first character, not merely its caret position. Migrated behavior matches that exactly, which is the point; the fix belongs to T-31, not to a mechanism-only migration. Remaining order: lkw, lookup, hbips.
 
